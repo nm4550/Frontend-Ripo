@@ -15,12 +15,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Divider from '@material-ui/core/Divider';
 import Tooltip from '@material-ui/core/Tooltip';
-import TodayIcon from '@material-ui/icons/Today';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import HistoryIcon from '@material-ui/icons/History';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
-import PaymentIcon from '@material-ui/icons/Payment';
-import ForumIcon from '@material-ui/icons/Forum';
+import EditIcon from '@material-ui/icons/Edit';
+import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import LocalMallIcon from '@material-ui/icons/LocalMall';
+import GroupIcon from '@material-ui/icons/Group';
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -152,38 +151,32 @@ export default function SearchAppBar() {
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
         <MenuItem>
-          <Avatar /> #Username
+          <Avatar /> #Admin
         </MenuItem>
         <Divider />
         <MenuItem>
           <ListItemIcon>
-            <PaymentIcon fontSize="small" />
+            <EditIcon fontSize="small" />
           </ListItemIcon>
-          Cart
+          Edit Products
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-            <ShoppingCartIcon fontSize="small" />
+            <AddShoppingCartIcon fontSize="small" />
           </ListItemIcon>
-          Ongoing Orders
+          Add Product
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-            <HistoryIcon fontSize="small" />
+            <LocalMallIcon fontSize="small" />
           </ListItemIcon>
-          Purchase History
+          Orders
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-            <ForumIcon fontSize="small" />
+            <GroupIcon fontSize="small" />
           </ListItemIcon>
-          Messages
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <TodayIcon fontSize="small" />
-          </ListItemIcon>
-          Reminder
+          Specialists
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
