@@ -5,6 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { styled } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import ProductIcon from "../productIcon/ProductIcon";
+import "./ShowProduct.css";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -20,573 +22,119 @@ const Img = styled('img')({
   maxHeight: '100%',
 });
 
+const Apartments=[{
+  image:"https://javaneban.ir/wp-content/uploads/2020/11/%D9%85%D8%B4%D8%A7%D9%88%D8%B1%D9%87-%D8%A2%D9%86%D9%84%D8%A7%DB%8C%D9%86-%DA%AF%D9%84-%D9%88-%DA%AF%DB%8C%D8%A7%D9%872-1.jpg",
+  name:"Gol 1",
+  price:"13000"
+},
+{
+  image:"https://www.parsnaz.com/images/2019/04/1814149798-parsnaz-com.jpg",
+  name:"Gol 2",
+  price:"24000"
+},
+{
+  image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzPAO8YS2Ls666zK95nvpG6NN1xLNv74rdbA&usqp=CAU",
+  name:"Gol 3",
+  price:"47000"
+},
+{
+  image:"https://www.bagheboon.com/wp-content/uploads/2016/11/MOSS-ROSE-4-450x450.jpg",
+  name:"Gol 4",
+  price:"32000"
+},
+{
+  image:"https://homtick.com/wp-content/uploads/2021/05/0502bcd194a480472e63cdedf641b9bf.jpg",
+  name:"Gol 5",
+  price:"65000"
+},
+{
+  image:"https://img.beroozresaan.com/unsafe/350x350/files/shop/product/ad4873ed26d549cbbe8faa8d0d0a8e11.jpg",
+  name:"Gol 6",
+  price:"44000"
+},
+]
+
+const Gardens=[{
+  image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9d4LeEQzUCPei2JAJU5Ed-fnSnm1OLdkmZTexrcQ63VTM2UaMUYBSsh7t3zlyGih_uSk&usqp=CAU",
+  name:"Garden 1",
+  price:"13000"
+},
+{
+  image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS82fImOaptr2bLQSicS6uaJcaUd11hXIiZ3Q&usqp=CAU",
+  name:"Garden 2",
+  price:"24000"
+},
+{
+  image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyHlEYbRfj2dXdKxNXqTGrEPDRvDKEtHwQsA&usqp=CAU",
+  name:"Garden 3",
+  price:"47000"
+},
+{
+  image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQkviB90B7UOowzJpygck_w6oX6uSe-jbyugA&usqp=CAU",
+  name:"Garden 4",
+  price:"32000"
+},
+{
+  image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiZ8oUJuTWLcHm1wZUovVOwu5Uv3UNes7zaA&usqp=CAU",
+  name:"Garden 5",
+  price:"65000"
+},
+{
+  image:"https://www.theenglishgarden.co.uk/wp-content/uploads/2016/04/cosmos.jpg",
+  name:"Garden 6",
+  price:"44000"
+},
+]
+
 function ShowProduct(){
     return(
-      <Box sx={{ p:3}}>
-        <Typography gutterBottom variant="h5" component="div">
-                Apartment
-              </Typography>
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={3}>
-          <Item>
+      <div className="showProductsBack">
+      <Box sx={{ width: '100%' }}>
 
-          
-      <Grid container spacing={2}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="Picture" src="/static/images/grid/complex.jpg" />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Name
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                more info
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle1" component="div">
-              $Price
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-    
-
+      <div className="showProductSubs">
+        Apartment : 
+      </div>
+      <Grid  container spacing={2}>
+        {Apartments.map(
+          gol => 
+          <Grid  item xs={12} s={6} md={2}>
+          <Item className="showProductsIcons">
+            <ProductIcon product={gol}/>
           </Item>
         </Grid>
-        <Grid item xs={3}>
-          <Item>
-
-          <Grid container spacing={2}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="Picture" src="/static/images/grid/complex.jpg" />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Name
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                more info
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle1" component="div">
-              $Price
-            </Typography>
-          </Grid>
-        </Grid>
+        )}
       </Grid>
 
+      <div className="showProductSubs">
+        Garden : 
+      </div>
+      <Grid  container spacing={2}>
+      {Gardens.map(
+          gol => 
+          <Grid  item xs={12} s={6} md={2}>
+          <Item className="showProductsIcons">
+            <ProductIcon product={gol}/>
           </Item>
         </Grid>
-        <Grid item xs={3}>
-          <Item>
-
-          <Grid container spacing={2}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="Picture" src="/static/images/grid/complex.jpg" />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Name
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                more info
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle1" component="div">
-              $Price
-            </Typography>
-          </Grid>
-        </Grid>
+        )}
+      
       </Grid>
 
+      <div className="showProductSubs">
+        Yard : 
+      </div>
+      <Grid  container spacing={2}>
+      {Apartments.map(
+          gol => 
+          <Grid  item xs={12} s={6} md={2}>
+          <Item className="showProductsIcons">
+            <ProductIcon product={gol}/>
           </Item>
         </Grid>
-        <Grid item xs={3}>
-          <Item>
-
-          <Grid container spacing={2}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="Picture" src="/static/images/grid/complex.jpg" />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Name
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                more info
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle1" component="div">
-              $Price
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-
-          </Item>
-        </Grid>
-      </Grid>
-
-
-
-      <Typography gutterBottom variant="h5" component="div">
-                Garden
-              </Typography>
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={3}>
-          <Item>
-
-          
-      <Grid container spacing={2}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="Picture" src="/static/images/grid/complex.jpg" />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Name
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                more info
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle1" component="div">
-              $Price
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-    
-
-          </Item>
-        </Grid>
-        <Grid item xs={3}>
-          <Item>
-
-          <Grid container spacing={2}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="Picture" src="/static/images/grid/complex.jpg" />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Name
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                more info
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle1" component="div">
-              $Price
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-
-          </Item>
-        </Grid>
-        <Grid item xs={3}>
-          <Item>
-
-          <Grid container spacing={2}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="Picture" src="/static/images/grid/complex.jpg" />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Name
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                more info
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle1" component="div">
-              $Price
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-
-          </Item>
-        </Grid>
-        <Grid item xs={3}>
-          <Item>
-
-          <Grid container spacing={2}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="Picture" src="/static/images/grid/complex.jpg" />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Name
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                more info
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle1" component="div">
-              $Price
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-
-          </Item>
-        </Grid>
-      </Grid>
-
-      <Typography gutterBottom variant="h5" component="div">
-                Yard
-              </Typography>
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={3}>
-          <Item>
-
-          
-      <Grid container spacing={2}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="Picture" src="/static/images/grid/complex.jpg" />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Name
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                more info
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle1" component="div">
-              $Price
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-    
-
-          </Item>
-        </Grid>
-        <Grid item xs={3}>
-          <Item>
-
-          <Grid container spacing={2}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="Picture" src="/static/images/grid/complex.jpg" />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Name
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                more info
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle1" component="div">
-              $Price
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-
-          </Item>
-        </Grid>
-        <Grid item xs={3}>
-          <Item>
-
-          <Grid container spacing={2}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="Picture" src="/static/images/grid/complex.jpg" />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Name
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                more info
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle1" component="div">
-              $Price
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-
-          </Item>
-        </Grid>
-        <Grid item xs={3}>
-          <Item>
-
-          <Grid container spacing={2}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="Picture" src="/static/images/grid/complex.jpg" />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Name
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                more info
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle1" component="div">
-              $Price
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-
-          </Item>
-        </Grid>
-      </Grid>
-
-
-      <Typography gutterBottom variant="h5" component="div">
-                Digging
-              </Typography>
-      <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item xs={3}>
-          <Item>
-
-          
-      <Grid container spacing={2}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="Picture" src="/static/images/grid/complex.jpg" />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Name
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                more info
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle1" component="div">
-              $Price
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-    
-
-          </Item>
-        </Grid>
-        <Grid item xs={3}>
-          <Item>
-
-          <Grid container spacing={2}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="Picture" src="/static/images/grid/complex.jpg" />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Name
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                more info
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle1" component="div">
-              $Price
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-
-          </Item>
-        </Grid>
-        <Grid item xs={3}>
-          <Item>
-
-          <Grid container spacing={2}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="Picture" src="/static/images/grid/complex.jpg" />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Name
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                more info
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle1" component="div">
-              $Price
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-
-          </Item>
-        </Grid>
-        <Grid item xs={3}>
-          <Item>
-
-          <Grid container spacing={2}>
-        <Grid item>
-          <ButtonBase sx={{ width: 128, height: 128 }}>
-            <Img alt="Picture" src="/static/images/grid/complex.jpg" />
-          </ButtonBase>
-        </Grid>
-        <Grid item xs={12} sm container>
-          <Grid item xs container direction="column" spacing={2}>
-            <Grid item xs>
-              <Typography gutterBottom variant="subtitle1" component="div">
-                Name
-              </Typography>
-              <Typography variant="body2" gutterBottom>
-                more info
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-                ID: 1
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item>
-            <Typography variant="subtitle1" component="div">
-              $Price
-            </Typography>
-          </Grid>
-        </Grid>
-      </Grid>
-
-          </Item>
-        </Grid>
+        )}     
       </Grid>
     </Box>
-      
+    </div>
     );
 }
 

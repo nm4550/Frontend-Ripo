@@ -9,7 +9,6 @@ import Paper from '@material-ui/core/Paper';
 
 function Sidebar() {
   return (
-    <Paper>
       <MenuList>
         <MenuItem>
         <ListItemText>Apartment (For Plants)</ListItemText>
@@ -27,7 +26,6 @@ function Sidebar() {
           <ListItemText>Digging (For Tools)</ListItemText>
         </MenuItem>
       </MenuList>
-      </Paper>
   );
 }
 

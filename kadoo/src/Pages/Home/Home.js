@@ -5,16 +5,31 @@ import Typography from '@material-ui/core/Typography';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import { styled } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import Navbar from "../../Components/Navbar/Navbar";
+import Sidebar from '../../Components/Sidebar/Sidebar'
+import ShowProduct from '../../Components/ShowProduct/ShowProduct';
 
-
-function Home(){
-    return(
+class Home extends React.Component {
+    render() {
+      return(
         <div>
-
-        </div>
+        <Navbar/>
         
-    
-    );
-}
+        <Box>
+          <Grid container>
+            <Grid xs={2}>
+            <Sidebar/>
+            </Grid>
+            <Grid xs={10} >
+            <ShowProduct/>
+            </Grid>
+          </Grid>
+        </Box>
+        
+        
+        </div>
+      )
+    }
+  }
 
 export default Home;
