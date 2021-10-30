@@ -1,9 +1,48 @@
-import React from 'react';
+import React , {useState} from 'react';
+import axiosInstance from '../../axios';
 import Background from '../../Images/SignIn/Background.jpg';
-import { ButtonGroup, Fab, Grid, TextField , Button , InputAdornment } from '@material-ui/core';
+import { Grid, TextField , Button , InputAdornment } from '@material-ui/core';
 import { AccountCircle , VpnKey , EmailSharp , Create } from '@material-ui/icons';
+import { useHistory } from 'react-router-dom';
 
 function SignUp(){
+    const history = useHistory();
+    const initialFormData = Object({
+        name:'',
+        lastName:'',
+        userName:'',
+        email:'',
+        password:''
+    });
+    const [formData , updateFormData] = useState(initialFormData);
+
+    const handleChange = (e) => {
+        updateFormData({
+            ...formData,
+            [e.target.name]: e.target.value.trim(),
+        });
+        console.log(formData);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(formData);
+
+        axiosInstance
+            .post('user/register/', {
+                email: formData.email,
+                username: formData.userName,
+                firstname: formData.name,
+                lastname: formData.lastName,
+                password: formData.password,
+            })
+            .then((res) => {
+                //history.push('/SignIn');
+                console.log(res);
+                //console.log(res.data);
+            });
+    };
+
     return(
         <div BackgroundColor="secondary">
             <Grid container style={{minHeight: '100vh'}}>
@@ -19,16 +58,7 @@ function SignUp(){
                 direction="column"
                 justify="space-between" 
                 style={{padding: 10}}>
-                    <Grid container justifyContent="flex-end">
-                        <ButtonGroup disableElevation>
-                            <Fab color="secondary" variant="contained" size="large">
-                                Sign In
-                            </Fab>
-                            <Fab color="secondary" variant="contained" size="large">
-                                Sign Up
-                            </Fab>
-                        </ButtonGroup>
-                    </Grid>
+                    <div/>
                     <div 
                     style={{
                         display:"flex" , 
@@ -36,33 +66,53 @@ function SignUp(){
                         maxWidth: 400,
                         minWidth: 300}}>
                         <TextField 
+                        id="firstname"
                         variant="standard"
                         label="Name" 
                         margin="normal"
                         required
-                        InputProps={{startAdornment:<InputAdornment position="start"> <Create/> </InputAdornment>}} /> 
+                        InputProps={{startAdornment:<InputAdornment position="start"> <Create/> </InputAdornment>}}
+                        onChange={handleChange} /> 
                         <TextField 
+                        id="lastname"
                         variant="standard"
                         label="Last name" 
                         margin="normal"
                         required
-                        InputProps={{startAdornment:<InputAdornment position="start"> <AccountCircle/> </InputAdornment>}} /> 
+                        InputProps={{startAdornment:<InputAdornment position="start"> <AccountCircle/> </InputAdornment>}}
+                        onChange={handleChange} /> 
                         <TextField 
+                        id="userName"
+                        variant="standard"
+                        label="Username" 
+                        margin="normal"
+                        required
+                        InputProps={{startAdornment:<InputAdornment position="start"> <AccountCircle/> </InputAdornment>}}
+                        onChange={handleChange} /> 
+                        <TextField 
+                        id="email"
                         variant="standard"
                         label="Email" 
                         margin="normal"
                         required
-                        InputProps={{startAdornment:<InputAdornment position="start"> <EmailSharp/> </InputAdornment>}} /> 
+                        InputProps={{startAdornment:<InputAdornment position="start"> <EmailSharp/> </InputAdornment>}}
+                        onChange={handleChange} /> 
                         <TextField 
+                        id="password"
                         variant="standard"
                         type="password"
                         label="Password" 
                         margin="normal"
                         required
-                        InputProps={{startAdornment:<InputAdornment position="start"> <VpnKey/> </InputAdornment>}}/>
+                        InputProps={{startAdornment:<InputAdornment position="start"> <VpnKey/> </InputAdornment>}}
+                        onChange={handleChange} />
                         <div style={{height: 20}}/> 
-                        <Button color="secondary" variant="contained">
+                        <Button color="secondary" variant="contained" onClick={handleSubmit}>
                             Sign Up
+                        </Button>
+                        <div style={{height: 20}}/> 
+                        <Button color="secondary" variant="outlined">
+                            Have an account ?
                         </Button>
                     </div>
                     <div/>

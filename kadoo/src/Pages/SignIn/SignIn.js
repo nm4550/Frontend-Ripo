@@ -1,10 +1,44 @@
 import React from 'react';
 import Background from '../../Images/SignIn/Background.jpg';
-import { ButtonGroup, Fab, Grid, TextField , Button , InputAdornment } from '@material-ui/core';
-import { EmailRounded , LockRounded , VpnKey} from '@material-ui/icons';
+import { Grid, TextField , Button , InputAdornment } from '@material-ui/core';
+import { EmailRounded , VpnKey} from '@material-ui/icons';
+import axios from 'axios';
+import axiosInstance from '../../axios';
+import { useHistory } from 'react-router';
+import { useState } from 'react';
 
 function SignIn(){
-    //const classes = useStyles()
+    const history = useHistory();
+    const initialFormData = Object.freeze({
+        email:'',
+        password:''
+    });
+    const [formData , updateFormData] = useState(initialFormData);
+
+    const handleChange = (e) => {
+        updateFormData({
+            ...formData,
+            [e.target.name]: e.target.value.trim(),
+        });
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(formData);
+
+        axiosInstance
+            .post('token/',{
+                email: formData.email,
+                password: formData.password,
+            })
+            .then((res) => {
+                localStorage.setItem('access_token',res.data.access);
+                localStorage.setItem('refresh_token',res.data.refresh);
+                axiosInstance.defaults.headers['Authorixation'] = 
+                    'JWT ' + localStorage.getItem('access_token');
+                    history.push('/');
+            });
+    };
     return(
         <div BackgroundColor="secondary">
             <Grid container style={{minHeight: '100vh'}}>
@@ -20,16 +54,7 @@ function SignIn(){
                 direction="column"
                 justify="space-between" 
                 style={{padding: 10}}>
-                    <Grid container justifyContent="flex-end">
-                        <ButtonGroup disableElevation>
-                            <Fab color="secondary" variant="contained" size="large">
-                                Sign In
-                            </Fab>
-                            <Fab color="secondary" variant="contained" size="large">
-                                Sign Up
-                            </Fab>
-                        </ButtonGroup>
-                    </Grid>
+                    <div/>
                     <div 
                     style={{
                         display:"flex" , 
@@ -41,19 +66,21 @@ function SignIn(){
                         variant="standard"
                         label="Email" 
                         margin="normal"
-                        InputProps={{startAdornment:<InputAdornment position="start"> <EmailRounded/> </InputAdornment>}} /> 
+                        InputProps={{startAdornment:<InputAdornment position="start"> <EmailRounded/> </InputAdornment>}} 
+                        onChange={handleChange} /> 
                         <TextField 
                         variant="standard"
                         type="password"
                         label="Password" 
                         margin="normal"
-                        InputProps={{startAdornment:<InputAdornment position="start"> <VpnKey/> </InputAdornment>}}/>
+                        InputProps={{startAdornment:<InputAdornment position="start"> <VpnKey/> </InputAdornment>}}
+                        onChange={handleChange} />
                         <div style={{height: 20}}/> 
-                        <Button color="primary" variant="contained">
+                        <Button color="secondary" variant="contained" onClick={handleSubmit}>
                             Sign In
                         </Button>
                         <div style={{height: 20}}/> 
-                        <Button color="secondary" variant="contained">
+                        <Button color="secondary" variant="outlined">
                             Sign Up
                         </Button>
                     </div>

@@ -1,8 +1,9 @@
 import React from 'react';
 import './App.css';
-//import SignIn from "./Pages/SignIn/SignIn";
+import SignIn from "./Pages/SignIn/SignIn";
 import SignUp from "./Pages/SignUp/SignUp";
 import { createTheme , ThemeProvider} from '@material-ui/core'
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 const theme = createTheme({
   palette: {
@@ -32,9 +33,12 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div className="App"> 
-        <SignUp/> 
-      </div>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={SignIn}/>
+          <Route exact path="/signup" component={SignUp}/>
+        </Switch>
+      </Router>
     </ThemeProvider>
     
   );
