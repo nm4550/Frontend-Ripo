@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 
 function SignUp(){
     const history = useHistory();
-    const initialFormData = Object({
+    const initialFormData = Object.freeze({
         name:'',
         lastName:'',
         userName:'',
@@ -66,7 +66,8 @@ function SignUp(){
                         maxWidth: 400,
                         minWidth: 300}}>
                         <TextField 
-                        id="firstname"
+                        id="name"
+                        name="name"
                         variant="standard"
                         label="Name" 
                         margin="normal"
@@ -74,7 +75,8 @@ function SignUp(){
                         InputProps={{startAdornment:<InputAdornment position="start"> <Create/> </InputAdornment>}}
                         onChange={handleChange} /> 
                         <TextField 
-                        id="lastname"
+                        id="lastName"
+                        name="lastName"
                         variant="standard"
                         label="Last name" 
                         margin="normal"
@@ -83,6 +85,7 @@ function SignUp(){
                         onChange={handleChange} /> 
                         <TextField 
                         id="userName"
+                        name="userName"
                         variant="standard"
                         label="Username" 
                         margin="normal"
@@ -91,6 +94,7 @@ function SignUp(){
                         onChange={handleChange} /> 
                         <TextField 
                         id="email"
+                        name="email"
                         variant="standard"
                         label="Email" 
                         margin="normal"
@@ -99,6 +103,7 @@ function SignUp(){
                         onChange={handleChange} /> 
                         <TextField 
                         id="password"
+                        name="password"
                         variant="standard"
                         type="password"
                         label="Password" 

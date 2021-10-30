@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const baseUrl = "http://127.0.0.1:8000/api/";
+const baseURL = "http://127.0.0.1:8000/api/";
 
 const axiosInstance = axios.create({
-    baseURL: baseUrl ,
+    baseURL: baseURL ,
     timeout: 5000,
     headers: {
-        Authorization: localStorage.getItem('access-token')
-            ? 'JWT ' + localStorage.getItem('access-token')
+        Authorization: localStorage.getItem('access_token')
+            ? 'JWT ' + localStorage.getItem('access_token')
             : null,
         'Content-Type' : 'applicatin/json',
         accept: 'application/json',
@@ -33,7 +33,7 @@ axiosInstance.interceptors.response.use(
 
         if(
             error.response.status === 401 && 
-            originalRequest.url === baseUrl + 'token/refresh/'
+            originalRequest.url === baseURL + 'token/refresh/'
         ){
             window.location.href = "/SignIn/";
             return Promise.reject(error);

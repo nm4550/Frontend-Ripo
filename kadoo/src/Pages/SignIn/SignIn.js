@@ -64,6 +64,7 @@ function SignIn(){
                         
                         <TextField 
                         variant="standard"
+                        name="email"
                         label="Email" 
                         margin="normal"
                         InputProps={{startAdornment:<InputAdornment position="start"> <EmailRounded/> </InputAdornment>}} 
@@ -71,6 +72,7 @@ function SignIn(){
                         <TextField 
                         variant="standard"
                         type="password"
+                        name="password"
                         label="Password" 
                         margin="normal"
                         InputProps={{startAdornment:<InputAdornment position="start"> <VpnKey/> </InputAdornment>}}
