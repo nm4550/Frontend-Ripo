@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 const baseURL = "http://127.0.0.1:8000/api/";
 
@@ -9,7 +9,7 @@ const axiosInstance = axios.create({
         Authorization: localStorage.getItem('access_token')
             ? 'JWT ' + localStorage.getItem('access_token')
             : null,
-        'Content-Type' : 'applicatin/json',
+        'Content-Type': 'applicatin/json',
         accept: 'application/json',
     },
 });

@@ -27,15 +27,26 @@ function SignUp(){
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(formData);
-
+        console.log("email:" + formData.email);
+        console.log("username:" + formData.userName);
+        console.log("Name:" + formData.name);
+        console.log("Last name:" + formData.lastName);
+        console.log("password:" + formData.password);
+        console.log( JSON.stringify({
+            "email": formData.email,
+            "user_name": formData.userName,
+            "first_name": formData.name,
+            "last_name": formData.lastName,
+            "password": formData.password,
+        }))
         axiosInstance
-            .post('user/register/', {
-                email: formData.email,
-                username: formData.userName,
-                firstname: formData.name,
-                lastname: formData.lastName,
-                password: formData.password,
-            })
+            .post(`user/register/`, JSON.stringify({
+                "email": formData.email,
+                "user_name": formData.userName,
+                "first_name": formData.name,
+                "last_name": formData.lastName,
+                "password": formData.password,
+            }))
             .then((res) => {
                 //history.push('/SignIn');
                 console.log(res);
