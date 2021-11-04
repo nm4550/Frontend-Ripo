@@ -1,25 +1,16 @@
 import './App.css';
-import { createMuiTheme, ThemeProvider } from '@mui/core';
+import HomePage from './Pages/HomePage/HomePage';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#71c1a5'
-    },
-    secondary:{
-      main:'#d784a6'
-    },
-    error:{
-      main:'#a3a3a3'
-    }
-  }
-})
+
 function App() {
   return (
     <div className="App">
-      <ThemeProvider theme={theme}>
-
-      </ThemeProvider>
+      <Router>
+      <Switch>
+        <Route path='/Homepage' exact component={HomePage} />
+      </Switch>
+      </Router>
     </div>
   );
 }
