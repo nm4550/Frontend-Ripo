@@ -1,27 +1,28 @@
-import './App.css';
-import { createMuiTheme, ThemeProvider } from '@mui/core';
+import './App.css'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import Cart from './Pages/AddToCart'
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     primary: {
-      main: '#71c1a5'
+      main: '#71c1a5',
     },
-    secondary:{
-      main:'#d784a6'
+    secondary: {
+      main: '#d784a6',
     },
-    error:{
-      main:'#a3a3a3'
-    }
-  }
+    error: {
+      main: '#a3a3a3',
+    },
+  },
 })
 function App() {
   return (
-    <div className="App">
+    <div className='App'>
       <ThemeProvider theme={theme}>
-
+        <Cart />
       </ThemeProvider>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
