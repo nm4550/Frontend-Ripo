@@ -1,0 +1,52 @@
+.navbar {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    max-width: 100%;
+    height: 40px;
+    margin: 0 auto;
+    border-bottom: 1px solid #f2f2f2;
+  }
+  .navbar .Searchicon{
+    color: #069c5e;
+  }
+  .navbar h1 {
+    color: #069c5e;
+  }
+  
+  .navbar .links {
+    color: black;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  .navbar .buttons {
+    align-items: center;
+    justify-content:flex-end;
+  }
+  .navbar a {
+    color: black;
+    margin-left: 16px;
+    margin-top: 1%;
+    text-decoration: none;
+    padding: 6px;
+    font-weight: bolder;
+  }
+  .navbar .links a:hover {
+    color: #39c785;
+  }
+  .navbar .buttons a:hover {
+    color: #069c5e;
+    background-color: white;
+    border-color: #069c5e;
+    border-width: 6px;
+  }
+.navbar .buttons a{
+    color: rgb(255, 255, 255); 
+    background-color: #069c5e;
+    border-radius: 7px;
+}
+@media screen and (max-width: 600px) {
+  .navbar .links {
+    flex-direction: column;
+  }
+}
