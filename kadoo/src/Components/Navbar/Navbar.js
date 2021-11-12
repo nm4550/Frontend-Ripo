@@ -16,6 +16,7 @@ function Navbar(){
         <Grid container spacing={2}>
         <Grid
         item xs={2}
+        
         textAlign="left"
         >
           <h1>Kadoo</h1>

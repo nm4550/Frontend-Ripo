@@ -12,8 +12,7 @@ import "./ShowProduct.css";
 const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
     padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
+    textAlign: 'center'
   }));
   
   const Img = styled('img')({
@@ -49,23 +48,23 @@ const Item = styled(Paper)(({ theme }) => ({
       return(
         <div className="showProductsBack">
         <Box sx={{ width: '100%' }}>
-  
         <div className="showProductSubs">
-          Plants : 
+          Plants
         </div>
         <Grid  container spacing={2}>
           {data.map(
-            gol => 
+            p => 
             <Grid  item xs={12} s={6} md={2}>
             <Item className="showProductsIcons">
-              <ProductIcon2 key = {gol.id} product={gol}/>
+              <ProductIcon2 key = {p.id} product={p}/>
             </Item>
           </Grid>
           )}
         </Grid>
-  
+        </Box>
+        <Box sx={{ width: '100%' }}>
         <div className="showProductSubs">
-          Tools : 
+          Tools 
         </div>
         <Grid  container spacing={2}>
         {tooldata.map(
@@ -76,7 +75,6 @@ const Item = styled(Paper)(({ theme }) => ({
             </Item>
           </Grid>
           )}
-        
         </Grid>
       </Box>
       </div>

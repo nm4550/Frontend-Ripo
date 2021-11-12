@@ -3,15 +3,12 @@
     margin-right: 1rem;
     margin-top: 1rem;
     border-radius: 8px;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-    padding-top: 1rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 0.25rem;
     background-color:rgb(245, 244, 244);
 }
 
-.showProductsIcons{
-    background-color: rgb(39, 146, 39);
-}
 
 .showProductsIcons:hover{
     background-color: rgb(248, 250, 248);

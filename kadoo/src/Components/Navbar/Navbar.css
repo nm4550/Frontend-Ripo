@@ -24,10 +24,12 @@
     justify-content:flex-end;
   }
   .navbar a {
+    color: black;
     margin-left: 16px;
     margin-top: 1%;
     text-decoration: none;
     padding: 6px;
+    font-weight: bolder;
   }
   .navbar .links a:hover {
     color: #39c785;
@@ -42,4 +44,9 @@
     color: rgb(255, 255, 255); 
     background-color: #069c5e;
     border-radius: 7px;
+}
+@media screen and (max-width: 600px) {
+  .navbar .links {
+    flex-direction: column;
+  }
 }
