@@ -1,26 +1,18 @@
+import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link, BrowserRouter ,Switch } from 'react-router-dom';
 import './App.css';
-import { createMuiTheme, ThemeProvider } from '@mui/core';
+import { Pages } from '@mui/icons-material';
+import './App.css';
+import ProductsPage from './Pages/ProductPlantsPage/ProductsPage';
 
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#71c1a5'
-    },
-    secondary:{
-      main:'#d784a6'
-    },
-    error:{
-      main:'#a3a3a3'
-    }
-  }
-})
 function App() {
   return (
-    <div className="App">
-      <ThemeProvider theme={theme}>
-
-      </ThemeProvider>
-    </div>
+      <Router>
+        <Switch>
+          <Route exact path="/" component={ProductsPage}/>
+          <Route exact path="/home" component={ProductsPage}/>
+        </Switch>
+      </Router>
   );
 }
 
