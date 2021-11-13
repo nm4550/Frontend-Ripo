@@ -220,6 +220,7 @@ function AddtoCart() {
           <Grid item xs={12} md={4}>
             <Item>
               <Basket
+                id="basket-part"
                 cartItems={cartItems}
                 toolCartItems={toolCartItems}
                 CheckoutCart={Checkout}

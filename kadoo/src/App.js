@@ -1,6 +1,8 @@
 import './App.css'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { BrowserRouter, Switch, Route, Link } from 'react-router-dom'
 import Cart from './Pages/AddToCart'
+import CategoriesPage from './Pages/CategoriesPage'
 
 const theme = createTheme({
   palette: {
@@ -18,9 +20,14 @@ const theme = createTheme({
 function App() {
   return (
     <div className='App'>
-      <ThemeProvider theme={theme}>
-        <Cart />
-      </ThemeProvider>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          <Switch>
+            <Route path='/cart' exact component={Cart} />
+            <Route path='/categories' exact component={CategoriesPage} />
+          </Switch>
+        </ThemeProvider>
+      </BrowserRouter>
     </div>
   )
 }

@@ -18,8 +18,6 @@ import NotificationsIcon from '@mui/icons-material/Notifications'
 import MoreIcon from '@mui/icons-material/MoreVert'
 
 export default function Header(props) {
-
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='static'>
@@ -33,6 +31,9 @@ export default function Header(props) {
               size='large'
               aria-label='show 4 new mails'
               color='inherit'
+              onClick={() =>
+                document.getElementById('basket-part').scrollIntoView()
+              }
             >
               <Badge badgeContent={props.countCartItems} color='error'>
                 <ShoppingCartIcon />
