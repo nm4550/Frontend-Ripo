@@ -20,7 +20,7 @@ function ProductIcon2(props){
         <Box className="productIconLink" sx={{ width: '100%' }}>
         <Grid container rowSpacing={1}>
           <Grid item xs={12}>
-          <Link to = {'/productPage2/'+ props.product.id}>
+          <Link to = {'/ProductPlantsPage/'+ props.product.id}>
             <div className="productIconImageContainer"><img className="productIconImage" src={props.product.image}></img></div>
           </Link>
           </Grid>

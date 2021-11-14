@@ -1,0 +1,109 @@
+.ProductPage{
+    background-color: rgb(230, 227, 227);
+    margin-top: 5rem;
+    height: 40rem;
+    padding-left: 17%;
+    padding-right: 17%;
+    padding-top: 7%;
+}
+
+.ProductPageProductContainer{
+    background-color: white;
+    border: 1px solid rgb(190, 190, 190);
+    min-height: 30rem;
+    border-radius: 15px;
+}
+
+.ProductPageImageContainer{
+    background-color: rgb(243, 241, 241);
+    min-height: 100%;
+    border-top-left-radius: 15px;
+    
+    padding-right: 4%;
+}
+.ProductPageBuyContainer{
+    background-color: rgb(243, 241, 241);
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    min-height: 1rem;
+}
+
+.ProductPageImage{
+    width: 100%;
+}
+
+.ProductPageTitle{
+    font-size: 18px;
+    font-weight: bolder;
+}
+
+.ProductPageText{
+    font-size: 16px;
+    word-break: break-all;
+}
+
+
+.ProductPageCounter{
+    display: inline-flex;
+}
+
+.ProductPageCounterMin{
+    border: 1px solid rgb(153, 153, 153);
+    border-top-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    width: 1.5rem;
+}
+
+.ProductPageCounterMin:hover{
+    background-color: rgb(206, 206, 206);
+    transition: all 0.3s ease-in-out;
+}
+
+.ProductPageCounterMin:active{
+    background-color: rgb(146, 146, 146);
+    transition: all 0.3s ease-in-out;
+}
+
+.ProductPageCounterPlu{
+    border: 1px solid rgb(153, 153, 153);
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    width: 1.5rem;
+}
+
+.ProductPageCounterPlu:hover{
+    background-color: rgb(206, 206, 206);
+    transition: all 0.3s ease-in-out;
+}
+
+.ProductPageCounterPlu:active{
+    background-color: rgb(146, 146, 146);
+    transition: all 0.3s ease-in-out;
+}
+.ProductPageCounterNum{
+    border: 1px solid rgb(153, 153, 153);
+    width: 1.5rem;
+    text-align: center;
+    text-justify:auto;
+}
+
+.productsPageAdd{
+    font-size: 16px;
+    font-weight: bold;
+    background-color: red;
+    border: 0ch none transparent;
+    border-radius: 3px;
+    width: 100%;
+    height: 100%;
+}
+
+.productsPageAdd:hover{
+    background-color: rgb(255, 111, 111);
+    transition: all 0.3s ease-in-out;
+}
+
+.productsPageAdd:active{
+    background-color: rgb(156, 0, 0);
+    transition: all 0.3s ease-in-out;
+}
+

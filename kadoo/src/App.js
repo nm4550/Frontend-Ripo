@@ -3,16 +3,17 @@ import { BrowserRouter as Router, Route, Link, BrowserRouter ,Switch } from 'rea
 import './App.css';
 import HomePage from './Pages/HomePage/HomePage';
 import { Pages } from '@mui/icons-material';
-import ProductsPage from './Pages/ProductPlantsPage/ProductsPage';
-
+import ProductPlantsPage from './Pages/ProductPlantsPage/ProductPlantsPage';
+import ProductToolsPage from './Pages/ProductToolsPage/ProductToolsPage';
 function App() {
   return (
     <div className="App">
       <Router>
       <Switch>
-        <Route path='/Homepage' exact component={HomePage} />
-        <Route exact path="/" component={ProductsPage}/>
-          <Route exact path="/home" component={ProductsPage}/>
+        <Route exact path="/" component={HomePage}/>
+        <Route exact path='/Homepage' exact component={HomePage} />
+        <Route exact path="/ProductPlantsPage/:id" component={ProductPlantsPage}/>
+        <Route exact path="/ProductToolsPage/:id" component={ProductToolsPage}/>
       </Switch>
       </Router>
     </div>
