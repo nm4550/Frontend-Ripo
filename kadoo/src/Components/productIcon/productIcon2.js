@@ -7,6 +7,7 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Link } from 'react-router-dom';
 import OpacityIcon from '@mui/icons-material/Opacity';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
+import NatureIcon from '@mui/icons-material/Nature';
 
 function ProductIcon2(props){
   const [showText, setShowText] = useState(false)
@@ -43,6 +44,11 @@ function ProductIcon2(props){
             onMouseLeave={handleMouseLeave}
             />
             {showText && <a className="Message" > {props.product.water} </a>}
+            <NatureIcon className="growButton"
+            onMouseOver={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            />
+            {showText && <a className="Message" > {props.product.growthRate} </a>}
             </div>
           </Grid>
         </Grid>
