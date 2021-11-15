@@ -82,18 +82,6 @@ class ProductToolsPage extends React.Component {
                               <hr/>
                               </Grid>
                               
-                              <Grid item xs={6} md={6} lg={6} className="ProductPageText">
-                              <div className="ProductPageText"> <b>Environment:</b> {this.state.product.environment} </div>
-                              </Grid>
-                              <Grid item xs={6} md={6} lg={6} className="ProductPageText">
-                              <div className="ProductPageText"> <b>Water:</b> {this.state.product.water}</div>
-                              </Grid>
-                              <Grid item xs={6} md={6} lg={6} className="ProductPageText">
-                              <div className="ProductPageText"> <b>Light:</b> {this.state.product.light} </div>
-                              </Grid>
-                              <Grid item xs={6} md={6} lg={6} className="ProductPageText">
-                              <div className="ProductPageText"> <b>GrowthRate:</b> {this.state.product.growthRate}  </div>
-                              </Grid>
                               <Grid item xs={12} md={12} lg={12} className="ProductPageBuyContainer">
                           <Grid container spacing={2}>
                               <Grid item xs={6} md={3} className="ProductPageTitle">
@@ -114,7 +102,7 @@ class ProductToolsPage extends React.Component {
                                   </button>
                               </Grid>
                               <Grid item xs={6} md={3} className="ProductPageTitle">
-                                  Total Price : {this.state.totalPrice} $
+                                  Total Price : {this.state.totalPrice}$
                               </Grid>
                               
                           </Grid>

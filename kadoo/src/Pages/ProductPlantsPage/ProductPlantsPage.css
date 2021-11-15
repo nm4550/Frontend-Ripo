@@ -20,16 +20,15 @@
     min-height: 100%;
     border-top-left-radius: 15px;
     padding: 1rem;
-    margin: 800px;
+    align-items: center;
+    justify-content: center;
 }
 .ProductPageBuyContainer{
     background-color: white;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
     min-height: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    
 }
 
 .ProductPageImage{
@@ -49,7 +48,9 @@
 
 
 .ProductPageCounter{
-    display: inline-flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .ProductPageCounterMin{
@@ -57,11 +58,17 @@
     border-top-left-radius: 3px;
     border-bottom-left-radius: 3px;
     width: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .ProductPageCounterMin:hover{
     background-color: rgb(206, 206, 206);
     transition: all 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .ProductPageCounterMin:active{

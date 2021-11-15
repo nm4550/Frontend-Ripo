@@ -95,11 +95,11 @@ class ProductPlantsPage extends React.Component {
                                 </button>
                             </Grid>
                             <Grid item xs={6} md={3} className="ProductPageTitle">
-                                Total Price : {this.state.totalPrice} $
+                                Total Price : {this.state.totalPrice}$
                             </Grid>
                             
                         </Grid>
-                        <Grid container item justifyContent="flex-end" sx={{p:4}} className="ProductPageTitle">
+                        <Grid container item justifyContent="flex-end" sx={{p:3}} className="ProductPageTitle">
                                 <Button variant="contained" className="productsPageAdd">
                                     Add To Bascket
                                 </Button>
