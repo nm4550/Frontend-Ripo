@@ -12,6 +12,7 @@
   .navbar h1 {
     padding-left: 1rem;
     color: #069c5e;
+    display: flex;
   }
   
   .navbar .links {

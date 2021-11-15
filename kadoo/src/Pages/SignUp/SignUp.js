@@ -27,11 +27,6 @@ function SignUp() {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log(formData)
-    console.log('email:' + formData.email)
-    console.log('username:' + formData.userName)
-    console.log('Name:' + formData.name)
-    console.log('Last name:' + formData.lastName)
-    console.log('password:' + formData.password)
     console.log(
       JSON.stringify({
         email: formData.email,
@@ -56,7 +51,9 @@ function SignUp() {
       .then((response) => {
         if(response.status === 201)
         {
-          alert("User registered!")
+          alert("User registered!");
+          history.push("/signin")
+          window.location.reload(true);
         } 
         else
         {
