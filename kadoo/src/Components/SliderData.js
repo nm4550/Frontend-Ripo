@@ -1,0 +1,20 @@
+export const SliderData = [
+    {
+        original:"https://javaneban.ir/wp-content/uploads/2020/11/%D9%85%D8%B4%D8%A7%D9%88%D8%B1%D9%87-%D8%A2%D9%86%D9%84%D8%A7%DB%8C%D9%86-%DA%AF%D9%84-%D9%88-%DA%AF%DB%8C%D8%A7%D9%872-1.jpg",
+      },
+      {
+        original:"https://www.parsnaz.com/images/2019/04/1814149798-parsnaz-com.jpg",
+      },
+      {
+        original:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzPAO8YS2Ls666zK95nvpG6NN1xLNv74rdbA&usqp=CAU",
+      },
+      {
+        original:"https://www.bagheboon.com/wp-content/uploads/2016/11/MOSS-ROSE-4-450x450.jpg",
+      },
+      {
+        original:"https://homtick.com/wp-content/uploads/2021/05/0502bcd194a480472e63cdedf641b9bf.jpg",
+      },
+      {
+        original:"https://img.beroozresaan.com/unsafe/350x350/files/shop/product/ad4873ed26d549cbbe8faa8d0d0a8e11.jpg",
+      },
+  ];

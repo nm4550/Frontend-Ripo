@@ -1,10 +1,5 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
-import "./ProductPlantsPage.css";
-import Chip from '@mui/material/Chip';
 
 
 class ProductPlantsPage extends React.Component {
@@ -12,8 +7,9 @@ class ProductPlantsPage extends React.Component {
         super(props);
         this.state = { 
           product : [] , 
-          id : this.props.match.params.id
-    
+          id : this.props.match.params.id,
+          numberOfBuy:0,
+          totalPrice:0,
         };
     }
     componentDidMount() {
@@ -22,36 +18,25 @@ class ProductPlantsPage extends React.Component {
           .then(response => response.json())
           .then(data => this.setState({ product: data }));
     }
-
-
+    
 
     render() {
-        var numberOfBuy=11;
+          var increaseBought=()=>{
+        var nob=this.state.numberOfBuy
+        this.setState({
+            numberOfBuy:nob+1,
+            totalPrice:(nob+1)*this.state.product.price
+    })
+    }
+    var decreaseBought=()=>{
+        var nob=this.state.numberOfBuy
+        this.setState({
+            numberOfBuy:nob-1,
+            totalPrice:(nob-1)*this.state.product.price
+    })
+    }
         
-        const increaseBought=()=>{
-            numberOfBuy++;
-        }
-        const Apartments=[{
-            original:"https://javaneban.ir/wp-content/uploads/2020/11/%D9%85%D8%B4%D8%A7%D9%88%D8%B1%D9%87-%D8%A2%D9%86%D9%84%D8%A7%DB%8C%D9%86-%DA%AF%D9%84-%D9%88-%DA%AF%DB%8C%D8%A7%D9%872-1.jpg",
-          },
-          {
-            original:"https://www.parsnaz.com/images/2019/04/1814149798-parsnaz-com.jpg",
-          },
-          {
-            original:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzPAO8YS2Ls666zK95nvpG6NN1xLNv74rdbA&usqp=CAU",
-          },
-          {
-            original:"https://www.bagheboon.com/wp-content/uploads/2016/11/MOSS-ROSE-4-450x450.jpg",
-          },
-          {
-            original:"https://homtick.com/wp-content/uploads/2021/05/0502bcd194a480472e63cdedf641b9bf.jpg",
-          },
-          {
-            original:"https://img.beroozresaan.com/unsafe/350x350/files/shop/product/ad4873ed26d549cbbe8faa8d0d0a8e11.jpg",
-          },
-          ]
-            
-
+        
       return (
           <div className="ProductPage">
                 <Grid container spacing={4} className="ProductPageProductContainer">
@@ -84,9 +69,6 @@ class ProductPlantsPage extends React.Component {
                             <Grid item xs={6} md={6} lg={6} className="ProductPageText">
                             <div className="ProductPageText"> <b>GrowthRate:</b> {this.state.product.growthRate}  </div>
                             </Grid>
-                            <Grid item xs={6} md={6} lg={6} className="ProductPageText">
-                            <b>Tags:</b> <Chip label={this.state.product.tags} />
-                            </Grid>
                         </Grid>
                     </Grid>
                     <Grid item xs={12} md={12} lg={12} className="ProductPageBuyContainer">
@@ -95,18 +77,21 @@ class ProductPlantsPage extends React.Component {
                             <div className="productPagePrice"> <b>Price:</b> {this.state.product.price} $</div>
                             </Grid>
                             <Grid item xs={6} md={3}  className="ProductPageCounter">
-                                <button onClick="decreaseBought()" className="ProductPageCounterMin">
+                                <button onClick={decreaseBought} className="ProductPageCounterMin">
                                     -
                                 </button>
+                                
                                 <div className="ProductPageCounterNum">
-                                    {numberOfBuy}
+                                    {this.state.numberOfBuy}
                                 </div>
+                                
+    
                                 <button onClick={increaseBought} className="ProductPageCounterPlu">
                                     +
                                 </button>
                             </Grid>
                             <Grid item xs={6} md={3} className="ProductPageTitle">
-                                Total Price : 
+                                Total Price : {this.state.totalPrice} $
                             </Grid>
                             <Grid item xs={6} md={2} className="ProductPageTitle">
                                 <button className="productsPageAdd">

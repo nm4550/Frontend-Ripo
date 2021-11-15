@@ -1,56 +1,60 @@
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Box from '@mui/material/Box';
-import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import "./ProductToolsPage.css";
 import Chip from '@mui/material/Chip';
-
 
 class ProductToolsPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = { 
           product : [] , 
-          id : this.props.match.params.id
-    
+          id : this.props.match.params.id,
+          numberOfBuy:0,
+          totalPrice:0,
+          idTags:[],
+          nameTags:[],
         };
     }
     componentDidMount() {
       console.log('http://127.0.0.1:8000/api/toolDetail/' + this.state.id)
-      fetch('http://127.0.0.1:8000/api/toolDetail/' + this.state.id + '/')
+      setTimeout(async () => {
+        const response = await fetch('http://127.0.0.1:8000/api/toolDetail/' + this.state.id + '/')
+        const data = await response.json()
+        this.setState({ product: data });
+        console.log(data.tags)
+      },1000)
+      this.setState({idTags : this.state.product.tags})
+      for (let i = 0; i < this.state.idTags.length; i++) {
+        const element = this.state.idTags[i];
+        fetch('http://127.0.0.1:8000/api/tagDetail/' + element + '/')
           .then(response => response.json())
-          .then(data => this.setState({ product: data }));
+          .then(data => this.setState({ ...this.state.nameTags[i] , name: data.name}));
+      }  
+      console.log(this.state.idTags)
+      console.log(this.state.nameTags)      
+
+            
     }
     
 
 
 
     render() {
-        var numberOfBuy=11;
-        
-        const increaseBought=()=>{
-            numberOfBuy++;
+          var increaseBought=()=>{
+            var nob=this.state.numberOfBuy
+            this.setState({
+                numberOfBuy:nob+1,
+                totalPrice:(nob+1)*this.state.product.price
+        })
         }
-        const Apartments=[{
-            original:"https://javaneban.ir/wp-content/uploads/2020/11/%D9%85%D8%B4%D8%A7%D9%88%D8%B1%D9%87-%D8%A2%D9%86%D9%84%D8%A7%DB%8C%D9%86-%DA%AF%D9%84-%D9%88-%DA%AF%DB%8C%D8%A7%D9%872-1.jpg",
-          },
-          {
-            original:"https://www.parsnaz.com/images/2019/04/1814149798-parsnaz-com.jpg",
-          },
-          {
-            original:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSzPAO8YS2Ls666zK95nvpG6NN1xLNv74rdbA&usqp=CAU",
-          },
-          {
-            original:"https://www.bagheboon.com/wp-content/uploads/2016/11/MOSS-ROSE-4-450x450.jpg",
-          },
-          {
-            original:"https://homtick.com/wp-content/uploads/2021/05/0502bcd194a480472e63cdedf641b9bf.jpg",
-          },
-          {
-            original:"https://img.beroozresaan.com/unsafe/350x350/files/shop/product/ad4873ed26d549cbbe8faa8d0d0a8e11.jpg",
-          },
-          ]
+        var decreaseBought=()=>{
+            var nob=this.state.numberOfBuy
+            this.setState({
+                numberOfBuy:nob-1,
+                totalPrice:(nob-1)*this.state.product.price
+        })
+        }
+        
             
 
       return (
@@ -69,33 +73,41 @@ class ProductToolsPage extends React.Component {
                             <Grid item xs={6} md={6} lg={11} className="ProductPageText">
                             <div className="ProductPageText"> <b>Description:</b> {this.state.product.description} </div>
                             <div className="ProductPageText"></div>
-                            <hr/>
+                            
                             </Grid>
                             <Grid item xs={6} md={6} lg={6} className="ProductPageText">
-                            <b>Tags:</b> <Chip label={this.state.product.tags} />
+                            <b>Tags:</b>
+                            {
+                              this.state.nameTags.map((item) => {
+                                <Chip label = {item.name}/>
+                              }) 
+                            }
                             </Grid>
                         </Grid>
                     </Grid>
                     <Grid item xs={12} md={12} lg={12} className="ProductPageBuyContainer">
                         <Grid container spacing={2}>
-                            <Grid item xs={6} md={3} className="ProductPageTitle">
+                            <Grid item xs={6} md={2} className="ProductPageTitle">
                             <div className="productPagePrice"> <b>Price:</b> {this.state.product.price} $</div>
                             </Grid>
-                            <Grid item xs={6} md={3}  className="ProductPageCounter">
-                                <button onClick="decreaseBought()" className="ProductPageCounterMin">
+                            <Grid item xs={6} md={2}  className="ProductPageCounter">
+                            <button onClick={decreaseBought} className="ProductPageCounterMin">
                                     -
                                 </button>
+                                
                                 <div className="ProductPageCounterNum">
-                                    {numberOfBuy}
+                                    {this.state.numberOfBuy}
                                 </div>
+                                
+    
                                 <button onClick={increaseBought} className="ProductPageCounterPlu">
                                     +
                                 </button>
                             </Grid>
                             <Grid item xs={6} md={3} className="ProductPageTitle">
-                                Total Price : 
+                            Total Price : {this.state.totalPrice} $ 
                             </Grid>
-                            <Grid item xs={6} md={2} className="ProductPageTitle">
+                            <Grid item xs={6} md={3} className="ProductPageTitle">
                                 <button className="productsPageAdd">
                                     Add To Bascket
                                 </button>
