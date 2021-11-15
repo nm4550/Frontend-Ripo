@@ -85,9 +85,7 @@ export default function Product(props) {
                 </IconButton>
               </Box>
             </Box>
-            <Divider sx={{ mt: 0.5, mb: 0.5 }}>
-              <Chip label='Info' />
-            </Divider>
+            <Divider sx={{ mt: 1.5, mb: 1.5 }}></Divider>
             <List
               sx={{
                 display: {
@@ -99,6 +97,7 @@ export default function Product(props) {
                   md: 'row',
                 },
                 padding: 0,
+                mt: 2,
               }}
             >
               <ListItem sx={{ color: '#1976d2' }}>

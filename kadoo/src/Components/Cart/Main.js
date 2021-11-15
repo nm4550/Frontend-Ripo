@@ -10,15 +10,6 @@ export default function Main(props) {
     props
   return (
     <Box align='left'>
-      <Typography
-        variant='h5'
-        noWrap
-        component='div'
-        sx={{ color: 'secondary.main', m: 0.5, p: 2 }}
-      >
-        Plants
-      </Typography>
-      <Divider variant='middle' sx={{ m: 1 }} />
       <div>
         {plants.map((product) => (
           <Product
@@ -29,15 +20,6 @@ export default function Main(props) {
           ></Product>
         ))}
       </div>
-      <Typography
-        variant='h5'
-        noWrap
-        component='div'
-        sx={{ color: 'secondary.main', m: 0.5, p: 2 }}
-      >
-        Tools
-      </Typography>
-      <Divider variant='middle' sx={{ m: 0.5 }} />
       <div>
         {tools.map((product) => (
           <ToolProduct
