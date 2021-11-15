@@ -75,14 +75,14 @@ class ProductToolsPage extends React.Component {
                             <div className="ProductPageText"></div>
                             
                             </Grid>
-                            <Grid item xs={6} md={6} lg={6} className="ProductPageText">
+                            {/* <Grid item xs={6} md={6} lg={6} className="ProductPageText">
                             <b>Tags:</b>
                             {
                               this.state.nameTags.map((item) => {
                                 <Chip label = {item.name}/>
                               }) 
                             }
-                            </Grid>
+                            </Grid> */}
                         </Grid>
                     </Grid>
                     <Grid item xs={12} md={12} lg={12} className="ProductPageBuyContainer">
