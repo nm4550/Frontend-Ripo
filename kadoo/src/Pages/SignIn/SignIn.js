@@ -40,6 +40,8 @@ function SignIn() {
         if(response.status == 200)
         {
           setFlagData(true);
+          history.push('/');
+          window.location.reload(true);
           return response.json();
         } 
         else

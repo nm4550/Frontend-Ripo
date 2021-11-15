@@ -15,6 +15,30 @@ function Navbar(){
       }
       const handleUserNav = e => {
         setUserNav(true)}
+
+        useEffect(() => {
+          const requestOptions = {
+            method: 'GET',
+            headers: { 
+              'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+              'Content-Type': 'application/json' },
+          }
+          fetch('http://127.0.0.1:8000/api/user/userinfo/', requestOptions)
+          .then((response) => {
+            console.log(localStorage.getItem('access_token'))
+          if(response.status != 401)
+          {
+            setUserNav(true)
+            setNav(false)
+            console.log("ghgjghj")
+          } 
+          else
+          {
+            throw response;
+          }
+        }).catch( err => {})
+        }, [])
+
     return(
       <div className="navbar">
         <Grid container spacing={2}>
@@ -55,6 +79,7 @@ function Navbar(){
         >
           {normalNav && <a href="/signup">SIGN UP</a>}
           {normalNav && <a href="/signin">SIGN IN</a>}
+          {userNav && <UserDropDown />}
         </Grid>
         </Grid>
       </div>
