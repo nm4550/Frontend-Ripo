@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import "./Navbar.css";
 import SearchIcon from '@mui/icons-material/Search';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
+import UserDropDown from '../UserDropDown/UserDropDown';
 
 
 function Navbar(){
+      const [userNav, setUserNav] = useState(false)
+      const [normalNav, setNav] = useState(true)
+      const handleNav = e => {
+        setNav(false)
+      }
+      const handleUserNav = e => {
+        setUserNav(true)}
     return(
       <div className="navbar">
         <Grid container spacing={2}>
@@ -43,8 +51,8 @@ function Navbar(){
         display="flex"
         className="buttons"
         >
-          <a href="/SignUp">SIGN UP</a>
-          <a href="/SignUp">LOG IN</a>
+          {normalNav && <a href="/SignUp">SIGN UP</a>}
+          {normalNav && <a href="/SignUp">LOG IN</a>}
         </Grid>
         </Grid>
       </div>

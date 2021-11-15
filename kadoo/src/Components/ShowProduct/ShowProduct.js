@@ -69,7 +69,7 @@ const Item = styled(Paper)(({ theme }) => ({
         <Grid  container spacing={2}>
         {tooldata.map(
             Tool => 
-            <Grid  item xs={12} s={6} md={2}>
+            <Grid  item xs={12} sm={4} md={3}>
             <Item className="showProductsIcons">
               <ProductIcon1 product={Tool}/>
             </Item>
