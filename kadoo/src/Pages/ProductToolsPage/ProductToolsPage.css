@@ -29,7 +29,9 @@
 }
 
 .ProductPageImage{
-    width: 100%;
+    width: 300px;
+    padding-inline-start: 0cm;
+    padding-top: 0cm;
 }
 
 .ProductPageTitle{
@@ -92,9 +94,10 @@
     font-weight: bold;
     background-color: red;
     border: 0ch none transparent;
-    border-radius: 3px;
+    border-radius: 9px;
     width: 100%;
     height: 100%;
+    text-align: center;
 }
 
 .productsPageAdd:hover{
