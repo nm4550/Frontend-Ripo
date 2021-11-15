@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import Background from '../../Images/SignIn/Background.jpg'
+import Background from '../../Images/SignUp/SignUpBG.png'
 import { Grid, TextField, Button, InputAdornment } from '@material-ui/core'
 import { AccountCircle, VpnKey, EmailSharp, Create } from '@material-ui/icons'
-import { useHistory } from 'react-router-dom'
+import history from '../../history'
+import "./SignUp.css"
 
 function SignUp() {
-  const history = useHistory()
   const initialFormData = Object.freeze({
     name: '',
     lastName: '',
@@ -13,7 +13,8 @@ function SignUp() {
     email: '',
     password: '',
   })
-  const [formData, updateFormData] = useState(initialFormData)
+  const [formData, updateFormData] = useState(initialFormData);
+  const [errorData, updateErrorData] = useState(initialFormData);
 
   const handleChange = (e) => {
     updateFormData({
@@ -52,12 +53,66 @@ function SignUp() {
       }),
     }
     fetch('http://127.0.0.1:8000/api/user/register/', requestOptions)
-      .then((response) => response.json())
-      .then((data) => console.log(data))
+      .then((response) => {
+        if(response.status === 201)
+        {
+          alert("User registered!")
+        } 
+        else
+        {
+          throw response;
+        }
+      })
+      .catch( err => {
+        err.text().then( errorMessage => {
+          const errors = JSON.parse(errorMessage)
+          console.log("e " + errors.email)
+          
+          if(errors.first_name !== undefined) {
+            updateErrorData({
+              ...errorData,
+              name: errors.first_name,
+            })
+            return;
+          }
+
+          if(errors.last_name !== undefined) {
+            updateErrorData({
+              ...errorData,
+              lastName: errors.last_name,
+            })
+            return;
+          }
+
+          if(errors.user_name !== undefined) {
+            updateErrorData({
+              ...errorData,
+              userName: errors.user_name,
+            })
+            return;
+          }
+
+          if(errors.email !== undefined) {
+            updateErrorData({
+              ...errorData,
+              email: errors.email,
+            })
+            return;
+          }
+          
+          if(errors.password !== undefined) {
+            updateErrorData({
+              ...errorData,
+              password: errors.password,
+            })
+            return;
+          }
+        })
+      })
   }
 
   return (
-    <div BackgroundColor='secondary'>
+    <div>
       <Grid container style={{ minHeight: '100vh' }}>
         <Grid item xs={12} sm={6}>
           <img
@@ -91,6 +146,7 @@ function SignUp() {
               variant='standard'
               label='Name'
               margin='normal'
+              helperText={errorData.name != '' ? errorData.name : ''}
               required
               InputProps={{
                 startAdornment: (
@@ -109,6 +165,7 @@ function SignUp() {
               label='Last name'
               margin='normal'
               required
+              helperText={errorData.lastName != '' ? errorData.lastName : ''}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position='start'>
@@ -126,6 +183,7 @@ function SignUp() {
               label='Username'
               margin='normal'
               required
+              helperText={errorData.userName != '' ? errorData.userName : ''}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position='start'>
@@ -143,6 +201,7 @@ function SignUp() {
               label='Email'
               margin='normal'
               required
+              helperText={errorData.email != '' ? errorData.email : ''}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position='start'>
@@ -161,6 +220,7 @@ function SignUp() {
               label='Password'
               margin='normal'
               required
+              helperText={errorData.password != '' ? errorData.password : ''}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position='start'>
@@ -176,11 +236,12 @@ function SignUp() {
               color='secondary'
               variant='contained'
               onClick={handleSubmit}
+              href="/"
             >
               Sign Up
             </Button>
             <div style={{ height: 20 }} />
-            <Button color='secondary' variant='outlined'>
+            <Button href="/signin" color='secondary' variant='outlined' onClick={() => history.push("/signin")}>
               Have an account ?
             </Button>
           </div>

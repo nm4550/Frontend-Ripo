@@ -1,17 +1,19 @@
 import React from 'react'
-import Background from '../../Images/SignIn/Background.jpg'
+import Background from '../../Images/SignIn/signInBG.png'
 import { Grid, TextField, Button, InputAdornment } from '@material-ui/core'
 import { EmailRounded, VpnKey } from '@material-ui/icons'
-import { useHistory } from 'react-router'
 import { useState } from 'react'
+import history from '../../history'
+import "./SignIn.css"
 
 function SignIn() {
-  const history = useHistory()
   const initialFormData = Object.freeze({
     email: '',
     password: '',
   })
   const [formData, updateFormData] = useState(initialFormData)
+  const [flagData, setFlagData] = useState(true)
+  const [errorData, updateErrorData] = useState(initialFormData);
 
   const handleChange = (e) => {
     updateFormData({
@@ -19,7 +21,8 @@ function SignIn() {
       [e.target.name]: e.target.value.trim(),
     })
   }
-
+  
+  
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log(formData)
@@ -33,14 +36,49 @@ function SignIn() {
       }),
     }
     fetch('http://127.0.0.1:8000/api/user/token/', requestOptions)
-      .then((response) => response.json())
+      .then((response) => {
+        if(response.status == 200)
+        {
+          return response.json()
+        } 
+        else
+        {
+          throw response;
+        }
+      })
+      .catch( err => {
+        flagData = false;
+        err.text().then( errorMessage => {
+          const errors = JSON.parse(errorMessage)
+          console.log("e " + errors.email)
+          if(errors.email !== undefined) {
+            updateErrorData({
+              ...errorData,
+              email: errors.email,
+            })
+            return;
+          }
+          
+          if(errors.password !== undefined) {
+            updateErrorData({
+              ...errorData,
+              password: errors.password,
+            })
+            return;
+          }
+        })
+      })
       .then((data) => {
-        localStorage.setItem('access_token', data.access)
-        localStorage.setItem('refresh_token', data.refresh)
+        if(flagData == true)
+        {
+          localStorage.setItem('access_token', data.access)
+          localStorage.setItem('refresh_token', data.refresh)
+          alert("Welcome !")
+        }
       })
   }
   return (
-    <div BackgroundColor='secondary'>
+    <div>
       <Grid container style={{ minHeight: '100vh' }}>
         <Grid item xs={12} sm={6}>
           <img
@@ -99,7 +137,12 @@ function SignIn() {
               }}
               onChange={handleChange}
             />
-            <div style={{ height: 20 }} />
+            <div style={{ height: 20 }} style={{
+              display: 'flex',
+              flexDirection: 'column',
+              maxWidth: 400,
+              minWidth: 300,
+            }} />
             <Button
               color='secondary'
               variant='contained'
@@ -108,11 +151,13 @@ function SignIn() {
               Sign In
             </Button>
             <div style={{ height: 20 }} />
-            <Button color='secondary' variant='outlined'>
+            <Button href="/signup" color='secondary' variant='outlined' onClick={() => history.push("/signup")}>
               Sign Up
             </Button>
           </div>
-          <Grid container justifyContent='center' spacing={2}>
+          <div>
+            <br/>
+          <Grid container justifyContent='center' spacing={2} alignItems='center'>
             <Grid item>
               <Button variant='outlined' color='secondary'>
                 Go to community page
@@ -124,6 +169,7 @@ function SignIn() {
               </Button>
             </Grid>
           </Grid>
+          </div>        
         </Grid>
       </Grid>
     </div>
