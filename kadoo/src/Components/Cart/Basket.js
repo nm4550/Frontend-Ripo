@@ -114,10 +114,7 @@ export default function Basket(props) {
                   ${shippingPrice.toFixed(2)}
                 </div>
               </Box>
-              <Divider textAlign='left' variant='middle' sx={{ m: 1 }}>
-                {' '}
-                +{' '}
-              </Divider>
+              <Divider textAlign='left' variant='middle' sx={{ m: 2 }} />
               <Box sx={{ display: 'flex', mr: 2, ml: 2, mt: 1 }}>
                 <Typography
                   component='div'
