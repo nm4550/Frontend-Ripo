@@ -1,7 +1,9 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
-import "./ProductToolsPage.css";
+import "../ProductPlantsPage/ProductPlantsPage.css";
 import Chip from '@mui/material/Chip';
+import Navbar from "../../Components/Navbar/Navbar";
+import Button from '@mui/material/Button';
 
 class ProductToolsPage extends React.Component {
     constructor(props) {
@@ -57,66 +59,66 @@ class ProductToolsPage extends React.Component {
         
             
 
-      return (
-          <div className="ProductPage">
-                <Grid container spacing={4} className="ProductPageProductContainer">
-                    <Grid item xs={12} md={6} lg={6} className="ProductPageImageContainer">
-                        <img className="ProductPageImage" ></img>
-                        <div className="productIconImageContainer"><img className="ProductPageImage" src={this.state.product.image}></img></div>
-                    </Grid>
-                    <Grid item xs={12} md={6} lg={6}>
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} md={12} lg={12} className="ProductPageTitle">
-                            <div className="productPageTitle">{this.state.product.name}</div>
-                            <hr/>
-                            </Grid>
-                            <Grid item xs={6} md={6} lg={11} className="ProductPageText">
-                            <div className="ProductPageText"> <b>Description:</b> {this.state.product.description} </div>
-                            <div className="ProductPageText"></div>
-                            
-                            </Grid>
-                            {/* <Grid item xs={6} md={6} lg={6} className="ProductPageText">
-                            <b>Tags:</b>
-                            {
-                              this.state.nameTags.map((item) => {
-                                <Chip label = {item.name}/>
-                              }) 
-                            }
-                            </Grid> */}
-                        </Grid>
-                    </Grid>
-                    <Grid item xs={12} md={12} lg={12} className="ProductPageBuyContainer">
-                        <Grid container spacing={2}>
-                            <Grid item xs={6} md={2} className="ProductPageTitle">
-                            <div className="productPagePrice"> <b>Price:</b> {this.state.product.price} $</div>
-                            </Grid>
-                            <Grid item xs={6} md={2}  className="ProductPageCounter">
-                            <button onClick={decreaseBought} className="ProductPageCounterMin">
-                                    -
-                                </button>
-                                
-                                <div className="ProductPageCounterNum">
-                                    {this.state.numberOfBuy}
-                                </div>
-                                
-    
-                                <button onClick={increaseBought} className="ProductPageCounterPlu">
-                                    +
-                                </button>
-                            </Grid>
-                            <Grid item xs={6} md={3} className="ProductPageTitle">
-                            Total Price : {this.state.totalPrice} $ 
-                            </Grid>
-                            <Grid item xs={6} md={3} className="ProductPageTitle">
-                                <button className="productsPageAdd">
-                                    Add To Bascket
-                                </button>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                </Grid>
-          </div>              
-      );
+        return (
+          <div>
+          <Navbar/>  
+      
+            <div className="ProductPage">
+                  <Grid container spacing={4} className="ProductPageProductContainer">
+                      <Grid item xs={12} md={6} lg={6} className="ProductPageImageContainer">
+                          <img className="ProductPageImage" ></img>
+                          <div className="productIconImageContainer"><img className="ProductPageImage" src={this.state.product.image}></img></div>
+                      </Grid>
+                      <Grid item xs={12} md={6} lg={6}>
+                          <Grid container spacing={2}>
+                              <Grid item xs={12} md={12} lg={12} className="ProductPageTitle">
+                              <div className="productPageTitle">{this.state.product.name}</div>
+                              <hr/>
+                              </Grid>
+                              <Grid item xs={6} md={6} lg={11} className="ProductPageText">
+                              <div className="ProductPageText"> <b>Description:</b> {this.state.product.description} </div>
+                              
+                              <div className="ProductPageText"></div>
+                              <hr/>
+                              </Grid>
+                              
+                              <Grid item xs={12} md={12} lg={12} className="ProductPageBuyContainer">
+                          <Grid container spacing={2}>
+                              <Grid item xs={6} md={3} className="ProductPageTitle">
+                              <div className="productPagePrice"> <b>Price:</b> {this.state.product.price} $</div>
+                              </Grid>
+                              <Grid item xs={6} md={3}  className="ProductPageCounter">
+                                  <button onClick={decreaseBought} className="ProductPageCounterMin">
+                                      -
+                                  </button>
+                                  
+                                  <div className="ProductPageCounterNum">
+                                      {this.state.numberOfBuy}
+                                  </div>
+                                  
+      
+                                  <button onClick={increaseBought} className="ProductPageCounterPlu">
+                                      +
+                                  </button>
+                              </Grid>
+                              <Grid item xs={6} md={3} className="ProductPageTitle">
+                                  Total Price : {this.state.totalPrice}$
+                              </Grid>
+                              
+                          </Grid>
+                          <Grid container item justifyContent="flex-end" sx={{p:4}} className="ProductPageTitle">
+                                  <Button variant="contained" className="productsPageAdd">
+                                      Add To Bascket
+                                  </Button>
+                              </Grid>
+                      </Grid>
+                          </Grid>
+                      </Grid>
+                      
+                  </Grid>
+            </div>  
+            </div>            
+        );
     }
   }
 

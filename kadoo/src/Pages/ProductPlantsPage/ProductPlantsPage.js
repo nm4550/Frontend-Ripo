@@ -1,5 +1,8 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
+import Navbar from "../../Components/Navbar/Navbar";
+import Button from '@mui/material/Button';
+import "./ProductPlantsPage.css";
 
 
 class ProductPlantsPage extends React.Component {
@@ -38,6 +41,9 @@ class ProductPlantsPage extends React.Component {
         
         
       return (
+        <div>
+        <Navbar/>  
+    
           <div className="ProductPage">
                 <Grid container spacing={4} className="ProductPageProductContainer">
                     <Grid item xs={12} md={6} lg={6} className="ProductPageImageContainer">
@@ -69,9 +75,7 @@ class ProductPlantsPage extends React.Component {
                             <Grid item xs={6} md={6} lg={6} className="ProductPageText">
                             <div className="ProductPageText"> <b>GrowthRate:</b> {this.state.product.growthRate}  </div>
                             </Grid>
-                        </Grid>
-                    </Grid>
-                    <Grid item xs={12} md={12} lg={12} className="ProductPageBuyContainer">
+                            <Grid item xs={12} md={12} lg={12} className="ProductPageBuyContainer">
                         <Grid container spacing={2}>
                             <Grid item xs={6} md={3} className="ProductPageTitle">
                             <div className="productPagePrice"> <b>Price:</b> {this.state.product.price} $</div>
@@ -91,17 +95,22 @@ class ProductPlantsPage extends React.Component {
                                 </button>
                             </Grid>
                             <Grid item xs={6} md={3} className="ProductPageTitle">
-                                Total Price : {this.state.totalPrice} $
+                                Total Price : {this.state.totalPrice}$
                             </Grid>
-                            <Grid item xs={6} md={2} className="ProductPageTitle">
-                                <button className="productsPageAdd">
+                            
+                        </Grid>
+                        <Grid container item justifyContent="flex-end" sx={{p:3}} className="ProductPageTitle">
+                                <Button variant="contained" className="productsPageAdd">
                                     Add To Bascket
-                                </button>
+                                </Button>
                             </Grid>
+                    </Grid>
                         </Grid>
                     </Grid>
+                    
                 </Grid>
-          </div>              
+          </div>  
+          </div>            
       );
     }
   }
