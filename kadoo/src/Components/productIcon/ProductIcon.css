@@ -39,6 +39,11 @@
     color: #b8e8ee;
 }
 
+.growButton{
+    border-left: 1px solid rgb(226, 226, 226);
+    color: #69ec86;
+}
+
 .lightButton{
     color: #fced1d;
     padding-right: 3px;

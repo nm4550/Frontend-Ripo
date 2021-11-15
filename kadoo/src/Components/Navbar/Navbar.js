@@ -1,29 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import "./Navbar.css";
 import SearchIcon from '@mui/icons-material/Search';
-import InputBase from '@mui/material/InputBase';
-import { styled, alpha } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
 import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
+import UserDropDown from '../UserDropDown/UserDropDown';
 
 
 function Navbar(){
+      const [userNav, setUserNav] = useState(false)
+      const [normalNav, setNav] = useState(true)
+      const handleNav = e => {
+        setNav(false)
+      }
+      const handleUserNav = e => {
+        setUserNav(true)}
     return(
       <div className="navbar">
         <Grid container spacing={2}>
         <Grid
-        item xs={2}
-        
-        textAlign="left"
+        item xs={12} sm={2} md={2}
         >
           <h1>Kadoo</h1>
         </Grid>
         <Grid
-        item xs={5}
-        display="flex"
+        item xs={12} sm={4} md={4}
         className="links"
         >
           
@@ -32,9 +32,9 @@ function Navbar(){
           <a href="/">Contact Us</a>
         </Grid>
         <Grid
-        item xs={5}
+        item xs={12} sm={4} md={4}
         display="flex"
-        className="buttons"
+        className="searchBox"
         >
             <SearchIcon
             className="Searchicon"
@@ -45,8 +45,14 @@ function Navbar(){
             id="outlined-search"
             label="Search.."
             type="search" />
-          <a href="/SignUp">SIGN UP</a>
-          <a href="/SignUp">LOG IN</a>
+        </Grid>
+        <Grid
+        item xs={12} sm={2} md={2}
+        display="flex"
+        className="buttons"
+        >
+          {normalNav && <a href="/SignUp">SIGN UP</a>}
+          {normalNav && <a href="/SignUp">LOG IN</a>}
         </Grid>
         </Grid>
       </div>
