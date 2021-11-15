@@ -1,3 +1,16 @@
 .MuiFormHelperText-root {
     color : red !important;
 }
+.centerElement{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.ButtonStyle{
+    color: #212121 !important;
+    background-color: #B8E0D2 !important;
+}
+.ButtonStyle2{
+    color: #212121 !important;
+    border-color: #B8E0D2 !important;
+}

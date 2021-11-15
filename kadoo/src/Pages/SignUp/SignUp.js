@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Background from '../../Images/SignUp/SignUpBG.png'
-import { Grid, TextField, Button, InputAdornment } from '@material-ui/core'
-import { AccountCircle, VpnKey, EmailSharp, Create } from '@material-ui/icons'
+import { Grid, TextField, Button, InputAdornment } from '@mui/material'
+import { AccountCircle, VpnKey, EmailSharp, Create } from '@mui/icons-material'
 import history from '../../history'
 import "./SignUp.css"
 
@@ -129,7 +129,7 @@ function SignUp() {
           alignItems='center'
           direction='column'
           justify='space-between'
-          style={{ padding: 10 }}
+          className="centerElement"
         >
           <div />
           <div
@@ -233,7 +233,7 @@ function SignUp() {
             />
             <div style={{ height: 20 }} />
             <Button
-              color='secondary'
+              className="ButtonStyle"
               variant='contained'
               onClick={handleSubmit}
               href="/"
@@ -241,7 +241,11 @@ function SignUp() {
               Sign Up
             </Button>
             <div style={{ height: 20 }} />
-            <Button href="/signin" color='secondary' variant='outlined' onClick={() => history.push("/signin")}>
+            <Button 
+            className="ButtonStyle2"
+            href="/signin" 
+            variant='outlined' 
+            onClick={() => history.push("/signin")}>
               Have an account ?
             </Button>
           </div>

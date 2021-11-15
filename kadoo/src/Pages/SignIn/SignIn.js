@@ -1,7 +1,7 @@
 import React from 'react'
 import Background from '../../Images/SignIn/signInBG.png'
-import { Grid, TextField, Button, InputAdornment } from '@material-ui/core'
-import { EmailRounded, VpnKey } from '@material-ui/icons'
+import { Grid, TextField, Button, InputAdornment } from '@mui/material'
+import { EmailRounded, VpnKey } from '@mui/icons-material'
 import { useState } from 'react'
 import history from '../../history'
 import "./SignIn.css"
@@ -12,7 +12,7 @@ function SignIn() {
     password: '',
   })
   const [formData, updateFormData] = useState(initialFormData)
-  const [flagData, setFlagData] = useState(true)
+  const [flagData, setFlagData] = useState(false)
   const [errorData, updateErrorData] = useState(initialFormData);
 
   const handleChange = (e) => {
@@ -39,7 +39,8 @@ function SignIn() {
       .then((response) => {
         if(response.status == 200)
         {
-          return response.json()
+          setFlagData(true);
+          return response.json();
         } 
         else
         {
@@ -47,7 +48,6 @@ function SignIn() {
         }
       })
       .catch( err => {
-        flagData = false;
         err.text().then( errorMessage => {
           const errors = JSON.parse(errorMessage)
           console.log("e " + errors.email)
@@ -71,10 +71,11 @@ function SignIn() {
       .then((data) => {
         if(flagData == true)
         {
-          localStorage.setItem('access_token', data.access)
-          localStorage.setItem('refresh_token', data.refresh)
-          alert("Welcome !")
+          localStorage.setItem('access_token', data.access);
+          localStorage.setItem('refresh_token', data.refresh);
+          alert("Welcome !");
         }
+        setFlagData(false);
       })
   }
   return (
@@ -95,7 +96,7 @@ function SignIn() {
           alignItems='center'
           direction='column'
           justify='space-between'
-          style={{ padding: 10 }}
+          className='centerElement'
         >
           <div />
           <div
@@ -111,6 +112,7 @@ function SignIn() {
               name='email'
               label='Email'
               margin='normal'
+              helperText={errorData.email != '' ? errorData.email : ''}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position='start'>
@@ -127,6 +129,7 @@ function SignIn() {
               name='password'
               label='Password'
               margin='normal'
+              helperText={errorData.password != '' ? errorData.password : ''}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position='start'>
@@ -144,32 +147,21 @@ function SignIn() {
               minWidth: 300,
             }} />
             <Button
-              color='secondary'
+              className='ButtonStyle'
               variant='contained'
               onClick={handleSubmit}
+              href="/Homepage"
             >
               Sign In
             </Button>
             <div style={{ height: 20 }} />
-            <Button href="/signup" color='secondary' variant='outlined' onClick={() => history.push("/signup")}>
+            <Button
+            className='ButtonStyle2' 
+            href="/signup"
+            variant='outlined' onClick={() => history.push("/signup")}>
               Sign Up
             </Button>
-          </div>
-          <div>
-            <br/>
-          <Grid container justifyContent='center' spacing={2} alignItems='center'>
-            <Grid item>
-              <Button variant='outlined' color='secondary'>
-                Go to community page
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button variant='outlined' color='secondary'>
-                Forgot password
-              </Button>
-            </Grid>
-          </Grid>
-          </div>        
+          </div>      
         </Grid>
       </Grid>
     </div>

@@ -1,16 +1,24 @@
-import React from "react";
 import Search from '../../Images/Search/search.jpg'
-import ShowProduct from "../ShowProduct/ShowProduct";
-import { useEffect, useState } from 'react'
 import SearchIcon from '@mui/icons-material/Search';
-import Grid from '@mui/material/Grid';
-import {TextField} from '@material-ui/core';
+import {TextField} from '@mui/material';
 import IconButton from '@mui/material/IconButton';
-import { Home } from "@material-ui/icons";
+import { Home } from "@mui/icons-material";
 import "./SearchResultProduct.css"
 import history from "../../history";
 import { Chip } from "@mui/material";
-import { CircularProgress } from "@mui/material";
+import React,{useEffect,useState} from 'react' ;
+import Grid from '@mui/material/Grid';
+import Box from '@mui/material/Box';
+import ProductIcon1 from "../productIcon/productIcon1";
+import ProductIcon2 from "../productIcon/productIcon2";
+import { styled } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
+
+const Item = styled(Paper)(({ theme }) => ({
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center'
+}));
 
 function SearchResultProduct(props){ 
     const [searchPlantData, setSearchPlantData] = useState([])
@@ -92,7 +100,7 @@ function SearchResultProduct(props){
     }, [])
     return(
         <div>
-          <div style={{backgroundImage:`url(${Search})` , backgroundSize: 'cover', overflow: 'hidden', height:'8' , padding:5 , display: 'flex' }}>
+          <div style={{backgroundImage:`url(${Search})` , backgroundSize: 'cover', overflow: 'hidden' , padding:5 , display: 'flex' }}>
           <Grid
               item xs={12}
               sm={6}
@@ -102,7 +110,7 @@ function SearchResultProduct(props){
             >  
             <TextField
               onChange={(e) => handleChange(e)}
-              size="medium"
+              size="small"
               id="outlined-search"
               name="SearchField"
               label="Search.."
@@ -121,7 +129,7 @@ function SearchResultProduct(props){
               alignItems='flex-end'
               justifyContent='flex-end'
               className="searchBox">
-              <IconButton onClick={() => history.push("/")}>
+              <IconButton href="/" onClick={() => history.push("/")}>
               <Home 
               fontSize="large"/>
               Home
@@ -130,7 +138,7 @@ function SearchResultProduct(props){
           </div>
             
             <br/>
-            <Grid container style={{ minHeight: '100vh' }}>
+            <Grid container style={{ minHeight: '100vh' }} xs={24}>
                 <Grid item xs={6} sm={3} style={{ padding: 10 }}>                    
                 </Grid>
                 <Grid
@@ -139,10 +147,40 @@ function SearchResultProduct(props){
                 xs={18}
                 sm={9}
                 alignItems='flex-start'
-                direction='column'
                 justify='space-between'
                 style={{ padding: 10 }}>
-                  <ShowProduct plants = {searchPlantData} tools = {searchToolData}/>
+                  <div>
+        <Box sx={{ width: '100%' }}>
+        <div className="showProductSubs">
+          Plants
+        </div>
+        <Grid  container spacing={2}>
+          {searchPlantData.map(
+            p => 
+            <Grid  item xs={12} sm={4} md={3}>
+            <Item className="showProductsIcons">
+              <ProductIcon2 key = {p.id} product={p}/>
+            </Item>
+          </Grid>
+          )}
+        </Grid>
+        </Box>
+        <Box sx={{ width: '100%' }}>
+        <div className="showProductSubs">
+          Tools 
+        </div>
+        <Grid  container spacing={2}>
+        {searchToolData.map(
+            Tool => 
+            <Grid  item xs={12} sm={4} md={3}>
+            <Item className="showProductsIcons">
+              <ProductIcon1 product={Tool}/>
+            </Item>
+          </Grid>
+          )}
+        </Grid>
+      </Box>
+      </div>
                 </Grid>
             </Grid>
         </div>
