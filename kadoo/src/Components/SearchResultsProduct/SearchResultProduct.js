@@ -102,8 +102,8 @@ function SearchResultProduct(props){
         <div>
           <div style={{backgroundImage:`url(${Search})` , backgroundSize: 'cover', overflow: 'hidden' , padding:5 , display: 'flex' }}>
           <Grid
-              item xs={12}
-              sm={6}
+              item xs={20}
+              sm={10}
               display="flex"
               marginLeft={0}
               className="home"
@@ -124,8 +124,8 @@ function SearchResultProduct(props){
             <Chip label={"You searched for "+searchText} variant="outlined"/>
             </Grid>
             <Grid 
-              item xs={12}
-              sm={6}
+              item xs={4}
+              sm={2}
               alignItems='flex-end'
               justifyContent='flex-end'
               className="searchBox">
