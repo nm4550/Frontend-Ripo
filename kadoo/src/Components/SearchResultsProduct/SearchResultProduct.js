@@ -13,6 +13,9 @@ import ProductIcon1 from "../productIcon/productIcon1";
 import ProductIcon2 from "../productIcon/productIcon2";
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
+import Button from '@mui/material/Button';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -24,6 +27,7 @@ function SearchResultProduct(props){
     const [searchPlantData, setSearchPlantData] = useState([])
     const [searchToolData, setSearchToolData] = useState([])
     const [searchText , setSearchText] = useState('')
+    const [sortmenu , setSortmenu] = useState(0)
 
     function handleSearchClick()
     {
@@ -77,6 +81,119 @@ function SearchResultProduct(props){
           fetchSearchProductData()
           fetchSearchToolData()
       }
+
+    const SortPlants_ByNameACS = () => {
+      async function fetchProductData() {
+        
+        await fetch('http://127.0.0.1:8000/api/plantsSortByName/ASC/')//ACS_NAME
+          .then((response) => response.json())
+          .then((data) => {
+            setSearchPlantData(data)
+            console.log(data)
+          })
+      }
+      fetchProductData()
+      setSortmenu(1)  
+    }
+
+    const SortPlants_ByNameDES = () => {
+      async function fetchProductData() {
+        await fetch('http://127.0.0.1:8000/api/plantsSortByName/DES/')//DES_NAME
+          .then((response) => response.json())
+          .then((data) => {
+            setSearchPlantData(data)
+            console.log(data)
+          })
+      }
+      fetchProductData()
+      setSortmenu(2)
+    
+    }
+    const SortPlants_ByPriceACS = () => {
+      async function fetchProductData() {
+        await fetch('http://127.0.0.1:8000/api/plantsSortByPrice/ASC/')
+          .then((response) => response.json())
+          .then((data) => {
+            setSearchPlantData(data)
+            console.log(data)
+          })
+      }
+      fetchProductData()
+      setSortmenu(3)
+    }
+    const SortPlants_ByPriceDEC= () => {
+      async function fetchProductData() {
+        await fetch('http://127.0.0.1:8000/api/plantsSortByPrice/DES/')
+          .then((response) => response.json())
+          .then((data) => {
+            setSearchPlantData(data)
+            console.log(data)
+          })
+      }
+      fetchProductData()
+      setSortmenu(4)
+    }
+
+    const SortTools_ByNameACS = () => {
+      async function fetchProductData() {
+        await fetch('http://127.0.0.1:8000/api/toolsSortByName/ASC/')
+          .then((response) => response.json())
+          .then((data) => {
+            setSearchPlantData(data)
+            console.log(data)
+          })
+      }
+      fetchProductData()
+      setSortmenu(5)
+    }
+    const SortTools_ByNameDES = () => {
+      async function fetchProductData() {
+        await fetch('http://127.0.0.1:8000/api/toolsSortByName/DES/')
+          .then((response) => response.json())
+          .then((data) => {
+            setSearchPlantData(data)
+            console.log(data)
+          })
+      }
+      fetchProductData()
+      setSortmenu(6)
+    }
+    const SortTools_ByPriceACS = () => {
+      async function fetchProductData() {
+        await fetch('http://127.0.0.1:8000/api/toolsSortByPrice/ASC/')
+          .then((response) => response.json())
+          .then((data) => {
+            setSearchPlantData(data)
+            console.log(data)
+          })
+      }
+      fetchProductData()
+      setSortmenu(7)
+    }
+    const SortTools_ByPriceDES = () => {
+      async function fetchProductData() {
+        await fetch('http://127.0.0.1:8000/api/toolsSortByPrice/DES/')
+          .then((response) => response.json())
+          .then((data) => {
+            setSearchPlantData(data)
+            console.log(data)
+          })
+      }
+      fetchProductData()
+      setSortmenu(8)
+    }
+    const Sortbytime = () => {
+      async function fetchProductData() {
+        await fetch('http://127.0.0.1:8000/api/plantsSortByPrice/DES/')
+          .then((response) => response.json())
+          .then((data) => {
+            setSearchPlantData(data)
+            console.log(data)
+          })
+      }
+      fetchProductData()
+      setSortmenu(9)
+    }
 
     useEffect(() => {
       async function fetchProductData() {
@@ -139,8 +256,10 @@ function SearchResultProduct(props){
             
             <br/>
             <Grid container style={{ minHeight: '100vh' }} xs={24}>
-                <Grid item xs={6} sm={3} style={{ padding: 10 }}>                    
+                <Grid item xs={6} sm={3} style={{ padding: 10 }}> 
+                             
                 </Grid>
+
                 <Grid
                 container
                 item
@@ -149,9 +268,24 @@ function SearchResultProduct(props){
                 alignItems='flex-start'
                 justify='space-between'
                 style={{ padding: 10 }}>
+                  
                   <div>
         <Box sx={{ width: '100%' }}>
+        <Stack direction="row" spacing={2}>
+        <Typography variant="body" gutterBottom>
+              	Sort By:</Typography>
+                <Button variant= { sortmenu==1 ? 'contained' : 'text'} onClick={( )=>SortPlants_ByNameACS( )} size="small"> Plants A to Z </Button>
+                <Button variant={ sortmenu==2 ? 'contained' : 'text'} onClick={( )=>SortPlants_ByNameDES( )}size="small"> Plants Z to A </Button>
+                <Button variant={ sortmenu==5 ? 'contained' : 'text'} onClick={( )=> SortTools_ByNameACS( )}size="small"> Tools A to Z </Button>
+                <Button variant={ sortmenu==6 ? 'contained' : 'text'} onClick={( )=> SortTools_ByNameDES( )}size="small"> Tools Z to A </Button>
+                <Button variant={ sortmenu==3 ? 'contained' : 'text'} onClick={( )=>SortPlants_ByPriceACS( )}size="small">ACS Price </Button>
+                <Button variant={ sortmenu==4 ? 'contained' : 'text'} onClick={( )=>SortPlants_ByPriceDEC( )}size="small">DES Price </Button>
+                <Button variant={ sortmenu==7 ? 'contained' : 'text'} onClick={( )=>SortTools_ByPriceACS( )}size="small"> ACS Price </Button>
+                <Button variant={ sortmenu==8 ? 'contained' : 'text'} onClick={( )=>SortTools_ByPriceDES( )}size="small"> DES Price</Button>
+                <Button variant={ sortmenu==9 ? 'contained' : 'text'} onClick={( )=>Sortbytime( )}size="small">          Newest </Button>  
+                </Stack>     
         <div className="showProductSubs">
+
           Plants
         </div>
         <Grid  container spacing={2}>

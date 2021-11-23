@@ -33,8 +33,8 @@ export default function Product(props) {
   const theme = useTheme()
 
   return (
-    <Card sx={{ m: 1.5, p: 1 }}>
-      <Grid container sx={{ display: 'flex', m: 1 }}>
+    <Card sx={{ mt: 2, p: 2 }}>
+      <Grid container sx={{ display: 'flex' }}>
         <Grid
           item
           container
@@ -44,59 +44,177 @@ export default function Product(props) {
           justifyContent='center'
           alignItems='center'
         >
-          <CardMedia
-            component='img'
-            image={product.image}
-            alt={product.name}
-            sx={{ m: 1 }}
-          />
+          <Grid>
+            <CardMedia
+              component='img'
+              image={product.image}
+              alt={product.name.trim()}
+              sx={{ maxHeight: 180 }}
+            />
+          </Grid>
         </Grid>
         <Grid item xs={12} sm={6} md={8}>
           <CardContent align='Left'>
-            <Box sx={{ display: 'flex' }}>
-              <Typography component='div' variant='h5' sx={{ flex: 1 }}>
-                {product.name}
-              </Typography>
-              <Box sx={{ display: 'flex', alignItems: 'center', pl: 1, pb: 1 }}>
-                <IconButton
-                  size='large'
-                  aria-label='show 4 new mails'
-                  color='inherit'
-                  sx={{ color: 'error.main' }}
-                  onClick={() => onRemoveTool(product)}
+            <Grid container justifyContent='center' alignItems='center'>
+              <Grid item md={12}>
+                <Box
+                  xs={12}
+                  sx={{
+                    flex: 1,
+                    display: {
+                      md: 'flex',
+                      sm: 'inline',
+                      xs: 'inline',
+                    },
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
                 >
-                  <RemoveIcon />
-                </IconButton>
-                <TextField
-                  id='outlined-number'
-                  size='small'
-                  sx={{ width: 50 }}
-                  InputLabelProps={{ shrink: true }}
-                  value={product.count}
-                />
-                <IconButton
-                  size='large'
-                  color='inherit'
-                  sx={{ color: 'success.main' }}
-                  onClick={() => onAddTool(product)}
+                  <Box
+                    sx={{
+                      flex: 1,
+                      textAlign: {
+                        md: 'left',
+                        xs: 'center',
+                      },
+                    }}
+                  >
+                    <Typography component='div' variant='h5' sx={{ flex: 1 }}>
+                      {product.name.trim()}
+                    </Typography>
+                  </Box>
+
+                  <Box
+                    sx={{
+                      display: {
+                        md: 'flex',
+                        sm: 'inline',
+                        xs: 'inline',
+                      },
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    <IconButton
+                      size='large'
+                      aria-label='show 4 new mails'
+                      color='inherit'
+                      sx={{
+                        color: 'error.main',
+                        mt: {
+                          md: 0,
+                          xs: 1,
+                        },
+                        mb: {
+                          md: 0,
+                          xs: 1,
+                        },
+                      }}
+                      onClick={() => onRemoveTool(product)}
+                    >
+                      <RemoveIcon />
+                    </IconButton>
+                    <TextField
+                      id='outlined-number'
+                      size='small'
+                      sx={{
+                        width: 50,
+                        mt: {
+                          md: 0,
+                          xs: 2,
+                        },
+                        mb: {
+                          md: 0,
+                          xs: 2,
+                        },
+                      }}
+                      value={product.count < 100 ? product.count : 100}
+                      inputProps={{
+                        style: { textAlign: 'center' },
+                        maxLength: 2,
+                      }}
+                    />
+                    <IconButton
+                      size='large'
+                      color='inherit'
+                      sx={{
+                        color: 'success.main',
+                        mt: {
+                          md: 0,
+                          xs: 1,
+                        },
+                        mb: {
+                          md: 0,
+                          xs: 1,
+                        },
+                      }}
+                      onClick={() => {
+                        if (product.count < 100) {
+                          onAddTool(product)
+                        }
+                      }}
+                    >
+                      <AddIcon />
+                    </IconButton>
+                  </Box>
+                </Box>
+              </Grid>
+            </Grid>
+            <Divider sx={{ mt: 1.5, mb: 1.5 }}></Divider>
+            <Grid container justifyContent='center' alignItems='center'>
+              <Grid item justifyContent='space-between' md={12}>
+                <Box
+                  xs={12}
+                  sx={{ justifyContent: 'center', alignItems: 'center' }}
                 >
-                  <AddIcon />
-                </IconButton>
-              </Box>
-            </Box>
-            <Typography component='div' variant='body' sx={{ flex: 1, mt: 1 }}>
-              {product.description}
-            </Typography>
+                  <Typography
+                    component='div'
+                    variant='body'
+                    sx={{ flex: 1, mt: 1 }}
+                    overflow='hidden'
+                    whiteSpace='pre-line'
+                    textOverflow='ellipsis'
+                    height={80}
+                  >
+                    {product.description + ' ...'}
+                  </Typography>
+                </Box>
+                <Grid
+                  container
+                  container
+                  direction='row'
+                  sx={{
+                    justifyContent: {
+                      sm: 'flex-end',
+                      xs: 'center',
+                    },
+                  }}
+                >
+                  <Chip
+                    label={product.price + ' $'}
+                    color='success'
+                    variant='outlined'
+                    style={{ fontSize: '1.1rem' }}
+                    sx={{
+                      pt: 0.5,
+                      pb: 0.5,
+                      pr: 1.5,
+                      pl: 1.5,
+                      mr: {
+                        sm: 3,
+                        xs: 0,
+                      },
+                      mt: {
+                        sm: 0.5,
+                        xs: 2,
+                      },
+                    }}
+                  />
+                </Grid>
+              </Grid>
+            </Grid>
           </CardContent>
-          <Grid container direction='row' justifyContent='flex-end'>
-            <Chip
-              label={product.price + '  $'}
-              color='success'
-              variant='outlined'
-              style={{ fontSize: '1.1rem' }}
-              sx={{ pt: 0.5, pb: 0.5, pr: 1.5, pl: 1.5, m: 1, mr: 4 }}
-            />
-          </Grid>
+          <Box sx={{ display: 'flex' }}></Box>
         </Grid>
       </Grid>
     </Card>

@@ -1,10 +1,12 @@
-import React from 'react'
+import * as React from 'react'
+import Badge from '@mui/material/Badge'
 import Button from '@mui/material/Button'
 import Divider from '@mui/material/Divider'
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import Typography from '@mui/material/Typography'
 import Alert from '@mui/material/Alert'
+import Chip from '@mui/material/Chip'
 import Grid from '@mui/material/Grid'
 
 export default function Basket(props) {
@@ -17,69 +19,81 @@ export default function Basket(props) {
   return (
     <Box>
       <Card sx={{ p: 1 }}>
-        <h2>Cart Items</h2>
+        <Typography variant='h4' sx={{ m: 1 }}>
+          Cart Items
+        </Typography>
         <Box sx={{ p: 1 }}>
-          <Typography variant='h5' sx={{ m: 0.5 }}>
-            Plants
-          </Typography>
-          <Divider variant='middle' />
-          {cartItems.length === 0 && (
-            <Alert severity='error'>Plant Cart Is Empty!</Alert>
-          )}
-          {cartItems.map((item) => (
-            <Box key={item.id} sx={{ display: 'flex', mr: 2, ml: 2, mt: 1 }}>
-              <Typography
-                component='div'
-                variant='body'
-                align='left'
-                sx={{ flex: 1 }}
-              >
-                {item.name}
+          {cartItems.length != 0 && (
+            <Box>
+              <Typography variant='h5' sx={{ m: 0.5 }}>
+                Plants
               </Typography>
-
-              <div className='col-2 text-right'>
-                {item.count} x ${item.price.toFixed(2)} = ${''}
-                {item.count * item.price}
-              </div>
+              <Divider variant='middle' />
+              {cartItems.map((item) => (
+                <Box
+                  key={item.id}
+                  sx={{ display: 'flex', mr: 2, ml: 2, mt: 1 }}
+                >
+                  <Box sx={{ display: 'flex', flex: 1, textAlign: 'left' }}>
+                    <Typography component='div' variant='body' align='left'>
+                      {item.name}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', flex: 1, textAlign: 'right' }}>
+                    <Typography component='div' variant='body' align='right'>
+                      {item.count}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ textAlign: 'right' }}>
+                    <Typography component='div' variant='body' align='right'>
+                      {'$ ' + item.count * item.price}
+                    </Typography>
+                  </Box>
+                </Box>
+              ))}
             </Box>
-          ))}
+          )}
         </Box>
 
         <Box sx={{ p: 1 }}>
-          <Typography variant='h5' sx={{ m: 0.5 }}>
-            Tools
-          </Typography>
-          <Divider variant='middle' />
-          {toolCartItems.length === 0 && (
-            <Alert severity='error' sx={{ m: 1 }}>
-              Tool Cart Is Empty!
-            </Alert>
-          )}
-          {toolCartItems.map((item) => (
-            <Box key={item.id} sx={{ display: 'flex', mr: 2, ml: 2, mt: 1 }}>
-              <Typography
-                component='div'
-                variant='body'
-                align='left'
-                sx={{ flex: 1 }}
-              >
-                {item.name}
+          {toolCartItems.length != 0 && (
+            <Box>
+              <Typography variant='h5' sx={{ m: 0.5 }}>
+                Tools
               </Typography>
-
-              <div className='col-2 text-right'>
-                {item.count} x ${item.price.toFixed(2)} = ${''}
-                {item.count * item.price}
-              </div>
+              <Divider variant='middle' />
+              {toolCartItems.map((item) => (
+                <Box
+                  key={item.id}
+                  sx={{ display: 'flex', mr: 2, ml: 2, mt: 1 }}
+                >
+                  <Box sx={{ display: 'flex', flex: 1, textAlign: 'left' }}>
+                    <Typography component='div' variant='body' align='left'>
+                      {item.name}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ display: 'flex', flex: 1, textAlign: 'right' }}>
+                    <Typography component='div' variant='body' align='right'>
+                      {item.count}
+                    </Typography>
+                  </Box>
+                  <Box sx={{ textAlign: 'right' }}>
+                    <Typography component='div' variant='body' align='right'>
+                      {'$ ' + item.count * item.price}
+                    </Typography>
+                  </Box>
+                </Box>
+              ))}
             </Box>
-          ))}
+          )}
         </Box>
       </Card>
 
-      <Card sx={{ p: 1, mt: 1.5 }}>
-        <Box sx={{ p: 1 }}>
+      <Card sx={{ pr: 3, pl: 3, pt: 1.5, pb: 1.5, mt: 1.5 }}>
+        <Box>
           {cartItems.length !== 0 && (
             <>
-              <Box sx={{ display: 'flex', mr: 2, ml: 2, mt: 1 }}>
+              <Box sx={{ display: 'flex', mt: 1 }}>
                 <Typography
                   component='div'
                   variant='body'
@@ -88,9 +102,11 @@ export default function Basket(props) {
                 >
                   Items Price
                 </Typography>
-                <div className='col-1 text-right'>${itemsPrice.toFixed(2)}</div>
+                <Typography className='text-right'>
+                  ${itemsPrice.toFixed(2)}
+                </Typography>
               </Box>
-              <Box sx={{ display: 'flex', mr: 2, ml: 2, mt: 1 }}>
+              <Box sx={{ display: 'flex', mt: 1 }}>
                 <Typography
                   component='div'
                   variant='body'
@@ -99,9 +115,11 @@ export default function Basket(props) {
                 >
                   Tax Price
                 </Typography>
-                <div className='col-1 text-right'>${taxPrice.toFixed(2)}</div>
+                <Typography className='text-right'>
+                  ${taxPrice.toFixed(2)}
+                </Typography>
               </Box>
-              <Box sx={{ display: 'flex', mr: 2, ml: 2, mt: 1 }}>
+              <Box sx={{ display: 'flex', mt: 1 }}>
                 <Typography
                   component='div'
                   variant='body'
@@ -110,12 +128,12 @@ export default function Basket(props) {
                 >
                   Shipping Price
                 </Typography>
-                <div className='col-1 text-right'>
+                <Typography className='text-right'>
                   ${shippingPrice.toFixed(2)}
-                </div>
+                </Typography>
               </Box>
-              <Divider textAlign='left' variant='middle' sx={{ m: 2 }} />
-              <Box sx={{ display: 'flex', mr: 2, ml: 2, mt: 1 }}>
+              <Divider textAlign='left' variant='middle' sx={{ m: 1 }} />
+              <Box sx={{ display: 'flex', mt: 2 }}>
                 <Typography
                   component='div'
                   variant='h5'
@@ -134,7 +152,7 @@ export default function Basket(props) {
         <Button
           variant='contained'
           onClick={() => CheckoutCart()}
-          sx={{ m: 1.5 }}
+          sx={{ mt: 1.5 }}
         >
           Checkout
         </Button>
