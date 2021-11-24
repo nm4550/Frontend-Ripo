@@ -9,7 +9,11 @@
   .navbar .Searchicon{
     color: #069c5e;
   }
+  .css-1hvfsrb-MuiButtonBase-root-MuiButton-root{
+    margin-left: 5% !important;
+  }
   .navbar h1 {
+    display: flex;
     padding-left: 1rem;
     color: #069c5e;
   }
@@ -31,7 +35,7 @@
     justify-content:flex-end;
     padding-right: 1rem;
   }
-  .navbar a {
+  .navbar .links a {
     color: black;
     margin-left: 16px;
     margin-top: 1%;
@@ -42,16 +46,13 @@
   .navbar .links a:hover {
     color: #39c785;
   }
-  .navbar .buttons a:hover {
-    color: #069c5e;
-    background-color: white;
-    border-color: #069c5e;
-    border-width: 6px;
-  }
-.navbar .buttons a{
-    color: rgb(255, 255, 255); 
-    background-color: #069c5e;
-    border-radius: 7px;
+.navbar .buttons {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.signUpButtons{
+  margin: 0.5rem;
 }
 @media screen and (max-width: 600px) {
   .navbar .links {
@@ -66,6 +67,7 @@
     align-items: center;
 }
   .navbar .buttons {
+    display: flex;
     justify-content: center;
     align-items: center;
     padding-bottom: 0.5rem;

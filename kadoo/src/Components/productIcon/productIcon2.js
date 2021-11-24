@@ -2,8 +2,6 @@ import React,{useEffect,useState} from 'react' ;
 import "./ProductIcon.css";
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import IconButton from '@mui/material/IconButton';
-import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import { Link } from 'react-router-dom';
 import OpacityIcon from '@mui/icons-material/Opacity';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
@@ -34,21 +32,12 @@ function ProductIcon2(props){
           </Grid>
           <Grid item xs={12}>
             <div className="featButton">
-            <WbSunnyIcon className="lightButton"
-            onMouseOver={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            />
-            {showText && <a className="Message" > {props.product.light} </a>}
-            <OpacityIcon className="waterButton"
-            onMouseOver={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            />
-            {showText && <a className="Message" > {props.product.water} </a>}
-            <NatureIcon className="growButton"
-            onMouseOver={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            />
-            {showText && <a className="Message" > {props.product.growthRate} </a>}
+            <WbSunnyIcon className="lightButton"/>
+            <a className="Message" > {props.product.light} </a>
+            <OpacityIcon className="waterButton"/>
+            <a className="Message" > {props.product.water} </a>
+            <NatureIcon className="growButton"/>
+            <a className="Message" > {props.product.growthRate} </a>
             </div>
           </Grid>
         </Grid>

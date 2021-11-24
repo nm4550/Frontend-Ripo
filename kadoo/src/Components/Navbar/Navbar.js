@@ -5,6 +5,8 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import UserDropDown from '../UserDropDown/UserDropDown';
 import history from '../../history';
+import Button from '@mui/material/Button';
+
 
 
 function Navbar(){
@@ -33,7 +35,7 @@ function Navbar(){
           <a href="/">Contact Us</a>
         </Grid>
         <Grid
-        item xs={12} sm={4} md={4}
+        item xs={12} sm={3} md={3}
         display="flex"
         className="searchBox"
         >
@@ -49,12 +51,12 @@ function Navbar(){
             onClick={() => history.push('/search')}/>
         </Grid>
         <Grid
-        item xs={12} sm={2} md={2}
-        display="flex"
+        item xs={6} sm={3} md={3}
         className="buttons"
         >
-          {normalNav && <a href="/signup">SIGN UP</a>}
-          {normalNav && <a href="/signin">SIGN IN</a>}
+          {normalNav && <Button href="/signup" variant="contained">SIGN UP</Button>}
+          {normalNav && <Button href="/signin" variant="contained">SIGN IN</Button>}
+          {userNav && <UserDropDown />}
         </Grid>
         </Grid>
       </div>

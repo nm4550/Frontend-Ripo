@@ -12,7 +12,6 @@
 
 .showProductsIcons:hover{
     background-color: rgb(248, 250, 248);
-    cursor: pointer;
     transition: all 0.3s ease-in;
 }
 
