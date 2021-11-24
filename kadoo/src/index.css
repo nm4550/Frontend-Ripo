@@ -28,8 +28,8 @@ code {
   background-color: rgba(223,230,238,255);
   background-image: -webkit-linear-gradient(
     90deg,
-    rgb(5, 77, 41) 5%,
-    rgb(15, 121, 24) 25%,
+    rgb(26, 131, 78) 5%,
+    rgb(100, 218, 110) 25%,
     transparent 100%,
     rgb(73, 218, 85) 75%,
     transparent
@@ -38,10 +38,10 @@ code {
 ::-webkit-scrollbar-thumb:hover{
   background-image: -webkit-linear-gradient(
     90deg,
-    rgb(47, 118, 201) 5%,
-    rgb(47, 118, 201) 25%,
+    rgb(121, 201, 47) 5%,
+    rgb(61, 196, 95) 25%,
     transparent 100%,
-    rgb(47, 118, 201) 75%,
+    rgb(175, 219, 146) 75%,
     transparent
   );
 }

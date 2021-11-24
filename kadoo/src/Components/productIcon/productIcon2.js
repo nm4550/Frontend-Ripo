@@ -8,14 +8,7 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny';
 import NatureIcon from '@mui/icons-material/Nature';
 
 function ProductIcon2(props){
-  const [showText, setShowText] = useState(false)
-  const handleMouseEnter = e => {
-    setShowText(true)
-  }
-  const handleMouseLeave = e => {
-    setShowText(false)}
-    return(
-        
+    return( 
         <Box className="productIconLink" sx={{ width: '100%' }}>
         <Grid container rowSpacing={1}>
           <Grid item xs={12}>
