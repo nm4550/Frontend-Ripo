@@ -21,6 +21,7 @@ class ProductPlantsPage extends React.Component {
           id : this.props.match.params.id,
           numberOfBuy:0,
           totalPrice:0,
+          imageName:[],
         };
     }
     componentDidMount() {
@@ -61,19 +62,21 @@ class ProductPlantsPage extends React.Component {
     }
     var backWardImageClick=()=>{
         if(this.state.currentImage == 0){
-            this.state.currentImage = this.state.album.length - 1;  
+            this.setState({currentImage : this.state.album.length - 1});  
         }
         else{
-            this.state.currentImage--;
+            this.setState({currentImage : this.state.currentImage - 1});;
         }
+        this.setState({imageName : this.state.album[this.state.currentImage]})
     }
     var forWardImageClick=()=>{
         if(this.state.currentImage == this.state.album.length - 1){
-            this.state.currentImage = 0;  
+            this.setState({currentImage : 0});  
         }
         else{
-            this.state.currentImage++;
+            this.setState({currentImage : this.state.currentImage + 1});;
         }
+        this.setState({imageName : this.state.album[this.state.currentImage]})
     }
         
         
@@ -92,7 +95,7 @@ class ProductPlantsPage extends React.Component {
                                     onClick={backWardImageClick}>
                                     <ArrowBackIosIcon />
                             </IconButton>
-                        <img className="ProductPageImage" src={this.state.product.image}></img>
+                        <img className="ProductPageImage" src={this.state.imageName.image} alt = {this.state.imageName.name}></img>
                             <IconButton 
                                     size='large'
                                     aria-label='show 4 new mails'

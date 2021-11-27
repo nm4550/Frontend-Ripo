@@ -23,6 +23,7 @@ class ProductPlantsPage extends React.Component {
           totalPrice:0,
           album:[],
           currentImage:0,
+          imageName:[],
         };
     }
     
@@ -40,7 +41,12 @@ class ProductPlantsPage extends React.Component {
             });
         fetch('http://127.0.0.1:8000/api/albumImages/' + this.state.id + '/')
           .then(response => response.json())
-          .then(data => this.setState({ album: data }));
+          .then(data => {
+              this.setState({ album: data })
+              this.setState({imageName : data[0]})
+        console.log(this.state.album)
+        console.log(this.state.imageName.image)
+        });
     }
     
     
@@ -64,56 +70,68 @@ class ProductPlantsPage extends React.Component {
     }
     var backWardImageClick=()=>{
         if(this.state.currentImage == 0){
-            this.state.currentImage = this.state.album.length - 1;  
+            this.setState({currentImage : this.state.album.length - 1});  
         }
         else{
-            this.state.currentImage--;
+            this.setState({currentImage : this.state.currentImage - 1});;
         }
+        this.setState({imageName : this.state.album[this.state.currentImage]})
     }
     var forWardImageClick=()=>{
         if(this.state.currentImage == this.state.album.length - 1){
-            this.state.currentImage = 0;  
+            this.setState({currentImage : 0});  
         }
         else{
-            this.state.currentImage++;
+            this.setState({currentImage : this.state.currentImage + 1});;
         }
-    }
-        
+        this.setState({imageName : this.state.album[this.state.currentImage]})
+    } 
         
       return (
         <div>
         <Navbar/>  
     
-          <div className="ProductPage">
-                <Grid container justifyContent = "center"  className="ProductPageProductContainer">
+          <Grid container justifyContent = "center" alignItems = "center" sx={{pl : {xs:2 , sm:10} , pr : {xs:2 , sm:10}}} >
+                <Grid container item justifyContent = "center"  className="ProductPageProductContainer">
                     <Grid item xs={12} md={6} lg={6} container justifyContent = "center" alignItems = "center" className="ProductPageImageContainer">
                         <Grid item container justifyContent = "center" alignItems = "center">
-                            <IconButton 
+                            <Grid container item justifyContent = "center" alignItems = "center" direction = "row">
+                                <IconButton 
+                                    sx={{ display: { xs: 'none', md: 'inline-block' } }}
                                     size='large'
                                     aria-label='show 4 new mails'
                                     color='primary'
                                     onClick={backWardImageClick}>
                                     <ArrowBackIosIcon />
-                            </IconButton>
-                        <img className="ProductPageImage" src={this.state.product.image}></img>
-                            <IconButton 
+                                </IconButton>
+                                <img className="ProductPageImage" src={this.state.imageName.image} alt = {this.state.imageName.name} sx={{width:{xs:'300px', sm:'400px'},height:{xs:'300px', sm:'400px'}}}></img>
+                                <IconButton 
+                                    sx={{ display: { xs: 'inline-block', md: 'none' } }}
+                                    size='large'
+                                    aria-label='show 4 new mails'
+                                    color='primary'
+                                    onClick={backWardImageClick}>
+                                    <ArrowBackIosIcon />
+                                </IconButton>
+                                <IconButton 
                                     size='large'
                                     aria-label='show 4 new mails'
                                     color='primary'
                                     onClick={forWardImageClick}>
                                     <ArrowForwardIosIcon />
-                            </IconButton>
+                                </IconButton>
+                            </Grid>
                         </Grid>
                     </Grid>
                     <Grid item xs={12} md={6} lg={6} sx={{p : 2}}>
-                        <Grid container spacing={2}>
+                        <Grid container spacing={1}>
                             <Grid item xs={12} md={12} lg={12} className="ProductPageTitle">
                             <div className="productPageTitle">{this.state.product.name}</div>
                             <hr/>
                             </Grid>
-                            <Grid item xs={6} md={6} lg={11} className="ProductPageText">
+                            <Grid item xs={12} md={12} lg={12} spacing = {1} className="ProductPageText">
                             <div className="ProductPageText"> <b>Description:</b> {this.state.product.description} </div>
-                            <Box sx = {{mt : 0.5 , mb : 0.5}}>
+                            <Box sx = {{mt : 0.5 , mb : 1.5}}>
                                 {this.state.tags.length !== 0 && (
                                     <Box>
                                         <b>Tags: </b>
@@ -126,47 +144,47 @@ class ProductPlantsPage extends React.Component {
                             <hr/>
                             </Grid>
                             
-                            <Grid item xs={6} md={6} lg={6} className="ProductPageText">
+                            <Grid item xs={12} sm={6} lg={6} className="ProductPageText">
                             <div className="ProductPageText"> <b>Environment:</b> {this.state.product.environment} </div>
                             </Grid>
-                            <Grid item xs={6} md={6} lg={6} className="ProductPageText">
+                            <Grid item xs={12} sm={6} lg={6} className="ProductPageText">
                             <div className="ProductPageText"> <b>Water:</b> {this.state.product.water}</div>
                             </Grid>
-                            <Grid item xs={6} md={6} lg={6} className="ProductPageText">
+                            <Grid item xs={12} sm={6} lg={6} className="ProductPageText">
                             <div className="ProductPageText"> <b>Light:</b> {this.state.product.light} </div>
                             </Grid>
-                            <Grid item xs={6} md={6} lg={6} className="ProductPageText">
+                            <Grid item xs={12} sm={6} lg={6} className="ProductPageText">
                             <div className="ProductPageText"> <b>GrowthRate:</b> {this.state.product.growthRate}  </div>
                             </Grid>
                             <Grid item xs={12} md={12} lg={12} className="ProductPageBuyContainer">
-                        <Grid container spacing={2} alignItems = "center">
-                            <Grid item xs={6} md={3} className="ProductPageTitle">
-                            <div className="productPagePrice"> <b>Price:</b> {this.state.product.price} $</div>
+                                <Grid container spacing={0} alignItems = "center">
+                                <Grid item xs={6} md={6} lg={2} className="ProductPageTitle">
+                                <div className="productPagePrice"> <b>Price:</b> {this.state.product.price} $</div>
+                                </Grid>
+                                <Grid container item xs={6} md={6} lg={4} sx={{ justifyContent: {xs:'flex-end',sm:'center'} }} className="ProductPageCounter">
+                                    <Grid item container alignItems = "center" diraction = "row">
+                                        <IconButton 
+                                            size='large'
+                                            aria-label='show 4 new mails'
+                                            color='inherit'
+                                            sx={{ color: 'error.main' }}
+                                            onClick={decreaseBought}>
+                                            <RemoveIcon />
+                                        </IconButton>
+                                        <div className="ProductPageCounterNum">
+                                            {this.state.numberOfBuy}
+                                        </div>
+                                        <IconButton 
+                                            size='large'
+                                            aria-label='show 4 new mails'
+                                            color='inherit'
+                                            sx={{ color: 'success.main' }}
+                                            onClick={increaseBought}>
+                                            <AddIcon />
+                                        </IconButton>
+                                    </Grid>
                             </Grid>
-                            <Grid item xs={6} md={3}  className="ProductPageCounter">
-                                <IconButton 
-                                    size='large'
-                                    aria-label='show 4 new mails'
-                                    color='inherit'
-                                    sx={{ color: 'error.main' }}
-                                    onClick={decreaseBought}>
-                                    <RemoveIcon />
-                                </IconButton>
-                                
-                                <div className="ProductPageCounterNum">
-                                    {this.state.numberOfBuy}
-                                </div>
-                                <IconButton 
-                                    size='large'
-                                    aria-label='show 4 new mails'
-                                    color='inherit'
-                                    sx={{ color: 'success.main' }}
-                                    onClick={increaseBought}>
-                                    <AddIcon />
-                                </IconButton>
-                                
-                            </Grid>
-                            <Grid item  className="ProductPageTitle">
+                            <Grid item sm = {6} className="ProductPageTitle">
                                 Total Price : {this.state.totalPrice}$
                             </Grid>
                             
@@ -181,7 +199,7 @@ class ProductPlantsPage extends React.Component {
                     </Grid>
                     
                 </Grid>
-          </div>  
+          </Grid>  
           </div>            
       );
     }
