@@ -5,8 +5,6 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import UserDropDown from '../UserDropDown/UserDropDown';
 import history from '../../history';
-import Button from '@mui/material/Button';
-
 
 
 function Navbar(){
@@ -17,6 +15,30 @@ function Navbar(){
       }
       const handleUserNav = e => {
         setUserNav(true)}
+
+        useEffect(() => {
+          const requestOptions = {
+            method: 'GET',
+            headers: { 
+              'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+              'Content-Type': 'application/json' },
+          }
+          fetch('http://127.0.0.1:8000/api/user/userinfo/', requestOptions)
+          .then((response) => {
+            console.log(localStorage.getItem('access_token'))
+          if(response.status != 401)
+          {
+            setUserNav(true)
+            setNav(false)
+            console.log("ghgjghj")
+          } 
+          else
+          {
+            throw response;
+          }
+        }).catch( err => {})
+        }, [])
+
     return(
       <div className="navbar">
         <Grid container spacing={2}>
@@ -35,7 +57,7 @@ function Navbar(){
           <a href="/">Contact Us</a>
         </Grid>
         <Grid
-        item xs={12} sm={3} md={3}
+        item xs={12} sm={4} md={4}
         display="flex"
         className="searchBox"
         >
@@ -51,11 +73,12 @@ function Navbar(){
             onClick={() => history.push('/search')}/>
         </Grid>
         <Grid
-        item xs={6} sm={3} md={3}
+        item xs={12} sm={2} md={2}
+        display="flex"
         className="buttons"
         >
-          {normalNav && <Button href="/signup" variant="contained">SIGN UP</Button>}
-          {normalNav && <Button href="/signin" variant="contained">SIGN IN</Button>}
+          {normalNav && <a href="/signup">SIGN UP</a>}
+          {normalNav && <a href="/signin">SIGN IN</a>}
           {userNav && <UserDropDown />}
         </Grid>
         </Grid>

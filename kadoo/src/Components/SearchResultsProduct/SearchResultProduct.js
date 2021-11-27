@@ -19,22 +19,135 @@ const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(1),
   textAlign: 'center'
 }));
-
 function SearchResultProduct(props){ 
+    const [searchPlantDataLoaded,setSearchPlantDataLoaded] = useState(false)
+    const [searchToolDataLoaded,setSearchToolDataLoaded] = useState(false)
     const [searchPlantData, setSearchPlantData] = useState([])
     const [searchToolData, setSearchToolData] = useState([])
-    const [searchText , setSearchText] = useState('')
+    //#########Plants
+    //Search
+    const [searchTextPlants , setSearchTextPlants] = useState('')
+    //Sort
+    const [sortKindPlants , setSortKindPlants] = useState('')
+    const [sortOrderPlants , setSortOrderPlants] = useState('')
+    //Filter
+    const [filterPriceLowerPlants , setFilterPriceLowerPlants] = useState('')
+    const [filterPriceHigherPlants , setFilterPriceHigherPlants] = useState('')
+    const [fiterEnvironmentPlants , setFiterEnvironmentPlants] = useState('')
+    const [filterWaterPlants , setFilterWaterPlants] = useState('')
+    const [filterLightPlants , setFilterLightPlants] = useState('')
+    const [filterGrowthRatePlants , setFilterGrowthRatePlants] = useState('')
+    //Pagination
+    const [paginationCountPlants , setPaginationCountPlants] = useState('')
+    const [paginationPagePlants , setPaginationPagePlants] = useState('')
+
+    //#########Tools
+    //Search
+    const [searchTextTools , setSearchTextTools] = useState('')
+    //Sort
+    const [sortKindTools , setSortKindTools] = useState('')
+    const [sortOrderTools , setSortOrderTools] = useState('')
+    //Filter
+    const [filterPriceLowerTools , setFilterPriceLowerTools] = useState('')
+    const [filterPriceHigherTools , setFilterPriceHigherTools] = useState('')
+    const [fiterEnvironmentTools , setFiterEnvironmentTools] = useState('')
+    const [filterWaterTools , setFilterWaterTools] = useState('')
+    const [filterLightTools , setFilterLightTools] = useState('')
+    const [filterGrowthRateTools , setFilterGrowthRateTools] = useState('')
+    //Pagination
+    const [paginationCountTools , setPaginationCountTools] = useState('')
+    const [paginationPageTools , setPaginationPageTools] = useState('')
+
+
+    function PlantsAdvanceSearch(){
+      const requestOptions = {
+        method: 'POST',
+        headers: { 
+          // 'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+         name:(searchTextPlants !== '' ? searchTextPlants:null) ,
+          price: {
+            lower:(filterPriceLowerPlants !== '' ? filterPriceLowerPlants:null),
+            higher:(filterPriceHigherPlants !== '' ? filterPriceHigherPlants:null)
+          },
+          environment:(fiterEnvironmentPlants !== '' ? fiterEnvironmentPlants:null),
+          water:(filterWaterPlants !== '' ? filterWaterPlants:null),
+          light:(filterLightPlants !== '' ? filterLightPlants:null),
+          growthRate:(filterGrowthRatePlants !== '' ? filterGrowthRatePlants:null),
+          pagination:{
+            count:(paginationCountPlants !== '' ? paginationCountPlants:null),
+            page:(paginationPagePlants !== '' ? paginationPagePlants:null)
+          },
+          sort:{
+            kind:(sortKindPlants !== '' ? sortKindPlants:null),
+            order:(sortOrderPlants !== '' ? sortOrderPlants:null)
+          },
+        }),
+      }
+  
+      console.log(requestOptions.body)
+      setSearchPlantData([])
+      setSearchPlantDataLoaded(false)
+      setTimeout(async () => {
+        const res = await fetch('http://127.0.0.1:8000/api/plantsAdvanceSearch/', requestOptions)
+        const data = await res.json()
+        setSearchPlantData(data)
+        setSearchPlantDataLoaded(true)
+        console.log('plantsData')
+        console.log(data)
+      }, 3000)
+    }
+    function ToolsAdvanceSearch(){
+      const requestOptions = {
+        method: 'POST',
+        headers: { 
+          // 'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+         name:(searchTextTools !== '' ? searchTextTools:null) ,
+          price: {
+            lower:(filterPriceLowerTools !== '' ? filterPriceLowerTools:null),
+            higher:(filterPriceHigherTools !== '' ? filterPriceHigherTools:null)
+          },
+          environment:(fiterEnvironmentTools !== '' ? fiterEnvironmentTools:null),
+          water:(filterWaterTools !== '' ? filterWaterTools:null),
+          light:(filterLightTools !== '' ? filterLightTools:null),
+          growthRate:(filterGrowthRateTools !== '' ? filterGrowthRateTools:null),
+          pagination:{
+            count:(paginationCountTools !== '' ? paginationCountTools:null),
+            page:(paginationPageTools !== '' ? paginationPageTools:null)
+          },
+          sort:{
+            kind:(sortKindTools !== '' ? sortKindTools:null),
+            order:(sortOrderTools !== '' ? sortOrderTools:null)
+          },
+        }),
+      }
+  
+      setSearchToolData([])
+      setSearchToolDataLoaded(false)
+      setTimeout(async () => {
+        const res = await fetch('http://127.0.0.1:8000/api/toolsAdvanceSearch/', requestOptions)
+        const data = await res.json()
+        setSearchToolData(data)
+        setSearchToolDataLoaded(true)
+        console.log(data)
+      }, 3000)
+    }
 
     function handleSearchClick()
     {
-      if(searchText == '' || searchText == ' ')
+      if(searchTextPlants == '' || searchTextPlants == ' ')
       {
         updateSearch()
       }
-      handleSearch(searchText);
+      handleSearch(searchTextPlants);
     }
     function handleChange  (e) {
-        setSearchText(e.target.value.trim());
+        setSearchTextPlants(e.target.value.trim());
       }
     const updateSearch = () => {
       async function fetchProductData() {
@@ -102,8 +215,8 @@ function SearchResultProduct(props){
         <div>
           <div style={{backgroundImage:`url(${Search})` , backgroundSize: 'cover', overflow: 'hidden' , padding:5 , display: 'flex' }}>
           <Grid
-              item xs={12}
-              sm={6}
+              item xs={20}
+              sm={10}
               display="flex"
               marginLeft={0}
               className="home"
@@ -121,11 +234,11 @@ function SearchResultProduct(props){
               className="Searchicon"
               fontSize="large"/>
             </IconButton>         
-            <Chip label={"You searched for "+searchText} variant="outlined"/>
+            <Chip label={"You searched for "+searchTextPlants} variant="outlined"/>
             </Grid>
             <Grid 
-              item xs={12}
-              sm={6}
+              item xs={4}
+              sm={2}
               alignItems='flex-end'
               justifyContent='flex-end'
               className="searchBox">

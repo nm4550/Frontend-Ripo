@@ -16,6 +16,7 @@
     display: flex;
     padding-left: 1rem;
     color: #069c5e;
+    display: flex;
   }
   
   .navbar .links {
@@ -59,6 +60,7 @@
     flex-direction: column;
   }
   .navbar h1{
+    display: flex;
     justify-content: center;
     align-items: center;
   }
