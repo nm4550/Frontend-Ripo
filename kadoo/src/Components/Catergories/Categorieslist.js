@@ -140,9 +140,9 @@ export default function SelectedListItem() {
   }, [])
 
   return (
-    <Box sx={{ flexGrow: 1, m: 4 }}>
-      <Grid container spacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item s={12} md={4}>
+    <Box sx={{ flexGrow: 1, m: 0 }}>
+      <Grid container spacing={0} >
+        <Grid item s={12} md={12}>
           <BoxItem>
             <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
               <Accordion
@@ -216,120 +216,7 @@ export default function SelectedListItem() {
             </Box>
           </BoxItem>
         </Grid>
-        <Grid item s={12} md={8}>
-          <BoxItem>
-            <Box>
-              <Typography variant='h5' sx={{ m: 0.5 }}>
-                Plants
-              </Typography>
-              <Divider variant='middle' />
-              {plantsData.length != 0 && (
-                <div>
-                  <Grid container spacing={2} sx={{ mt: 2 }}>
-                    {plantsData.map((item) => (
-                      <Grid item md={4}>
-                        <Card>
-                          <CardMedia
-                            component='img'
-                            height='140'
-                            image={item.image}
-                            alt={item.name}
-                          />
-                          <CardContent>
-                            <Typography
-                              gutterBottom
-                              variant='h5'
-                              component='div'
-                            >
-                              {item.name}
-                            </Typography>
-                          </CardContent>
-                        </Card>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </div>
-              )}
-
-              {plantsData.length === 0 && (
-                <div>
-                  {plantsDataLoaded === true && (
-                    <Alert severity='error'>
-                      There is NO plant in this category right now! Come Back
-                      soon ...
-                    </Alert>
-                  )}
-                  {plantsDataLoaded === false && (
-                    <Stack sx={{ m: 2 }}>
-                      <SkeletonArticle />
-                    </Stack>
-                  )}
-                </div>
-              )}
-            </Box>
-
-            <Box sx={{ mt: 4 }}>
-              <Typography variant='h5' sx={{ m: 0.5 }}>
-                Tools
-              </Typography>
-              <Divider variant='middle' />
-              {toolsData.length != 0 && (
-                <div>
-                  <Grid container spacing={2} sx={{ mt: 2 }}>
-                    {toolsData.map((item) => (
-                      <Grid item md={4}>
-                        <Card>
-                          <Grid
-                            sx={{ height: 200, p: 5, m: 1 }}
-                            container
-                            justifyContent='center'
-                            alignItems='center'
-                          >
-                            <Grid item>
-                              <CardMedia
-                                component='img'
-                                height='140'
-                                image={item.image}
-                                className='image-media'
-                                alt={item.name}
-                              />
-                            </Grid>
-                          </Grid>
-
-                          <CardContent sx={{ mt: 5 }}>
-                            <Typography
-                              gutterBottom
-                              variant='h5'
-                              component='div'
-                            >
-                              {item.name}
-                            </Typography>
-                          </CardContent>
-                        </Card>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </div>
-              )}
-
-              {toolsData.length === 0 && (
-                <div>
-                  {toolsDataLoaded === true && (
-                    <Alert severity='error'>
-                      There is NO tool in this category right now! Come Back
-                      soon ...
-                    </Alert>
-                  )}
-                  {toolsDataLoaded === false && (
-                    <Stack sx={{ m: 2 }}>
-                      <SkeletonArticle />
-                    </Stack>
-                  )}
-                </div>
-              )}
-            </Box>
-          </BoxItem>
-        </Grid>
+       
       </Grid>
     </Box>
   )
