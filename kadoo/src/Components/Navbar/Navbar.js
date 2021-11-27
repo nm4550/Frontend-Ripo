@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import UserDropDown from '../UserDropDown/UserDropDown';
 import history from '../../history';
-
+import Button from '@mui/material/Button';
 
 function Navbar(){
       const [userNav, setUserNav] = useState(false)
@@ -77,8 +77,8 @@ function Navbar(){
         display="flex"
         className="buttons"
         >
-          {normalNav && <a href="/signup">SIGN UP</a>}
-          {normalNav && <a href="/signin">SIGN IN</a>}
+          {normalNav && <Button href="/signup" variant="contained">SIGN UP</Button>}
+          {normalNav && <Button href="/signin" variant="contained">SIGN IN</Button>}
           {userNav && <UserDropDown />}
         </Grid>
         </Grid>
