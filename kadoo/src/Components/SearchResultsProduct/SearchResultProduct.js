@@ -22,23 +22,136 @@ const Item = styled(Paper)(({ theme }) => ({
   padding: theme.spacing(1),
   textAlign: 'center'
 }));
-
 function SearchResultProduct(props){ 
+    const [searchPlantDataLoaded,setSearchPlantDataLoaded] = useState(false)
+    const [searchToolDataLoaded,setSearchToolDataLoaded] = useState(false)
     const [searchPlantData, setSearchPlantData] = useState([])
     const [searchToolData, setSearchToolData] = useState([])
-    const [searchText , setSearchText] = useState('')
-    const [sortmenu , setSortmenu] = useState(0)
+    const [sortmenu , setSortmenunew] = useState(0)
+    //#########Plants
+    //Search
+    const [searchTextPlants , setSearchTextPlants] = useState('')
+    //Sort
+    const [sortKindPlants , setSortKindPlants] = useState('')
+    const [sortOrderPlants , setSortOrderPlants] = useState('')
+    //Filter
+    const [filterPriceLowerPlants , setFilterPriceLowerPlants] = useState('')
+    const [filterPriceHigherPlants , setFilterPriceHigherPlants] = useState('')
+    const [fiterEnvironmentPlants , setFiterEnvironmentPlants] = useState('')
+    const [filterWaterPlants , setFilterWaterPlants] = useState('')
+    const [filterLightPlants , setFilterLightPlants] = useState('')
+    const [filterGrowthRatePlants , setFilterGrowthRatePlants] = useState('')
+    //Pagination
+    const [paginationCountPlants , setPaginationCountPlants] = useState('')
+    const [paginationPagePlants , setPaginationPagePlants] = useState('')
+
+    //#########Tools
+    //Search
+    const [searchTextTools , setSearchTextTools] = useState('')
+    //Sort
+    const [sortKindTools , setSortKindTools] = useState('')
+    const [sortOrderTools , setSortOrderTools] = useState('')
+    //Filter
+    const [filterPriceLowerTools , setFilterPriceLowerTools] = useState('')
+    const [filterPriceHigherTools , setFilterPriceHigherTools] = useState('')
+    const [fiterEnvironmentTools , setFiterEnvironmentTools] = useState('')
+    const [filterWaterTools , setFilterWaterTools] = useState('')
+    const [filterLightTools , setFilterLightTools] = useState('')
+    const [filterGrowthRateTools , setFilterGrowthRateTools] = useState('')
+    //Pagination
+    const [paginationCountTools , setPaginationCountTools] = useState('')
+    const [paginationPageTools , setPaginationPageTools] = useState('')
+
+
+    function PlantsAdvanceSearch(){
+      const requestOptions = {
+        method: 'POST',
+        headers: { 
+          // 'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+         name:(searchTextPlants !== '' ? searchTextPlants:null) ,
+          price: {
+            lower:(filterPriceLowerPlants !== '' ? filterPriceLowerPlants:null),
+            higher:(filterPriceHigherPlants !== '' ? filterPriceHigherPlants:null)
+          },
+          environment:(fiterEnvironmentPlants !== '' ? fiterEnvironmentPlants:null),
+          water:(filterWaterPlants !== '' ? filterWaterPlants:null),
+          light:(filterLightPlants !== '' ? filterLightPlants:null),
+          growthRate:(filterGrowthRatePlants !== '' ? filterGrowthRatePlants:null),
+          pagination:{
+            count:(paginationCountPlants !== '' ? paginationCountPlants:null),
+            page:(paginationPagePlants !== '' ? paginationPagePlants:null)
+          },
+          sort:{
+            kind:(sortKindPlants !== '' ? sortKindPlants:null),
+            order:(sortOrderPlants !== '' ? sortOrderPlants:null)
+          },
+        }),
+      }
+  
+      console.log(requestOptions.body)
+      setSearchPlantData([])
+      setSearchPlantDataLoaded(false)
+      setTimeout(async () => {
+        const res = await fetch('http://127.0.0.1:8000/api/plantsAdvanceSearch/', requestOptions)
+        const data = await res.json()
+        setSearchPlantData(data)
+        setSearchPlantDataLoaded(true)
+        console.log('plantsData')
+        console.log(data)
+      }, 3000)
+    }
+    function ToolsAdvanceSearch(){
+      const requestOptions = {
+        method: 'POST',
+        headers: { 
+          // 'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+         name:(searchTextTools !== '' ? searchTextTools:null) ,
+          price: {
+            lower:(filterPriceLowerTools !== '' ? filterPriceLowerTools:null),
+            higher:(filterPriceHigherTools !== '' ? filterPriceHigherTools:null)
+          },
+          environment:(fiterEnvironmentTools !== '' ? fiterEnvironmentTools:null),
+          water:(filterWaterTools !== '' ? filterWaterTools:null),
+          light:(filterLightTools !== '' ? filterLightTools:null),
+          growthRate:(filterGrowthRateTools !== '' ? filterGrowthRateTools:null),
+          pagination:{
+            count:(paginationCountTools !== '' ? paginationCountTools:null),
+            page:(paginationPageTools !== '' ? paginationPageTools:null)
+          },
+          sort:{
+            kind:(sortKindTools !== '' ? sortKindTools:null),
+            order:(sortOrderTools !== '' ? sortOrderTools:null)
+          },
+        }),
+      }
+  
+      setSearchToolData([])
+      setSearchToolDataLoaded(false)
+      setTimeout(async () => {
+        const res = await fetch('http://127.0.0.1:8000/api/toolsAdvanceSearch/', requestOptions)
+        const data = await res.json()
+        setSearchToolData(data)
+        setSearchToolDataLoaded(true)
+        console.log(data)
+      }, 3000)
+    }
 
     function handleSearchClick()
     {
-      if(searchText == '' || searchText == ' ')
+      if(searchTextPlants == '' || searchTextPlants == ' ')
       {
         updateSearch()
       }
-      handleSearch(searchText);
+      handleSearch(searchTextPlants);
     }
     function handleChange  (e) {
-        setSearchText(e.target.value.trim());
+        setSearchTextPlants(e.target.value.trim());
       }
     const updateSearch = () => {
       async function fetchProductData() {
@@ -82,31 +195,23 @@ function SearchResultProduct(props){
           fetchSearchToolData()
       }
 
-    const SortPlants_ByNameACS = () => {
-      async function fetchProductData() {
+      const SortPlants_ByNameACS = () => {
+      
         
-        await fetch('http://127.0.0.1:8000/api/plantsSortByName/ASC/')//ACS_NAME
-          .then((response) => response.json())
-          .then((data) => {
-            setSearchPlantData(data)
-            console.log(data)
-          })
-      }
-      fetchProductData()
-      setSortmenu(1)  
+       setSortKindPlants('name')
+      setSortOrderPlants('ASC')
+      
+      setSortmenunew(1)  
+      PlantsAdvanceSearch()
     }
 
     const SortPlants_ByNameDES = () => {
-      async function fetchProductData() {
-        await fetch('http://127.0.0.1:8000/api/plantsSortByName/DES/')//DES_NAME
-          .then((response) => response.json())
-          .then((data) => {
-            setSearchPlantData(data)
-            console.log(data)
-          })
-      }
-      fetchProductData()
-      setSortmenu(2)
+     
+      setSortKindPlants('name')
+      setSortOrderPlants('DES')
+       console.log(sortKindPlants)
+      setSortmenunew(2)
+      PlantsAdvanceSearch()
     
     }
     const SortPlants_ByPriceACS = () => {
@@ -119,7 +224,7 @@ function SearchResultProduct(props){
           })
       }
       fetchProductData()
-      setSortmenu(3)
+      setSortmenunew(3)
     }
     const SortPlants_ByPriceDEC= () => {
       async function fetchProductData() {
@@ -131,7 +236,7 @@ function SearchResultProduct(props){
           })
       }
       fetchProductData()
-      setSortmenu(4)
+      setSortmenunew(4)
     }
 
     const SortTools_ByNameACS = () => {
@@ -144,7 +249,7 @@ function SearchResultProduct(props){
           })
       }
       fetchProductData()
-      setSortmenu(5)
+      setSortmenunew(5)
     }
     const SortTools_ByNameDES = () => {
       async function fetchProductData() {
@@ -156,7 +261,7 @@ function SearchResultProduct(props){
           })
       }
       fetchProductData()
-      setSortmenu(6)
+      setSortmenunew(6)
     }
     const SortTools_ByPriceACS = () => {
       async function fetchProductData() {
@@ -168,7 +273,7 @@ function SearchResultProduct(props){
           })
       }
       fetchProductData()
-      setSortmenu(7)
+      setSortmenunew(7)
     }
     const SortTools_ByPriceDES = () => {
       async function fetchProductData() {
@@ -180,7 +285,7 @@ function SearchResultProduct(props){
           })
       }
       fetchProductData()
-      setSortmenu(8)
+      setSortmenunew(8)
     }
     const Sortbytime = () => {
       async function fetchProductData() {
@@ -192,8 +297,9 @@ function SearchResultProduct(props){
           })
       }
       fetchProductData()
-      setSortmenu(9)
+      setSortmenunew(9)
     }
+
 
     useEffect(() => {
       async function fetchProductData() {
@@ -238,7 +344,7 @@ function SearchResultProduct(props){
               className="Searchicon"
               fontSize="large"/>
             </IconButton>         
-            <Chip label={"You searched for "+searchText} variant="outlined"/>
+            <Chip label={"You searched for "+searchTextPlants} variant="outlined"/>
             </Grid>
             <Grid 
               item xs={4}
@@ -256,10 +362,8 @@ function SearchResultProduct(props){
             
             <br/>
             <Grid container style={{ minHeight: '100vh' }} xs={24}>
-                <Grid item xs={6} sm={3} style={{ padding: 10 }}> 
-                             
+                <Grid item xs={6} sm={3} style={{ padding: 10 }}>                    
                 </Grid>
-
                 <Grid
                 container
                 item
@@ -268,10 +372,9 @@ function SearchResultProduct(props){
                 alignItems='flex-start'
                 justify='space-between'
                 style={{ padding: 10 }}>
-                  
                   <div>
         <Box sx={{ width: '100%' }}>
-        <Stack direction="row" spacing={2}>
+           <Stack direction="row" spacing={2}>
         <Typography variant="body" gutterBottom>
               	Sort By:</Typography>
                 <Button variant= { sortmenu==1 ? 'contained' : 'text'} onClick={( )=>SortPlants_ByNameACS( )} size="small"> Plants A to Z </Button>
@@ -285,7 +388,6 @@ function SearchResultProduct(props){
                 <Button variant={ sortmenu==9 ? 'contained' : 'text'} onClick={( )=>Sortbytime( )}size="small">          Newest </Button>  
                 </Stack>     
         <div className="showProductSubs">
-
           Plants
         </div>
         <Grid  container spacing={2}>
@@ -300,6 +402,7 @@ function SearchResultProduct(props){
         </Grid>
         </Box>
         <Box sx={{ width: '100%' }}>
+
         <div className="showProductSubs">
           Tools 
         </div>
