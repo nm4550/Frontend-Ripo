@@ -35,6 +35,10 @@
     padding-right: 3px;
 }
 
+.Message:hover{
+    color: black;
+}
+
 .waterButton{
     border-left: 1px solid rgb(226, 226, 226);
     color: #b8e8ee;
