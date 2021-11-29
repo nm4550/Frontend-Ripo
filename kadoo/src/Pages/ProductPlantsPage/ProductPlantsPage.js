@@ -39,7 +39,7 @@ class ProductPlantsPage extends React.Component {
               this.setState({ tags: data })
               console.log(this.state.tags)
             });
-        fetch('http://127.0.0.1:8000/api/albumImages/' + this.state.id + '/')
+        fetch('http://127.0.0.1:8000/api/plantAlbumImages/' + this.state.id + '/')
           .then(response => response.json())
           .then(data => {
               this.setState({ album: data })
@@ -104,7 +104,7 @@ class ProductPlantsPage extends React.Component {
                                     onClick={backWardImageClick}>
                                     <ArrowBackIosIcon />
                                 </IconButton>
-                                <img className="ProductPageImage" src={this.state.imageName.image} alt = {this.state.imageName.name} sx={{width:{xs:'300px', sm:'400px'},height:{xs:'300px', sm:'400px'}}}></img>
+                                <img className="ProductPageImage" src={this.state.imageName.image} alt = {this.state.imageName.name} sx={{width:{xs:'300px', sm:'400px'},heiyyght:{xs:'300px', sm:'400px'}}}></img>
                                 <IconButton 
                                     sx={{ display: { xs: 'inline-block', md: 'none' } }}
                                     size='large'
