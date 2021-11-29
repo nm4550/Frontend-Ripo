@@ -467,21 +467,36 @@ function SearchResultProduct(props) {
         >
           <div>
             <Box sx={{ width: '100%' }}>
-              {/* ////////////////////////// NavBar Sort ////////////////////////// */}
-              {/* ////////////////////////// Samples ////////////////////////// */}
-              {/* /////// Sort /////// */}
-              {/* <Button onClick={() => handleToolsSortBy_Name_ASC()}></Button> */}
+               
+                <Stack direction="row" spacing={2}>
+        <Typography variant="body" gutterBottom>
+              	Sort By:</Typography>
+                <Button variant= { sortSelectMenu==1 ? 'contained' : 'text'} onClick={( )=>handlePlantsSortBy_Name_ASC( )} size="small"> Plants A to Z </Button>
+                <Button variant={ sortSelectMenu==2 ? 'contained' : 'text'} onClick={( ) => handlePlantsSortBy_Name_DES( )}size="small"> Plants Z to A </Button>
+                <Button variant={sortSelectMenu==5 ? 'contained' : 'text'} onClick={( )=> handlePlantsSortBy_Price_ASC( )}size="small"> Plants ACS Price </Button>
+                <Button variant={ sortSelectMenu==6 ? 'contained' : 'text'} onClick={( )=> handlePlantsSortBy_Price_DES( )}size="small"> Plants DES Price </Button>
+                <Button variant={ sortSelectMenu==3 ? 'contained' : 'text'} onClick={( )=>handlePlantsSortBy_Time_ASC( )}size="small">Plants ACS time  </Button>
+                <Button variant={ sortSelectMenu==4 ? 'contained' : 'text'} onClick={( )=>handlePlantsSortBy_Time_DES( )}size="small">Plants DES time  </Button>
+                <Button variant={ sortSelectMenu==7 ? 'contained' : 'text'} onClick={( )=>handleToolsSortBy_Name_ASC( )}size="small"> Tools A to Z </Button>
+                <Button variant={ sortSelectMenu==8 ? 'contained' : 'text'} onClick={( )=>handleToolsSortBy_Name_DES( )}size="small"> Tools Z to A</Button>
+                <Button variant={ sortSelectMenu==9 ? 'contained' : 'text'} onClick={( )=>handleToolsSortBy_Price_ASC( )}size="small">   Tools ACS Price </Button> 
+                 <Button variant={ sortSelectMenu==10 ? 'contained' : 'text'} onClick={( )=>handleToolsSortBy_Price_DES( )}size="small"> Tools DES Price </Button> 
+                  <Button variant={ sortSelectMenu==11 ? 'contained' : 'text'} onClick={( )=>handleToolsSortBy_Time_ASC( )}size="small">   Tools ACS time </Button> 
+                   <Button variant={ sortSelectMenu==12 ? 'contained' : 'text'} onClick={( )=>handleToolsSortBy_Time_DES( )}size="small">    Tools DES time </Button> 
+
+                </Stack>    
               <Box>
                 <div className='showProductSubs'>Plants</div>
                 <Divider variant='middle' />
-                {searchPlantData.length != 0 && (
+                {( Array.isArray(searchPlantData) && searchPlantData.length != 0) && (
                   <div>
                     <Grid container spacing={2} sx={{ mt: 2 }}>
                       <ShowPlants data={searchPlantData} />
                     </Grid>
                   </div>
                 )}
-                {searchPlantData.length === 0 && (
+                
+                { ( Array.isArray(searchPlantData) && searchPlantData.length === 0) && (
                   <div>
                     {searchPlantDataLoaded === true && (
                       <Alert severity='error'>
@@ -499,14 +514,14 @@ function SearchResultProduct(props) {
               <Box>
                 <div className='showProductSubs'>Tools</div>
                 <Divider variant='middle' />
-                {searchToolData.length != 0 && (
+                {( Array.isArray(searchToolData) && searchToolData.length  != 0) && (
                   <div>
                     <Grid container spacing={2} sx={{ mt: 2 }}>
                       <ShowTools tooldata={searchToolData} />
                     </Grid>
                   </div>
                 )}
-                {searchToolData.length === 0 && (
+                { ( Array.isArray(searchToolData) && searchToolData.length === 0) && (
                   <div>
                     {searchToolDataLoaded === true && (
                       <Alert severity='error'>
