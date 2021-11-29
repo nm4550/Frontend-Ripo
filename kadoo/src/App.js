@@ -4,7 +4,7 @@ import SignIn from "./Pages/SignIn/SignIn";
 import SignUp from "./Pages/SignUp/SignUp";
 import HomePage from './Pages/HomePage/HomePage';
 import SearchResultProduct from './Components/SearchResultsProduct/SearchResultProduct';
-//import { createTheme , ThemeProvider} from '@material-ui/core'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { BrowserRouter as Router, Route, Link, BrowserRouter ,Switch } from 'react-router-dom';
 import './App.css';
 import Cart from './Pages/AddToCart';
@@ -14,34 +14,22 @@ import ProductToolsPage from './Pages/ProductToolsPage/ProductToolsPage';
 import LandingPage from './Pages/LandingPage/LandingPage';
 
 
-//const theme = createTheme({
-  //palette: {
-    //grey
-    //primary: {
-      //main: '#B8B8B8' ,
-      //light: '#616161' ,
-      //dark: '#212121'
-    //},
-    //green
-    //secondary:
-    //{
-      //main: '#B8E0D2' ,
-      //light: '#7FC7AD' ,
-      //dark: '#19392D'
-    //}
-  //},
-  //typography: {
-    //fontFamily: 'Quicksand',
-    //fontWeightLight: 400,
-    //fontWeightRegular: 500,
-    //fontWeightMedium: 600,
-    //fontWeightBold: 700,
-  //}
-//})
+const Theme = createTheme({
+  palette: {
+    type: 'light',
+    primary: {
+      main: '#069c5e',
+    },
+    secondary: {
+      main: '#B8E0D2',
+    },
+    divider: '#aaaaaa',
+  },
+});
 
 function App() {
   return (
-    //<ThemeProvider theme={theme}>
+    <ThemeProvider theme={Theme}>
       <Router>
         <Switch>
           <Route exact path="/" component={LandingPage}/>
@@ -55,7 +43,7 @@ function App() {
           <Route exact path="/ProductToolsPage/:id" component={ProductToolsPage}/>
         </Switch>
       </Router>
-    //</ThemeProvider>
+    </ThemeProvider>
     
   );
 }
