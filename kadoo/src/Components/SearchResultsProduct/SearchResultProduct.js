@@ -21,6 +21,19 @@ import Divider from '@mui/material/Divider'
 import Stack from '@mui/material/Stack'
 import Alert from '@mui/material/Alert'
 import Typography from '@mui/material/Typography'
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
+import FormGroup from '@mui/material/FormGroup';
+import Checkbox from '@mui/material/Checkbox';
+import Slider from '@mui/material/Slider';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -292,6 +305,7 @@ function SearchResultProduct(props) {
   }
   // 2) Filter By Water Plants
   const handleFilterWater = (value) => {
+    console.log('sara eshghe mne')
     setFilterWaterPlants(value)
   }
   // 3) Filter By Light Plants
@@ -311,6 +325,27 @@ function SearchResultProduct(props) {
     setFilterPriceLowerTools(lower)
     setFilterPriceHigherTools(higher)
   }
+  // 7) Filter By Plant Data
+  const handleSearchPlantData = () => {
+    setSearchPlantData([])
+  }
+  // 8) Filter By Tool Data
+  const handleSearchToolData = () => {
+    setSearchToolData([])
+  }
+  // 9) Filter handel change water
+   const handleChangeWater = (event) => {
+    handleFilterWater(event.target.value)
+  };
+  // 10) Filter handel change light
+   const handleChangeLight = (event) => {
+    handleFilterLight(event.target.value)
+  };
+ // 11) Filter handel change price
+   const handleChangePrice = (lower, higher) => {
+    handleFilterPricePlants(lower)
+    handleFilterPricePlants(higher)
+  };
   ////////////////////// Pagination Functions //////////////////////
   // 1) Pagination Plants
   const handlePaginationPlants = (count, page) => {
@@ -331,11 +366,11 @@ function SearchResultProduct(props) {
       ToolsAdvanceSearch()
     }
     if (
-      filterGrowthRatePlants !== '' &&
-      filterLightPlants !== '' &&
-      fiterEnvironmentPlants !== '' &&
-      filterWaterPlants !== '' &&
-      filterPriceHigherPlants !== '' &&
+      filterGrowthRatePlants !== '' ||
+      filterLightPlants !== '' ||
+      fiterEnvironmentPlants !== '' ||
+      filterWaterPlants !== '' ||
+      filterPriceHigherPlants !== '' ||
       filterPriceLowerPlants !== ''
     ) {
       PlantsAdvanceSearch()
@@ -455,22 +490,95 @@ function SearchResultProduct(props) {
           {/* ////////////////////////// Sidbar For Filter ////////////////////////// */}
           {/* /////// Filter /////// */}
           {/* <Button onClick={() => handleFilterEnvironment(VALUEFROMUSER)}></Button> */}
-        </Grid>
-        <Grid
-          container
-          item
-          xs={18}
-          sm={9}
-          alignItems='flex-start'
-          justify='space-between'
-          style={{ padding: 10 }}
-        >
+          <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Water</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={filterWaterPlants}
+            label="Light"
+            onChange={handleChangeLight}
+          >
+            <MenuItem value={'low'}>Low</MenuItem>
+            <MenuItem value={'medium'}>Medium</MenuItem>
+            <MenuItem value={'much'}>Much</MenuItem>
+          </Select>
+        </FormControl>
+        <hr/>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Light</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={filterWaterPlants}
+            label="Water"
+            onChange={handleChangeWater}
+          >
+            <MenuItem value={'low'}>Low</MenuItem>
+            <MenuItem value={'medium'}>Medium</MenuItem>
+            <MenuItem value={'much'}>Much</MenuItem>
+          </Select>
+        </FormControl>
+        <hr/>
+        <FormControl component="fieldset">
+          <FormLabel component="legend">Type of data</FormLabel>
+              <RadioGroup
+                aria-label="gender"
+                name="controlled-radio-buttons-group"
+                value1={searchPlantData}
+                value2={searchToolData}
+                onChange={handleSearchPlantData}
+              >
+                <FormControlLabel value1="female" control={<Radio />} label="Plants" />
+                <FormControlLabel value2="male" control={<Radio />} label="Tools" />
+              </RadioGroup>
+          </FormControl>
+          <hr/>
+          <FormGroup>
+            <FormControlLabel control={<Checkbox defaultChecked />} label="GrowthRate" />
+          </FormGroup>
+          <hr/>
+          <Box sx={{ width: 300 }}>
+            <Typography id="input-slider" gutterBottom>
+              Range of Price
+            </Typography>
+            <Slider 
+              getAriaLabel={() => 'Temperature range'}
+              value={filterPriceLowerPlants}
+              onChange={handleFilterPricePlants}
+              valueLabelDisplay="auto"
+              getAriaValueText={handleChangePrice}
+              min={10}
+              max={110}
+            />
+          </Box>
+          </Grid>
+          <Grid
+            container
+            item
+            xs={18}
+            sm={9}
+            alignItems='flex-start'
+            justify='space-between'
+            style={{ padding: 10 }}
+            
+          >
           <div>
             <Box sx={{ width: '100%' }}>
               {/* ////////////////////////// NavBar Sort ////////////////////////// */}
               {/* ////////////////////////// Samples ////////////////////////// */}
               {/* /////// Sort /////// */}
               {/* <Button onClick={() => handleToolsSortBy_Name_ASC()}></Button> */}
+              <Stack direction="row" spacing={2}>
+                <Typography variant="body" gutterBottom>
+              	Sort By:</Typography>
+                <Button variant= { sortSelectMenu==1 ? 'contained' : 'text'} onClick={( )=>{handlePlantsSortBy_Name_ASC( )  ;handleToolsSortBy_Name_ASC( )}  } size="small">  A to Z </Button>
+                <Button variant={ sortSelectMenu==2 ? 'contained' : 'text'} onClick={( ) => {handlePlantsSortBy_Name_DES( ) ;handleToolsSortBy_Name_DES( )}}size="small">  Z to A </Button>
+                <Button variant={sortSelectMenu==3 ? 'contained' : 'text'} onClick={( )=> {handlePlantsSortBy_Price_ASC( )  ;handleToolsSortBy_Price_ASC()}}size="small">  ACS Price </Button>
+                <Button variant={ sortSelectMenu==4 ? 'contained' : 'text'} onClick={( )=> {handlePlantsSortBy_Price_DES( ) ;handleToolsSortBy_Price_DES() }}size="small"> DES Price </Button>
+                <Button variant={ sortSelectMenu==5 ? 'contained' : 'text'} onClick={( )=>{handlePlantsSortBy_Time_ASC( )   ;handleToolsSortBy_Time_ASC() } }size="small"> ACS time  </Button>
+                <Button variant={ sortSelectMenu==6 ? 'contained' : 'text'} onClick={( )=>{handlePlantsSortBy_Time_DES( )   ;handleToolsSortBy_Time_DES( ) }}size="small"> DES time  </Button>
+                </Stack>  
               <Box>
                 <div className='showProductSubs'>Plants</div>
                 <Divider variant='middle' />
