@@ -1,8 +1,6 @@
 import React,{useEffect,useState} from 'react' ;
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import ButtonBase from '@mui/material/ButtonBase';
 import { styled } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
 import ProductIcon1 from "../productIcon/productIcon1";
@@ -22,7 +20,7 @@ const Item = styled(Paper)(({ theme }) => ({
     maxHeight: '100%',
   });
 
-  function ShowProduct(){
+  function ShowProduct(props){
     const [data, setData] = useState([])
     const [tooldata , setTooldata] = useState([])
     useEffect(() => {
