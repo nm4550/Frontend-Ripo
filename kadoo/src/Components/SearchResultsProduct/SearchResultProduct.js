@@ -22,6 +22,8 @@ import Stack from '@mui/material/Stack'
 import Alert from '@mui/material/Alert'
 import Typography from '@mui/material/Typography'
 
+
+
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
@@ -244,34 +246,34 @@ function SearchResultProduct(props) {
   }
   // 4) Sort By Name Tools
   const handleToolsSortBy_Name_ASC = () => {
-    setSortSelectMenu(7)
+    
     setSortKindTools('name')
     setSortOrderTools('ASC')
   }
   const handleToolsSortBy_Name_DES = () => {
-    setSortSelectMenu(8)
+    
     setSortKindTools('name')
     setSortOrderTools('DES')
   }
   // 5) Sort By Price Tools
   const handleToolsSortBy_Price_ASC = () => {
-    setSortSelectMenu(9)
+    
     setSortKindTools('price')
     setSortOrderTools('ASC')
   }
   const handleToolsSortBy_Price_DES = () => {
-    setSortSelectMenu(10)
+    
     setSortKindTools('price')
     setSortOrderTools('DES')
   }
   // 6) Sort By Time Tools
   const handleToolsSortBy_Time_ASC = () => {
-    setSortSelectMenu(11)
+    
     setSortKindTools('time')
     setSortOrderTools('ASC')
   }
   const handleToolsSortBy_Time_DES = () => {
-    setSortSelectMenu(12)
+    
     setSortKindTools('time')
     setSortOrderTools('DES')
   }
@@ -425,7 +427,9 @@ function SearchResultProduct(props) {
           ></TextField>
           {/* ////////////////////////// Samples ////////////////////////// */}
           {/* /////// Search /////// */}
-          {/* <Button onClick={() => handleSearchPlantsByName(searchText)}></Button> */}
+          {/* <Button onClick={() => handleSearchPlantsByName(searchText)}></Button> */} 
+         
+
           <IconButton>
             <SearchIcon className='Searchicon' fontSize='large' />
           </IconButton>
@@ -471,19 +475,16 @@ function SearchResultProduct(props) {
                 <Stack direction="row" spacing={2}>
         <Typography variant="body" gutterBottom>
               	Sort By:</Typography>
-                <Button variant= { sortSelectMenu==1 ? 'contained' : 'text'} onClick={( )=>handlePlantsSortBy_Name_ASC( )} size="small"> Plants A to Z </Button>
-                <Button variant={ sortSelectMenu==2 ? 'contained' : 'text'} onClick={( ) => handlePlantsSortBy_Name_DES( )}size="small"> Plants Z to A </Button>
-                <Button variant={sortSelectMenu==5 ? 'contained' : 'text'} onClick={( )=> handlePlantsSortBy_Price_ASC( )}size="small"> Plants ACS Price </Button>
-                <Button variant={ sortSelectMenu==6 ? 'contained' : 'text'} onClick={( )=> handlePlantsSortBy_Price_DES( )}size="small"> Plants DES Price </Button>
-                <Button variant={ sortSelectMenu==3 ? 'contained' : 'text'} onClick={( )=>handlePlantsSortBy_Time_ASC( )}size="small">Plants ACS time  </Button>
-                <Button variant={ sortSelectMenu==4 ? 'contained' : 'text'} onClick={( )=>handlePlantsSortBy_Time_DES( )}size="small">Plants DES time  </Button>
-                <Button variant={ sortSelectMenu==7 ? 'contained' : 'text'} onClick={( )=>handleToolsSortBy_Name_ASC( )}size="small"> Tools A to Z </Button>
-                <Button variant={ sortSelectMenu==8 ? 'contained' : 'text'} onClick={( )=>handleToolsSortBy_Name_DES( )}size="small"> Tools Z to A</Button>
-                <Button variant={ sortSelectMenu==9 ? 'contained' : 'text'} onClick={( )=>handleToolsSortBy_Price_ASC( )}size="small">   Tools ACS Price </Button> 
-                 <Button variant={ sortSelectMenu==10 ? 'contained' : 'text'} onClick={( )=>handleToolsSortBy_Price_DES( )}size="small"> Tools DES Price </Button> 
-                  <Button variant={ sortSelectMenu==11 ? 'contained' : 'text'} onClick={( )=>handleToolsSortBy_Time_ASC( )}size="small">   Tools ACS time </Button> 
-                   <Button variant={ sortSelectMenu==12 ? 'contained' : 'text'} onClick={( )=>handleToolsSortBy_Time_DES( )}size="small">    Tools DES time </Button> 
+                <Button variant= { sortSelectMenu==1 ? 'contained' : 'text'} onClick={( )=>{handlePlantsSortBy_Name_ASC( )  ;handleToolsSortBy_Name_ASC( )}  } size="small">  A to Z </Button>
+                <Button variant={ sortSelectMenu==2 ? 'contained' : 'text'} onClick={( ) => {handlePlantsSortBy_Name_DES( ) ;handleToolsSortBy_Name_DES( )}}size="small">  Z to A </Button>
+                <Button variant={sortSelectMenu==3 ? 'contained' : 'text'} onClick={( )=> {handlePlantsSortBy_Price_ASC( )  ;handleToolsSortBy_Price_ASC()}}size="small">  ACS Price </Button>
+                <Button variant={ sortSelectMenu==4 ? 'contained' : 'text'} onClick={( )=> {handlePlantsSortBy_Price_DES( ) ;handleToolsSortBy_Price_DES() }}size="small"> DES Price </Button>
+                <Button variant={ sortSelectMenu==5 ? 'contained' : 'text'} onClick={( )=>{handlePlantsSortBy_Time_ASC( )   ;handleToolsSortBy_Time_ASC() } }size="small"> ACS time  </Button>
+                <Button variant={ sortSelectMenu==6 ? 'contained' : 'text'} onClick={( )=>{handlePlantsSortBy_Time_DES( )   ;handleToolsSortBy_Time_DES( ) }}size="small"> DES time  </Button>
 
+                
+               
+               
                 </Stack>    
               <Box>
                 <div className='showProductSubs'>Plants</div>
