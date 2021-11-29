@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
+import "./HomePage.css";
 import Navbar from "../../Components/Navbar/Navbar";
 import ShowPlants from '../../Components/ShowProduct/ShowPlants';
 import ShowTools from '../../Components/ShowProduct/ShowTools';
-import Pagination from '../../Components/Pagination/Pagination';
-import axios from 'axios';
+import Pagination from '@mui/material/Pagination';
 
 class HomePage extends React.Component {
     state = {
@@ -31,10 +31,11 @@ class HomePage extends React.Component {
     
   render() {
       return(
-        <div>
+        <div className="home_elements">
         <Navbar/>
         <ShowPlants data={this.state.setPlants}/>
         <ShowTools tooldata={this.state.setTools}/>
+        <Pagination className="pagination_center" count={5} />
         </div>
       )
     }

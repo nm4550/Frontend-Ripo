@@ -90,7 +90,7 @@
     opacity: 0.7;
   }
   
-  .text {
+.text {
     font-family: "Quicksand";
     color: white;
     font-size: 10px;
@@ -103,4 +103,21 @@
     text-align: center;
   }
 
+@media screen and (max-width: 1113px) {
+  .Message{
+      font-size: smaller;
+  }
+}
+
+@media screen and (min-width:600px) and (max-width: 696px) {
+    .Message{
+        font-size: x-small;
+    }
+  }
+
+@media screen and (max-width: 599px) {
+    .Message{
+        font-size: small;
+    }
+  }
 

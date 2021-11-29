@@ -28,7 +28,7 @@ function ProductIcon2(props){
           <Link to = {'/ProductPlantsPage/'+ props.product.id}>
             <div className="productIconImageContainer"><img className="productIconImage" src={props.product.image}></img></div>
             <div className="overlay">
-              <div className="text">{props.product.description}</div>
+              <div className="text">{`${props.product.description.substring(0, 200)}...`}</div>
             </div>
           </Link>
           </Grid>
