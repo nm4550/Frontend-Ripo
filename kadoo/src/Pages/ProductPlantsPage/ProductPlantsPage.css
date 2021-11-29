@@ -29,9 +29,7 @@
 }
 
 .ProductPageImage{
-        object-fit: fit;
-        width: 400px;
-        height: 400px;
+    object-fit: fit;
 }
 
 .ProductPageTitle{
