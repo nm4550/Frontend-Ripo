@@ -24,12 +24,13 @@ function ProductIcon2(props){
     return( 
         <Box className="productIconLink" sx={{ width: '100%' }}>
         <Grid container rowSpacing={1}>
-          <Grid item xs={12}>
-          <LightTooltip title={props.product.description}>
+          <Grid className="container" item xs={12}>
           <Link to = {'/ProductPlantsPage/'+ props.product.id}>
             <div className="productIconImageContainer"><img className="productIconImage" src={props.product.image}></img></div>
+            <div className="overlay">
+              <div className="text">{props.product.description}</div>
+            </div>
           </Link>
-          </LightTooltip>
           </Grid>
           <Grid item xs={12}>
             <div className="productIconName"><a>{props.product.name}</a></div>

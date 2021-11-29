@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import Navbar from "../../Components/Navbar/Navbar";
 import ShowPlants from '../../Components/ShowProduct/ShowPlants';
 import ShowTools from '../../Components/ShowProduct/ShowTools';
-
+import Pagination from '../../Components/Pagination/Pagination';
+import axios from 'axios';
 
 class HomePage extends React.Component {
     state = {
