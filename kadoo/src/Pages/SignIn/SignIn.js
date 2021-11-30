@@ -2,7 +2,7 @@ import React from 'react'
 import Background from '../../Images/SignIn/signInBG.png'
 import { Grid, TextField, Button, InputAdornment } from '@mui/material'
 import { EmailRounded, VpnKey } from '@mui/icons-material'
-import { useState } from 'react'
+import { useState , useEffect} from 'react'
 import history from '../../history'
 import "./SignIn.css"
 
@@ -13,7 +13,13 @@ function SignIn() {
   })
   const [formData, updateFormData] = useState(initialFormData)
   const [flagData, setFlagData] = useState(false)
-  const [errorData, updateErrorData] = useState(initialFormData);
+  const [errorData, updateErrorData] = useState([]);
+  const [refresh, setRefresh] = useState(false)
+  
+  useEffect(() => {
+    updateErrorData([]);
+    console.log(errorData);
+  }, [refresh])
 
   const handleChange = (e) => {
     updateFormData({
@@ -26,7 +32,11 @@ function SignIn() {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log(formData)
-
+    
+    if(refresh)
+      setRefresh(false);
+    else
+      setRefresh(true);
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
