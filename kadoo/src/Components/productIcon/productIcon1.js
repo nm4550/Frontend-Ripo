@@ -24,6 +24,10 @@ function ProductIcon1(props){
             <div className="productIconPrice">${props.product.price}
             </div>
           </Grid>
+          <Grid item xs={12}>
+            <div className="productIconPrice">
+            </div>
+          </Grid>
         </Grid>
       </Box>
     )
