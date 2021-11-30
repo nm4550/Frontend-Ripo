@@ -152,6 +152,7 @@ function SignIn() {
               className="ButtonStyle"
               variant='contained'
               href="/HomePage"
+              onClick={handleSubmit}
             >
               Sign In
             </a>
