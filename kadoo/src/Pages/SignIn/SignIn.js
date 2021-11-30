@@ -82,7 +82,7 @@ function SignIn() {
   }
   return (
     <div>
-      <Grid container style={{ minHeight: '100vh' }}>
+      <Grid container style={{ minHeight: '100vh' }} sx={{pl:{sm:20 , xs:0} , pr:{sm:20 , xs:0}}}>
         <Grid item xs={12} sm={6}>
           <img
             src={Background}
@@ -148,21 +148,21 @@ function SignIn() {
               maxWidth: 400,
               minWidth: 300,
             }} />
-            <Button
-              className='ButtonStyle'
+            <a
+              className="ButtonStyle"
               variant='contained'
-              onClick={handleSubmit}
-              href="/Homepage"
+              href="/HomePage"
             >
               Sign In
-            </Button>
-            <div style={{ height: 20 }} />
-            <Button
-            className='ButtonStyle2' 
-            href="/signup"
-            variant='outlined' onClick={() => history.push("/signup")}>
+            </a>
+            <div style={{ height: 30 }}  className="Buttons" />
+            <div className="divSignUp">
+              <a 
+              href="/signup" 
+              className="aSignUp">
               Sign Up
-            </Button>
+            </a>
+          </div>
           </div>      
         </Grid>
       </Grid>

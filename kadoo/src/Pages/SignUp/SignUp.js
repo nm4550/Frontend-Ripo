@@ -40,6 +40,29 @@ function SignUp() {
         password: formData.password,
       })
     )
+    
+    updateErrorData({
+      ...errorData,
+      name: '',
+    })
+    updateErrorData({
+      ...errorData,
+      lastName: '',
+    })
+    updateErrorData({
+      ...errorData,
+      userName: '',
+    })
+    updateErrorData({
+      ...errorData,
+      email: '',
+    })
+    updateErrorData({
+      ...errorData,
+      password: '',
+    })
+    console.log(errorData);
+
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -114,7 +137,7 @@ function SignUp() {
 
   return (
     <div>
-      <Grid container style={{ minHeight: '100vh' }}>
+      <Grid container style={{ minHeight: '100vh' }} sx={{pl:{sm:20 , xs:0} , pr:{sm:20 , xs:0}}} >
         <Grid item xs={12} sm={6}>
           <img
             src={Background}
@@ -139,6 +162,7 @@ function SignUp() {
               flexDirection: 'column',
               maxWidth: 400,
               minWidth: 300,
+              margin:0
             }}
           >
             <TextField
@@ -232,25 +256,26 @@ function SignUp() {
               }}
               onChange={handleChange}
             />
-            <div style={{ height: 20 }} />
-            <Button
+            <div style={{ height: 20 }}/>
+            <a
               className="ButtonStyle"
               variant='contained'
               onClick={handleSubmit}
               href="/"
             >
               Sign Up
-            </Button>
-            <div style={{ height: 20 }} />
-            <Button 
-            className="ButtonStyle2"
-            href="/signin" 
-            variant='outlined' 
-            onClick={() => history.push("/signin")}>
+            </a>
+            <div style={{ height: 30 }}  className="Buttons" />
+            <div className="divSignUp">
+              <a 
+              href="/signin" 
+              onClick={() => history.push("/signin")}
+              className="aSignUp">
               Have an account ?
-            </Button>
+            </a>
+            </div>
           </div>
-          <div />
+          <div style={{height:40}}/>
         </Grid>
       </Grid>
     </div>

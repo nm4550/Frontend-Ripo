@@ -5,13 +5,17 @@
     box-sizing: border-box;
     font-family: 'Poppins' , sans-serif;
 }
-
 .AppBar{
     color: "#282c34" !important;
 }
 
 .header{
     align-items: center;
+}
+
+.css-1oqqzyl-MuiContainer-root{
+    height: 100vh;
+    padding-top: 3px;
 }
 
 .css-hip9hq-MuiPaper-root-MuiAppBar-root {
@@ -71,7 +75,8 @@
 .Box1{
     align-items: center !important;
     justify-content: center !important;
-    display: flex !important
+    display: flex !important;
+    height: 80vh;
 }
 
 .Button{
@@ -168,4 +173,53 @@
     transform: scaleX(1);
     transform-origin: left;
     transition: transform 0.5s;
+}
+
+.Introduction{
+    margin-left: 10%;
+    margin-right: 10%;
+}
+
+.css-1ri6ub7-MuiPaper-root-MuiCard-root{
+    background-color:rgba(0,0,0,0.5) !important;
+}
+
+.Span{
+    color: #7FC7AD !important;
+}
+
+.TypographyKadoo{
+    font-weight: 800;
+    padding-bottom: 10%;
+    align-items: center !important;
+    justify-content: center !important;
+    display: flex !important;
+}
+
+.Card{
+    max-width: 100%;
+}
+
+.Container{
+    max-height: fit-content !important;
+    height: 200vh !important;
+}
+
+.GridContactUs{
+    align-items: center !important;
+    justify-content: center !important;
+    display: flex !important;
+    margin-top: 10%;
+}
+
+.Avatars{
+    margin-top: 10% !important;
+}
+
+.ContactUs{
+    color: #8c7fc7 !important;
+}
+
+.css-147bo66-MuiSvgIcon-root{
+    color: #7FC7AD !important;
 }
