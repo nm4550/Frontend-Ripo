@@ -1,0 +1,7 @@
+.home_elements{
+    margin-bottom: 30px;
+}
+.pagination_center{
+    display: flex;
+    justify-content: center;
+}
