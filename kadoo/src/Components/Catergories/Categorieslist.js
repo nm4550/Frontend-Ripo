@@ -23,6 +23,7 @@ import Alert from '@mui/material/Alert'
 import './Categorieslist.css'
 import SkeletonArticle from '../Cart/SkeletonArticle'
 
+
 const BoxItem = styled(Box)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
@@ -30,7 +31,8 @@ const BoxItem = styled(Box)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }))
 
-export default function SelectedListItem() {
+
+export default function SelectedListItem(props) {
   const [plantSelectedId, setPlantSelectedId] = React.useState(1)
   const [toolSelectedId, setToolSelectedId] = React.useState(1)
 
@@ -47,57 +49,63 @@ export default function SelectedListItem() {
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false)
   }
-  const handlePlantListItemClick = (event, Id) => {
-    setPlantSelectedId(Id)
-    setPlnatsData([])
-    setPlnatsDataLoaded(false)
+  const handlePlantListItemClick = (event, Id , name) => {
+    setPlantSelectedId(Id )
+    //setPlnatsData([])
+    //setPlnatsDataLoaded(false)
     setTimeout(async () => {
       const res = await fetch(
         'http://127.0.0.1:8000/api/plantsWithTag/' + Id + '/'
       )
       const data = await res.json()
-      setPlnatsData(data)
-      setPlnatsDataLoaded(true)
+      props.bindplants(data)
+      props.settext(name) 
+      //setPlnatsDataLoaded(true)
       console.log(data)
-    }, 3000)
+    }, 0)
   }
-  const handleToolListItemClick = (event, Id) => {
-    setToolSelectedId(Id)
-    setToolsData([])
-    setToolsDataLoaded(false)
+  const handleToolListItemClick = (event, Id , name) => {
+    setToolSelectedId(Id )
+    //setToolsData([])
+    //setToolsDataLoaded(false)
     setTimeout(async () => {
       const res = await fetch(
         'http://127.0.0.1:8000/api/toolsWithTag/' + Id + '/'
       )
       const data = await res.json()
-      setToolsData(data)
-      setToolsDataLoaded(true)
+      props.bindtools(data)
+       props.settext(name) 
+      //setToolsDataLoaded(true)
       console.log(data)
-    }, 3000)
+    }, 0)
   }
 
   const handlePlantListItemClickAll = () => {
-    setPlnatsData([])
-    setPlnatsDataLoaded(false)
+    //setPlnatsData([])
+    //setPlnatsDataLoaded(false)
+    setPlantSelectedId(1)
     setTimeout(async () => {
       const res = await fetch('http://127.0.0.1:8000/api/plantsList/')
       const data = await res.json()
-      setPlnatsData(data)
-      setPlnatsDataLoaded(true)
+      props.bindplants(data)
+       props.settext('All plants')
+      //setPlnatsDataLoaded(true)
       console.log(data)
-    }, 3000)
+    }, 0)
   }
 
   const handleToolListItemClickAll = () => {
-    setToolsData([])
-    setToolsDataLoaded(false)
+    //setToolsData([])
+    //setToolsDataLoaded(false)
+    setToolSelectedId(1)
     setTimeout(async () => {
       const res = await fetch('http://127.0.0.1:8000/api/toolsList/')
       const data = await res.json()
-      setToolsData(data)
-      setToolsDataLoaded(true)
+      props.bindtools(data)
+      props.settext('All tools')
+      //setToolsDataLoaded(true)
       console.log(data)
-    }, 3000)
+    }, 0)
   }
 
   useEffect(() => {
@@ -119,30 +127,30 @@ export default function SelectedListItem() {
         })
     }
 
-    setTimeout(async () => {
+   /* setTimeout(async () => {
       const res = await fetch('http://127.0.0.1:8000/api/plantsList/')
       const data = await res.json()
       setPlnatsData(data)
       setPlnatsDataLoaded(true)
       console.log(data)
-    }, 3000)
+    }, 3000)*/
 
-    setTimeout(async () => {
+    /*setTimeout(async () => {
       const res = await fetch('http://127.0.0.1:8000/api/toolsList/')
       const data = await res.json()
       setToolsData(data)
       setToolsDataLoaded(true)
       console.log(data)
-    }, 3000)
+    }, 3000)*/
 
     fetchPlantTagsData()
     fetchToolTagsData()
   }, [])
 
   return (
-    <Box sx={{ flexGrow: 1, m: 4 }}>
-      <Grid container spacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        <Grid item s={12} md={4}>
+    <Box sx={{ flexGrow: 1, m: 0 }}>
+      <Grid container spacing={0} >
+        <Grid item s={12} md={12}>
           <BoxItem>
             <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
               <Accordion
@@ -170,7 +178,7 @@ export default function SelectedListItem() {
                       <ListItemButton
                         selected={plantSelectedId === item.id}
                         onClick={(event) =>
-                          handlePlantListItemClick(event, item.id)
+                          handlePlantListItemClick(event, item.id , item.name) 
                         }
                       >
                         <ListItemText primary={item.name} />
@@ -204,7 +212,7 @@ export default function SelectedListItem() {
                       <ListItemButton
                         selected={toolSelectedId === item.id}
                         onClick={(event) =>
-                          handleToolListItemClick(event, item.id)
+                          handleToolListItemClick(event, item.id , item.name)
                         }
                       >
                         <ListItemText primary={item.name} />
@@ -216,120 +224,7 @@ export default function SelectedListItem() {
             </Box>
           </BoxItem>
         </Grid>
-        <Grid item s={12} md={8}>
-          <BoxItem>
-            <Box>
-              <Typography variant='h5' sx={{ m: 0.5 }}>
-                Plants
-              </Typography>
-              <Divider variant='middle' />
-              {plantsData.length != 0 && (
-                <div>
-                  <Grid container spacing={2} sx={{ mt: 2 }}>
-                    {plantsData.map((item) => (
-                      <Grid item md={4}>
-                        <Card>
-                          <CardMedia
-                            component='img'
-                            height='140'
-                            image={item.image}
-                            alt={item.name}
-                          />
-                          <CardContent>
-                            <Typography
-                              gutterBottom
-                              variant='h5'
-                              component='div'
-                            >
-                              {item.name}
-                            </Typography>
-                          </CardContent>
-                        </Card>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </div>
-              )}
-
-              {plantsData.length === 0 && (
-                <div>
-                  {plantsDataLoaded === true && (
-                    <Alert severity='error'>
-                      There is NO plant in this category right now! Come Back
-                      soon ...
-                    </Alert>
-                  )}
-                  {plantsDataLoaded === false && (
-                    <Stack sx={{ m: 2 }}>
-                      <SkeletonArticle />
-                    </Stack>
-                  )}
-                </div>
-              )}
-            </Box>
-
-            <Box sx={{ mt: 4 }}>
-              <Typography variant='h5' sx={{ m: 0.5 }}>
-                Tools
-              </Typography>
-              <Divider variant='middle' />
-              {toolsData.length != 0 && (
-                <div>
-                  <Grid container spacing={2} sx={{ mt: 2 }}>
-                    {toolsData.map((item) => (
-                      <Grid item md={4}>
-                        <Card>
-                          <Grid
-                            sx={{ height: 200, p: 5, m: 1 }}
-                            container
-                            justifyContent='center'
-                            alignItems='center'
-                          >
-                            <Grid item>
-                              <CardMedia
-                                component='img'
-                                height='140'
-                                image={item.image}
-                                className='image-media'
-                                alt={item.name}
-                              />
-                            </Grid>
-                          </Grid>
-
-                          <CardContent sx={{ mt: 5 }}>
-                            <Typography
-                              gutterBottom
-                              variant='h5'
-                              component='div'
-                            >
-                              {item.name}
-                            </Typography>
-                          </CardContent>
-                        </Card>
-                      </Grid>
-                    ))}
-                  </Grid>
-                </div>
-              )}
-
-              {toolsData.length === 0 && (
-                <div>
-                  {toolsDataLoaded === true && (
-                    <Alert severity='error'>
-                      There is NO tool in this category right now! Come Back
-                      soon ...
-                    </Alert>
-                  )}
-                  {toolsDataLoaded === false && (
-                    <Stack sx={{ m: 2 }}>
-                      <SkeletonArticle />
-                    </Stack>
-                  )}
-                </div>
-              )}
-            </Box>
-          </BoxItem>
-        </Grid>
+       
       </Grid>
     </Box>
   )

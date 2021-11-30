@@ -6,10 +6,13 @@ import TextField from '@mui/material/TextField';
 import UserDropDown from '../UserDropDown/UserDropDown';
 import history from '../../history';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
 
-function Navbar(){
+function Navbar(props){
       const [userNav, setUserNav] = useState(false)
       const [normalNav, setNav] = useState(true)
+       const [openDrawer, setOpenDrawer] = React.useState(false)
       const handleNav = e => {
         setNav(false)
       }
@@ -39,17 +42,45 @@ function Navbar(){
         }).catch( err => {})
         }, [])
 
+        
+        const handlemenue=() => { 
+            if (openDrawer){
+              props.closemenue ()
+              setOpenDrawer (false)
+              
+            }
+            else {
+              props.openmenue()
+              setOpenDrawer (true)
+            }
+
+        }
+
     return(
       <div className="navbar">
         <Grid container spacing={2}>
         <Grid
-        item xs={12} sm={2} md={2}
+        item xs={3} sm={1} md={0.75}
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+        >
+
+          <IconButton onClick={handlemenue}>
+          
+
+            <MenuIcon />
+          </IconButton>
+        </Grid>
+        <Grid
+        item xs={6} sm={2} md={1}
         >
           <h1>Kadoo</h1>
         </Grid>
         <Grid
-        item xs={12} sm={4} md={4}
+        item md={4}
         className="links"
+        sx={{ display: { xs: 'none', sm: 'none', md: 'flex' } }}
         >
           
           <a href="/HomePage">Home</a>
@@ -57,7 +88,7 @@ function Navbar(){
           <a href="/">Contact Us</a>
         </Grid>
         <Grid
-        item xs={12} sm={4} md={4}
+        item xs={12} sm={5} md={3}
         display="flex"
         className="searchBox"
         >
@@ -73,7 +104,7 @@ function Navbar(){
             onClick={() => history.push('/search')}/>
         </Grid>
         <Grid
-        item xs={12} sm={2} md={2}
+        item xs={12} sm={4} md={3}
         display="flex"
         className="buttons"
         >
