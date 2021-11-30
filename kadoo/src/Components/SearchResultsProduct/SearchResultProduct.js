@@ -57,11 +57,13 @@ function SearchResultProduct(props) {
   const [sortOrderPlants, setSortOrderPlants] = useState('')
   //Filter
   const [filterPriceLowerPlants, setFilterPriceLowerPlants] = useState('')
+  const [filterPricePlants, setFilterPricePlants] = useState('',)
   const [filterPriceHigherPlants, setFilterPriceHigherPlants] = useState('')
   const [fiterEnvironmentPlants, setFiterEnvironmentPlants] = useState('')
   const [filterWaterPlants, setFilterWaterPlants] = useState('')
   const [filterLightPlants, setFilterLightPlants] = useState('')
   const [filterGrowthRatePlants, setFilterGrowthRatePlants] = useState('')
+  const [filterType, setFilterType] = useState(0)
   //Pagination
   const [paginationCountPlants, setPaginationCountPlants] = useState('')
   const [paginationPagePlants, setPaginationPagePlants] = useState('')
@@ -325,26 +327,27 @@ function SearchResultProduct(props) {
     setFilterPriceLowerTools(lower)
     setFilterPriceHigherTools(higher)
   }
-  // 7) Filter By Plant Data
-  const handleSearchPlantData = () => {
-    setSearchPlantData([])
+  // 7) Filter By Type of data
+  const handleChangeTypeData = (event) => {
+    if(event.target.value === 'plant'){
+      setFilterType(1)
+    }
+    else if(event.target.value === 'tool'){
+      setFilterType(2)
+    }
   }
-  // 8) Filter By Tool Data
-  const handleSearchToolData = () => {
-    setSearchToolData([])
-  }
-  // 9) Filter handel change water
+  // 8) Filter handel change water
    const handleChangeWater = (event) => {
     handleFilterWater(event.target.value)
   };
-  // 10) Filter handel change light
+  // 9) Filter handel change light
    const handleChangeLight = (event) => {
     handleFilterLight(event.target.value)
   };
- // 11) Filter handel change price
-   const handleChangePrice = (lower, higher) => {
-    handleFilterPricePlants(lower)
-    handleFilterPricePlants(higher)
+ // 10) Filter handel change price
+   const handleChangePrice = (event) => {
+    handleFilterPricePlants(event.target.value[0] , event.target.value[1])
+    handleFilterPriceTools(event.target.value[0] , event.target.value[1])
   };
   ////////////////////// Pagination Functions //////////////////////
   // 1) Pagination Plants
@@ -490,23 +493,21 @@ function SearchResultProduct(props) {
           {/* ////////////////////////// Sidbar For Filter ////////////////////////// */}
           {/* /////// Filter /////// */}
           {/* <Button onClick={() => handleFilterEnvironment(VALUEFROMUSER)}></Button> */}
+          <FormControl component="fieldset">
+            <FormLabel component="sort">Type of  data</FormLabel>
+            <RadioGroup
+              aria-label="gender"
+              name="controlled-radio-buttons-group"
+              value={searchPlantData}
+              onChange={handleChangeTypeData}
+            >
+              <FormControlLabel checked={filterType === 1} value={'plant'} control={<Radio />} label="Plants" />
+              <FormControlLabel checked={filterType === 2} value={'tool'} control={<Radio />} label="Tools" />
+            </RadioGroup>
+          </FormControl>
+          <hr/>
           <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Water</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={filterWaterPlants}
-            label="Light"
-            onChange={handleChangeLight}
-          >
-            <MenuItem value={'low'}>Low</MenuItem>
-            <MenuItem value={'medium'}>Medium</MenuItem>
-            <MenuItem value={'much'}>Much</MenuItem>
-          </Select>
-        </FormControl>
-        <hr/>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Light</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             id="demo-simple-select"
@@ -520,36 +521,32 @@ function SearchResultProduct(props) {
           </Select>
         </FormControl>
         <hr/>
-        <FormControl component="fieldset">
-          <FormLabel component="legend">Type of data</FormLabel>
-              <RadioGroup
-                aria-label="gender"
-                name="controlled-radio-buttons-group"
-                value1={searchPlantData}
-                value2={searchToolData}
-                onChange={handleSearchPlantData}
-              >
-                <FormControlLabel value1="female" control={<Radio />} label="Plants" />
-                <FormControlLabel value2="male" control={<Radio />} label="Tools" />
-              </RadioGroup>
-          </FormControl>
-          <hr/>
-          <FormGroup>
-            <FormControlLabel control={<Checkbox defaultChecked />} label="GrowthRate" />
-          </FormGroup>
-          <hr/>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Light</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={filterLightPlants}
+            label="Light"
+            onChange={handleChangeLight}
+          >
+            <MenuItem value={'low'}>Low</MenuItem>
+            <MenuItem value={'medium'}>Medium</MenuItem>
+            <MenuItem value={'much'}>Much</MenuItem>
+          </Select>
+        </FormControl>
+        <hr/>
           <Box sx={{ width: 300 }}>
             <Typography id="input-slider" gutterBottom>
               Range of Price
             </Typography>
             <Slider 
               getAriaLabel={() => 'Temperature range'}
-              value={filterPriceLowerPlants}
-              onChange={handleFilterPricePlants}
+              value = {[filterPriceLowerPlants , filterPriceHigherPlants === '' ? 30:filterPriceHigherPlants]}
+              onChange={handleChangePrice}
               valueLabelDisplay="auto"
-              getAriaValueText={handleChangePrice}
-              min={10}
-              max={110}
+              min={4}$
+              max={30}$
             />
           </Box>
           </Grid>
@@ -582,7 +579,7 @@ function SearchResultProduct(props) {
               <Box>
                 <div className='showProductSubs'>Plants</div>
                 <Divider variant='middle' />
-                {searchPlantData.length != 0 && (
+                {(searchPlantData.length != 0 && filterType !== 2) && (
                   <div>
                     <Grid container spacing={2} sx={{ mt: 2 }}>
                       <ShowPlants data={searchPlantData} />
@@ -607,7 +604,7 @@ function SearchResultProduct(props) {
               <Box>
                 <div className='showProductSubs'>Tools</div>
                 <Divider variant='middle' />
-                {searchToolData.length != 0 && (
+                {(searchToolData.length != 0 &&  filterType !== 1)&&(
                   <div>
                     <Grid container spacing={2} sx={{ mt: 2 }}>
                       <ShowTools tooldata={searchToolData} />

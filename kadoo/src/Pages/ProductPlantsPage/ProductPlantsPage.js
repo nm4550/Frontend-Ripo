@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
 import Navbar from "../../Components/Navbar/Navbar";
+import Basket from "../../Components/Cart/Basket";
 import Button from '@mui/material/Button';
 import "./ProductPlantsPage.css";
 import Box from '@mui/material/Box';
@@ -86,6 +87,35 @@ class ProductPlantsPage extends React.Component {
         }
         this.setState({imageName : this.state.album[this.state.currentImage]})
     } 
+    var addToBasket=()=>{
+        const requestOptions = {
+            method: 'POST',
+            headers: { 
+              'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+              'Content-Type': 'application/json' },
+              body: JSON.stringify({id: this.state.product.id , count: `${this.state.numberOfBuy}`})
+          }
+          console.log(requestOptions.body)
+          fetch('http://127.0.0.1:8000/api/cart/add-plant-to-cart/', requestOptions)
+          .then((response) => {
+            console.log(response.status)
+          if(response.status === 201)
+          {
+            alert('successfully add!')
+          } 
+          else if(response.status === 401)
+          {
+              console.log(response)
+            alert('You are not login!')
+          }
+          else if(response.status === 400)
+          {
+              console.log(response)
+            alert('This Plant is already in the Basket!')
+          }
+        })
+            
+    }
         
       return (
         <div>
@@ -190,7 +220,7 @@ class ProductPlantsPage extends React.Component {
                             
                         </Grid>
                         <Grid container item justifyContent="flex-end" sx={{p:3 , Color: '#12824C'}} className="ProductPageTitle">
-                                <Button variant="contained" className="productsPageAdd">
+                                <Button variant="contained" className="productsPageAdd" onClick={addToBasket}>
                                     Add To Bascket
                                 </Button>
                             </Grid>
