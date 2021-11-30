@@ -21,6 +21,9 @@ import ListItemText from '@mui/material/ListItemText'
 import InboxIcon from '@mui/icons-material/MoveToInbox'
 import MailIcon from '@mui/icons-material/Mail'
 import Categorieslist from '../../Components/Catergories/Categorieslist'
+import ShowPlants from '../../Components/ShowProduct/ShowPlants'
+import ShowTools from '../../Components/ShowProduct/ShowTools'
+import Chip from '@mui/material/Chip'
 const drawerWidth = 240
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
@@ -52,8 +55,29 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 }))
 
 export default function HomePage() {
-  const [openDrawer, setOpenDrawer] = React.useState(true)
+    const [openDrawer, setOpenDrawer] = React.useState(false)
+    const [plantsData, setPlantsData] = React.useState([])
+    const [toolsData, setToolsData] = React.useState([])
+    const [isplant, setIsPlant] = React.useState(0) 
+    const [categoryText, setCategoryText] = React.useState('')
+  const handlePlantsData = (value) => {
+    setPlantsData(value)
+    setIsPlant(1)
 
+  }
+
+
+  const handleToolsData = (value) => {
+    setToolsData(value)
+    setIsPlant(2)
+    
+  }
+
+   const handleCategoryText = (value) => {
+    setCategoryText(value)
+    
+
+  }
   const handleDrawerOpen = () => {
     setOpenDrawer(true)
   }
@@ -61,6 +85,11 @@ export default function HomePage() {
   const handleDrawerClose = () => {
     setOpenDrawer(false)
   }
+
+  const handleDelete = () => {
+    setIsPlant (0)
+  };
+
 
   return (
     <div>
@@ -81,18 +110,22 @@ export default function HomePage() {
           open={openDrawer}
         >
           <DrawerHeader>
-            <IconButton onClick={handleDrawerClose}>
+          { /* <IconButton onClick={handleDrawerClose}>
               <ChevronLeftIcon />
-            </IconButton>
+            </IconButton>*/}
           
             </DrawerHeader>
-            <Categorieslist/>  
+            <Categorieslist bindplants={handlePlantsData} bindtools={ handleToolsData} settext={handleCategoryText}/>  
         </Drawer>
         <Main open={openDrawer}>
-          <DrawerHeader />
+         
           <Box>
-            <Navbar />
-            <ShowProduct />
+            <Navbar closemenue={handleDrawerClose} openmenue={handleDrawerOpen}/>
+            {(isplant !== 0 && (<Chip label={categoryText}  variant="outlined" sx={{mt:2, ml:2}}  onDelete={handleDelete} />))} 
+            
+            {(isplant === 0 && (<ShowProduct/>))} 
+            {(isplant === 1 && (<ShowPlants data={ plantsData}/>))}
+            {(isplant === 2 && (<ShowTools tooldata ={toolsData}/>))}
           </Box>
         </Main>
       </Box>

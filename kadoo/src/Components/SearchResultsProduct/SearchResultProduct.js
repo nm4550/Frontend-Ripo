@@ -22,6 +22,8 @@ import Stack from '@mui/material/Stack'
 import Alert from '@mui/material/Alert'
 import Typography from '@mui/material/Typography'
 
+
+
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
@@ -244,34 +246,34 @@ function SearchResultProduct(props) {
   }
   // 4) Sort By Name Tools
   const handleToolsSortBy_Name_ASC = () => {
-    setSortSelectMenu(7)
+    
     setSortKindTools('name')
     setSortOrderTools('ASC')
   }
   const handleToolsSortBy_Name_DES = () => {
-    setSortSelectMenu(8)
+    
     setSortKindTools('name')
     setSortOrderTools('DES')
   }
   // 5) Sort By Price Tools
   const handleToolsSortBy_Price_ASC = () => {
-    setSortSelectMenu(9)
+    
     setSortKindTools('price')
     setSortOrderTools('ASC')
   }
   const handleToolsSortBy_Price_DES = () => {
-    setSortSelectMenu(10)
+    
     setSortKindTools('price')
     setSortOrderTools('DES')
   }
   // 6) Sort By Time Tools
   const handleToolsSortBy_Time_ASC = () => {
-    setSortSelectMenu(11)
+    
     setSortKindTools('time')
     setSortOrderTools('ASC')
   }
   const handleToolsSortBy_Time_DES = () => {
-    setSortSelectMenu(12)
+    
     setSortKindTools('time')
     setSortOrderTools('DES')
   }
@@ -425,7 +427,9 @@ function SearchResultProduct(props) {
           ></TextField>
           {/* ////////////////////////// Samples ////////////////////////// */}
           {/* /////// Search /////// */}
-          {/* <Button onClick={() => handleSearchPlantsByName(searchText)}></Button> */}
+          {/* <Button onClick={() => handleSearchPlantsByName(searchText)}></Button> */} 
+         
+
           <IconButton>
             <SearchIcon className='Searchicon' fontSize='large' />
           </IconButton>
@@ -467,21 +471,33 @@ function SearchResultProduct(props) {
         >
           <div>
             <Box sx={{ width: '100%' }}>
-              {/* ////////////////////////// NavBar Sort ////////////////////////// */}
-              {/* ////////////////////////// Samples ////////////////////////// */}
-              {/* /////// Sort /////// */}
-              {/* <Button onClick={() => handleToolsSortBy_Name_ASC()}></Button> */}
+               
+                <Stack direction="row" spacing={2}>
+        <Typography variant="body" gutterBottom>
+              	Sort By:</Typography>
+                <Button variant= { sortSelectMenu==1 ? 'contained' : 'text'} onClick={( )=>{handlePlantsSortBy_Name_ASC( )  ;handleToolsSortBy_Name_ASC( )}  } size="small">  A to Z </Button>
+                <Button variant={ sortSelectMenu==2 ? 'contained' : 'text'} onClick={( ) => {handlePlantsSortBy_Name_DES( ) ;handleToolsSortBy_Name_DES( )}}size="small">  Z to A </Button>
+                <Button variant={sortSelectMenu==3 ? 'contained' : 'text'} onClick={( )=> {handlePlantsSortBy_Price_ASC( )  ;handleToolsSortBy_Price_ASC()}}size="small">  ACS Price </Button>
+                <Button variant={ sortSelectMenu==4 ? 'contained' : 'text'} onClick={( )=> {handlePlantsSortBy_Price_DES( ) ;handleToolsSortBy_Price_DES() }}size="small"> DES Price </Button>
+                <Button variant={ sortSelectMenu==5 ? 'contained' : 'text'} onClick={( )=>{handlePlantsSortBy_Time_ASC( )   ;handleToolsSortBy_Time_ASC() } }size="small"> ACS time  </Button>
+                <Button variant={ sortSelectMenu==6 ? 'contained' : 'text'} onClick={( )=>{handlePlantsSortBy_Time_DES( )   ;handleToolsSortBy_Time_DES( ) }}size="small"> DES time  </Button>
+
+                
+               
+               
+                </Stack>    
               <Box>
-                <div className='showProductSubs'>Plants</div>
-                <Divider variant='middle' />
-                {searchPlantData.length != 0 && (
+                {/*<div className='showProductSubs'>Plants</div>
+                <Divider variant='middle' />*/}
+                {( Array.isArray(searchPlantData) && searchPlantData.length != 0) && (
                   <div>
                     <Grid container spacing={2} sx={{ mt: 2 }}>
                       <ShowPlants data={searchPlantData} />
                     </Grid>
                   </div>
                 )}
-                {searchPlantData.length === 0 && (
+                
+                { ( Array.isArray(searchPlantData) && searchPlantData.length === 0) && (
                   <div>
                     {searchPlantDataLoaded === true && (
                       <Alert severity='error'>
@@ -497,16 +513,16 @@ function SearchResultProduct(props) {
                 )}
               </Box>
               <Box>
-                <div className='showProductSubs'>Tools</div>
-                <Divider variant='middle' />
-                {searchToolData.length != 0 && (
+                {/*<div className='showProductSubs'>Tools</div>
+                <Divider variant='middle' />*/}
+                {( Array.isArray(searchToolData) && searchToolData.length  != 0) && (
                   <div>
                     <Grid container spacing={2} sx={{ mt: 2 }}>
                       <ShowTools tooldata={searchToolData} />
                     </Grid>
                   </div>
                 )}
-                {searchToolData.length === 0 && (
+                { ( Array.isArray(searchToolData) && searchToolData.length === 0) && (
                   <div>
                     {searchToolDataLoaded === true && (
                       <Alert severity='error'>

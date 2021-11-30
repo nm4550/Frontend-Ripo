@@ -23,6 +23,7 @@ import Alert from '@mui/material/Alert'
 import './Categorieslist.css'
 import SkeletonArticle from '../Cart/SkeletonArticle'
 
+
 const BoxItem = styled(Box)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
@@ -30,7 +31,8 @@ const BoxItem = styled(Box)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }))
 
-export default function SelectedListItem() {
+
+export default function SelectedListItem(props) {
   const [plantSelectedId, setPlantSelectedId] = React.useState(1)
   const [toolSelectedId, setToolSelectedId] = React.useState(1)
 
@@ -47,57 +49,63 @@ export default function SelectedListItem() {
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false)
   }
-  const handlePlantListItemClick = (event, Id) => {
-    setPlantSelectedId(Id)
-    setPlnatsData([])
-    setPlnatsDataLoaded(false)
+  const handlePlantListItemClick = (event, Id , name) => {
+    setPlantSelectedId(Id )
+    //setPlnatsData([])
+    //setPlnatsDataLoaded(false)
     setTimeout(async () => {
       const res = await fetch(
         'http://127.0.0.1:8000/api/plantsWithTag/' + Id + '/'
       )
       const data = await res.json()
-      setPlnatsData(data)
-      setPlnatsDataLoaded(true)
+      props.bindplants(data)
+      props.settext(name) 
+      //setPlnatsDataLoaded(true)
       console.log(data)
-    }, 3000)
+    }, 0)
   }
-  const handleToolListItemClick = (event, Id) => {
-    setToolSelectedId(Id)
-    setToolsData([])
-    setToolsDataLoaded(false)
+  const handleToolListItemClick = (event, Id , name) => {
+    setToolSelectedId(Id )
+    //setToolsData([])
+    //setToolsDataLoaded(false)
     setTimeout(async () => {
       const res = await fetch(
         'http://127.0.0.1:8000/api/toolsWithTag/' + Id + '/'
       )
       const data = await res.json()
-      setToolsData(data)
-      setToolsDataLoaded(true)
+      props.bindtools(data)
+       props.settext(name) 
+      //setToolsDataLoaded(true)
       console.log(data)
-    }, 3000)
+    }, 0)
   }
 
   const handlePlantListItemClickAll = () => {
-    setPlnatsData([])
-    setPlnatsDataLoaded(false)
+    //setPlnatsData([])
+    //setPlnatsDataLoaded(false)
+    setPlantSelectedId(1)
     setTimeout(async () => {
       const res = await fetch('http://127.0.0.1:8000/api/plantsList/')
       const data = await res.json()
-      setPlnatsData(data)
-      setPlnatsDataLoaded(true)
+      props.bindplants(data)
+       props.settext('All plants')
+      //setPlnatsDataLoaded(true)
       console.log(data)
-    }, 3000)
+    }, 0)
   }
 
   const handleToolListItemClickAll = () => {
-    setToolsData([])
-    setToolsDataLoaded(false)
+    //setToolsData([])
+    //setToolsDataLoaded(false)
+    setToolSelectedId(1)
     setTimeout(async () => {
       const res = await fetch('http://127.0.0.1:8000/api/toolsList/')
       const data = await res.json()
-      setToolsData(data)
-      setToolsDataLoaded(true)
+      props.bindtools(data)
+      props.settext('All tools')
+      //setToolsDataLoaded(true)
       console.log(data)
-    }, 3000)
+    }, 0)
   }
 
   useEffect(() => {
@@ -119,21 +127,21 @@ export default function SelectedListItem() {
         })
     }
 
-    setTimeout(async () => {
+   /* setTimeout(async () => {
       const res = await fetch('http://127.0.0.1:8000/api/plantsList/')
       const data = await res.json()
       setPlnatsData(data)
       setPlnatsDataLoaded(true)
       console.log(data)
-    }, 3000)
+    }, 3000)*/
 
-    setTimeout(async () => {
+    /*setTimeout(async () => {
       const res = await fetch('http://127.0.0.1:8000/api/toolsList/')
       const data = await res.json()
       setToolsData(data)
       setToolsDataLoaded(true)
       console.log(data)
-    }, 3000)
+    }, 3000)*/
 
     fetchPlantTagsData()
     fetchToolTagsData()
@@ -170,7 +178,7 @@ export default function SelectedListItem() {
                       <ListItemButton
                         selected={plantSelectedId === item.id}
                         onClick={(event) =>
-                          handlePlantListItemClick(event, item.id)
+                          handlePlantListItemClick(event, item.id , item.name) 
                         }
                       >
                         <ListItemText primary={item.name} />
@@ -204,7 +212,7 @@ export default function SelectedListItem() {
                       <ListItemButton
                         selected={toolSelectedId === item.id}
                         onClick={(event) =>
-                          handleToolListItemClick(event, item.id)
+                          handleToolListItemClick(event, item.id , item.name)
                         }
                       >
                         <ListItemText primary={item.name} />
