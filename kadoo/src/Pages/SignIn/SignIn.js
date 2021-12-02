@@ -2,7 +2,7 @@ import React from 'react'
 import Background from '../../Images/SignIn/signInBG.png'
 import { Grid, TextField, Button, InputAdornment } from '@mui/material'
 import { EmailRounded, VpnKey } from '@mui/icons-material'
-import { useState } from 'react'
+import { useState , useEffect} from 'react'
 import history from '../../history'
 import "./SignIn.css"
 
@@ -13,7 +13,13 @@ function SignIn() {
   })
   const [formData, updateFormData] = useState(initialFormData)
   const [flagData, setFlagData] = useState(false)
-  const [errorData, updateErrorData] = useState(initialFormData);
+  const [errorData, updateErrorData] = useState([]);
+  const [refresh, setRefresh] = useState(false)
+  
+  useEffect(() => {
+    updateErrorData([]);
+    console.log(errorData);
+  }, [refresh])
 
   const handleChange = (e) => {
     updateFormData({
@@ -26,7 +32,11 @@ function SignIn() {
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log(formData)
-
+    
+    if(refresh)
+      setRefresh(false);
+    else
+      setRefresh(true);
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -82,7 +92,7 @@ function SignIn() {
   }
   return (
     <div>
-      <Grid container style={{ minHeight: '100vh' }}>
+      <Grid container style={{ minHeight: '100vh' }} sx={{pl:{sm:20 , xs:0} , pr:{sm:20 , xs:0}}}>
         <Grid item xs={12} sm={6}>
           <img
             src={Background}
@@ -148,21 +158,22 @@ function SignIn() {
               maxWidth: 400,
               minWidth: 300,
             }} />
-            <Button
-              className='ButtonStyle'
+            <a
+              className="ButtonStyle"
               variant='contained'
+              href="/HomePage"
               onClick={handleSubmit}
-              href="/Homepage"
             >
               Sign In
-            </Button>
-            <div style={{ height: 20 }} />
-            <Button
-            className='ButtonStyle2' 
-            href="/signup"
-            variant='outlined' onClick={() => history.push("/signup")}>
+            </a>
+            <div style={{ height: 30 }}  className="Buttons" />
+            <div className="divSignUp">
+              <a 
+              href="/signup" 
+              className="aSignUp">
               Sign Up
-            </Button>
+            </a>
+          </div>
           </div>      
         </Grid>
       </Grid>

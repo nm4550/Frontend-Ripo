@@ -21,6 +21,7 @@ import Divider from '@mui/material/Divider'
 import Stack from '@mui/material/Stack'
 import Alert from '@mui/material/Alert'
 import Typography from '@mui/material/Typography'
+import Navbar2 from "../../Components/NavbarHome/Navbar2";
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -398,63 +399,41 @@ function SearchResultProduct(props) {
   }, [])
   return (
     <div>
-      <div
-        style={{
-          backgroundImage: `url(${Search})`,
-          backgroundSize: 'cover',
-          overflow: 'hidden',
-          padding: 5,
-          display: 'flex',
-        }}
-      >
+      <Navbar2/>
+      <br />
+      <Grid container style={{ minHeight: '100vh' }} xs={24}>
+        <Grid item xs={6} sm={3} style={{ padding: 10 }}>
         <Grid
           item
           xs={20}
           sm={10}
           display='flex'
           marginLeft={0}
-          className='home'
+          direction='column'
         >
+          <Grid>
           <TextField
             onChange={(e) => handleChange(e)}
             size='small'
             id='outlined-search'
             name='SearchField'
             label='Search..'
-            type='search'
-          ></TextField>
+            type='search'>
+          </TextField>
           {/* ////////////////////////// Samples ////////////////////////// */}
           {/* /////// Search /////// */}
           {/* <Button onClick={() => handleSearchPlantsByName(searchText)}></Button> */}
-          <IconButton>
+          <IconButton onClick={() => {handleSearchPlantsByName(searchText) ;handleSearchToolsByName(searchText) }}>
             <SearchIcon className='Searchicon' fontSize='large' />
           </IconButton>
+          </Grid>
+          
           <Chip
+            width="10px"
             label={'You searched for ' + searchTextPlants}
             variant='outlined'
           />
         </Grid>
-        <Grid
-          item
-          xs={4}
-          sm={2}
-          alignItems='flex-end'
-          justifyContent='flex-end'
-          className='searchBox'
-        >
-          <IconButton href='/' onClick={() => history.push('/')}>
-            <Home fontSize='large' />
-            Home
-          </IconButton>
-        </Grid>
-      </div>
-
-      <br />
-      <Grid container style={{ minHeight: '100vh' }} xs={24}>
-        <Grid item xs={6} sm={3} style={{ padding: 10 }}>
-          {/* ////////////////////////// Sidbar For Filter ////////////////////////// */}
-          {/* /////// Filter /////// */}
-          {/* <Button onClick={() => handleFilterEnvironment(VALUEFROMUSER)}></Button> */}
         </Grid>
         <Grid
           container
