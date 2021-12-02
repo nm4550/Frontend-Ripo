@@ -11,6 +11,7 @@ import Cart from './Pages/AddToCart';
 import CategoriesPage from './Pages/CategoriesPage';
 import ProductPlantsPage from './Pages/ProductPlantsPage/ProductPlantsPage';
 import ProductToolsPage from './Pages/ProductToolsPage/ProductToolsPage';
+import LandingPage from './Pages/LandingPage/LandingPage';
 
 
 const Theme = createTheme({
@@ -31,7 +32,7 @@ function App() {
     <ThemeProvider theme={Theme}>
       <Router>
         <Switch>
-          <Route exact path="/" component={HomePage}/>
+          <Route exact path="/" component={LandingPage}/>
           <Route exact path="/signin" component={SignIn}/>
           <Route exact path="/signup" component={SignUp}/>
           <Route exact path="/search" component={SearchResultProduct}/>

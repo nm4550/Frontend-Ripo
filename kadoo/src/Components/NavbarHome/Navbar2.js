@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import "./Navbar.css";
+import "./Navbar2.css";
 import SearchIcon from '@mui/icons-material/Search';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
@@ -75,16 +75,6 @@ function Navbar(){
         display="flex"
         className="searchBox"
         >
-            <SearchIcon
-            className="Searchicon"
-            fontSize="large"/>
-            <TextField
-            size="small"
-            className="Searchbox"
-            id="outlined-search"
-            label="Search.."
-            type="search" 
-            onClick={() => history.push('/search')}/>
         </Grid>
         <Grid
         item xs={12} sm={4} md={3}
