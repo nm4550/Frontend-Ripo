@@ -438,7 +438,7 @@ function SearchResultProduct(props) {
   return (
     <div>
       <Navbar2/>
-      <br />
+      {/* <br />
       <Grid container style={{ minHeight: '100vh' }} xs={24}>
         <Grid item xs={6} sm={3} style={{ padding: 10 }}>
         <Grid
@@ -458,9 +458,7 @@ function SearchResultProduct(props) {
             label='Search..'
             type='search'>
           </TextField>
-          {/* ////////////////////////// Samples ////////////////////////// */}
-          {/* /////// Search /////// */}
-          {/* <Button onClick={() => handleSearchPlantsByName(searchText)}></Button> */}
+          
           <IconButton onClick={() => {handleSearchPlantsByName(searchText) ;handleSearchToolsByName(searchText) }}>
             <SearchIcon className='Searchicon' fontSize='large' />
           </IconButton>
@@ -495,14 +493,46 @@ function SearchResultProduct(props) {
             Home
           </IconButton>
         </Grid>
-      </div>
+      </div> */}
 
       <br />
       <Grid container style={{ minHeight: '100vh' }} xs={24}>
         <Grid item xs={6} sm={3} style={{ padding: 10 }}>
+          <Grid
+          item
+          xs={20}
+          sm={10}
+          display='flex'
+          marginLeft={0}
+          direction='column'
+        >
+          <Grid>
+          <TextField
+            onChange={(e) => handleChange(e)}
+            size='small'
+            id='outlined-search'
+            name='SearchField'
+            label='Search..'
+            type='search'>
+          </TextField>
+          {/* ////////////////////////// Samples ////////////////////////// */}
+          {/* /////// Search /////// */}
+          {/* <Button onClick={() => handleSearchPlantsByName(searchText)}></Button> */}
+          <IconButton onClick={() => {handleSearchPlantsByName(searchText) ;handleSearchToolsByName(searchText) }}>
+            <SearchIcon className='Searchicon' fontSize='large' />
+          </IconButton>
+          </Grid>
+          
+          <Chip
+            width="10px"
+            label={'You searched for ' + searchTextPlants}
+            variant='outlined'
+          />
+        </Grid>
           {/* ////////////////////////// Sidbar For Filter ////////////////////////// */}
           {/* /////// Filter /////// */}
           {/* <Button onClick={() => handleFilterEnvironment(VALUEFROMUSER)}></Button> */}
+
           <FormControl component="fieldset">
             <FormLabel component="sort">Type of  data</FormLabel>
             <RadioGroup
