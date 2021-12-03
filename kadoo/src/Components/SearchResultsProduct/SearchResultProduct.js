@@ -21,8 +21,20 @@ import Divider from '@mui/material/Divider'
 import Stack from '@mui/material/Stack'
 import Alert from '@mui/material/Alert'
 import Typography from '@mui/material/Typography'
-
-
+import Navbar2 from "../../Components/NavbarHome/Navbar2";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
+import FormGroup from '@mui/material/FormGroup';
+import Checkbox from '@mui/material/Checkbox';
+import Slider from '@mui/material/Slider';
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -46,11 +58,13 @@ function SearchResultProduct(props) {
   const [sortOrderPlants, setSortOrderPlants] = useState('')
   //Filter
   const [filterPriceLowerPlants, setFilterPriceLowerPlants] = useState('')
+  const [filterPricePlants, setFilterPricePlants] = useState('',)
   const [filterPriceHigherPlants, setFilterPriceHigherPlants] = useState('')
   const [fiterEnvironmentPlants, setFiterEnvironmentPlants] = useState('')
   const [filterWaterPlants, setFilterWaterPlants] = useState('')
   const [filterLightPlants, setFilterLightPlants] = useState('')
   const [filterGrowthRatePlants, setFilterGrowthRatePlants] = useState('')
+  const [filterType, setFilterType] = useState(0)
   //Pagination
   const [paginationCountPlants, setPaginationCountPlants] = useState('')
   const [paginationPagePlants, setPaginationPagePlants] = useState('')
@@ -246,34 +260,34 @@ function SearchResultProduct(props) {
   }
   // 4) Sort By Name Tools
   const handleToolsSortBy_Name_ASC = () => {
-    
+    setSortSelectMenu(7)
     setSortKindTools('name')
     setSortOrderTools('ASC')
   }
   const handleToolsSortBy_Name_DES = () => {
-    
+    setSortSelectMenu(8)
     setSortKindTools('name')
     setSortOrderTools('DES')
   }
   // 5) Sort By Price Tools
   const handleToolsSortBy_Price_ASC = () => {
-    
+    setSortSelectMenu(9)
     setSortKindTools('price')
     setSortOrderTools('ASC')
   }
   const handleToolsSortBy_Price_DES = () => {
-    
+    setSortSelectMenu(10)
     setSortKindTools('price')
     setSortOrderTools('DES')
   }
   // 6) Sort By Time Tools
   const handleToolsSortBy_Time_ASC = () => {
-    
+    setSortSelectMenu(11)
     setSortKindTools('time')
     setSortOrderTools('ASC')
   }
   const handleToolsSortBy_Time_DES = () => {
-    
+    setSortSelectMenu(12)
     setSortKindTools('time')
     setSortOrderTools('DES')
   }
@@ -294,6 +308,7 @@ function SearchResultProduct(props) {
   }
   // 2) Filter By Water Plants
   const handleFilterWater = (value) => {
+    console.log('sara eshghe mne')
     setFilterWaterPlants(value)
   }
   // 3) Filter By Light Plants
@@ -313,6 +328,28 @@ function SearchResultProduct(props) {
     setFilterPriceLowerTools(lower)
     setFilterPriceHigherTools(higher)
   }
+  // 7) Filter By Type of data
+  const handleChangeTypeData = (event) => {
+    if(event.target.value === 'plant'){
+      setFilterType(1)
+    }
+    else if(event.target.value === 'tool'){
+      setFilterType(2)
+    }
+  }
+  // 8) Filter handel change water
+   const handleChangeWater = (event) => {
+    handleFilterWater(event.target.value)
+  };
+  // 9) Filter handel change light
+   const handleChangeLight = (event) => {
+    handleFilterLight(event.target.value)
+  };
+ // 10) Filter handel change price
+   const handleChangePrice = (event) => {
+    handleFilterPricePlants(event.target.value[0] , event.target.value[1])
+    handleFilterPriceTools(event.target.value[0] , event.target.value[1])
+  };
   ////////////////////// Pagination Functions //////////////////////
   // 1) Pagination Plants
   const handlePaginationPlants = (count, page) => {
@@ -333,11 +370,11 @@ function SearchResultProduct(props) {
       ToolsAdvanceSearch()
     }
     if (
-      filterGrowthRatePlants !== '' &&
-      filterLightPlants !== '' &&
-      fiterEnvironmentPlants !== '' &&
-      filterWaterPlants !== '' &&
-      filterPriceHigherPlants !== '' &&
+      filterGrowthRatePlants !== '' ||
+      filterLightPlants !== '' ||
+      fiterEnvironmentPlants !== '' ||
+      filterWaterPlants !== '' ||
+      filterPriceHigherPlants !== '' ||
       filterPriceLowerPlants !== ''
     ) {
       PlantsAdvanceSearch()
@@ -400,44 +437,49 @@ function SearchResultProduct(props) {
   }, [])
   return (
     <div>
-      <div
-        style={{
-          backgroundImage: `url(${Search})`,
-          backgroundSize: 'cover',
-          overflow: 'hidden',
-          padding: 5,
-          display: 'flex',
-        }}
-      >
+      <Navbar2/>
+      {/* <br />
+      <Grid container style={{ minHeight: '100vh' }} xs={24}>
+        <Grid item xs={6} sm={3} style={{ padding: 10 }}>
         <Grid
           item
           xs={20}
           sm={10}
           display='flex'
           marginLeft={0}
-          className='home'
+          direction='column'
         >
+          <Grid>
           <TextField
             onChange={(e) => handleChange(e)}
             size='small'
             id='outlined-search'
             name='SearchField'
             label='Search..'
-            type='search'
-          ></TextField>
-          {/* ////////////////////////// Samples ////////////////////////// */}
-          {/* /////// Search /////// */}
-          {/* <Button onClick={() => handleSearchPlantsByName(searchText)}></Button> */} 
-         
-
-          <IconButton>
+            type='search'>
+          </TextField>
+          
+          <IconButton onClick={() => {handleSearchPlantsByName(searchText) ;handleSearchToolsByName(searchText) }}>
             <SearchIcon className='Searchicon' fontSize='large' />
           </IconButton>
+          </Grid>
+          
           <Chip
+            width="10px"
             label={'You searched for ' + searchTextPlants}
             variant='outlined'
           />
         </Grid>
+        </Grid>
+        <Grid
+          container
+          item
+          xs={18}
+          sm={9}
+          alignItems='flex-start'
+          justify='space-between'
+          style={{ padding: 10 }}
+        >
         <Grid
           item
           xs={4}
@@ -451,29 +493,121 @@ function SearchResultProduct(props) {
             Home
           </IconButton>
         </Grid>
-      </div>
+      </div> */}
 
       <br />
       <Grid container style={{ minHeight: '100vh' }} xs={24}>
         <Grid item xs={6} sm={3} style={{ padding: 10 }}>
+          <Grid
+          item
+          xs={20}
+          sm={10}
+          display='flex'
+          marginLeft={0}
+          direction='column'
+        >
+          <Grid>
+          <TextField
+            onChange={(e) => handleChange(e)}
+            size='small'
+            id='outlined-search'
+            name='SearchField'
+            label='Search..'
+            type='search'>
+          </TextField>
+          {/* ////////////////////////// Samples ////////////////////////// */}
+          {/* /////// Search /////// */}
+          {/* <Button onClick={() => handleSearchPlantsByName(searchText)}></Button> */}
+          <IconButton onClick={() => {handleSearchPlantsByName(searchText) ;handleSearchToolsByName(searchText) }}>
+            <SearchIcon className='Searchicon' fontSize='large' />
+          </IconButton>
+          </Grid>
+          
+          <Chip
+            width="10px"
+            label={'You searched for ' + searchTextPlants}
+            variant='outlined'
+          />
+        </Grid>
           {/* ////////////////////////// Sidbar For Filter ////////////////////////// */}
           {/* /////// Filter /////// */}
           {/* <Button onClick={() => handleFilterEnvironment(VALUEFROMUSER)}></Button> */}
-        </Grid>
-        <Grid
-          container
-          item
-          xs={18}
-          sm={9}
-          alignItems='flex-start'
-          justify='space-between'
-          style={{ padding: 10 }}
-        >
+
+          <FormControl component="fieldset">
+            <FormLabel component="sort">Type of  data</FormLabel>
+            <RadioGroup
+              aria-label="gender"
+              name="controlled-radio-buttons-group"
+              value={searchPlantData}
+              onChange={handleChangeTypeData}
+            >
+              <FormControlLabel checked={filterType === 1} value={'plant'} control={<Radio />} label="Plants" />
+              <FormControlLabel checked={filterType === 2} value={'tool'} control={<Radio />} label="Tools" />
+            </RadioGroup>
+          </FormControl>
+          <hr/>
+          <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Water</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={filterWaterPlants}
+            label="Water"
+            onChange={handleChangeWater}
+          >
+            <MenuItem value={'low'}>Low</MenuItem>
+            <MenuItem value={'medium'}>Medium</MenuItem>
+            <MenuItem value={'much'}>Much</MenuItem>
+          </Select>
+        </FormControl>
+        <hr/>
+        <FormControl fullWidth>
+          <InputLabel id="demo-simple-select-label">Light</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            id="demo-simple-select"
+            value={filterLightPlants}
+            label="Light"
+            onChange={handleChangeLight}
+          >
+            <MenuItem value={'low'}>Low</MenuItem>
+            <MenuItem value={'medium'}>Medium</MenuItem>
+            <MenuItem value={'much'}>Much</MenuItem>
+          </Select>
+        </FormControl>
+        <hr/>
+          <Box sx={{ width: 300 }}>
+            <Typography id="input-slider" gutterBottom>
+              Range of Price
+            </Typography>
+            <Slider 
+              getAriaLabel={() => 'Temperature range'}
+              value = {[filterPriceLowerPlants , filterPriceHigherPlants === '' ? 30:filterPriceHigherPlants]}
+              onChange={handleChangePrice}
+              valueLabelDisplay="auto"
+              min={4}$
+              max={30}$
+            />
+          </Box>
+          </Grid>
+          <Grid
+            container
+            item
+            xs={18}
+            sm={9}
+            alignItems='flex-start'
+            justify='space-between'
+            style={{ padding: 10 }}
+            
+          >
           <div>
             <Box sx={{ width: '100%' }}>
-               
-                <Stack direction="row" spacing={2}>
-        <Typography variant="body" gutterBottom>
+              {/* ////////////////////////// NavBar Sort ////////////////////////// */}
+              {/* ////////////////////////// Samples ////////////////////////// */}
+              {/* /////// Sort /////// */}
+              {/* <Button onClick={() => handleToolsSortBy_Name_ASC()}></Button> */}
+              <Stack direction="row" spacing={2}>
+                <Typography variant="body" gutterBottom>
               	Sort By:</Typography>
                 <Button variant= { sortSelectMenu==1 ? 'contained' : 'text'} onClick={( )=>{handlePlantsSortBy_Name_ASC( )  ;handleToolsSortBy_Name_ASC( )}  } size="small">  A to Z </Button>
                 <Button variant={ sortSelectMenu==2 ? 'contained' : 'text'} onClick={( ) => {handlePlantsSortBy_Name_DES( ) ;handleToolsSortBy_Name_DES( )}}size="small">  Z to A </Button>
@@ -481,23 +615,18 @@ function SearchResultProduct(props) {
                 <Button variant={ sortSelectMenu==4 ? 'contained' : 'text'} onClick={( )=> {handlePlantsSortBy_Price_DES( ) ;handleToolsSortBy_Price_DES() }}size="small"> DES Price </Button>
                 <Button variant={ sortSelectMenu==5 ? 'contained' : 'text'} onClick={( )=>{handlePlantsSortBy_Time_ASC( )   ;handleToolsSortBy_Time_ASC() } }size="small"> ACS time  </Button>
                 <Button variant={ sortSelectMenu==6 ? 'contained' : 'text'} onClick={( )=>{handlePlantsSortBy_Time_DES( )   ;handleToolsSortBy_Time_DES( ) }}size="small"> DES time  </Button>
-
-                
-               
-               
-                </Stack>    
+                </Stack>  
               <Box>
-                {/*<div className='showProductSubs'>Plants</div>
-                <Divider variant='middle' />*/}
-                {( Array.isArray(searchPlantData) && searchPlantData.length != 0) && (
+                <div className='showProductSubs'>Plants</div>
+                <Divider variant='middle' />
+                {(searchPlantData.length != 0 && filterType !== 2) && (
                   <div>
                     <Grid container spacing={2} sx={{ mt: 2 }}>
                       <ShowPlants data={searchPlantData} />
                     </Grid>
                   </div>
                 )}
-                
-                { ( Array.isArray(searchPlantData) && searchPlantData.length === 0) && (
+                {searchPlantData.length === 0 && (
                   <div>
                     {searchPlantDataLoaded === true && (
                       <Alert severity='error'>
@@ -513,16 +642,16 @@ function SearchResultProduct(props) {
                 )}
               </Box>
               <Box>
-                {/*<div className='showProductSubs'>Tools</div>
-                <Divider variant='middle' />*/}
-                {( Array.isArray(searchToolData) && searchToolData.length  != 0) && (
+                <div className='showProductSubs'>Tools</div>
+                <Divider variant='middle' />
+                {(searchToolData.length != 0 &&  filterType !== 1)&&(
                   <div>
                     <Grid container spacing={2} sx={{ mt: 2 }}>
                       <ShowTools tooldata={searchToolData} />
                     </Grid>
                   </div>
                 )}
-                { ( Array.isArray(searchToolData) && searchToolData.length === 0) && (
+                {searchToolData.length === 0 && (
                   <div>
                     {searchToolDataLoaded === true && (
                       <Alert severity='error'>

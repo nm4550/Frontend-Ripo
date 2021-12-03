@@ -21,8 +21,9 @@ import CardMedia from '@mui/material/CardMedia'
 import Stack from '@mui/material/Stack'
 import Alert from '@mui/material/Alert'
 import './Categorieslist.css'
+import ProductTabs from '../../Components/ProductTabs/TabPanel'
+import Button from '@mui/material/Button'
 import SkeletonArticle from '../Cart/SkeletonArticle'
-
 
 const BoxItem = styled(Box)(({ theme }) => ({
   ...theme.typography.body2,
@@ -31,8 +32,7 @@ const BoxItem = styled(Box)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }))
 
-
-export default function SelectedListItem(props) {
+export default function Categorieslist(props) {
   const [plantSelectedId, setPlantSelectedId] = React.useState(1)
   const [toolSelectedId, setToolSelectedId] = React.useState(1)
 
@@ -49,8 +49,8 @@ export default function SelectedListItem(props) {
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false)
   }
-  const handlePlantListItemClick = (event, Id , name) => {
-    setPlantSelectedId(Id )
+  const handlePlantListItemClick = (event, Id, name) => {
+    setPlantSelectedId(Id)
     //setPlnatsData([])
     //setPlnatsDataLoaded(false)
     setTimeout(async () => {
@@ -59,13 +59,13 @@ export default function SelectedListItem(props) {
       )
       const data = await res.json()
       props.bindplants(data)
-      props.settext(name) 
+      props.settext(name)
       //setPlnatsDataLoaded(true)
       console.log(data)
     }, 0)
   }
-  const handleToolListItemClick = (event, Id , name) => {
-    setToolSelectedId(Id )
+  const handleToolListItemClick = (event, Id, name) => {
+    setToolSelectedId(Id)
     //setToolsData([])
     //setToolsDataLoaded(false)
     setTimeout(async () => {
@@ -74,7 +74,7 @@ export default function SelectedListItem(props) {
       )
       const data = await res.json()
       props.bindtools(data)
-       props.settext(name) 
+      props.settext(name)
       //setToolsDataLoaded(true)
       console.log(data)
     }, 0)
@@ -88,7 +88,7 @@ export default function SelectedListItem(props) {
       const res = await fetch('http://127.0.0.1:8000/api/plantsList/')
       const data = await res.json()
       props.bindplants(data)
-       props.settext('All plants')
+      props.settext('All plants')
       //setPlnatsDataLoaded(true)
       console.log(data)
     }, 0)
@@ -127,7 +127,7 @@ export default function SelectedListItem(props) {
         })
     }
 
-   /* setTimeout(async () => {
+    /* setTimeout(async () => {
       const res = await fetch('http://127.0.0.1:8000/api/plantsList/')
       const data = await res.json()
       setPlnatsData(data)
@@ -149,82 +149,60 @@ export default function SelectedListItem(props) {
 
   return (
     <Box sx={{ flexGrow: 1, m: 0 }}>
-      <Grid container spacing={0} >
-        <Grid item s={12} md={12}>
+      <Grid container spacing={0} justifyContent='center' alignItems='flex-end'>
+        <Grid item xs={12} md={12} sx={{ mr: 2 }}>
           <BoxItem>
-            <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
-              <Accordion
-                expanded={expanded === 'panel1'}
-                onChange={handleChange('panel1')}
-              >
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls='panel1bh-content'
-                  id='panel1bh-header'
+            <Box sx={{ width: '100%', mt: 1.5 }}>
+              <Typography align='left' sx={{ width: '100%', pl: 1, pb: 1 }}>
+                Plant Categories
+              </Typography>
+              <Divider />
+              <List component='nav'>
+                <ListItemButton
+                  selected={plantSelectedId === 1}
+                  onClick={() => handlePlantListItemClickAll()}
                 >
-                  <Typography sx={{ width: '100%' }}>
-                    Plant Categories
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <List component='nav'>
-                    <ListItemButton
-                      selected={plantSelectedId === 1}
-                      onClick={() => handlePlantListItemClickAll()}
-                    >
-                      <ListItemText primary='All' />
-                    </ListItemButton>
-                    {plantTagsData.map((item) => (
-                      <ListItemButton
-                        selected={plantSelectedId === item.id}
-                        onClick={(event) =>
-                          handlePlantListItemClick(event, item.id , item.name) 
-                        }
-                      >
-                        <ListItemText primary={item.name} />
-                      </ListItemButton>
-                    ))}
-                  </List>
-                </AccordionDetails>
-              </Accordion>
-              <Accordion
-                expanded={expanded === 'panel2'}
-                onChange={handleChange('panel2')}
+                  <ListItemText primary='All' />
+                </ListItemButton>
+                {plantTagsData.map((item) => (
+                  <ListItemButton
+                    selected={plantSelectedId === item.id}
+                    onClick={(event) =>
+                      handlePlantListItemClick(event, item.id, item.name)
+                    }
+                  >
+                    <ListItemText primary={item.name} />
+                  </ListItemButton>
+                ))}
+              </List>
+              <Typography
+                align='left'
+                sx={{ width: '100%', flexShrink: 0, pl: 1, pb: 1 }}
               >
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls='panel1bh-content'
-                  id='panel1bh-header'
+                Tool Categories
+              </Typography>
+              <Divider />
+              <List component='nav'>
+                <ListItemButton
+                  selected={toolSelectedId === 1}
+                  onClick={() => handleToolListItemClickAll()}
                 >
-                  <Typography sx={{ width: '100%', flexShrink: 0 }}>
-                    Tool Categories
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <List component='nav'>
-                    <ListItemButton
-                      selected={toolSelectedId === 1}
-                      onClick={() => handleToolListItemClickAll()}
-                    >
-                      <ListItemText primary='All' />
-                    </ListItemButton>
-                    {toolTagsData.map((item) => (
-                      <ListItemButton
-                        selected={toolSelectedId === item.id}
-                        onClick={(event) =>
-                          handleToolListItemClick(event, item.id , item.name)
-                        }
-                      >
-                        <ListItemText primary={item.name} />
-                      </ListItemButton>
-                    ))}
-                  </List>
-                </AccordionDetails>
-              </Accordion>
+                  <ListItemText primary='All' />
+                </ListItemButton>
+                {toolTagsData.map((item) => (
+                  <ListItemButton
+                    selected={toolSelectedId === item.id}
+                    onClick={(event) =>
+                      handleToolListItemClick(event, item.id, item.name)
+                    }
+                  >
+                    <ListItemText primary={item.name} />
+                  </ListItemButton>
+                ))}
+              </List>
             </Box>
           </BoxItem>
         </Grid>
-       
       </Grid>
     </Box>
   )
