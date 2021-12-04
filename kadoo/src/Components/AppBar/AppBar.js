@@ -122,6 +122,14 @@ export default function KadooAppBar(props) {
     }
   }, [isAuthorized])
 
+  const handelDrawer = () => {
+    if (props.isopen === false) {
+      props.OpenMenu()
+    } else {
+      props.CloseMenu()
+    }
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='static'>
@@ -132,6 +140,7 @@ export default function KadooAppBar(props) {
             color='inherit'
             aria-label='open drawer'
             sx={{ mr: 2 }}
+            onClick={handelDrawer}
           >
             <MenuIcon />
           </IconButton>

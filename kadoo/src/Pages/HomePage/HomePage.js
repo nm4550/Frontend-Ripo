@@ -4,6 +4,7 @@ import AppBar from '../../Components/AppBar/AppBar'
 import ShowProduct from '../../Components/ShowProduct/ShowProduct'
 //import CategoryDrawer from '../../Components/CategoryDrawer/CategoryDrawer'
 import { styled, useTheme } from '@mui/material/styles'
+import Slide from '@mui/material/Slide'
 import Box from '@mui/material/Box'
 import Drawer from '@mui/material/Drawer'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -94,26 +95,6 @@ export default function HomePage() {
     setIsPlant(2)
   }
 
-  useEffect(() => {
-    fetchPagination()
-  }, [page])
-  const handleChange = (event, value) => {
-    setPage(value)
-  }
-  const fetchPagination = () => {
-    fetch('http://127.0.0.1:8000/api/allPagination/', {
-      method: 'Post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ count: '6', page: `${page}` }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data.data)
-      })
-  }
-
   return (
     <div>
       <Box sx={{ display: 'flex' }}>
@@ -149,13 +130,25 @@ export default function HomePage() {
               TicketOption={true}
               CartOption={true}
               AuthorizationOption={true}
+              isopen={openDrawer}
+              OpenMenu={handleDrawerOpen}
+              CloseMenu={handleDrawerClose}
             />
           </Box>
-          <Box>
-            <ContentHeader />
-            <ProductWithCategory />
-            <ProductTabs />
-          </Box>
+          <Slide
+            direction='right'
+            in={true}
+            mountOnEnter
+            unmountOnExit
+            timeout={900}
+          >
+            <Box>
+              <ContentHeader />
+
+              <ProductWithCategory />
+              <ProductTabs />
+            </Box>
+          </Slide>
         </Main>
       </Box>
     </div>

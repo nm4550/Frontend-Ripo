@@ -33,8 +33,8 @@ const BoxItem = styled(Box)(({ theme }) => ({
 }))
 
 export default function Categorieslist(props) {
-  const [plantSelectedId, setPlantSelectedId] = React.useState(1)
-  const [toolSelectedId, setToolSelectedId] = React.useState(1)
+  const [plantSelectedId, setPlantSelectedId] = React.useState(0)
+  const [toolSelectedId, setToolSelectedId] = React.useState(0)
 
   const [plantTagsData, setPlantTagsData] = useState([])
   const [toolTagsData, setToolTagsData] = useState([])
@@ -49,46 +49,59 @@ export default function Categorieslist(props) {
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false)
   }
+
+  const handleReset = () => {
+    props.bindall()
+    setPlantSelectedId(0)
+    setToolSelectedId(0)
+  }
+
   const handlePlantListItemClick = (event, Id, name) => {
+    setToolSelectedId(0)
     setPlantSelectedId(Id)
     //setPlnatsData([])
     //setPlnatsDataLoaded(false)
     setTimeout(async () => {
-      const res = await fetch(
-        'http://127.0.0.1:8000/api/plantsWithTag/' + Id + '/'
-      )
-      const data = await res.json()
-      props.bindplants(data)
-      props.settext(name)
-      //setPlnatsDataLoaded(true)
-      console.log(data)
+      fetchPlantsPagination(name, props.givenpage)
     }, 0)
   }
   const handleToolListItemClick = (event, Id, name) => {
+    setPlantSelectedId(0)
     setToolSelectedId(Id)
     //setToolsData([])
     //setToolsDataLoaded(false)
     setTimeout(async () => {
-      const res = await fetch(
-        'http://127.0.0.1:8000/api/toolsWithTag/' + Id + '/'
-      )
-      const data = await res.json()
-      props.bindtools(data)
-      props.settext(name)
-      //setToolsDataLoaded(true)
-      console.log(data)
+      fetchToolsPagination(name, props.givenpage)
     }, 0)
   }
 
   const handlePlantListItemClickAll = () => {
     //setPlnatsData([])
+    setToolSelectedId(0)
     //setPlnatsDataLoaded(false)
     setPlantSelectedId(1)
     setTimeout(async () => {
-      const res = await fetch('http://127.0.0.1:8000/api/plantsList/')
+      const res = await fetch(
+        'http://127.0.0.1:8000/api/plantsAdvanceSearch/',
+        {
+          method: 'Post',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: null,
+            price: { lower: null, higher: null },
+            pagination: { count: '6', page: '1' },
+            sort: { kind: null, order: null },
+          }),
+        }
+      )
+
       const data = await res.json()
-      props.bindplants(data)
+      props.bindplants(data.data)
+      props.setpageall(data.pageCount)
       props.settext('All plants')
+      props.setgivenpage(1)
       //setPlnatsDataLoaded(true)
       console.log(data)
     }, 0)
@@ -97,15 +110,84 @@ export default function Categorieslist(props) {
   const handleToolListItemClickAll = () => {
     //setToolsData([])
     //setToolsDataLoaded(false)
+    setPlantSelectedId(0)
     setToolSelectedId(1)
     setTimeout(async () => {
-      const res = await fetch('http://127.0.0.1:8000/api/toolsList/')
+      const res = await fetch('http://127.0.0.1:8000/api/toolsAdvanceSearch/', {
+        method: 'Post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: null,
+          price: { lower: null, higher: null },
+          pagination: { count: '6', page: '1' },
+          sort: { kind: null, order: null },
+        }),
+      })
+
       const data = await res.json()
-      props.bindtools(data)
+      props.bindtools(data.data)
+      props.setpageall(data.pageCount)
       props.settext('All tools')
+      props.setgivenpage(1)
       //setToolsDataLoaded(true)
       console.log(data)
     }, 0)
+  }
+
+  const fetchPlantsPagination = (name, page) => {
+    console.log(
+      JSON.stringify({
+        name: null,
+        price: { lower: null, higher: null },
+        tags: [`${name}`],
+        pagination: { count: '6', page: '1' },
+        sort: { kind: null, order: null },
+      })
+    )
+    fetch('http://127.0.0.1:8000/api/plantsAdvanceSearch/', {
+      method: 'Post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: null,
+        price: { lower: null, higher: null },
+        tags: [`${name}`],
+        pagination: { count: '6', page: '1' },
+        sort: { kind: null, order: null },
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        props.bindplants(data.data)
+        props.setpageall(data.pageCount)
+        props.settext(name)
+        props.setgivenpage(1)
+      })
+  }
+  const fetchToolsPagination = (name, page) => {
+    fetch('http://127.0.0.1:8000/api/toolsAdvanceSearch/', {
+      method: 'Post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: null,
+        price: { lower: null, higher: null },
+        tags: [`${name}`],
+        pagination: { count: '6', page: '1' },
+        sort: { kind: null, order: null },
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        props.bindtools(data.data)
+        props.setpageall(data.pageCount)
+        props.settext(name)
+        props.setgivenpage(1)
+      })
   }
 
   useEffect(() => {
@@ -127,22 +209,6 @@ export default function Categorieslist(props) {
         })
     }
 
-    /* setTimeout(async () => {
-      const res = await fetch('http://127.0.0.1:8000/api/plantsList/')
-      const data = await res.json()
-      setPlnatsData(data)
-      setPlnatsDataLoaded(true)
-      console.log(data)
-    }, 3000)*/
-
-    /*setTimeout(async () => {
-      const res = await fetch('http://127.0.0.1:8000/api/toolsList/')
-      const data = await res.json()
-      setToolsData(data)
-      setToolsDataLoaded(true)
-      console.log(data)
-    }, 3000)*/
-
     fetchPlantTagsData()
     fetchToolTagsData()
   }, [])
@@ -152,8 +218,19 @@ export default function Categorieslist(props) {
       <Grid container spacing={0} justifyContent='center' alignItems='flex-end'>
         <Grid item xs={12} md={12} sx={{ mr: 2 }}>
           <BoxItem>
-            <Box sx={{ width: '100%', mt: 1.5 }}>
-              <Typography align='left' sx={{ width: '100%', pl: 1, pb: 1 }}>
+            <Box sx={{ width: '100%', mt: 1.2 }}>
+              <List component='nav'>
+                <ListItemButton
+                  selected={plantSelectedId === 0 && toolSelectedId === 0}
+                  onClick={handleReset}
+                >
+                  <ListItemText primary='All Products' />
+                </ListItemButton>
+              </List>
+              <Typography
+                align='left'
+                sx={{ width: '100%', pl: 1, pb: 1, mt: 1 }}
+              >
                 Plant Categories
               </Typography>
               <Divider />
@@ -162,7 +239,7 @@ export default function Categorieslist(props) {
                   selected={plantSelectedId === 1}
                   onClick={() => handlePlantListItemClickAll()}
                 >
-                  <ListItemText primary='All' />
+                  <ListItemText primary='Only plants' />
                 </ListItemButton>
                 {plantTagsData.map((item) => (
                   <ListItemButton
@@ -177,7 +254,7 @@ export default function Categorieslist(props) {
               </List>
               <Typography
                 align='left'
-                sx={{ width: '100%', flexShrink: 0, pl: 1, pb: 1 }}
+                sx={{ width: '100%', flexShrink: 0, pl: 1, pb: 1, mt: 1 }}
               >
                 Tool Categories
               </Typography>
@@ -187,7 +264,7 @@ export default function Categorieslist(props) {
                   selected={toolSelectedId === 1}
                   onClick={() => handleToolListItemClickAll()}
                 >
-                  <ListItemText primary='All' />
+                  <ListItemText primary='Only tools' />
                 </ListItemButton>
                 {toolTagsData.map((item) => (
                   <ListItemButton

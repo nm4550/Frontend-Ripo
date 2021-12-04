@@ -24,6 +24,7 @@ function ProductWithCategory(props) {
   const [isplant, setIsPlant] = React.useState(0)
   const [categoryText, setCategoryText] = React.useState('')
   const [page, setPage] = useState(1)
+  const [allPage, setAllPage] = useState(1)
   const [products, setProducts] = useState([])
 
   const handlePlantsData = (value) => {
@@ -43,6 +44,7 @@ function ProductWithCategory(props) {
   }
 
   const handleDelete = () => {
+    fetchPagination()
     setIsPlant(0)
   }
 
@@ -52,11 +54,29 @@ function ProductWithCategory(props) {
   }
 
   useEffect(() => {
-    fetchPagination()
+    if (isplant === 0) {
+      fetchPagination()
+    }
+    if (isplant === 1) {
+      fetchPlantsPagination(categoryText)
+    }
+    if (isplant === 2) {
+      fetchToolsPagination(categoryText)
+    }
   }, [page])
+
   const handleChange = (event, value) => {
     setPage(value)
   }
+
+  const handleChangePage = (value) => {
+    setPage(value)
+  }
+
+  const handleChangeAllPage = (value) => {
+    setAllPage(value)
+  }
+
   const fetchPagination = () => {
     fetch('http://127.0.0.1:8000/api/allPagination/', {
       method: 'Post',
@@ -68,7 +88,107 @@ function ProductWithCategory(props) {
       .then((res) => res.json())
       .then((data) => {
         setProducts(data.data)
+        setAllPage(data.pageCount)
       })
+  }
+
+  const fetchPlantsPagination = (name) => {
+    console.log(name)
+    if (name !== 'All plants') {
+      console.log(
+        JSON.stringify({
+          name: null,
+          price: { lower: null, higher: null },
+          tags: [`${name}`],
+          pagination: { count: '6', page: `${page}` },
+          sort: { kind: null, order: null },
+        })
+      )
+      fetch('http://127.0.0.1:8000/api/plantsAdvanceSearch/', {
+        method: 'Post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: null,
+          price: { lower: null, higher: null },
+          tags: [`${name}`],
+          pagination: { count: '6', page: `${page}` },
+          sort: { kind: null, order: null },
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPlantsData(data.data)
+          setAllPage(data.pageCount)
+        })
+    } else {
+      console.log(
+        JSON.stringify({
+          name: null,
+          price: { lower: null, higher: null },
+          pagination: { count: '6', page: `${page}` },
+          sort: { kind: null, order: null },
+        })
+      )
+      fetch('http://127.0.0.1:8000/api/plantsAdvanceSearch/', {
+        method: 'Post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: null,
+          price: { lower: null, higher: null },
+          pagination: { count: '6', page: `${page}` },
+          sort: { kind: null, order: null },
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPlantsData(data.data)
+          setAllPage(data.pageCount)
+        })
+    }
+  }
+  const fetchToolsPagination = (name) => {
+    if (name !== 'All tools') {
+      fetch('http://127.0.0.1:8000/api/toolsAdvanceSearch/', {
+        method: 'Post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: null,
+          price: { lower: null, higher: null },
+          tags: [`${name}`],
+          pagination: { count: '6', page: `${page}` },
+          sort: { kind: null, order: null },
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setToolsData(data.data)
+          setAllPage(data.pageCount)
+        })
+    } else {
+      fetch('http://127.0.0.1:8000/api/toolsAdvanceSearch/', {
+        method: 'Post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: null,
+          price: { lower: null, higher: null },
+          pagination: { count: '6', page: `${page}` },
+          sort: { kind: null, order: null },
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setToolsData(data.data)
+          setAllPage(data.pageCount)
+        })
+    }
   }
 
   return (
@@ -89,26 +209,20 @@ function ProductWithCategory(props) {
           justifyContent='center'
           alignItems='flex-start'
         >
-          <Grid item xs={12} sm={2}>
+          <Grid item xs={12} sm={12} md={2}>
             <Categorieslist
               bindplants={handlePlantsData}
               bindtools={handleToolsData}
+              bindall={handleDelete}
               settext={handleCategoryText}
+              setpageall={handleChangeAllPage}
+              setgivenpage={handleChangePage}
             />
           </Grid>
-          <Grid item xs={12} sm={10}>
-            {isplant !== 0 && (
-              <Chip
-                label={categoryText}
-                variant='outlined'
-                sx={{ mt: 2, ml: 2 }}
-                onDelete={handleDelete}
-              />
-            )}
-
+          <Grid item xs={12} sm={12} md={10}>
             {isplant === 0 && <ShowProduct data={products} />}
-            {isplant === 1 && <ShowPlants data={plantsData} />}
-            {isplant === 2 && <ShowTools tooldata={toolsData} />}
+            {isplant === 1 && <ShowProduct data={plantsData} />}
+            {isplant === 2 && <ShowProduct data={toolsData} />}
             <Grid
               container
               direction='row'
@@ -117,12 +231,30 @@ function ProductWithCategory(props) {
               sx={{ mt: 3, mb: 1 }}
             >
               <Grid item>
-                <Pagination
-                  className='pagination_center'
-                  count={3}
-                  page={page}
-                  onChange={handleChange}
-                />
+                {isplant === 0 && (
+                  <Pagination
+                    className='pagination_center'
+                    count={allPage}
+                    page={page}
+                    onChange={handleChange}
+                  />
+                )}
+                {isplant === 1 && (
+                  <Pagination
+                    className='pagination_center'
+                    count={allPage}
+                    page={page}
+                    onChange={handleChange}
+                  />
+                )}
+                {isplant === 2 && (
+                  <Pagination
+                    className='pagination_center'
+                    count={allPage}
+                    page={page}
+                    onChange={handleChange}
+                  />
+                )}
               </Grid>
             </Grid>
           </Grid>

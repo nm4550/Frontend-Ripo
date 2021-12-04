@@ -154,7 +154,11 @@ export default function BasicTabs() {
             sx={{ mt: 2 }}
           >
             <Grid item>
-              <Button variant='outlined' endIcon={<ChevronRightIcon />}>
+              <Button
+                variant='outlined'
+                href='/search'
+                endIcon={<ChevronRightIcon />}
+              >
                 See more
               </Button>
             </Grid>
@@ -170,7 +174,11 @@ export default function BasicTabs() {
             sx={{ mt: 2 }}
           >
             <Grid item>
-              <Button variant='outlined' endIcon={<ChevronRightIcon />}>
+              <Button
+                variant='outlined'
+                href='/search'
+                endIcon={<ChevronRightIcon />}
+              >
                 See more
               </Button>
             </Grid>
