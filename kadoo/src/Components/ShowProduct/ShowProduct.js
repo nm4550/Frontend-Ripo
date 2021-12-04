@@ -22,12 +22,12 @@ const Img = styled('img')({
 
 function ShowProduct(props) {
   return (
-    <div className='showProductsBack'>
+    <div>
       <Box sx={{ width: '100%' }}>
         <div className='showProductSubs'>Products</div>
         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           {props.data.map((p) => (
-            <Grid item xs={12} sm={4} md={3}>
+            <Grid item xs={12} sm={6} md={4}>
               {p.kind == 'Plant' && (
                 <Item className='showProductsIcons'>
                   <ProductIcon2 product={p} />
