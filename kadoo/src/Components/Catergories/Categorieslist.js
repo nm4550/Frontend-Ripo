@@ -228,6 +228,7 @@ export default function Categorieslist(props) {
                 </ListItemButton>
               </List>
               <Typography
+                variant="h5"
                 align='left'
                 sx={{ width: '100%', pl: 1, pb: 1, mt: 1 }}
               >
@@ -253,6 +254,7 @@ export default function Categorieslist(props) {
                 ))}
               </List>
               <Typography
+                variant="h5"
                 align='left'
                 sx={{ width: '100%', flexShrink: 0, pl: 1, pb: 1, mt: 1 }}
               >
