@@ -21,8 +21,9 @@ import CardMedia from '@mui/material/CardMedia'
 import Stack from '@mui/material/Stack'
 import Alert from '@mui/material/Alert'
 import './Categorieslist.css'
+import ProductTabs from '../../Components/ProductTabs/TabPanel'
+import Button from '@mui/material/Button'
 import SkeletonArticle from '../Cart/SkeletonArticle'
-
 
 const BoxItem = styled(Box)(({ theme }) => ({
   ...theme.typography.body2,
@@ -31,10 +32,9 @@ const BoxItem = styled(Box)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }))
 
-
-export default function SelectedListItem(props) {
-  const [plantSelectedId, setPlantSelectedId] = React.useState(1)
-  const [toolSelectedId, setToolSelectedId] = React.useState(1)
+export default function Categorieslist(props) {
+  const [plantSelectedId, setPlantSelectedId] = React.useState(0)
+  const [toolSelectedId, setToolSelectedId] = React.useState(0)
 
   const [plantTagsData, setPlantTagsData] = useState([])
   const [toolTagsData, setToolTagsData] = useState([])
@@ -49,46 +49,59 @@ export default function SelectedListItem(props) {
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false)
   }
-  const handlePlantListItemClick = (event, Id , name) => {
-    setPlantSelectedId(Id )
+
+  const handleReset = () => {
+    props.bindall()
+    setPlantSelectedId(0)
+    setToolSelectedId(0)
+  }
+
+  const handlePlantListItemClick = (event, Id, name) => {
+    setToolSelectedId(0)
+    setPlantSelectedId(Id)
     //setPlnatsData([])
     //setPlnatsDataLoaded(false)
     setTimeout(async () => {
-      const res = await fetch(
-        'http://127.0.0.1:8000/api/plantsWithTag/' + Id + '/'
-      )
-      const data = await res.json()
-      props.bindplants(data)
-      props.settext(name) 
-      //setPlnatsDataLoaded(true)
-      console.log(data)
+      fetchPlantsPagination(name, props.givenpage)
     }, 0)
   }
-  const handleToolListItemClick = (event, Id , name) => {
-    setToolSelectedId(Id )
+  const handleToolListItemClick = (event, Id, name) => {
+    setPlantSelectedId(0)
+    setToolSelectedId(Id)
     //setToolsData([])
     //setToolsDataLoaded(false)
     setTimeout(async () => {
-      const res = await fetch(
-        'http://127.0.0.1:8000/api/toolsWithTag/' + Id + '/'
-      )
-      const data = await res.json()
-      props.bindtools(data)
-       props.settext(name) 
-      //setToolsDataLoaded(true)
-      console.log(data)
+      fetchToolsPagination(name, props.givenpage)
     }, 0)
   }
 
   const handlePlantListItemClickAll = () => {
     //setPlnatsData([])
+    setToolSelectedId(0)
     //setPlnatsDataLoaded(false)
     setPlantSelectedId(1)
     setTimeout(async () => {
-      const res = await fetch('http://127.0.0.1:8000/api/plantsList/')
+      const res = await fetch(
+        'http://127.0.0.1:8000/api/plantsAdvanceSearch/',
+        {
+          method: 'Post',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            name: null,
+            price: { lower: null, higher: null },
+            pagination: { count: '6', page: '1' },
+            sort: { kind: null, order: null },
+          }),
+        }
+      )
+
       const data = await res.json()
-      props.bindplants(data)
-       props.settext('All plants')
+      props.bindplants(data.data)
+      props.setpageall(data.pageCount)
+      props.settext('All plants')
+      props.setgivenpage(1)
       //setPlnatsDataLoaded(true)
       console.log(data)
     }, 0)
@@ -97,15 +110,84 @@ export default function SelectedListItem(props) {
   const handleToolListItemClickAll = () => {
     //setToolsData([])
     //setToolsDataLoaded(false)
+    setPlantSelectedId(0)
     setToolSelectedId(1)
     setTimeout(async () => {
-      const res = await fetch('http://127.0.0.1:8000/api/toolsList/')
+      const res = await fetch('http://127.0.0.1:8000/api/toolsAdvanceSearch/', {
+        method: 'Post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: null,
+          price: { lower: null, higher: null },
+          pagination: { count: '6', page: '1' },
+          sort: { kind: null, order: null },
+        }),
+      })
+
       const data = await res.json()
-      props.bindtools(data)
+      props.bindtools(data.data)
+      props.setpageall(data.pageCount)
       props.settext('All tools')
+      props.setgivenpage(1)
       //setToolsDataLoaded(true)
       console.log(data)
     }, 0)
+  }
+
+  const fetchPlantsPagination = (name, page) => {
+    console.log(
+      JSON.stringify({
+        name: null,
+        price: { lower: null, higher: null },
+        tags: [`${name}`],
+        pagination: { count: '6', page: '1' },
+        sort: { kind: null, order: null },
+      })
+    )
+    fetch('http://127.0.0.1:8000/api/plantsAdvanceSearch/', {
+      method: 'Post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: null,
+        price: { lower: null, higher: null },
+        tags: [`${name}`],
+        pagination: { count: '6', page: '1' },
+        sort: { kind: null, order: null },
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        props.bindplants(data.data)
+        props.setpageall(data.pageCount)
+        props.settext(name)
+        props.setgivenpage(1)
+      })
+  }
+  const fetchToolsPagination = (name, page) => {
+    fetch('http://127.0.0.1:8000/api/toolsAdvanceSearch/', {
+      method: 'Post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: null,
+        price: { lower: null, higher: null },
+        tags: [`${name}`],
+        pagination: { count: '6', page: '1' },
+        sort: { kind: null, order: null },
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        props.bindtools(data.data)
+        props.setpageall(data.pageCount)
+        props.settext(name)
+        props.setgivenpage(1)
+      })
   }
 
   useEffect(() => {
@@ -127,104 +209,77 @@ export default function SelectedListItem(props) {
         })
     }
 
-   /* setTimeout(async () => {
-      const res = await fetch('http://127.0.0.1:8000/api/plantsList/')
-      const data = await res.json()
-      setPlnatsData(data)
-      setPlnatsDataLoaded(true)
-      console.log(data)
-    }, 3000)*/
-
-    /*setTimeout(async () => {
-      const res = await fetch('http://127.0.0.1:8000/api/toolsList/')
-      const data = await res.json()
-      setToolsData(data)
-      setToolsDataLoaded(true)
-      console.log(data)
-    }, 3000)*/
-
     fetchPlantTagsData()
     fetchToolTagsData()
   }, [])
 
   return (
     <Box sx={{ flexGrow: 1, m: 0 }}>
-      <Grid container spacing={0} >
-        <Grid item s={12} md={12}>
+      <Grid container spacing={0} justifyContent='center' alignItems='flex-end'>
+        <Grid item xs={12} md={12} sx={{ mr: 2 }}>
           <BoxItem>
-            <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
-              <Accordion
-                expanded={expanded === 'panel1'}
-                onChange={handleChange('panel1')}
-              >
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls='panel1bh-content'
-                  id='panel1bh-header'
+            <Box sx={{ width: '100%', mt: 1.2 }}>
+              <List component='nav'>
+                <ListItemButton
+                  selected={plantSelectedId === 0 && toolSelectedId === 0}
+                  onClick={handleReset}
                 >
-                  <Typography sx={{ width: '100%' }}>
-                    Plant Categories
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <List component='nav'>
-                    <ListItemButton
-                      selected={plantSelectedId === 1}
-                      onClick={() => handlePlantListItemClickAll()}
-                    >
-                      <ListItemText primary='All' />
-                    </ListItemButton>
-                    {plantTagsData.map((item) => (
-                      <ListItemButton
-                        selected={plantSelectedId === item.id}
-                        onClick={(event) =>
-                          handlePlantListItemClick(event, item.id , item.name) 
-                        }
-                      >
-                        <ListItemText primary={item.name} />
-                      </ListItemButton>
-                    ))}
-                  </List>
-                </AccordionDetails>
-              </Accordion>
-              <Accordion
-                expanded={expanded === 'panel2'}
-                onChange={handleChange('panel2')}
+                  <ListItemText primary='All Products' />
+                </ListItemButton>
+              </List>
+              <Typography
+                align='left'
+                sx={{ width: '100%', pl: 1, pb: 1, mt: 1 }}
               >
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls='panel1bh-content'
-                  id='panel1bh-header'
+                Plant Categories
+              </Typography>
+              <Divider />
+              <List component='nav'>
+                <ListItemButton
+                  selected={plantSelectedId === 1}
+                  onClick={() => handlePlantListItemClickAll()}
                 >
-                  <Typography sx={{ width: '100%', flexShrink: 0 }}>
-                    Tool Categories
-                  </Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <List component='nav'>
-                    <ListItemButton
-                      selected={toolSelectedId === 1}
-                      onClick={() => handleToolListItemClickAll()}
-                    >
-                      <ListItemText primary='All' />
-                    </ListItemButton>
-                    {toolTagsData.map((item) => (
-                      <ListItemButton
-                        selected={toolSelectedId === item.id}
-                        onClick={(event) =>
-                          handleToolListItemClick(event, item.id , item.name)
-                        }
-                      >
-                        <ListItemText primary={item.name} />
-                      </ListItemButton>
-                    ))}
-                  </List>
-                </AccordionDetails>
-              </Accordion>
+                  <ListItemText primary='Only plants' />
+                </ListItemButton>
+                {plantTagsData.map((item) => (
+                  <ListItemButton
+                    selected={plantSelectedId === item.id}
+                    onClick={(event) =>
+                      handlePlantListItemClick(event, item.id, item.name)
+                    }
+                  >
+                    <ListItemText primary={item.name} />
+                  </ListItemButton>
+                ))}
+              </List>
+              <Typography
+                align='left'
+                sx={{ width: '100%', flexShrink: 0, pl: 1, pb: 1, mt: 1 }}
+              >
+                Tool Categories
+              </Typography>
+              <Divider />
+              <List component='nav'>
+                <ListItemButton
+                  selected={toolSelectedId === 1}
+                  onClick={() => handleToolListItemClickAll()}
+                >
+                  <ListItemText primary='Only tools' />
+                </ListItemButton>
+                {toolTagsData.map((item) => (
+                  <ListItemButton
+                    selected={toolSelectedId === item.id}
+                    onClick={(event) =>
+                      handleToolListItemClick(event, item.id, item.name)
+                    }
+                  >
+                    <ListItemText primary={item.name} />
+                  </ListItemButton>
+                ))}
+              </List>
             </Box>
           </BoxItem>
         </Grid>
-       
       </Grid>
     </Box>
   )
