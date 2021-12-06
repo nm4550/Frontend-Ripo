@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { styled, alpha } from '@mui/material/styles'
+import './AppBar.css'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -18,7 +19,6 @@ import MoreIcon from '@mui/icons-material/MoreVert'
 import Button from '@mui/material/Button'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Grid from '@mui/material/Grid'
-
 import UserDropDown from '../UserDropDown/UserDropDown'
 
 const Search = styled('div')(({ theme }) => ({
@@ -132,7 +132,7 @@ export default function KadooAppBar(props) {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static'>
+      <AppBar position='fixed'>
         <Toolbar>
           <IconButton
             size='large'

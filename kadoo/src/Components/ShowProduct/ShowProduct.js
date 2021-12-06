@@ -1,43 +1,30 @@
 import React, { useEffect, useState } from 'react'
+import './ShowProduct.css'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
-import ProductIcon1 from '../productIcon/productIcon1'
-import ProductIcon2 from '../productIcon/productIcon2'
-import './ShowProduct.css'
+import Typography from '@mui/material/Typography';
+import PlantsCart from '../ProductsCart/PlantsCart'
+import ToolsCart from '../ProductsCart/ToolsCart'
 
-const Item = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-}))
-
-const Img = styled('img')({
-  margin: 'auto',
-  display: 'block',
-  maxWidth: '100%',
-  maxHeight: '100%',
-})
 
 function ShowProduct(props) {
   return (
     <div>
       <Box sx={{ width: '100%' }}>
-        <div className='showProductSubs'>Products</div>
+      <Typography variant="h4" gutterBottom component="div">
+        Products
+      </Typography>
         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           {props.data.map((p) => (
             <Grid item xs={12} sm={6} md={4}>
               {p.kind == 'Plant' && (
-                <Item className='showProductsIcons'>
-                  <ProductIcon2 product={p} />
-                </Item>
+                  <PlantsCart product={p} />
               )}
 
               {p.kind == 'Tool' && (
-                <Item className='showProductsIcons'>
-                  <ProductIcon1 product={p} />
-                </Item>
+                <ToolsCart product={p} />
               )}
             </Grid>
           ))}

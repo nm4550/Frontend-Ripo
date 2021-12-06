@@ -129,7 +129,7 @@ export default function BasicTabs() {
         pb: 2,
       }}
     >
-      <Typography variant='h5' sx={{ mt: 2 }}>
+      <Typography variant='h4' sx={{ mt: 2 }}>
         Explore our Newest products
       </Typography>
       <Box sx={{ width: '100%', mt: 3 }}>
