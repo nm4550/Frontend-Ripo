@@ -134,24 +134,33 @@ export default function KadooAppBar(props) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='static'>
         <Toolbar>
-          <IconButton
-            size='large'
-            edge='start'
-            color='inherit'
-            aria-label='open drawer'
-            sx={{ mr: 2 }}
-            onClick={handelDrawer}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant='h4'
-            noWrap
-            component='div'
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            Kadoo
-          </Typography>
+          {props.DrawerOption && (
+            <IconButton
+              size='large'
+              edge='start'
+              color='inherit'
+              aria-label='open drawer'
+              sx={{ mr: 2 }}
+              onClick={handelDrawer}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
+          {props.DrawerOption && (
+            <Typography
+              variant='h4'
+              noWrap
+              component='div'
+              sx={{ display: { xs: 'none', sm: 'block' } }}
+            >
+              Kadoo
+            </Typography>
+          )}
+          {!props.DrawerOption && (
+            <Typography variant='h4' noWrap component='div'>
+              Kadoo
+            </Typography>
+          )}
           {props.SearchOption && (
             <Search>
               <Grid wrap='nowrap' container direction='row' alignItems='center'>

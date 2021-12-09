@@ -130,6 +130,7 @@ export default function HomePage() {
               TicketOption={true}
               CartOption={true}
               AuthorizationOption={true}
+              DrawerOption={true}
               isopen={openDrawer}
               OpenMenu={handleDrawerOpen}
               CloseMenu={handleDrawerClose}
