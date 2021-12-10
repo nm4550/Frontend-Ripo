@@ -134,6 +134,7 @@ export default function KadooAppBar(props) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='fixed'>
         <Toolbar>
+          <Grid display={{xs:'flex' ,sm:'none'}}>
           <IconButton
             size='large'
             edge='start'
@@ -144,6 +145,7 @@ export default function KadooAppBar(props) {
           >
             <MenuIcon />
           </IconButton>
+          </Grid>
           <Typography
             variant='h4'
             noWrap

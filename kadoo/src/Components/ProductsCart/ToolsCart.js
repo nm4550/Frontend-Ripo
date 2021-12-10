@@ -6,6 +6,7 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, Grid } from '@mui/material';
 import { Link } from 'react-router-dom';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 export default function ToolsCart(props) {
     return (
@@ -14,7 +15,7 @@ export default function ToolsCart(props) {
         <Link to = {'/ProductPlantsPage/'+ props.product.id}>
           <CardMedia
             component="img"
-            height="226"
+            height="200"
             image={props.product.image}
             alt="picture"
           />
@@ -26,6 +27,10 @@ export default function ToolsCart(props) {
             <Typography gutterBottom variant="h6" component="div">
             $ {props.product.price}
             </Typography>
+            <div className="featButton">
+              <SettingsIcon className="toolIcon"/>
+              <a className="Message">Tools</a>
+            </div>
           </CardContent>
         </CardActionArea>
       </Card>
