@@ -80,7 +80,6 @@ export default function HomePage() {
   const handleCategoryText = (value) => {
     setCategoryText(value)
   }
-  
 
   const handleDelete = () => {
     fetchPagination()
@@ -91,7 +90,7 @@ export default function HomePage() {
     setToolsData(value)
     setIsPlant(2)
   }
-  
+
   const handleDrawerOpen = () => {
     setOpenDrawer(true)
   }
@@ -99,8 +98,6 @@ export default function HomePage() {
   const handleDrawerClose = () => {
     setOpenDrawer(false)
   }
-
-
 
   useEffect(() => {
     if (isplant === 0) {
@@ -240,8 +237,6 @@ export default function HomePage() {
     }
   }
 
-  
-
   return (
     <div>
       <Box sx={{ display: 'flex' }}>
@@ -265,13 +260,13 @@ export default function HomePage() {
             </IconButton>
           </DrawerHeader>
           <Categorieslist
-              bindplants={handlePlantsData}
-              bindtools={handleToolsData}
-              bindall={handleDelete}
-              settext={handleCategoryText}
-              setpageall={handleChangeAllPage}
-              setgivenpage={handleChangePage}
-            />
+            bindplants={handlePlantsData}
+            bindtools={handleToolsData}
+            bindall={handleDelete}
+            settext={handleCategoryText}
+            setpageall={handleChangeAllPage}
+            setgivenpage={handleChangePage}
+          />
         </Drawer>
         <Main open={openDrawer}>
           <Box>
@@ -284,7 +279,6 @@ export default function HomePage() {
               isopen={openDrawer}
               OpenMenu={handleDrawerOpen}
               CloseMenu={handleDrawerClose}
-
             />
           </Box>
           <Slide
@@ -297,11 +291,9 @@ export default function HomePage() {
             <Box>
               <ContentHeader />
               <ProductTabs />
-              <Grid item display={{xs:'none' ,sm:'flex'}}>
-              <ProductWithCategory  />
+              <Grid item display={{ xs: 'none', sm: 'flex' }}>
+                <ProductWithCategory />
               </Grid>
-
-
 
               <Card
                 style={{ backgroundColor: '#f5f4f4' }}
@@ -312,56 +304,55 @@ export default function HomePage() {
                   pt: 2,
                   pb: 2,
                 }}
+                display={{ xs: 'flex', sm: 'none' }}
               >
-        <Grid
-          display={{xs:'flex' ,sm:'none'}}
-          container
-          direction='row'
-          justifyContent='center'
-          alignItems='flex-start'
-        >
-
-            <Grid item >
-            {isplant === 0 && <ShowProduct data={products} />}
-            {isplant === 1 && <ShowProduct data={plantsData} />}
-            {isplant === 2 && <ShowProduct data={toolsData} />}
-            <Grid
-              container
-              direction='row'
-              justifyContent='center'
-              alignItems='center'
-              sx={{ mt: 3, mb: 1 }}
-            >
-              <Grid item>
-                {isplant === 0 && (
-                  <Pagination
-                    className='pagination_center'
-                    count={allPage}
-                    page={page}
-                    onChange={handleChange}
-                  />
-                )}
-                {isplant === 1 && (
-                  <Pagination
-                    className='pagination_center'
-                    count={allPage}
-                    page={page}
-                    onChange={handleChange}
-                  />
-                )}
-                {isplant === 2 && (
-                  <Pagination
-                    className='pagination_center'
-                    count={allPage}
-                    page={page}
-                    onChange={handleChange}
-                  />
-                )}
-              </Grid>
-            </Grid>
-          </Grid>
-          </Grid>
-          </Card>
+                <Grid
+                  container
+                  direction='row'
+                  justifyContent='center'
+                  alignItems='flex-start'
+                >
+                  <Grid item>
+                    {isplant === 0 && <ShowProduct data={products} />}
+                    {isplant === 1 && <ShowProduct data={plantsData} />}
+                    {isplant === 2 && <ShowProduct data={toolsData} />}
+                    <Grid
+                      container
+                      direction='row'
+                      justifyContent='center'
+                      alignItems='center'
+                      sx={{ mt: 3, mb: 1 }}
+                    >
+                      <Grid item>
+                        {isplant === 0 && (
+                          <Pagination
+                            className='pagination_center'
+                            count={allPage}
+                            page={page}
+                            onChange={handleChange}
+                          />
+                        )}
+                        {isplant === 1 && (
+                          <Pagination
+                            className='pagination_center'
+                            count={allPage}
+                            page={page}
+                            onChange={handleChange}
+                          />
+                        )}
+                        {isplant === 2 && (
+                          <Pagination
+                            className='pagination_center'
+                            count={allPage}
+                            page={page}
+                            onChange={handleChange}
+                          />
+                        )}
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Card>
             </Box>
           </Slide>
         </Main>
