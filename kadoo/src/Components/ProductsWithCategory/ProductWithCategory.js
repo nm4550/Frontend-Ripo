@@ -209,7 +209,9 @@ function ProductWithCategory(props) {
           justifyContent='center'
           alignItems='flex-start'
         >
-          <Grid item xs={12} sm={12} md={2}>
+          <Grid
+          sx={{ display: { xs: 'none', sm: 'none', md: 'flex' } }}
+          item xs={12} sm={12} md={2}>
             <Categorieslist
               bindplants={handlePlantsData}
               bindtools={handleToolsData}
