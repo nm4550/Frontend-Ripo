@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { styled, alpha } from '@mui/material/styles'
-import './AppBar.css'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -19,6 +18,7 @@ import MoreIcon from '@mui/icons-material/MoreVert'
 import Button from '@mui/material/Button'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Grid from '@mui/material/Grid'
+
 import UserDropDown from '../UserDropDown/UserDropDown'
 
 const Search = styled('div')(({ theme }) => ({
@@ -132,28 +132,35 @@ export default function KadooAppBar(props) {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='fixed'>
+      <AppBar position='static'>
         <Toolbar>
-          <Grid display={{xs:'flex' ,sm:'none'}}>
-          <IconButton
-            size='large'
-            edge='start'
-            color='inherit'
-            aria-label='open drawer'
-            sx={{ mr: 2 }}
-            onClick={handelDrawer}
-          >
-            <MenuIcon />
-          </IconButton>
-          </Grid>
-          <Typography
-            variant='h4'
-            noWrap
-            component='div'
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            Kadoo
-          </Typography>
+          {props.DrawerOption && (
+            <IconButton
+              size='large'
+              edge='start'
+              color='inherit'
+              aria-label='open drawer'
+              sx={{ mr: 2 }}
+              onClick={handelDrawer}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
+          {props.DrawerOption && (
+            <Typography
+              variant='h4'
+              noWrap
+              component='div'
+              sx={{ display: { xs: 'none', sm: 'block' } }}
+            >
+              Kadoo
+            </Typography>
+          )}
+          {!props.DrawerOption && (
+            <Typography variant='h4' noWrap component='div'>
+              Kadoo
+            </Typography>
+          )}
           {props.SearchOption && (
             <Search>
               <Grid wrap='nowrap' container direction='row' alignItems='center'>
