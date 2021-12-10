@@ -4,12 +4,8 @@ import Box from '@mui/material/Box'
 import { styled } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
 import ProductIcon2 from '../productIcon/productIcon2'
+import PlantsCart from '../ProductsCart/PlantsCart'
 
-const Item = styled(Paper)(({ theme }) => ({
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-}))
 
 function ShowPlantsOneRow(props) {
   return (
@@ -22,9 +18,7 @@ function ShowPlantsOneRow(props) {
         >
           {props.data.slice(0, 3).map((p) => (
             <Grid item xs={12}>
-              <Item className='showProductsIcons'>
-                <ProductIcon2 key={p.id} product={p} />
-              </Item>
+              <PlantsCart product={p} />
             </Grid>
           ))}
         </Grid>
@@ -35,9 +29,7 @@ function ShowPlantsOneRow(props) {
         >
           {props.data.slice(0, 2).map((p) => (
             <Grid item xs={6}>
-              <Item className='showProductsIcons'>
-                <ProductIcon2 key={p.id} product={p} />
-              </Item>
+              <PlantsCart product={p} />
             </Grid>
           ))}
         </Grid>
@@ -49,9 +41,7 @@ function ShowPlantsOneRow(props) {
         >
           {props.data.slice(0, 3).map((p) => (
             <Grid item xs={4}>
-              <Item className='showProductsIcons'>
-                <ProductIcon2 key={p.id} product={p} />
-              </Item>
+               <PlantsCart key={p.id} product={p} />
             </Grid>
           ))}
         </Grid>

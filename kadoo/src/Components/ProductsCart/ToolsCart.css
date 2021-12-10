@@ -1,0 +1,11 @@
+.css-o69gx8-MuiCardMedia-root{
+    object-fit: contain !important;
+}
+.toolIcon{
+    color: rgb(196, 196, 196);
+}
+.Message {
+    font-family: 'Quicksand';
+    color: black;
+    padding-right: 10px!important;
+  }

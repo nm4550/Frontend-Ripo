@@ -31,6 +31,7 @@ import Chip from '@mui/material/Chip'
 import Grid from '@mui/material/Grid'
 import ContentHeader from '../../Components/Header/ContentHeader'
 import ProductWithCategory from '../../Components/ProductsWithCategory/ProductWithCategory'
+import Card from '@mui/material/Card'
 
 const drawerWidth = 240
 
@@ -68,6 +69,7 @@ export default function HomePage() {
   const [isplant, setIsPlant] = React.useState(0)
   const [categoryText, setCategoryText] = React.useState('')
   const [page, setPage] = useState(1)
+  const [allPage, setAllPage] = useState(1)
   const [products, setProducts] = useState([])
 
   const handlePlantsData = (value) => {
@@ -78,6 +80,18 @@ export default function HomePage() {
   const handleCategoryText = (value) => {
     setCategoryText(value)
   }
+  
+
+  const handleDelete = () => {
+    fetchPagination()
+    setIsPlant(0)
+  }
+
+  const handleToolsData = (value) => {
+    setToolsData(value)
+    setIsPlant(2)
+  }
+  
   const handleDrawerOpen = () => {
     setOpenDrawer(true)
   }
@@ -86,14 +100,147 @@ export default function HomePage() {
     setOpenDrawer(false)
   }
 
-  const handleDelete = () => {
-    setIsPlant(0)
+
+
+  useEffect(() => {
+    if (isplant === 0) {
+      fetchPagination()
+    }
+    if (isplant === 1) {
+      fetchPlantsPagination(categoryText)
+    }
+    if (isplant === 2) {
+      fetchToolsPagination(categoryText)
+    }
+  }, [page])
+
+  const handleChange = (event, value) => {
+    setPage(value)
   }
 
-  const handleToolsData = (value) => {
-    setToolsData(value)
-    setIsPlant(2)
+  const handleChangePage = (value) => {
+    setPage(value)
   }
+
+  const handleChangeAllPage = (value) => {
+    setAllPage(value)
+  }
+
+  const fetchPagination = () => {
+    fetch('http://127.0.0.1:8000/api/allPagination/', {
+      method: 'Post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ count: '6', page: `${page}` }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data.data)
+        setAllPage(data.pageCount)
+      })
+  }
+
+  const fetchPlantsPagination = (name) => {
+    console.log(name)
+    if (name !== 'All plants') {
+      console.log(
+        JSON.stringify({
+          name: null,
+          price: { lower: null, higher: null },
+          tags: [`${name}`],
+          pagination: { count: '6', page: `${page}` },
+          sort: { kind: null, order: null },
+        })
+      )
+      fetch('http://127.0.0.1:8000/api/plantsAdvanceSearch/', {
+        method: 'Post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: null,
+          price: { lower: null, higher: null },
+          tags: [`${name}`],
+          pagination: { count: '6', page: `${page}` },
+          sort: { kind: null, order: null },
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPlantsData(data.data)
+          setAllPage(data.pageCount)
+        })
+    } else {
+      console.log(
+        JSON.stringify({
+          name: null,
+          price: { lower: null, higher: null },
+          pagination: { count: '6', page: `${page}` },
+          sort: { kind: null, order: null },
+        })
+      )
+      fetch('http://127.0.0.1:8000/api/plantsAdvanceSearch/', {
+        method: 'Post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: null,
+          price: { lower: null, higher: null },
+          pagination: { count: '6', page: `${page}` },
+          sort: { kind: null, order: null },
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPlantsData(data.data)
+          setAllPage(data.pageCount)
+        })
+    }
+  }
+  const fetchToolsPagination = (name) => {
+    if (name !== 'All tools') {
+      fetch('http://127.0.0.1:8000/api/toolsAdvanceSearch/', {
+        method: 'Post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: null,
+          price: { lower: null, higher: null },
+          tags: [`${name}`],
+          pagination: { count: '6', page: `${page}` },
+          sort: { kind: null, order: null },
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setToolsData(data.data)
+          setAllPage(data.pageCount)
+        })
+    } else {
+      fetch('http://127.0.0.1:8000/api/toolsAdvanceSearch/', {
+        method: 'Post',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: null,
+          price: { lower: null, higher: null },
+          pagination: { count: '6', page: `${page}` },
+          sort: { kind: null, order: null },
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setToolsData(data.data)
+          setAllPage(data.pageCount)
+        })
+    }
+  }
+
+  
 
   return (
     <div>
@@ -113,15 +260,18 @@ export default function HomePage() {
           open={openDrawer}
         >
           <DrawerHeader>
-            {/* <IconButton onClick={handleDrawerClose}>
+            <IconButton onClick={handleDrawerClose}>
               <ChevronLeftIcon />
-            </IconButton>*/}
+            </IconButton>
           </DrawerHeader>
           <Categorieslist
-            bindplants={handlePlantsData}
-            bindtools={handleToolsData}
-            settext={handleCategoryText}
-          />
+              bindplants={handlePlantsData}
+              bindtools={handleToolsData}
+              bindall={handleDelete}
+              settext={handleCategoryText}
+              setpageall={handleChangeAllPage}
+              setgivenpage={handleChangePage}
+            />
         </Drawer>
         <Main open={openDrawer}>
           <Box>
@@ -134,6 +284,7 @@ export default function HomePage() {
               isopen={openDrawer}
               OpenMenu={handleDrawerOpen}
               CloseMenu={handleDrawerClose}
+
             />
           </Box>
           <Slide
@@ -145,9 +296,72 @@ export default function HomePage() {
           >
             <Box>
               <ContentHeader />
-
-              <ProductWithCategory />
               <ProductTabs />
+              <Grid item display={{xs:'none' ,sm:'flex'}}>
+              <ProductWithCategory  />
+              </Grid>
+
+
+
+              <Card
+                style={{ backgroundColor: '#f5f4f4' }}
+                sx={{
+                  m: { xs: 3, sm: 5 },
+                  pl: { xs: 1, sm: 2, md: 2 },
+                  pr: { xs: 1, sm: 2, md: 8 },
+                  pt: 2,
+                  pb: 2,
+                }}
+              >
+        <Grid
+          display={{xs:'flex' ,sm:'none'}}
+          container
+          direction='row'
+          justifyContent='center'
+          alignItems='flex-start'
+        >
+
+            <Grid item >
+            {isplant === 0 && <ShowProduct data={products} />}
+            {isplant === 1 && <ShowProduct data={plantsData} />}
+            {isplant === 2 && <ShowProduct data={toolsData} />}
+            <Grid
+              container
+              direction='row'
+              justifyContent='center'
+              alignItems='center'
+              sx={{ mt: 3, mb: 1 }}
+            >
+              <Grid item>
+                {isplant === 0 && (
+                  <Pagination
+                    className='pagination_center'
+                    count={allPage}
+                    page={page}
+                    onChange={handleChange}
+                  />
+                )}
+                {isplant === 1 && (
+                  <Pagination
+                    className='pagination_center'
+                    count={allPage}
+                    page={page}
+                    onChange={handleChange}
+                  />
+                )}
+                {isplant === 2 && (
+                  <Pagination
+                    className='pagination_center'
+                    count={allPage}
+                    page={page}
+                    onChange={handleChange}
+                  />
+                )}
+              </Grid>
+            </Grid>
+          </Grid>
+          </Grid>
+          </Card>
             </Box>
           </Slide>
         </Main>

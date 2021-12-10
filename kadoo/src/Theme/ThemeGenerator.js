@@ -2,7 +2,7 @@ import { createTheme } from '@mui/material/styles'
 import VarelaRound from './Fonts/VarelaRound-Regular.ttf'
 
 const varelaRound = {
-  fontFamily: 'VarelaRound-Regular',
+  fontFamily: 'Quicksand',
   fontStyle: 'Regular',
   fontDisplay: 'swap',
   src: `
@@ -43,10 +43,10 @@ const Theme = createTheme({
     },
   },
   typography: {
-    fontFamily: [varelaRound],
-    fontWeightLight: 200,
-    fontWeightRegular: 200,
-    fontWeightMedium: 200,
+    fontFamily: "Quicksand",
+    fontWeightLight: 400,
+    fontWeightRegular: 800,
+    fontWeightMedium: 500,
     fontWeightBold: 800,
     h1: {
       fontWeight: 800,
@@ -62,7 +62,7 @@ const Theme = createTheme({
     },
     h5: {
       fontWeight: 800,
-      fontSize: '1.6rem',
+      fontSize: '1.4rem',
     },
     subtitle1: {
       fontWeight: 800,

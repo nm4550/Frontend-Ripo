@@ -47,7 +47,7 @@ function ContentHeader(props) {
             timeout={900}
           >
             <Typography
-              variant='h6'
+              variant='h5'
               gutterBottom
               component='div'
               sx={{ mt: 1 }}

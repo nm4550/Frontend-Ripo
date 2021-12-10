@@ -19,10 +19,10 @@
 }
 
 .showProductSubs {
+  font-family: 'Quicksand';
   display: flex;
   padding-top: 1rem;
   padding-bottom: 0.8rem;
   font-size: 25px;
   font-weight: bolder;
-  color: #069c5e;
 }
