@@ -95,6 +95,7 @@ function SearchBar(props) {
                       handleSeacrh()
                       props.funcSearchPlantsByName(searchText)
                       props.funcSearchToolsByName(searchText)
+                      props.funcSearchProductsByName(searchText)
                     }}
                   >
                     <SearchIconWrapper>

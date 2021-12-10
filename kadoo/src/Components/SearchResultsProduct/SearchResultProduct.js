@@ -32,6 +32,7 @@ import Select from '@mui/material/Select'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 import FormControlLabel from '@mui/material/FormControlLabel'
+import FilterListIcon from '@mui/icons-material/FilterList'
 import FormLabel from '@mui/material/FormLabel'
 import FormGroup from '@mui/material/FormGroup'
 import Checkbox from '@mui/material/Checkbox'
@@ -43,6 +44,7 @@ import SortNavBar from './SortNavBar'
 import SearchBar from './SearchBar'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import ShowProduct from '../../Components/ShowProduct/ShowProduct'
+import Badge from '@mui/material/Badge'
 
 const drawerWidth = 340
 
@@ -89,6 +91,7 @@ function SearchResultProduct(props) {
   const [searchPlantData, setSearchPlantData] = useState([])
   const [searchToolData, setSearchToolData] = useState([])
   const [openDrawer, setOpenDrawer] = React.useState(false)
+  const [isFilterd, setIsFilterd] = React.useState(true)
   ///////////////////// Advance Serach States /////////////////////
   //#########Plants
   //Search
@@ -111,7 +114,7 @@ function SearchResultProduct(props) {
   const [resultPaginationPagePlants, setResultPaginationPagePlants] =
     useState(0)
 
-  //#########Tools
+  //#########Products
   //Search
   const [searchTextProducts, setSearchTextProducts] = useState('')
   //Sort
@@ -158,6 +161,14 @@ function SearchResultProduct(props) {
   const handleDrawerClose = () => {
     setOpenDrawer(false)
     console.log(openDrawer)
+  }
+
+  const handelDrawer = () => {
+    if (openDrawer === false) {
+      handleDrawerOpen()
+    } else {
+      handleDrawerClose()
+    }
   }
 
   function PlantsAdvanceSearch() {
@@ -352,6 +363,12 @@ function SearchResultProduct(props) {
   const FuncSortOrderTools = (name) => {
     setSortOrderTools(name)
   }
+  const FuncSortKindProducts = (name) => {
+    setSortKindProducts(name)
+  }
+  const FuncSortOrderProducts = (name) => {
+    setSortOrderProducts(name)
+  }
   ////////////////////// Search Functions //////////////////////
   // 1) Serach Plants By Name
   const handleSearchPlantsByName = (name) => {
@@ -361,11 +378,18 @@ function SearchResultProduct(props) {
   const handleSearchToolsByName = (name) => {
     setSearchTextTools(name)
   }
+  const handleSearchProductsByName = (name) => {
+    setSearchTextProducts(name)
+  }
   ////////////////////// Filter Functions //////////////////////
   // 1) Filter By Price Plants
   const handleFilterPricePlants = (lower, higher) => {
     setFilterPriceLowerPlants(lower)
     setFilterPriceHigherPlants(higher)
+  }
+  const handleFilterPriceProducts = (lower, higher) => {
+    setFilterPriceLowerProducts(lower)
+    setFilterPriceHigherProducts(higher)
   }
   // 2) Filter By Water Plants
   const handleFilterWater = (value) => {
@@ -411,6 +435,7 @@ function SearchResultProduct(props) {
   const handleChangePrice = (event) => {
     handleFilterPricePlants(event.target.value[0], event.target.value[1])
     handleFilterPriceTools(event.target.value[0], event.target.value[1])
+    handleFilterPriceProducts(event.target.value[0], event.target.value[1])
   }
   ////////////////////// Pagination Functions //////////////////////
   // 1) Pagination Plants
@@ -472,6 +497,23 @@ function SearchResultProduct(props) {
     if (paginationCountProducts !== '' && paginationPageProducts !== '') {
       ProductsAdvanceSearch()
     }
+    if (
+      filterGrowthRatePlants === '' &&
+      filterLightPlants === '' &&
+      fiterEnvironmentPlants === '' &&
+      filterWaterPlants === '' &&
+      filterPriceHigherPlants === '' &&
+      filterPriceLowerPlants === '' &&
+      filterPriceHigherTools === '' &&
+      filterPriceLowerTools === '' &&
+      filterPriceHigherProducts === '' &&
+      filterPriceLowerProducts === '' &&
+      filterType === 0
+    ) {
+      setIsFilterd(true)
+    } else {
+      setIsFilterd(false)
+    }
   }, [
     sortKindPlants,
     sortOrderPlants,
@@ -498,6 +540,7 @@ function SearchResultProduct(props) {
     paginationPageTools,
     paginationCountProducts,
     paginationPageProducts,
+    filterType,
   ])
 
   useEffect(() => {
@@ -698,11 +741,12 @@ function SearchResultProduct(props) {
                 container
                 item
                 xs={24}
-                alignItems='flex-start'
-                justify='space-between'
+                alignItems='center'
+                justify='center'
+                direction='column'
                 style={{ padding: 10 }}
               >
-                <div>
+                <Grid item sx={{ width: '100%' }}>
                   <Box sx={{ width: '100%' }}>
                     {/* ////////////////////////// NavBar Sort ////////////////////////// */}
                     <Grid
@@ -719,19 +763,49 @@ function SearchResultProduct(props) {
                           />
                         )}
                       </Grid>
-                      <Grid item>
-                        <SortNavBar
-                          handleSortKindPlants={FuncSortKindPlants}
-                          handleSortOrderPlants={FuncSortOrderPlants}
-                          handleSortKindTools={FuncSortKindTools}
-                          handleSortOrderTools={FuncSortOrderTools}
-                        />
+                      <Grid
+                        item
+                        container
+                        direction='row'
+                        alignItems='center'
+                        sx={{ flex: 1 }}
+                      >
+                        <Grid item container sx={{ flex: 1 }}>
+                          <SortNavBar
+                            sx={{ flex: 1 }}
+                            handleSortKindPlants={FuncSortKindPlants}
+                            handleSortOrderPlants={FuncSortOrderPlants}
+                            handleSortKindTools={FuncSortKindTools}
+                            handleSortOrderTools={FuncSortOrderTools}
+                            handleSortKindProducts={FuncSortKindProducts}
+                            handleSortOrderProducts={FuncSortOrderProducts}
+                          />
+                        </Grid>
+
+                        <Button
+                          variant='text'
+                          startIcon={
+                            <Badge
+                              color='secondary'
+                              variant='dot'
+                              invisible={isFilterd}
+                            >
+                              <FilterListIcon />
+                            </Badge>
+                          }
+                          onClick={handelDrawer}
+                        >
+                          Filters
+                        </Button>
                       </Grid>
                       <Grid item>
                         {xsScreen && (
                           <SearchBar
                             funcSearchPlantsByName={handleSearchPlantsByName}
                             funcSearchToolsByName={handleSearchToolsByName}
+                            funcSearchProductsByName={
+                              handleSearchProductsByName
+                            }
                           />
                         )}
                       </Grid>
@@ -750,7 +824,7 @@ function SearchResultProduct(props) {
                           </Grid>
                         </div>
                       )}
-                      {searchProductData.length === 0 && filterType === 1 && (
+                      {searchProductData.length === 0 && filterType === 0 && (
                         <div>
                           {searchProductDataLoaded === true && (
                             <Alert severity='error'>
@@ -758,7 +832,7 @@ function SearchResultProduct(props) {
                             </Alert>
                           )}
                           {searchProductDataLoaded === false && (
-                            <Grid container item>
+                            <Grid sx={{ width: '100%' }} sx={{ p: 2 }}>
                               <SkeletonArticle />
                             </Grid>
                           )}
@@ -783,7 +857,7 @@ function SearchResultProduct(props) {
                             </Alert>
                           )}
                           {searchPlantDataLoaded === false && (
-                            <Grid container item sx={{ m: 2, flex: 1 }}>
+                            <Grid sx={{ width: '100%' }} sx={{ p: 2 }}>
                               <SkeletonArticle />
                             </Grid>
                           )}
@@ -808,7 +882,7 @@ function SearchResultProduct(props) {
                             </Alert>
                           )}
                           {searchToolDataLoaded === false && (
-                            <Grid sx={{ m: 2 }}>
+                            <Grid sx={{ width: '100%' }} sx={{ p: 2 }}>
                               <SkeletonArticle />
                             </Grid>
                           )}
@@ -816,33 +890,33 @@ function SearchResultProduct(props) {
                       )}
                     </Box>
                   </Box>
-                  <Grid item>
-                    {filterType === 0 && (
-                      <Pagination
-                        className='pagination_center'
-                        count={resultPaginationPageProducts}
-                        page={paginationPageProducts}
-                        onChange={handleChangeProduct}
-                      />
-                    )}
-                    {filterType === 1 && (
-                      <Pagination
-                        className='pagination_center'
-                        count={resultPaginationPagePlants}
-                        page={paginationPagePlants}
-                        onChange={handleChangePlant}
-                      />
-                    )}
-                    {filterType === 2 && (
-                      <Pagination
-                        className='pagination_center'
-                        count={resultPaginationPageTools}
-                        page={paginationPageTools}
-                        onChange={handleChangeTool}
-                      />
-                    )}
-                  </Grid>
-                </div>
+                </Grid>
+                <Grid item>
+                  {filterType === 0 && (
+                    <Pagination
+                      className='pagination_center'
+                      count={resultPaginationPageProducts}
+                      page={paginationPageProducts}
+                      onChange={handleChangeProduct}
+                    />
+                  )}
+                  {filterType === 1 && (
+                    <Pagination
+                      className='pagination_center'
+                      count={resultPaginationPagePlants}
+                      page={paginationPagePlants}
+                      onChange={handleChangePlant}
+                    />
+                  )}
+                  {filterType === 2 && (
+                    <Pagination
+                      className='pagination_center'
+                      count={resultPaginationPageTools}
+                      page={paginationPageTools}
+                      onChange={handleChangeTool}
+                    />
+                  )}
+                </Grid>
               </Grid>
             </Grid>
           </Box>

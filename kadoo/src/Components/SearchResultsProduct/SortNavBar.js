@@ -23,35 +23,43 @@ function SortNavBar(props) {
     handleSortOrderPlants,
     handleSortKindTools,
     handleSortOrderTools,
+    handleSortKindProducts,
+    handleSortOrderProducts,
   } = props
   useEffect(() => {
-    setSortSelectMenu(1)
+    //setSortSelectMenu(1)
   }, [])
   useEffect(() => {
     switch (sortSelectMenu) {
       case 1:
         handlePlantsSortBy_Name_ASC()
         handleToolsSortBy_Name_ASC()
+        handleProductsSortBy_Name_ASC()
         break
       case 2:
         handlePlantsSortBy_Name_DES()
         handleToolsSortBy_Name_DES()
+        handleProductsSortBy_Name_DES()
         break
       case 3:
         handlePlantsSortBy_Price_ASC()
         handleToolsSortBy_Price_ASC()
+        handleProductsSortBy_Price_ASC()
         break
       case 4:
         handlePlantsSortBy_Price_DES()
         handleToolsSortBy_Price_DES()
+        handleProductsSortBy_Price_DES()
         break
       case 5:
         handlePlantsSortBy_Time_ASC()
         handleToolsSortBy_Time_ASC()
+        handleProductsSortBy_Time_ASC()
         break
       case 6:
         handlePlantsSortBy_Time_DES()
         handleToolsSortBy_Time_DES()
+        handleProductsSortBy_Time_DES()
         break
     }
   }, [sortSelectMenu])
@@ -116,9 +124,36 @@ function SortNavBar(props) {
     handleSortKindTools('time')
     handleSortOrderTools('DES')
   }
+
+  const handleProductsSortBy_Name_ASC = () => {
+    handleSortKindProducts('name')
+    handleSortOrderProducts('ASC')
+  }
+  const handleProductsSortBy_Name_DES = () => {
+    handleSortKindProducts('name')
+    handleSortOrderProducts('DES')
+  }
+  // 5) Sort By Price Products
+  const handleProductsSortBy_Price_ASC = () => {
+    handleSortKindProducts('price')
+    handleSortOrderProducts('ASC')
+  }
+  const handleProductsSortBy_Price_DES = () => {
+    handleSortKindProducts('price')
+    handleSortOrderProducts('DES')
+  }
+  // 6) Sort By Time Products
+  const handleProductsSortBy_Time_ASC = () => {
+    handleSortKindProducts('time')
+    handleSortOrderProducts('ASC')
+  }
+  const handleProductsSortBy_Time_DES = () => {
+    handleSortKindProducts('time')
+    handleSortOrderProducts('DES')
+  }
   return (
-    <div>
-      <Grid container xs={12}>
+    <Grid container xs={12}>
+      <Grid container item xs={12}>
         <Grid
           item
           container
@@ -126,20 +161,24 @@ function SortNavBar(props) {
           alignContent='center'
           justifyContent='center'
           sx={{ minWidth: 240 }}
-          sx={{ display: { xs: 'flex', sm: 'none' }, mt: 2, mb: 2 }}
+          sx={{ display: { xs: 'block', sm: 'none' }, mt: 2, mb: 2 }}
+          xs={12}
         >
-          <Grid item sx={{ flex: 1 }}>
-            <Box>
-              <FormControl fullWidth>
-                <InputLabel sx={{ flex: 1 }} id='demo-simple-select-label'>
-                  Sort by
-                </InputLabel>
+          <Grid container item xs={12}>
+            <Grid item xs={12}>
+              <FormControl
+                component='div'
+                display='flex'
+                sx={{ width: '100%' }}
+              >
+                <InputLabel id='demo-simple-select-label'>Sort by</InputLabel>
                 <Select
                   labelId='demo-simple-select-label'
                   id='demo-simple-select'
                   label='Sort by'
                   value={sortSelectMenu}
                   onChange={handleChangeSelect}
+                  xs={12}
                 >
                   <MenuItem value={1}>A to Z</MenuItem>
                   <MenuItem value={2}>Z to A</MenuItem>
@@ -149,7 +188,7 @@ function SortNavBar(props) {
                   <MenuItem value={6}>DES time</MenuItem>
                 </Select>
               </FormControl>
-            </Box>
+            </Grid>
           </Grid>
         </Grid>
 
@@ -234,7 +273,7 @@ function SortNavBar(props) {
           </Button>
         </Box>
       </Grid>
-    </div>
+    </Grid>
   )
 }
 
