@@ -16,6 +16,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import PaymentIcon from '@mui/icons-material/Payment'
 import ForumIcon from '@mui/icons-material/Forum'
 import Badge from '@mui/material/Badge'
+import ShowCoins from '../ShowCoins/ShowCoins'
 
 function UserDropDown(props) {
   const [anchorEl, setAnchorEl] = React.useState(null)

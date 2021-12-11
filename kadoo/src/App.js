@@ -18,6 +18,7 @@ import CategoriesPage from './Pages/CategoriesPage'
 import ProductPlantsPage from './Pages/ProductPlantsPage/ProductPlantsPage'
 import ProductToolsPage from './Pages/ProductToolsPage/ProductToolsPage'
 import LandingPage from './Pages/LandingPage/LandingPage'
+import ShowCoins from './Components/ShowCoins/ShowCoins'
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
       <ThemeProvider theme={Theme}>
         <Router>
           <Switch>
+            <Route exact path='/Coins' component={ShowCoins} />
             <Route exact path='/' component={LandingPage} />
             <Route exact path='/signin' component={SignIn} />
             <Route exact path='/signup' component={SignUp} />
