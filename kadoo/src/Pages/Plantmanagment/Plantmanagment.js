@@ -28,53 +28,48 @@ function Plantmanagment(props) {
     setOpenDrawer(false)
   }
   useEffect(() =>{  
-     function FetchMyPlant() {
+     
     const requestOptions = {
       method: 'GET',
       headers: {
        'Authorization': 'JWT ' + localStorage.getItem('access_token'),
-        'Content-Type': 'application/json',
+       'Content-Type': 'application/json',
       },
-     
+
     }
-    
+
     setPlantData([])
     setPlantDataLoaded ( false ) 
+    console.log ('chera kharabi') 
     setTimeout(async () => {
 
-        fetch('http://127.0.0.1:8000/api/myPlants/', requestOptions)
-      .then((response) => {
-        if(response.status === 401)
-        {
-           throw response;
-        } 
-       
-        else {
 
-          response.json ()
+      fetch('http://127.0.0.1:8000/api/myPlants/', requestOptions)
+      .then(async (response) => {
+    const isJson = response.headers.get('content-type')?.includes('application/json');
+        const data = isJson ? await response.json() : null;
+
+        // check for error response
+        console.log(response.status)
+        if (!response.ok) {
+            // get error message from body or default to response status
+            const error = (data && data.message) || response.status;
+            return Promise.reject(error);
         }
-        
-      }).then(
 
-      (data) =>{ 
+        setPlantData(data)
+          setPlantDataLoaded(true)
+          console.log(data) 
 
-      setPlantData(data)
-      setPlantDataLoaded(true)
-      console.log(data) 
 
-        }
-      )
-      .catch( err => {
-        err.text().then( errorMessage => {
-            alert("You are not loged in! You should login first. ");
-        })
       })
-     
-    }, 3000)
-     
-    FetchMyPlant () 
-          
-  }
+      .catch(error => {
+        
+        console.error('There was an error!', error);
+    }); 
+
+    
+   
   }, [ ])
   return (
     <div>
