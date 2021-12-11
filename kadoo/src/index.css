@@ -6,9 +6,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   cursor:url('tree-leaf.png'), auto;
 }
-body:hover {
-  cursor:url('tree-leaf.png'), auto;
-}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -31,20 +28,20 @@ code {
   background-color: rgba(223,230,238,255);
   background-image: -webkit-linear-gradient(
     90deg,
-    rgb(26, 131, 78) 5%,
-    rgb(100, 218, 110) 25%,
+    #009688 5%,
+    #26a69a 25%,
     transparent 100%,
-    rgb(73, 218, 85) 75%,
+    #00796b 75%,
     transparent
   );
 }
 ::-webkit-scrollbar-thumb:hover{
   background-image: -webkit-linear-gradient(
     90deg,
-    rgb(121, 201, 47) 5%,
-    rgb(61, 196, 95) 25%,
+    #024942 5%,
+    #0a6d63 25%,
     transparent 100%,
-    rgb(175, 219, 146) 75%,
+    #06332e 75%,
     transparent
   );
 }

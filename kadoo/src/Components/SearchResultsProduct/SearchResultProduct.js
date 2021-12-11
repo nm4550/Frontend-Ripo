@@ -10,6 +10,7 @@ import './SearchResultProduct.css'
 import history from '../../history'
 import { Chip } from '@mui/material'
 import React, { useEffect, useState } from 'react'
+import Pagination from '@mui/material/Pagination'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 import ProductIcon1 from '../productIcon/productIcon1'
@@ -21,20 +22,58 @@ import Divider from '@mui/material/Divider'
 import Stack from '@mui/material/Stack'
 import Alert from '@mui/material/Alert'
 import Typography from '@mui/material/Typography'
-import Navbar2 from "../../Components/NavbarHome/Navbar2";
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
-import FormGroup from '@mui/material/FormGroup';
-import Checkbox from '@mui/material/Checkbox';
-import Slider from '@mui/material/Slider';
+import Navbar2 from '../../Components/NavbarHome/Navbar2'
+import List from '@mui/material/List'
+import ListItem from '@mui/material/ListItem'
+import InputLabel from '@mui/material/InputLabel'
+import MenuItem from '@mui/material/MenuItem'
+import FormControl from '@mui/material/FormControl'
+import Select from '@mui/material/Select'
+import Radio from '@mui/material/Radio'
+import RadioGroup from '@mui/material/RadioGroup'
+import FormControlLabel from '@mui/material/FormControlLabel'
+import FilterListIcon from '@mui/icons-material/FilterList'
+import FormLabel from '@mui/material/FormLabel'
+import FormGroup from '@mui/material/FormGroup'
+import Checkbox from '@mui/material/Checkbox'
+import AppBar from '../../Components/AppBar/AppBar'
+import Slider from '@mui/material/Slider'
+import Drawer from '@mui/material/Drawer'
+import CssBaseline from '@mui/material/CssBaseline'
+import SortNavBar from './SortNavBar'
+import SearchBar from './SearchBar'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import ShowProduct from '../../Components/ShowProduct/ShowProduct'
+import Badge from '@mui/material/Badge'
+
+const drawerWidth = 340
+
+const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
+  ({ theme, open }) => ({
+    flexGrow: 1,
+    transition: theme.transitions.create('margin', {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.leavingScreen,
+    }),
+    marginLeft: `-${drawerWidth}px`,
+    ...(open && {
+      transition: theme.transitions.create('margin', {
+        easing: theme.transitions.easing.easeOut,
+        duration: theme.transitions.duration.enteringScreen,
+      }),
+      marginLeft: 0,
+    }),
+  })
+)
+
+const DrawerHeader = styled('div')(({ theme }) => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: theme.spacing(0, 1),
+  // necessary for content to be below app bar
+  ...theme.mixins.toolbar,
+  justifyContent: 'left',
+}))
 
 const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
@@ -43,12 +82,16 @@ const Item = styled(Paper)(({ theme }) => ({
 }))
 
 function SearchResultProduct(props) {
+  const xsScreen = useMediaQuery('(min-width: 900px)')
+
   const [searchPlantDataLoaded, setSearchPlantDataLoaded] = useState(false)
   const [searchToolDataLoaded, setSearchToolDataLoaded] = useState(false)
+  const [searchProductDataLoaded, setSearchProductDataLoaded] = useState(false)
+  const [searchProductData, setSearchProductData] = useState([])
   const [searchPlantData, setSearchPlantData] = useState([])
   const [searchToolData, setSearchToolData] = useState([])
-  const [sortSelectMenu, setSortSelectMenu] = useState(0)
-  const [searchText, setSearchText] = useState('')
+  const [openDrawer, setOpenDrawer] = React.useState(false)
+  const [isFilterd, setIsFilterd] = React.useState(true)
   ///////////////////// Advance Serach States /////////////////////
   //#########Plants
   //Search
@@ -58,7 +101,7 @@ function SearchResultProduct(props) {
   const [sortOrderPlants, setSortOrderPlants] = useState('')
   //Filter
   const [filterPriceLowerPlants, setFilterPriceLowerPlants] = useState('')
-  const [filterPricePlants, setFilterPricePlants] = useState('',)
+  const [filterPricePlants, setFilterPricePlants] = useState('')
   const [filterPriceHigherPlants, setFilterPriceHigherPlants] = useState('')
   const [fiterEnvironmentPlants, setFiterEnvironmentPlants] = useState('')
   const [filterWaterPlants, setFilterWaterPlants] = useState('')
@@ -66,9 +109,24 @@ function SearchResultProduct(props) {
   const [filterGrowthRatePlants, setFilterGrowthRatePlants] = useState('')
   const [filterType, setFilterType] = useState(0)
   //Pagination
-  const [paginationCountPlants, setPaginationCountPlants] = useState('')
-  const [paginationPagePlants, setPaginationPagePlants] = useState('')
+  const [paginationCountPlants, setPaginationCountPlants] = useState(6)
+  const [paginationPagePlants, setPaginationPagePlants] = useState(1)
   const [resultPaginationPagePlants, setResultPaginationPagePlants] =
+    useState(0)
+
+  //#########Products
+  //Search
+  const [searchTextProducts, setSearchTextProducts] = useState('')
+  //Sort
+  const [sortKindProducts, setSortKindProducts] = useState('')
+  const [sortOrderProducts, setSortOrderProducts] = useState('')
+  //Filter
+  const [filterPriceLowerProducts, setFilterPriceLowerProducts] = useState('')
+  const [filterPriceHigherProducts, setFilterPriceHigherProducts] = useState('')
+  //Pagination
+  const [paginationCountProducts, setPaginationCountProducts] = useState(6)
+  const [paginationPageProducts, setPaginationPageProducts] = useState(1)
+  const [resultPaginationPageProducts, setResultPaginationPageProducts] =
     useState(0)
 
   //#########Tools
@@ -81,9 +139,37 @@ function SearchResultProduct(props) {
   const [filterPriceLowerTools, setFilterPriceLowerTools] = useState('')
   const [filterPriceHigherTools, setFilterPriceHigherTools] = useState('')
   //Pagination
-  const [paginationCountTools, setPaginationCountTools] = useState('')
-  const [paginationPageTools, setPaginationPageTools] = useState('')
+  const [paginationCountTools, setPaginationCountTools] = useState(6)
+  const [paginationPageTools, setPaginationPageTools] = useState(1)
   const [resultPaginationPageTools, setResultPaginationPageTools] = useState(0)
+
+  const handleChangePlant = (event, value) => {
+    setPaginationPagePlants(value)
+  }
+  const handleChangeTool = (event, value) => {
+    setPaginationPageTools(value)
+  }
+  const handleChangeProduct = (event, value) => {
+    setPaginationPageProducts(value)
+  }
+
+  const handleDrawerOpen = () => {
+    setOpenDrawer(true)
+    console.log(openDrawer)
+  }
+
+  const handleDrawerClose = () => {
+    setOpenDrawer(false)
+    console.log(openDrawer)
+  }
+
+  const handelDrawer = () => {
+    if (openDrawer === false) {
+      handleDrawerOpen()
+    } else {
+      handleDrawerClose()
+    }
+  }
 
   function PlantsAdvanceSearch() {
     const requestOptions = {
@@ -135,6 +221,48 @@ function SearchResultProduct(props) {
       console.log(data)
     }, 3000)
   }
+  function ProductsAdvanceSearch() {
+    const requestOptions = {
+      method: 'POST',
+      headers: {
+        // 'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: searchTextProducts !== '' ? searchTextProducts : null,
+        price: {
+          lower:
+            filterPriceLowerProducts !== '' ? filterPriceLowerProducts : null,
+          higher:
+            filterPriceHigherProducts !== '' ? filterPriceHigherProducts : null,
+        },
+        pagination: {
+          count:
+            paginationCountProducts !== '' ? paginationCountProducts : null,
+          page: paginationPageProducts !== '' ? paginationPageProducts : null,
+        },
+        sort: {
+          kind: sortKindProducts !== '' ? sortKindProducts : null,
+          order: sortOrderProducts !== '' ? sortOrderProducts : null,
+        },
+      }),
+    }
+    console.log('body : ' + requestOptions.body)
+    setSearchProductData([])
+    setSearchProductDataLoaded(false)
+    setTimeout(async () => {
+      const res = await fetch(
+        'http://127.0.0.1:8000/api/allAdvanceSearch/',
+        requestOptions
+      )
+      const data = await res.json()
+      setSearchProductData(data.data)
+      console.log('product page: ' + data.pageCount)
+      setResultPaginationPageProducts(data.pageCount)
+      setSearchProductDataLoaded(true)
+      console.log(data)
+    }, 3000)
+  }
   function ToolsAdvanceSearch() {
     const requestOptions = {
       method: 'POST',
@@ -180,9 +308,7 @@ function SearchResultProduct(props) {
     }
     handleSearch(searchTextPlants)
   }
-  function handleChange(e) {
-    setSearchText(e.target.value.trim())
-  }
+
   const updateSearch = () => {
     async function fetchProductData() {
       await fetch('http://127.0.0.1:8000/api/plantsList/')
@@ -225,71 +351,23 @@ function SearchResultProduct(props) {
     fetchSearchToolData()
   }
   ////////////////////// Sort Functions //////////////////////
-  // 1) Sort By Name Plants
-  const handlePlantsSortBy_Name_ASC = () => {
-    setSortSelectMenu(1)
-    setSortKindPlants('name')
-    setSortOrderPlants('ASC')
+  const FuncSortKindPlants = (name) => {
+    setSortKindPlants(name)
   }
-  const handlePlantsSortBy_Name_DES = () => {
-    setSortSelectMenu(2)
-    setSortKindPlants('name')
-    setSortOrderPlants('DES')
+  const FuncSortOrderPlants = (name) => {
+    setSortOrderPlants(name)
   }
-  // 2) Sort By Price Plants
-  const handlePlantsSortBy_Price_ASC = () => {
-    setSortSelectMenu(3)
-    setSortKindPlants('price')
-    setSortOrderPlants('ASC')
+  const FuncSortKindTools = (name) => {
+    setSortKindTools(name)
   }
-  const handlePlantsSortBy_Price_DES = () => {
-    setSortSelectMenu(4)
-    setSortKindPlants('price')
-    setSortOrderPlants('DES')
+  const FuncSortOrderTools = (name) => {
+    setSortOrderTools(name)
   }
-  // 3) Sort By Time Plants
-  const handlePlantsSortBy_Time_ASC = () => {
-    setSortSelectMenu(5)
-    setSortKindPlants('time')
-    setSortOrderPlants('ASC')
+  const FuncSortKindProducts = (name) => {
+    setSortKindProducts(name)
   }
-  const handlePlantsSortBy_Time_DES = () => {
-    setSortSelectMenu(6)
-    setSortKindPlants('time')
-    setSortOrderPlants('DES')
-  }
-  // 4) Sort By Name Tools
-  const handleToolsSortBy_Name_ASC = () => {
-    setSortSelectMenu(7)
-    setSortKindTools('name')
-    setSortOrderTools('ASC')
-  }
-  const handleToolsSortBy_Name_DES = () => {
-    setSortSelectMenu(8)
-    setSortKindTools('name')
-    setSortOrderTools('DES')
-  }
-  // 5) Sort By Price Tools
-  const handleToolsSortBy_Price_ASC = () => {
-    setSortSelectMenu(9)
-    setSortKindTools('price')
-    setSortOrderTools('ASC')
-  }
-  const handleToolsSortBy_Price_DES = () => {
-    setSortSelectMenu(10)
-    setSortKindTools('price')
-    setSortOrderTools('DES')
-  }
-  // 6) Sort By Time Tools
-  const handleToolsSortBy_Time_ASC = () => {
-    setSortSelectMenu(11)
-    setSortKindTools('time')
-    setSortOrderTools('ASC')
-  }
-  const handleToolsSortBy_Time_DES = () => {
-    setSortSelectMenu(12)
-    setSortKindTools('time')
-    setSortOrderTools('DES')
+  const FuncSortOrderProducts = (name) => {
+    setSortOrderProducts(name)
   }
   ////////////////////// Search Functions //////////////////////
   // 1) Serach Plants By Name
@@ -300,11 +378,18 @@ function SearchResultProduct(props) {
   const handleSearchToolsByName = (name) => {
     setSearchTextTools(name)
   }
+  const handleSearchProductsByName = (name) => {
+    setSearchTextProducts(name)
+  }
   ////////////////////// Filter Functions //////////////////////
   // 1) Filter By Price Plants
   const handleFilterPricePlants = (lower, higher) => {
     setFilterPriceLowerPlants(lower)
     setFilterPriceHigherPlants(higher)
+  }
+  const handleFilterPriceProducts = (lower, higher) => {
+    setFilterPriceLowerProducts(lower)
+    setFilterPriceHigherProducts(higher)
   }
   // 2) Filter By Water Plants
   const handleFilterWater = (value) => {
@@ -330,26 +415,28 @@ function SearchResultProduct(props) {
   }
   // 7) Filter By Type of data
   const handleChangeTypeData = (event) => {
-    if(event.target.value === 'plant'){
+    if (event.target.value === 'plant') {
       setFilterType(1)
-    }
-    else if(event.target.value === 'tool'){
+    } else if (event.target.value === 'tool') {
       setFilterType(2)
+    } else if (event.target.value === 'all') {
+      setFilterType(0)
     }
   }
   // 8) Filter handel change water
-   const handleChangeWater = (event) => {
+  const handleChangeWater = (event) => {
     handleFilterWater(event.target.value)
-  };
+  }
   // 9) Filter handel change light
-   const handleChangeLight = (event) => {
+  const handleChangeLight = (event) => {
     handleFilterLight(event.target.value)
-  };
- // 10) Filter handel change price
-   const handleChangePrice = (event) => {
-    handleFilterPricePlants(event.target.value[0] , event.target.value[1])
-    handleFilterPriceTools(event.target.value[0] , event.target.value[1])
-  };
+  }
+  // 10) Filter handel change price
+  const handleChangePrice = (event) => {
+    handleFilterPricePlants(event.target.value[0], event.target.value[1])
+    handleFilterPriceTools(event.target.value[0], event.target.value[1])
+    handleFilterPriceProducts(event.target.value[0], event.target.value[1])
+  }
   ////////////////////// Pagination Functions //////////////////////
   // 1) Pagination Plants
   const handlePaginationPlants = (count, page) => {
@@ -361,12 +448,19 @@ function SearchResultProduct(props) {
     setPaginationCountTools(count)
     setPaginationPageTools(page)
   }
+  const handlePaginationProducts = (count, page) => {
+    setPaginationCountProducts(count)
+    setPaginationPageProducts(page)
+  }
 
   useEffect(() => {
     if (sortKindPlants !== '' && sortOrderPlants !== '') {
       PlantsAdvanceSearch()
     }
     if (sortKindTools !== '' && sortOrderTools !== '') {
+      ToolsAdvanceSearch()
+    }
+    if (sortKindProducts !== '' && sortOrderProducts !== '') {
       ToolsAdvanceSearch()
     }
     if (
@@ -394,11 +488,39 @@ function SearchResultProduct(props) {
     if (paginationCountTools !== '' && paginationPageTools !== '') {
       ToolsAdvanceSearch()
     }
+    if (filterPriceHigherProducts !== '' && filterPriceLowerProducts !== '') {
+      ProductsAdvanceSearch()
+    }
+    if (searchTextProducts !== '') {
+      ProductsAdvanceSearch()
+    }
+    if (paginationCountProducts !== '' && paginationPageProducts !== '') {
+      ProductsAdvanceSearch()
+    }
+    if (
+      filterGrowthRatePlants === '' &&
+      filterLightPlants === '' &&
+      fiterEnvironmentPlants === '' &&
+      filterWaterPlants === '' &&
+      filterPriceHigherPlants === '' &&
+      filterPriceLowerPlants === '' &&
+      filterPriceHigherTools === '' &&
+      filterPriceLowerTools === '' &&
+      filterPriceHigherProducts === '' &&
+      filterPriceLowerProducts === '' &&
+      filterType === 0
+    ) {
+      setIsFilterd(true)
+    } else {
+      setIsFilterd(false)
+    }
   }, [
     sortKindPlants,
     sortOrderPlants,
     sortKindTools,
     sortOrderTools,
+    sortKindProducts,
+    sortOrderProducts,
     filterGrowthRatePlants,
     filterLightPlants,
     fiterEnvironmentPlants,
@@ -406,44 +528,152 @@ function SearchResultProduct(props) {
     filterPriceHigherTools,
     filterPriceLowerPlants,
     filterPriceLowerTools,
+    filterPriceHigherProducts,
+    filterPriceLowerProducts,
     filterWaterPlants,
     searchTextPlants,
     searchTextTools,
+    searchTextProducts,
     paginationCountPlants,
     paginationCountTools,
     paginationPagePlants,
     paginationPageTools,
+    paginationCountProducts,
+    paginationPageProducts,
+    filterType,
   ])
 
   useEffect(() => {
-    async function fetchProductData() {
-      await fetch('http://127.0.0.1:8000/api/plantsList/')
-        .then((response) => response.json())
-        .then((data) => {
-          setSearchPlantData(data)
-          console.log(data)
-        })
+    if (filterType === 0) {
+      ProductsAdvanceSearch()
     }
-    async function fetchToolData() {
-      await fetch('http://127.0.0.1:8000/api/toolsList/')
-        .then((response) => response.json())
-        .then((data) => {
-          setSearchToolData(data)
-          console.log(data)
-        })
+    if (filterType === 1) {
+      PlantsAdvanceSearch()
     }
-    fetchProductData()
-    fetchToolData()
+    if (filterType === 2) {
+      ToolsAdvanceSearch()
+    }
+  }, [paginationPagePlants, paginationPageTools, paginationPageProducts])
+
+  useEffect(() => {
+    ProductsAdvanceSearch()
   }, [])
   return (
     <div>
-      <Navbar2/>
-      {/* <br />
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <Drawer
+          sx={{
+            width: drawerWidth,
+            flexShrink: 0,
+            '& .MuiDrawer-paper': {
+              width: drawerWidth,
+              boxSizing: 'border-box',
+            },
+          }}
+          variant='persistent'
+          anchor='left'
+          open={openDrawer}
+        >
+          <DrawerHeader>
+            <Typography variant='h6' noWrap component='div'>
+              Filters
+            </Typography>
+          </DrawerHeader>
+          <Grid item style={{ padding: 10 }}>
+            {/* ////////////////////////// Sidbar For Filter ////////////////////////// */}
+            {/* /////// Filter /////// */}
+            {/* <Button onClick={() => handleFilterEnvironment(VALUEFROMUSER)}></Button> */}
+
+            <FormControl component='fieldset' sx={{ mb: 1 }}>
+              <FormLabel component='sort'>Type of data</FormLabel>
+              <RadioGroup
+                aria-label='gender'
+                name='controlled-radio-buttons-group'
+                value={searchPlantData}
+                onChange={handleChangeTypeData}
+              >
+                <FormControlLabel
+                  checked={filterType === 0}
+                  value={'all'}
+                  control={<Radio />}
+                  label='All'
+                />
+                <FormControlLabel
+                  checked={filterType === 1}
+                  value={'plant'}
+                  control={<Radio />}
+                  label='Plants'
+                />
+                <FormControlLabel
+                  checked={filterType === 2}
+                  value={'tool'}
+                  control={<Radio />}
+                  label='Tools'
+                />
+              </RadioGroup>
+            </FormControl>
+            {filterType === 1 && (
+              <Box>
+                <hr />
+                <FormControl fullWidth sx={{ mt: 1 }}>
+                  <InputLabel id='demo-simple-select-label'>Water</InputLabel>
+                  <Select
+                    labelId='demo-simple-select-label'
+                    id='demo-simple-select'
+                    value={filterWaterPlants}
+                    label='Water'
+                    onChange={handleChangeWater}
+                  >
+                    <MenuItem value={'low'}>Low</MenuItem>
+                    <MenuItem value={'medium'}>Medium</MenuItem>
+                    <MenuItem value={'much'}>Much</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl fullWidth sx={{ mt: 1, mb: 1 }}>
+                  <InputLabel id='demo-simple-select-label'>Light</InputLabel>
+                  <Select
+                    labelId='demo-simple-select-label'
+                    id='demo-simple-select'
+                    value={filterLightPlants}
+                    label='Light'
+                    onChange={handleChangeLight}
+                  >
+                    <MenuItem value={'low'}>Low</MenuItem>
+                    <MenuItem value={'medium'}>Medium</MenuItem>
+                    <MenuItem value={'much'}>Much</MenuItem>
+                  </Select>
+                </FormControl>
+              </Box>
+            )}
+
+            <hr />
+            <Box sx={{ mt: 1, ml: 2, mr: 2 }}>
+              <Typography id='input-slider' gutterBottom sx={{ ml: -2 }}>
+                Range of Price
+              </Typography>
+              <Slider
+                getAriaLabel={() => 'Temperature range'}
+                value={[
+                  filterPriceLowerPlants,
+                  filterPriceHigherPlants === '' ? 30 : filterPriceHigherPlants,
+                ]}
+                onChange={handleChangePrice}
+                valueLabelDisplay='auto'
+                min={4}
+                $
+                max={30}
+                $
+              />
+            </Box>
+          </Grid>
+        </Drawer>
+        {/* <br />
       <Grid container style={{ minHeight: '100vh' }} xs={24}>
         <Grid item xs={6} sm={3} style={{ padding: 10 }}>
         <Grid
           item
-          xs={20}
+          xs={20} 
           sm={10}
           display='flex'
           marginLeft={0}
@@ -494,185 +724,208 @@ function SearchResultProduct(props) {
           </IconButton>
         </Grid>
       </div> */}
-
-      <br />
-      <Grid container style={{ minHeight: '100vh' }} xs={24}>
-        <Grid item xs={6} sm={3} style={{ padding: 10 }}>
-          <Grid
-          item
-          xs={20}
-          sm={10}
-          display='flex'
-          marginLeft={0}
-          direction='column'
-        >
-          <Grid>
-          <TextField
-            onChange={(e) => handleChange(e)}
-            size='small'
-            id='outlined-search'
-            name='SearchField'
-            label='Search..'
-            type='search'>
-          </TextField>
-          {/* ////////////////////////// Samples ////////////////////////// */}
-          {/* /////// Search /////// */}
-          {/* <Button onClick={() => handleSearchPlantsByName(searchText)}></Button> */}
-          <IconButton onClick={() => {handleSearchPlantsByName(searchText) ;handleSearchToolsByName(searchText) }}>
-            <SearchIcon className='Searchicon' fontSize='large' />
-          </IconButton>
-          </Grid>
-          
-          <Chip
-            width="10px"
-            label={'You searched for ' + searchTextPlants}
-            variant='outlined'
-          />
-        </Grid>
-          {/* ////////////////////////// Sidbar For Filter ////////////////////////// */}
-          {/* /////// Filter /////// */}
-          {/* <Button onClick={() => handleFilterEnvironment(VALUEFROMUSER)}></Button> */}
-
-          <FormControl component="fieldset">
-            <FormLabel component="sort">Type of  data</FormLabel>
-            <RadioGroup
-              aria-label="gender"
-              name="controlled-radio-buttons-group"
-              value={searchPlantData}
-              onChange={handleChangeTypeData}
-            >
-              <FormControlLabel checked={filterType === 1} value={'plant'} control={<Radio />} label="Plants" />
-              <FormControlLabel checked={filterType === 2} value={'tool'} control={<Radio />} label="Tools" />
-            </RadioGroup>
-          </FormControl>
-          <hr/>
-          <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Water</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={filterWaterPlants}
-            label="Water"
-            onChange={handleChangeWater}
-          >
-            <MenuItem value={'low'}>Low</MenuItem>
-            <MenuItem value={'medium'}>Medium</MenuItem>
-            <MenuItem value={'much'}>Much</MenuItem>
-          </Select>
-        </FormControl>
-        <hr/>
-        <FormControl fullWidth>
-          <InputLabel id="demo-simple-select-label">Light</InputLabel>
-          <Select
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            value={filterLightPlants}
-            label="Light"
-            onChange={handleChangeLight}
-          >
-            <MenuItem value={'low'}>Low</MenuItem>
-            <MenuItem value={'medium'}>Medium</MenuItem>
-            <MenuItem value={'much'}>Much</MenuItem>
-          </Select>
-        </FormControl>
-        <hr/>
-          <Box sx={{ width: 300 }}>
-            <Typography id="input-slider" gutterBottom>
-              Range of Price
-            </Typography>
-            <Slider 
-              getAriaLabel={() => 'Temperature range'}
-              value = {[filterPriceLowerPlants , filterPriceHigherPlants === '' ? 30:filterPriceHigherPlants]}
-              onChange={handleChangePrice}
-              valueLabelDisplay="auto"
-              min={4}$
-              max={30}$
+        <Main open={openDrawer}>
+          <Box>
+            <AppBar
+              SearchOption={false}
+              TicketOption={true}
+              CartOption={true}
+              AuthorizationOption={true}
+              DrawerOption={true}
+              isopen={openDrawer}
+              OpenMenu={handleDrawerOpen}
+              CloseMenu={handleDrawerClose}
             />
+            <Grid container style={{ minHeight: '100vh' }} xs={24}>
+              <Grid
+                container
+                item
+                xs={24}
+                alignItems='center'
+                justify='center'
+                direction='column'
+                style={{ padding: 10 }}
+              >
+                <Grid item sx={{ width: '100%' }}>
+                  <Box sx={{ width: '100%' }}>
+                    {/* ////////////////////////// NavBar Sort ////////////////////////// */}
+                    <Grid
+                      container
+                      alignItems={xsScreen ? 'center' : 'left'}
+                      direction={xsScreen ? 'row' : 'column'}
+                    >
+                      <Grid item>
+                        {!xsScreen && (
+                          <SearchBar
+                            sx={{ pt: 5, pb: 5 }}
+                            funcSearchPlantsByName={handleSearchPlantsByName}
+                            funcSearchToolsByName={handleSearchToolsByName}
+                          />
+                        )}
+                      </Grid>
+                      <Grid
+                        item
+                        container
+                        direction='row'
+                        alignItems='center'
+                        sx={{ flex: 1 }}
+                      >
+                        <Grid item container sx={{ flex: 1 }}>
+                          <SortNavBar
+                            sx={{ flex: 1 }}
+                            handleSortKindPlants={FuncSortKindPlants}
+                            handleSortOrderPlants={FuncSortOrderPlants}
+                            handleSortKindTools={FuncSortKindTools}
+                            handleSortOrderTools={FuncSortOrderTools}
+                            handleSortKindProducts={FuncSortKindProducts}
+                            handleSortOrderProducts={FuncSortOrderProducts}
+                          />
+                        </Grid>
+
+                        <Button
+                          variant='text'
+                          startIcon={
+                            <Badge
+                              color='secondary'
+                              variant='dot'
+                              invisible={isFilterd}
+                            >
+                              <FilterListIcon />
+                            </Badge>
+                          }
+                          onClick={handelDrawer}
+                        >
+                          Filters
+                        </Button>
+                      </Grid>
+                      <Grid item>
+                        {xsScreen && (
+                          <SearchBar
+                            funcSearchPlantsByName={handleSearchPlantsByName}
+                            funcSearchToolsByName={handleSearchToolsByName}
+                            funcSearchProductsByName={
+                              handleSearchProductsByName
+                            }
+                          />
+                        )}
+                      </Grid>
+                    </Grid>
+
+                    {/* ////////////////////////// Samples ////////////////////////// */}
+                    {/* /////// Sort /////// */}
+                    {/* <Button onClick={() => handleToolsSortBy_Name_ASC()}></Button> */}
+                    <Box sx={{ width: '100%' }}>
+                      {searchProductData.length != 0 && filterType === 0 && (
+                        <div>
+                          {/*<div className='showProductSubs'>Products</div>
+                          <Divider variant='middle' />*/}
+                          <Grid container spacing={2} sx={{ p: 2 }}>
+                            <ShowProduct data={searchProductData} />
+                          </Grid>
+                        </div>
+                      )}
+                      {searchProductData.length === 0 && filterType === 0 && (
+                        <div>
+                          {searchProductDataLoaded === true && (
+                            <Alert severity='error'>
+                              There is NO Product right now! Come Back soon ...
+                            </Alert>
+                          )}
+                          {searchProductDataLoaded === false && (
+                            <Grid sx={{ width: '100%' }} sx={{ p: 2 }}>
+                              <SkeletonArticle />
+                            </Grid>
+                          )}
+                        </div>
+                      )}
+                    </Box>
+                    <Box sx={{ width: '100%' }}>
+                      {searchPlantData.length != 0 && filterType === 1 && (
+                        <div>
+                          {/*<div className='showProductSubs'>Plants</div>
+                          <Divider variant='middle' />*/}
+                          <Grid container spacing={2} sx={{ p: 2 }}>
+                            <ShowProduct data={searchPlantData} />
+                          </Grid>
+                        </div>
+                      )}
+                      {searchPlantData.length === 0 && filterType === 1 && (
+                        <div>
+                          {searchPlantDataLoaded === true && (
+                            <Alert severity='error'>
+                              There is NO plant right now! Come Back soon ...
+                            </Alert>
+                          )}
+                          {searchPlantDataLoaded === false && (
+                            <Grid sx={{ width: '100%' }} sx={{ p: 2 }}>
+                              <SkeletonArticle />
+                            </Grid>
+                          )}
+                        </div>
+                      )}
+                    </Box>
+                    <Box>
+                      {searchToolData.length != 0 && filterType === 2 && (
+                        <div>
+                          {/*<div className='showProductSubs'>Tools</div>
+                          <Divider variant='middle' />*/}
+                          <Grid container spacing={2} sx={{ p: 2 }}>
+                            <ShowProduct data={searchToolData} />
+                          </Grid>
+                        </div>
+                      )}
+                      {searchToolData.length === 0 && filterType === 2 && (
+                        <div>
+                          {searchToolDataLoaded === true && (
+                            <Alert severity='error'>
+                              There is NO plant right now! Come Back soon ...
+                            </Alert>
+                          )}
+                          {searchToolDataLoaded === false && (
+                            <Grid sx={{ width: '100%' }} sx={{ p: 2 }}>
+                              <SkeletonArticle />
+                            </Grid>
+                          )}
+                        </div>
+                      )}
+                    </Box>
+                  </Box>
+                </Grid>
+                <Grid item>
+                  {filterType === 0 && (
+                    <Pagination
+                      className='pagination_center'
+                      count={resultPaginationPageProducts}
+                      page={paginationPageProducts}
+                      onChange={handleChangeProduct}
+                    />
+                  )}
+                  {filterType === 1 && (
+                    <Pagination
+                      className='pagination_center'
+                      count={resultPaginationPagePlants}
+                      page={paginationPagePlants}
+                      onChange={handleChangePlant}
+                    />
+                  )}
+                  {filterType === 2 && (
+                    <Pagination
+                      className='pagination_center'
+                      count={resultPaginationPageTools}
+                      page={paginationPageTools}
+                      onChange={handleChangeTool}
+                    />
+                  )}
+                </Grid>
+              </Grid>
+            </Grid>
           </Box>
-          </Grid>
-          <Grid
-            container
-            item
-            xs={18}
-            sm={9}
-            alignItems='flex-start'
-            justify='space-between'
-            style={{ padding: 10 }}
-            
-          >
-          <div>
-            <Box sx={{ width: '100%' }}>
-              {/* ////////////////////////// NavBar Sort ////////////////////////// */}
-              {/* ////////////////////////// Samples ////////////////////////// */}
-              {/* /////// Sort /////// */}
-              {/* <Button onClick={() => handleToolsSortBy_Name_ASC()}></Button> */}
-              <Stack direction="row" spacing={2}>
-                <Typography variant="body" gutterBottom>
-              	Sort By:</Typography>
-                <Button variant= { sortSelectMenu==1 ? 'contained' : 'text'} onClick={( )=>{handlePlantsSortBy_Name_ASC( )  ;handleToolsSortBy_Name_ASC( )}  } size="small">  A to Z </Button>
-                <Button variant={ sortSelectMenu==2 ? 'contained' : 'text'} onClick={( ) => {handlePlantsSortBy_Name_DES( ) ;handleToolsSortBy_Name_DES( )}}size="small">  Z to A </Button>
-                <Button variant={sortSelectMenu==3 ? 'contained' : 'text'} onClick={( )=> {handlePlantsSortBy_Price_ASC( )  ;handleToolsSortBy_Price_ASC()}}size="small">  ACS Price </Button>
-                <Button variant={ sortSelectMenu==4 ? 'contained' : 'text'} onClick={( )=> {handlePlantsSortBy_Price_DES( ) ;handleToolsSortBy_Price_DES() }}size="small"> DES Price </Button>
-                <Button variant={ sortSelectMenu==5 ? 'contained' : 'text'} onClick={( )=>{handlePlantsSortBy_Time_ASC( )   ;handleToolsSortBy_Time_ASC() } }size="small"> ACS time  </Button>
-                <Button variant={ sortSelectMenu==6 ? 'contained' : 'text'} onClick={( )=>{handlePlantsSortBy_Time_DES( )   ;handleToolsSortBy_Time_DES( ) }}size="small"> DES time  </Button>
-                </Stack>  
-              <Box>
-                <div className='showProductSubs'>Plants</div>
-                <Divider variant='middle' />
-                {(searchPlantData.length != 0 && filterType !== 2) && (
-                  <div>
-                    <Grid container spacing={2} sx={{ mt: 2 }}>
-                      <ShowPlants data={searchPlantData} />
-                    </Grid>
-                  </div>
-                )}
-                {searchPlantData.length === 0 && (
-                  <div>
-                    {searchPlantDataLoaded === true && (
-                      <Alert severity='error'>
-                        There is NO plant right now! Come Back soon ...
-                      </Alert>
-                    )}
-                    {searchPlantDataLoaded === false && (
-                      <Stack sx={{ m: 2 }}>
-                        <SkeletonArticle />
-                      </Stack>
-                    )}
-                  </div>
-                )}
-              </Box>
-              <Box>
-                <div className='showProductSubs'>Tools</div>
-                <Divider variant='middle' />
-                {(searchToolData.length != 0 &&  filterType !== 1)&&(
-                  <div>
-                    <Grid container spacing={2} sx={{ mt: 2 }}>
-                      <ShowTools tooldata={searchToolData} />
-                    </Grid>
-                  </div>
-                )}
-                {searchToolData.length === 0 && (
-                  <div>
-                    {searchToolDataLoaded === true && (
-                      <Alert severity='error'>
-                        There is NO plant right now! Come Back soon ...
-                      </Alert>
-                    )}
-                    {searchToolDataLoaded === false && (
-                      <Stack sx={{ m: 2 }}>
-                        <SkeletonArticle />
-                      </Stack>
-                    )}
-                  </div>
-                )}
-              </Box>
-            </Box>
-          </div>
-        </Grid>
-      </Grid>
-      {/* ////////////////////////// Samples ////////////////////////// */}
-      {/* /////// Pagination /////// */}
-      {/* <Button onClick={() => handlePaginationPlants(Count, Page)}></Button> */}
+        </Main>
+
+        {/* ////////////////////////// Samples ////////////////////////// */}
+        {/* /////// Pagination /////// */}
+        {/* <Button onClick={() => handlePaginationPlants(Count, Page)}></Button> */}
+      </Box>
     </div>
   )
 }
