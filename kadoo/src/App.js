@@ -18,6 +18,7 @@ import CategoriesPage from './Pages/CategoriesPage'
 import ProductPlantsPage from './Pages/ProductPlantsPage/ProductPlantsPage'
 import ProductToolsPage from './Pages/ProductToolsPage/ProductToolsPage'
 import LandingPage from './Pages/LandingPage/LandingPage'
+import AdminPage from './Pages/AdminPage/AdminPage'
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route exact path='/Homepage' exact component={HomePage} />
             <Route path='/cart' exact component={Cart} />
             <Route path='/categories' exact component={CategoriesPage} />
+            <Route exact path='/AdminPage' component={AdminPage} />
             <Route
               exact
               path='/ProductPlantsPage/:id'

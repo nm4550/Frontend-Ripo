@@ -190,7 +190,7 @@
 
 .TypographyKadoo{
     font-weight: 800;
-    padding-bottom: 10%;
+    padding-bottom: 5%;
     align-items: center !important;
     justify-content: center !important;
     display: flex !important;
@@ -202,18 +202,17 @@
 
 .Container{
     max-height: fit-content !important;
-    height: 200vh !important;
 }
 
 .GridContactUs{
     align-items: center !important;
     justify-content: center !important;
     display: flex !important;
-    margin-top: 10%;
+    margin-top: 8%;
 }
 
 .Avatars{
-    margin-top: 10% !important;
+    margin-top: 8% !important;
 }
 
 .ContactUs{
@@ -222,4 +221,11 @@
 
 .css-147bo66-MuiSvgIcon-root{
     color: #7FC7AD !important;
+}
+
+.AboutUsTxt{
+    margin-top: 8% !important;
+    justify-content: center !important;
+    display: flex !important;
+    align-items: center !important;
 }

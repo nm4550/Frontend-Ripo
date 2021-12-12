@@ -13,7 +13,7 @@ import Sara from '../../Images/Landing/Sara.jpg';
 import Deniz from '../../Images/Landing/Deniz.jpg';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import { Container } from '@mui/material';
+import { Container, Icon, List, ListItem } from '@mui/material';
 import { Fade } from "react-awesome-reveal";
 import AppBar from "../../Components/AppBar/AppBar";
 import { Grid } from '@mui/material';
@@ -27,6 +27,9 @@ import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import PhoneIcon from '@mui/icons-material/Phone';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import RenderSwiper from '../../Pages/Swiper/RenderSwiper'
 
 export default function LandingPage() {
 
@@ -60,13 +63,13 @@ export default function LandingPage() {
             </a>
           </Fade>
         </Box>
-        <Grid className="Introduction">
-          <p>We often don't think to buy plant online. But what if we tell you that you can now order the most beautiful plants right from home? Kadoo presents a broad range of Live Plants that can be bought online in Iran.</p>
+        <Grid className="Introduction" sx={{ display: { xs: 'flex', sm: 'none', md: 'none' } }}>
+          <Typography align="center">We often don't think to buy plant online. But what if we tell you that you can now order the most beautiful plants right from home?</Typography>
         </Grid>
       </Box>
-      <Grid style={{backgroundImage:`url(${Background2})` ,
+      <Grid style={{backgroundImage:`url(${Background2})`,
       backgroundPosition: 'center' ,
-      height: '200vh' ,
+      minHeight: '100vh' ,
       backgroundRepeat: 'no-repeat' ,
       backgroundSize: 'cover', 
       position: 'relative' ,
@@ -74,7 +77,7 @@ export default function LandingPage() {
       justifyContent: 'center' ,
       alignItems: 'center'}}>
       <Container className="Container"  maxWidth="lg" >
-        <Typography variant="h4" className="TypographyKadoo">
+        <Typography variant="h4" className="TypographyKadoo" sx={{marginTop: {sm: '10%' , xs: '25%' , md: '10%'} , paddingBottom: {sm: '5%' , xs: '15%' , md: '5%'}}}>
           <h4>Why<span className="Span"> kadoo</span> :</h4>
         </Typography>
         <Grid container spacing={3}>
@@ -84,7 +87,7 @@ export default function LandingPage() {
               className="Media"
               image={apartmentPlants}
               alt="Apartment Plants"
-              sx={{ maxWidth: {sm: 400 , xs: 400 , md: 400} , height: { sm: 300 , xs:250 , md: 200}}}/>
+              sx={{ maxWidth: {sm: 400 , xs: 400 , md: 400} , height: { sm: 270 , xs:400 , md: 300}}}/>
               <CardContent >
                 <Typography gutterBottom color="#212121" varient="h5" component="h2">
                   Apartment plants
@@ -102,7 +105,7 @@ export default function LandingPage() {
               className="Media"
               image={GardenPlants}
               alt="Garden Plants"
-              sx={{ maxWidth: {sm: 400 , xs: 400 , md: 400} , height: { sm: 300 , xs:250 , md: 200}}}/>
+              sx={{ maxWidth: {sm: 400 , xs: 400 , md: 400} , height: { sm: 270 , xs:400 , md: 300}}}/>
               <CardContent >
                 <Typography gutterBottom color="#212121" varient="h5" component="h2">
                   Garden plants
@@ -120,7 +123,7 @@ export default function LandingPage() {
               className="Media"
               image={YardPlants}
               alt="Yard Plants"
-              sx={{ maxWidth: {sm: 400 , xs: 400 , md: 400} , height: { sm: 300 , xs:250 , md: 200}}}/>
+              sx={{ maxWidth: {sm: 400 , xs: 400 , md: 400} , height: { sm: 270 , xs:400 , md: 300}}}/>
               <CardContent >
                 <Typography gutterBottom color="#212121" varient="h5" component="h1">
                   Yard plants
@@ -133,89 +136,9 @@ export default function LandingPage() {
             </Card>         
           </Grid>
         </Grid>
-        <Grid className="GridContactUs">
-          <Typography variant="h4" className="TypographyContactUs">
-            <h4>About<span className="Span"> Us</span> :</h4>
-          </Typography>
-        </Grid>
-        <Grid container spacing={3} justifyContent="center"  className="Avatars">
-          <Grid item>
-            <Avatar
-            alt="Amirmohammad Sohrabi"
-            src={Amir}
-            sx={{ width: {sm: 90 , xs: 30 }, height: { sm: 90 , xs:30 }}}
-          />
-          </Grid>
-          <Grid item>
-            <Avatar
-            alt="Hooriye Sabzevari"
-            src={Hooriye}
-            sx={{ width: {sm: 90 , xs: 30}, height: { sm: 90 , xs:30 }}}
-          />
-          </Grid>
-          <Grid item>
-            <Avatar
-            alt="Elnaz Rezaee"
-            src={Elnaz}
-            sx={{ width: {sm: 90 , xs: 30}, height: { sm: 90 , xs:30 }}}
-          />
-          </Grid>
-          <Grid item>
-            <Avatar
-            alt="Navid Moosavizade"
-            src={Navid}
-            sx={{ width: {sm: 90 , xs: 30}, height: { sm: 90 , xs:30 }}}
-          />
-          </Grid>
-          <Grid item>
-            <Avatar
-            alt="Sara Yoonesi"
-            src={Sara}
-            sx={{ width: {sm: 90 , xs: 30}, height: { sm: 90 , xs:30 }}}
-          />
-          </Grid>
-          <Grid item>
-            <Avatar
-            alt="Deniz Ahmadi"
-            src={Deniz}
-            sx={{ width: {sm: 90 , xs: 30}, height: { sm: 90 , xs:30 }}}
-          />
-          </Grid>
-        </Grid>
-        <Grid className="GridContactUs">
-          <Typography variant="h4" className="TypographyContactUs">
-            <h4>Contact<span className="Span"> Us</span> :</h4>
-          </Typography>
-        </Grid>
-        <Grid container spacing={3} justifyContent="center" className="Avatars">
-          <Grid item >
-            <IconButton>
-              <TelegramIcon  sx={{ width: {sm: 90 , xs: 30}, height: { sm: 90 , xs:30 }}}/>
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <IconButton>
-              <WhatsAppIcon  sx={{ width: {sm: 90 , xs: 30}, height: { sm: 90 , xs:30 }}}/>
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <IconButton>
-              <TwitterIcon  sx={{ width: {sm: 90 , xs: 30}, height: { sm: 90 , xs:30 }}}/>
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <IconButton>
-              <AlternateEmailIcon  sx={{ width: {sm: 90 , xs: 30}, height: { sm: 90 , xs:30 }}}/>
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <IconButton>
-              <PhoneIcon  sx={{ width: {sm: 90 , xs: 30}, height: { sm: 90 , xs:30 }}}/>
-            </IconButton>  
-          </Grid>
-        </Grid>
       </Container>
       </Grid>
+
       
 
     </div>
