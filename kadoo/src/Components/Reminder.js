@@ -29,11 +29,11 @@ export default function Reminder() {
                 renderInput={(params) => <TextField {...params} />}
             />
             </LocalizationProvider>
-        </Grid>
-        <Grid container item justifyContent="flex-end" sx={{p:3 , Color: '#12824C'}} className="ProductPageTitle">
-            <Button variant="contained" className="productsPageAdd" onClick={DenizJoonReminder}>
-                Add To value
-            </Button>
+            <Grid item container justifyContent = "center" alignItems = "center">
+                <Button variant="contained" container item justifyContent="flex-end" sx={{p:1 , Color: '#12824C'}} className="ProductPageTitle" onClick={DenizJoonReminder}>
+                    Add To value
+                </Button>
+            </Grid>
         </Grid>
     </Grid>
   );
