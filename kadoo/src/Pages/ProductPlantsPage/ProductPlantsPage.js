@@ -223,7 +223,7 @@ class ProductPlantsPage extends React.Component {
                                 <Button variant="contained" className="productsPageAdd" onClick={addToBasket}>
                                     Add To Bascket
                                 </Button>
-                            </Grid>
+                         </Grid>
                     </Grid>
                         </Grid>
                     </Grid>
