@@ -23,13 +23,14 @@ export default function ShowCoins(props) {
           setCoinsNumber(data.coin_vlaue)
           console.log(data)
         })
-    }, []);
+        }, []);
     return (
         <Grid
         display='flex'
         alignItems='center'
+        justifyItems='center'
         >
-            <img src={CoinsIcon}/>
+            <img className='coinPic' src={CoinsIcon} width={30}/>
             <Typography className='coinText'>Coins: {coins}</Typography>
         </Grid>
         )}
