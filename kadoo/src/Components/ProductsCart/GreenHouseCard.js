@@ -19,6 +19,7 @@ import OpacityIcon from '@mui/icons-material/Opacity'
 import WbSunnyIcon from '@mui/icons-material/WbSunny'
 import { Link } from 'react-router-dom'
 import './GreenHouseCard.css'
+import Fab from '@mui/material/Fab'
 // Import Theme Files
 import { ThemeProvider } from '@mui/material/styles'
 import Theme from '../../Theme/ThemeGenerator'
@@ -59,27 +60,40 @@ function GreenHouseCard(props) {
             />
           </Grid>
         </Link>
-        <CardContent className={cardStyles.content}>
+        <Avatar className={cardStyles.avatar}>
+          <Fab color='primary' aria-label='add'>
+            <OpacityIcon />
+          </Fab>
+        </Avatar>
+        <CardContent className={cardStyles.content} className='FontRight'>
           <TextInfoContent
+            className='FontRight'
             classes={textCardContentStyles}
             heading={props.data.name}
             body={
-              <div className='featButton'>
-                <WbSunnyIcon className='lightButton' />
-                <a className='Message'> {props.data.light} </a>
-                <OpacityIcon className='waterButton' />
-                <a className='Message'> {props.data.water} </a>
-                <NatureIcon className='growButton' />
-                <a className='Message'> {props.data.growthRate} </a>
+              <div>
+                <div className='lighWeightFont'>
+                  {props.data.description.length > 99
+                    ? props.data.description.substring(0, 99) + ' ...'
+                    : props.data.description}
+                </div>
+                <div className='featButton'>
+                  <WbSunnyIcon className='lightButton' />
+                  <a className='Message'> {props.data.light} </a>
+                  <OpacityIcon className='waterButton' />
+                  <a className='Message'> {props.data.water} </a>
+                  <NatureIcon className='growButton' />
+                  <a className='Message'> {props.data.growthRate} </a>
+                </div>
               </div>
             }
           />
         </CardContent>
         <Box px={2} pb={2} mt={-1}>
-          <IconButton>
+          <IconButton size='small'>
             <EditIcon />
           </IconButton>
-          <IconButton>
+          <IconButton size='small'>
             <DeleteIcon />
           </IconButton>
         </Box>

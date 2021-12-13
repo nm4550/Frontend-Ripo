@@ -5,3 +5,21 @@
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
 }
+
+.FontRight h4 {
+  font-family: Quicksand !important;
+  font-size: 1.3rem !important;
+  line-height: 1.5 !important;
+  padding-top: 4px;
+  padding-bottom: 8px;
+}
+
+.Message {
+  font-family: Quicksand !important;
+}
+
+.lighWeightFont {
+  font-family: Quicksand !important;
+  font-weight: 400 !important;
+  padding-bottom: 16px;
+}

@@ -40,35 +40,33 @@ function Plantmanagment(props) {
   }, [plantData])
 
   useEffect(() => {
-    if (plantData !== []) {
-      const requestOptions = {
-        method: 'GET',
-        headers: {
-          //'Authorization': 'JWT ' + localStorage.getItem('access_token'),
-          'Content-Type': 'application/json',
-        },
-      }
-
-      setPlantDataLoaded(false)
-      setTimeout(async () => {
-        plantId.map((p) => {
-          console.log('plant Id' + p.plant)
-          fetch(
-            'http://127.0.0.1:8000/api/plantDetail/' + p.plant + '/',
-            requestOptions
-          ).then(async (response) => {
-            let isJson = response.headers
-              .get('content-type')
-              ?.includes('application/json')
-            let data = isJson ? await response.json() : null
-            console.log('1')
-            console.log(plantData)
-            setPlantData((prestate) => [...prestate, data])
-            console.log(data)
-          })
-        })
-      }, 3000)
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        //'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+        'Content-Type': 'application/json',
+      },
     }
+
+    setPlantDataLoaded(false)
+    setTimeout(async () => {
+      plantId.map((p) => {
+        console.log('plant Id' + p.plant)
+        fetch(
+          'http://127.0.0.1:8000/api/plantDetail/' + p.plant + '/',
+          requestOptions
+        ).then(async (response) => {
+          let isJson = response.headers
+            .get('content-type')
+            ?.includes('application/json')
+          let data = isJson ? await response.json() : null
+          console.log('1')
+          console.log(plantData)
+          setPlantData((prestate) => [...prestate, data])
+          console.log(data)
+        })
+      })
+    }, 3000)
   }, [plantId])
 
   useEffect(() => {
@@ -95,8 +93,14 @@ function Plantmanagment(props) {
             return Promise.reject(error)
           }
 
-          setPlantId(data)
-          console.log(data)
+          if (data === null) {
+            setPlantDataLoaded(true)
+            console.log('sadasd')
+          } else {
+            setPlantId(data)
+          }
+          console.log('1111')
+          console.log(data.lenght)
         })
         .catch((error) => {
           if (error === 401) {
@@ -127,7 +131,7 @@ function Plantmanagment(props) {
           alignItems='center'
           justify='center'
           direction='column'
-          sx={{ p: 5 }}
+          sx={{ p: 3.5, pt: 4 }}
         >
           <Grid item sx={{ width: '100%' }}>
             <Box sx={{ width: '100%' }}>
@@ -136,7 +140,7 @@ function Plantmanagment(props) {
                   container
                   spacing={2}
                   xs={12}
-                  sx={{ p: 3, mt: 2 }}
+                  sx={{ mt: 2 }}
                   sx={{ width: '100%' }}
                 >
                   <Grid item sx={{ width: '100%' }}>
@@ -147,8 +151,8 @@ function Plantmanagment(props) {
               {plantData.length === 0 && (
                 <div>
                   {plantDataLoaded === true && (
-                    <Grid container spacing={2} xs={12} sx={{ p: 3, mt: 2 }}>
-                      <Alert severity='error'>
+                    <Grid container spacing={2} xs={12} sx={{ p: 3 }}>
+                      <Alert severity='error' sx={{ width: '100%' }}>
                         There is NO plant right now! Come Back soon ...
                       </Alert>
                     </Grid>

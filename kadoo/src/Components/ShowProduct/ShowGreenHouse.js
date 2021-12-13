@@ -16,7 +16,12 @@ function ShowGreenHouse(props) {
         <Typography variant='h4' gutterBottom component='div'>
           My Plnats
         </Typography>
-        <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid
+          container
+          rowSpacing={2}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          sx={{ mt: 2 }}
+        >
           {props.data.map((p) => (
             <Grid item xs={12} sm={6} md={4}>
               <GreenHouseCard data={p} />
