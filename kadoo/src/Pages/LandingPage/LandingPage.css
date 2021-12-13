@@ -35,6 +35,10 @@
     margin-left: 10px !important;
 }
 
+.BlackBackground{
+    background-color: #212121 !important;
+}
+
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
     margin-bottom: 0rem !important;
 }
@@ -208,11 +212,10 @@
     align-items: center !important;
     justify-content: center !important;
     display: flex !important;
-    margin-top: 8%;
 }
 
 .Avatars{
-    margin-top: 8% !important;
+    margin-top: 4% !important;
 }
 
 .ContactUs{
@@ -228,4 +231,23 @@
     justify-content: center !important;
     display: flex !important;
     align-items: center !important;
+}
+
+.react-multi-carousel-item{
+    margin-left: 2% !important;
+    margin-right: 2% !important;
+}
+
+.Icons{
+    margin-top: 2% !important;
+}
+
+.Info{
+    margin-top: 4%;
+}
+
+.Carousel{
+    margin-top: 6%;
+    margin-left: 3%;
+    margin-right: 3%;
 }
