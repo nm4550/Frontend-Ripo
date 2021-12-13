@@ -19,8 +19,9 @@ import ProductPlantsPage from './Pages/ProductPlantsPage/ProductPlantsPage'
 import ProductToolsPage from './Pages/ProductToolsPage/ProductToolsPage'
 import LandingPage from './Pages/LandingPage/LandingPage'
 import Reminder from './Pages/ReminderTest/ReminderTest'
-import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import Plantmanagement from './Pages/Plantmanagement/Plantmanagement'
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
               <Route path='/cart' exact component={Cart} />
               <Route path='/categories' exact component={CategoriesPage} />
               <Route path='/Reminder' exact component={Reminder} />
+              <Route path='/greenhouse' exact component={Plantmanagement} />
               <Route
                 exact
                 path='/ProductPlantsPage/:id'
