@@ -132,7 +132,7 @@ export default function KadooAppBar(props) {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static'>
+      <AppBar position='fixed'>
         <Toolbar>
         <Grid display={{xs:'flex' ,sm:'none'}}>
           {props.DrawerOption && (
