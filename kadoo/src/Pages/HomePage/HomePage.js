@@ -307,6 +307,7 @@ export default function HomePage() {
                 display={{ xs: 'flex', sm: 'none' }}
               >
                 <Grid
+                  display={{xs:'flex' ,sm:'none'}}
                   container
                   direction='row'
                   justifyContent='center'
