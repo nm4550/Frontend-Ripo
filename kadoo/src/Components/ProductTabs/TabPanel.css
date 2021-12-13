@@ -8,3 +8,11 @@
   -ms-transition: background-color 10000ms linear;
   transition: background-color 10000ms linear;
 }
+.css-xg80zk-MuiButtonBase-root-MuiTab-root{
+  font-weight: 800!important;
+  font-size: 1.4rem!important;
+}
+
+.css-1cm0iu6-MuiButtonBase-root-MuiButton-root{
+  font-weight: 800!important;
+}

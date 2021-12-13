@@ -18,8 +18,8 @@ import MoreIcon from '@mui/icons-material/MoreVert'
 import Button from '@mui/material/Button'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Grid from '@mui/material/Grid'
-
 import UserDropDown from '../UserDropDown/UserDropDown'
+import ShowCoins from '../ShowCoins/ShowCoins'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -134,24 +134,35 @@ export default function KadooAppBar(props) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position='fixed'>
         <Toolbar>
-          <IconButton
-            size='large'
-            edge='start'
-            color='inherit'
-            aria-label='open drawer'
-            sx={{ mr: 2 }}
-            onClick={handelDrawer}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant='h4'
-            noWrap
-            component='div'
-            sx={{ display: { xs: 'none', sm: 'block' } }}
-          >
-            Kadoo
-          </Typography>
+        <Grid display={{xs:'flex' ,sm:'none'}}>
+          {props.DrawerOption && (
+            <IconButton
+              size='large'
+              edge='start'
+              color='inherit'
+              aria-label='open drawer'
+              sx={{ mr: 2 }}
+              onClick={handelDrawer}
+            >
+              <MenuIcon />
+            </IconButton>
+          )}
+          </Grid>
+          {props.DrawerOption && (
+            <Typography
+              variant='h4'
+              noWrap
+              component='div'
+              sx={{ display: { xs: 'none', sm: 'block' } }}
+            >
+              Kadoo
+            </Typography>
+          )}
+          {!props.DrawerOption && (
+            <Typography variant='h4' noWrap component='div'>
+              Kadoo
+            </Typography>
+          )}
           {props.SearchOption && (
             <Search>
               <Grid wrap='nowrap' container direction='row' alignItems='center'>
@@ -179,6 +190,12 @@ export default function KadooAppBar(props) {
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+
+            {props.AuthorizationOption &&
+              isAuthorized === true &&(
+                <ShowCoins/>
+              )}
+
             {props.AuthorizationOption &&
               isAuthorized === true &&
               props.TicketOption &&
