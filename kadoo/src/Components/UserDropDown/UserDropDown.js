@@ -16,6 +16,8 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import PaymentIcon from '@mui/icons-material/Payment'
 import ForumIcon from '@mui/icons-material/Forum'
 import Badge from '@mui/material/Badge'
+import CoinsIcon from '../../Images/Coins/coins.png'
+
 
 function UserDropDown(props) {
   const [anchorEl, setAnchorEl] = React.useState(null)
@@ -23,6 +25,7 @@ function UserDropDown(props) {
   const [numberOfItems, setNumberOfItems] = useState(0)
   const [userData, setUserData] = React.useState([])
   const open = Boolean(anchorEl)
+  const [coins, setCoinsNumber] = useState(0)
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
@@ -30,6 +33,24 @@ function UserDropDown(props) {
   const handleClose = () => {
     setAnchorEl(null)
   }
+
+  useEffect(() => {
+
+    const requestOptions = {
+        method: 'GET',
+        headers: {
+         'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+         'Content-Type': 'application/json',
+        },
+  
+      }
+    fetch('http://127.0.0.1:8000/api/coin/get/', requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+      setCoinsNumber(data.coin_vlaue)
+      console.log(data)
+    })
+    }, []);
 
   useEffect(() => {
     const requestOptions = {
@@ -107,6 +128,10 @@ function UserDropDown(props) {
       >
         <MenuItem>
           <Avatar /> {userData.user_name}
+        </MenuItem>
+        <MenuItem sx={{ display: { xs: 'flex', md: 'none' } }}>
+          <img className='coinIcon' src={CoinsIcon} width={30}/>
+          <Typography sx={{ pl: 1.2 }}>Coins: {coins}</Typography>
         </MenuItem>
         <Divider />
         <MenuItem sx={{ display: { xs: 'flex', md: 'none' } }}>

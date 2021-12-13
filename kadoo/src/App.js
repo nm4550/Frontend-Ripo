@@ -21,6 +21,7 @@ import LandingPage from './Pages/LandingPage/LandingPage'
 import Reminder from './Pages/ReminderTest/ReminderTest'
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import ShowCoins from './Components/ShowCoins/ShowCoins'
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Router>
             <Switch>
+              <Route exact path='/Coins' component={ShowCoins} />
               <Route exact path='/' component={LandingPage} />
               <Route exact path='/signin' component={SignIn} />
               <Route exact path='/signup' component={SignUp} />
