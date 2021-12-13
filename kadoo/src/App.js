@@ -22,6 +22,7 @@ import Reminder from './Pages/ReminderTest/ReminderTest'
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 import ShowCoins from './Components/ShowCoins/ShowCoins'
+import WateringUpdate from './Components/UpdateCoins/WateringUpdate'
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Router>
             <Switch>
+              <Route exact path='/test' component={WateringUpdate} />
               <Route exact path='/Coins' component={ShowCoins} />
               <Route exact path='/' component={LandingPage} />
               <Route exact path='/signin' component={SignIn} />

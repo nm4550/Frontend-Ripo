@@ -20,7 +20,7 @@ export default function ShowCoins(props) {
         fetch('http://127.0.0.1:8000/api/coin/get/', requestOptions)
         .then((response) => response.json())
         .then((data) => {
-          setCoinsNumber(data.coin_vlaue)
+          setCoinsNumber(data.coin_value)
           console.log(data)
         })
         }, []);

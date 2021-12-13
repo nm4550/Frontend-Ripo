@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
-import Navbar from "../../Components/Navbar/Navbar";
+import Navbar from "../../Components/AppBar/AppBar";
 import Basket from "../../Components/Cart/Basket";
 import Button from '@mui/material/Button';
 import "./ProductPlantsPage.css";
