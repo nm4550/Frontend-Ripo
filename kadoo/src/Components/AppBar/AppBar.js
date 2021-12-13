@@ -18,8 +18,8 @@ import MoreIcon from '@mui/icons-material/MoreVert'
 import Button from '@mui/material/Button'
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Grid from '@mui/material/Grid'
-
 import UserDropDown from '../UserDropDown/UserDropDown'
+import ShowCoins from '../ShowCoins/ShowCoins'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -132,8 +132,9 @@ export default function KadooAppBar(props) {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='static'>
+      <AppBar position='fixed'>
         <Toolbar>
+        <Grid display={{xs:'flex' ,sm:'none'}}>
           {props.DrawerOption && (
             <IconButton
               size='large'
@@ -146,6 +147,7 @@ export default function KadooAppBar(props) {
               <MenuIcon />
             </IconButton>
           )}
+          </Grid>
           {props.DrawerOption && (
             <Typography
               variant='h4'
@@ -188,6 +190,12 @@ export default function KadooAppBar(props) {
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
+
+            {props.AuthorizationOption &&
+              isAuthorized === true &&(
+                <ShowCoins/>
+              )}
+
             {props.AuthorizationOption &&
               isAuthorized === true &&
               props.TicketOption &&

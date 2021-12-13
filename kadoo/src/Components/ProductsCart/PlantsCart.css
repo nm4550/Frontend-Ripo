@@ -55,3 +55,15 @@
     font-size: small;
   }
 }
+
+@media (min-width: 900px){
+  .css-iltpxr-MuiGrid-root {
+    max-width: 100%!important;
+  }
+}
+
+@media (min-width: 600px){
+  .css-iltpxr-MuiGrid-root {
+    max-width: 100%!important;
+  }
+}

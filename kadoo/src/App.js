@@ -1,7 +1,6 @@
 // Import Initial Files
 import React from 'react'
 import './App.css'
-import './App.css'
 // Import Theme Files
 import { ThemeProvider } from '@mui/material/styles'
 import Theme from './Theme/ThemeGenerator'
@@ -18,35 +17,45 @@ import CategoriesPage from './Pages/CategoriesPage'
 import ProductPlantsPage from './Pages/ProductPlantsPage/ProductPlantsPage'
 import ProductToolsPage from './Pages/ProductToolsPage/ProductToolsPage'
 import LandingPage from './Pages/LandingPage/LandingPage'
-import Plantmanagment from './Pages/Plantmanagment/Plantmanagment'
+import AdminPage from './Pages/AdminPage/AdminPage'
+import Reminder from './Pages/ReminderTest/ReminderTest'
+import AdapterDateFns from '@mui/lab/AdapterDateFns'
+import Plantmanagement from './Pages/Plantmanagement/Plantmanagement'
+import LocalizationProvider from '@mui/lab/LocalizationProvider'
+import ShowCoins from './Components/ShowCoins/ShowCoins'
 
 function App() {
   return (
     <React.Fragment>
       <CssBaseline />
       <ThemeProvider theme={Theme}>
-        <Router>
-          <Switch>
-            <Route exact path='/' component={LandingPage} />
-            <Route exact path='/signin' component={SignIn} />
-            <Route exact path='/signup' component={SignUp} />
-            <Route exact path='/search' component={SearchResultProduct} />
-            <Route exact path='/Homepage' exact component={HomePage} />
-            <Route path='/cart' exact component={Cart} />
-            <Route path='/categories' exact component={CategoriesPage} />
-            <Route path='/greenhouse' exact component={Plantmanagment} />
-            <Route
-              exact
-              path='/ProductPlantsPage/:id'
-              component={ProductPlantsPage}
-            />
-            <Route
-              exact
-              path='/ProductToolsPage/:id'
-              component={ProductToolsPage}
-            />
-          </Switch>
-        </Router>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <Router>
+            <Switch>
+              <Route exact path='/Coins' component={ShowCoins} />
+              <Route exact path='/' component={LandingPage} />
+              <Route exact path='/signin' component={SignIn} />
+              <Route exact path='/signup' component={SignUp} />
+              <Route exact path='/search' component={SearchResultProduct} />
+              <Route exact path='/Homepage' exact component={HomePage} />
+              <Route path='/cart' exact component={Cart} />
+              <Route path='/categories' exact component={CategoriesPage} />
+              <Route path='/Reminder' exact component={Reminder} />
+              <Route path='/greenhouse' exact component={Plantmanagement} />
+              <Route exact path='/AdminPage' component={AdminPage} />
+              <Route
+                exact
+                path='/ProductPlantsPage/:id'
+                component={ProductPlantsPage}
+              />
+              <Route
+                exact
+                path='/ProductToolsPage/:id'
+                component={ProductToolsPage}
+              />
+            </Switch>
+          </Router>
+        </LocalizationProvider>
       </ThemeProvider>
     </React.Fragment>
   )
