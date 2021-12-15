@@ -556,7 +556,9 @@ function SearchResultProduct(props) {
   }, [paginationPagePlants, paginationPageTools, paginationPageProducts])
 
   useEffect(() => {
-    ProductsAdvanceSearch()
+    setSearchTextPlants(props.match.params.text)
+    setSearchTextTools(props.match.params.text)
+    setSearchTextProducts(props.match.params.text)
   }, [])
   return (
     <div>

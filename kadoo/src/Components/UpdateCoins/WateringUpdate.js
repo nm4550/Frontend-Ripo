@@ -6,17 +6,46 @@ import { Grid } from '@mui/material';
 export default function WateringUpdate() {
     const[watering,setWatering]=useState(false)
     const[handle,setHandle]=useState(false)
+    const[load,setLoad]=useState(false)
+    const [coins, setCoinsNumber] = useState(0)
 
+    const reload=()=>{
+      const requestOptions = {
+        method: 'GET',
+        headers: {
+         'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+         'Content-Type': 'application/json',
+        },
+  
+      }
+    fetch('http://127.0.0.1:8000/api/coin/get/', requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+      setCoinsNumber(data.coin_value)
+      console.log(data)
+    })
+    }
+    useEffect(() => {
+        reload()
+        }, []);
+        
+    useEffect(() => {
+        reload()
+        }, [load]);
+
+        
     useEffect(() => {
     const requestOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+      'Content-Type': 'application/json' },
       body: JSON.stringify(),
     }
     fetch('http://127.0.0.1:8000/api/coin/new-watering/', requestOptions)
     .then((response) => response.json())
     .then((data) => {
-        setWatering(true)
+        console.log(data)
+        setWatering(watering? false:true)
     })
     }, [handle]);
 
@@ -24,12 +53,15 @@ export default function WateringUpdate() {
     if(watering){
     const requestOptions = {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+      'Content-Type': 'application/json' },
       body: JSON.stringify(),
     }
     fetch('http://127.0.0.1:8000/api/coin/daily-watering-update/', requestOptions)
     .then((response) => response.json())
     .then((data) => {
+      console.log(data)
+      setLoad(load? false:true)
     })}
     }, [watering]);
 
@@ -40,6 +72,6 @@ export default function WateringUpdate() {
     return (
         <div style={{backgroundColor:'darkblue'}}>
         <Button variant="contained" onClick={handleClick}>TEST</Button>
-        <ShowCoins/>
+        <ShowCoins coins={coins}/>
         </div>
         )}

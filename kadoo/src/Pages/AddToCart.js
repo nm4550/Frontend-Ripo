@@ -1,4 +1,4 @@
-import Header from '../Components/Cart/Header'
+import Header from '../Components/AppBar/AppBar'
 import Main from '../Components/Cart/Main'
 import Basket from '../Components/Cart/Basket'
 import React, { useEffect, useState } from 'react'
@@ -202,7 +202,13 @@ function AddtoCart() {
 
   return (
     <div className='App'>
-      <Header countCartItems={cartItems.length}></Header>
+      <Header
+      numberOfItems={cartItems.length}
+      SearchOption={true}
+      AuthorizationOption={true}
+      CartOption={true}
+      TicketOption={true}
+      ></Header>
       <Box sx={{ flexGrow: 1, m: 4 }}>
         <Grid container spacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={12} md={8}>

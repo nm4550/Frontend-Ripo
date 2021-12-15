@@ -119,7 +119,12 @@ class ProductPlantsPage extends React.Component {
         
       return (
         <div>
-        <Navbar/>  
+        <Navbar
+        SearchOption={true}
+        AuthorizationOption={true}
+        CartOption={true}
+        TicketOption={true}
+        />  
     
           <Grid container justifyContent = "center" alignItems = "center" sx={{pl : {xs:2 , sm:10} , pr : {xs:2 , sm:10}}} >
                 <Grid container item justifyContent = "center"  className="ProductPageProductContainer">
