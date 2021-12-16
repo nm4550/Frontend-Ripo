@@ -3,6 +3,7 @@ import Main from '../Components/Cart/Main'
 import Basket from '../Components/Cart/Basket'
 import React, { useEffect, useState } from 'react'
 import axiosInstance from '../Components/Cart/axios'
+import AppBar from '../Components/AppBar/AppBar'
 import 'react-router-dom'
 
 import { styled } from '@mui/material/styles'
@@ -202,7 +203,13 @@ function AddtoCart() {
 
   return (
     <div className='App'>
-      <Header countCartItems={cartItems.length}></Header>
+      <AppBar
+        SearchOption={true}
+        TicketOption={false}
+        CartOption={true}
+        AuthorizationOption={true}
+        DrawerOption={true}
+      />
       <Box sx={{ flexGrow: 1, m: 4 }}>
         <Grid container spacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={12} md={8}>
@@ -220,7 +227,7 @@ function AddtoCart() {
           <Grid item xs={12} md={4}>
             <Item>
               <Basket
-                id="basket-part"
+                id='basket-part'
                 cartItems={cartItems}
                 toolCartItems={toolCartItems}
                 CheckoutCart={Checkout}
