@@ -1,7 +1,6 @@
 // Import Initial Files
 import React from 'react'
 import './App.css'
-import './App.css'
 // Import Theme Files
 import { ThemeProvider } from '@mui/material/styles'
 import Theme from './Theme/ThemeGenerator'
@@ -18,6 +17,7 @@ import CategoriesPage from './Pages/CategoriesPage'
 import ProductPlantsPage from './Pages/ProductPlantsPage/ProductPlantsPage'
 import ProductToolsPage from './Pages/ProductToolsPage/ProductToolsPage'
 import LandingPage from './Pages/LandingPage/LandingPage'
+import AdminPage from './Pages/AdminPage/AdminPage'
 import Reminder from './Pages/ReminderTest/ReminderTest'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import Plantmanagement from './Pages/Plantmanagement/Plantmanagement'
@@ -42,6 +42,7 @@ function App() {
               <Route path='/categories' exact component={CategoriesPage} />
               <Route path='/Reminder' exact component={Reminder} />
               <Route path='/greenhouse' exact component={Plantmanagement} />
+              <Route exact path='/AdminPage' component={AdminPage} />
               <Route
                 exact
                 path='/ProductPlantsPage/:id'
