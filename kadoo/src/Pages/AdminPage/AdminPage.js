@@ -9,36 +9,29 @@ import AdminNewUser from "../../Pages/AdminNewUser/AdminNewUser";
 import AdminProductList from "../../Pages/AdminProductList/AdminProductList";
 import AdminProduct from "../../Pages/AdminProduct/AdminProduct";
 import AdminNewProduct from "../../Pages/AdminNewProduct/AdminNewProduct";
+import UserList from "../../Pages/AdminUserList/AdminUserList";
 
 function App() {
   return (
     <Router>
       <Topbar />
-      <div className="container">
+      <div className="containerAdmin">
         <Sidebar />
         <Switch>
-          <Route exact path="/">
-            <AdminHome />
+          <Route exact path="/AdminHome">
+            <AdminHome/>
           </Route>
-          <Route path="/AdminUserList">
-            <AdminUserList />
+          <Route path="/users">
+            <UserList/>
           </Route>
-          <Route path="/AdminUser/:userId">
-            <AdminUser />
+          <Route exact path="/products">
+            <AdminProduct/>
           </Route>
-          <Route path="/AdminNewUser">
-            <AdminNewUser />
-          </Route>
-          <Route path="/AdminProductList">
-            <AdminProductList />
-          </Route>
-          <Route path="/AdminProduct/:productId">
-            <AdminProduct />
-          </Route>
-          <Route path="/AdminNewProduct">
-            <AdminNewProduct />
+          <Route exact path="/products">
+            <AdminProduct/>
           </Route>
         </Switch>
+        <AdminHome/>
       </div>
     </Router>
   );
