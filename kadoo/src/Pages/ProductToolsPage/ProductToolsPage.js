@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Grid from '@mui/material/Grid';
-import Navbar from "../../Components/Navbar/Navbar";
+import Navbar from "../../Components/AppBar/AppBar";
 import Button from '@mui/material/Button';
 import "../ProductPlantsPage/ProductPlantsPage.css";
 import Box from '@mui/material/Box';
@@ -119,7 +119,12 @@ class ProductToolsPage extends React.Component {
         
       return (
         <div>
-        <Navbar/>  
+        <Navbar
+        SearchOption={true}
+        AuthorizationOption={true}
+        CartOption={true}
+        TicketOption={true}
+        />   
     
           <Grid container justifyContent = "center" alignItems = "center" sx={{pl : {xs:2 , sm:10} , pr : {xs:2 , sm:10}}} >
                 <Grid container item justifyContent = "center"  className="ProductPageProductContainer">

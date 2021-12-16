@@ -12,7 +12,7 @@ export default function ToolsCart(props) {
   return (
     <Card>
       <CardActionArea>
-        <Link to={'/ProductPlantsPage/' + props.product.id}>
+        <Link to={'/ProductToolsPage/' + props.product.id}>
           <Grid className='productIconImageContainer' sx={{ p: 1 }}>
             <CardMedia
               component='img'
