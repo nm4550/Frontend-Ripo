@@ -35,6 +35,10 @@
     margin-left: 10px !important;
 }
 
+.BlackBackground{
+    background-color: #212121 !important;
+}
+
 .h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
     margin-bottom: 0rem !important;
 }
@@ -190,7 +194,7 @@
 
 .TypographyKadoo{
     font-weight: 800;
-    padding-bottom: 10%;
+    padding-bottom: 5%;
     align-items: center !important;
     justify-content: center !important;
     display: flex !important;
@@ -202,18 +206,16 @@
 
 .Container{
     max-height: fit-content !important;
-    height: 200vh !important;
 }
 
 .GridContactUs{
     align-items: center !important;
     justify-content: center !important;
     display: flex !important;
-    margin-top: 10%;
 }
 
 .Avatars{
-    margin-top: 10% !important;
+    margin-top: 4% !important;
 }
 
 .ContactUs{
@@ -222,4 +224,30 @@
 
 .css-147bo66-MuiSvgIcon-root{
     color: #7FC7AD !important;
+}
+
+.AboutUsTxt{
+    margin-top: 8% !important;
+    justify-content: center !important;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.react-multi-carousel-item{
+    margin-left: 2% !important;
+    margin-right: 2% !important;
+}
+
+.Icons{
+    margin-top: 2% !important;
+}
+
+.Info{
+    margin-top: 4%;
+}
+
+.Carousel{
+    margin-top: 6%;
+    margin-left: 3%;
+    margin-right: 3%;
 }
