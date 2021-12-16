@@ -239,7 +239,7 @@ export default function KadooAppBar(props) {
               isAuthorized === true &&
               props.CartOption &&
               props.numberOfItems !== 0 && (
-                <IconButton size='large' color='inherit'>
+                <IconButton size='large' color='inherit' href='/cart'>
                   <Badge badgeContent={numberOfItems} color='secondary'>
                     <ShoppingCartIcon />
                   </Badge>
