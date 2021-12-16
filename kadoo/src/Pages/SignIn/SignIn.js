@@ -13,11 +13,11 @@ function SignIn() {
   })
   const [formData, updateFormData] = useState(initialFormData)
   const [flagData, setFlagData] = useState(false)
-  const [errorData, updateErrorData] = useState([]);
+  const [errorData, updateErrorData] = useState(initialFormData);
   const [refresh, setRefresh] = useState(false)
   
   useEffect(() => {
-    updateErrorData([]);
+    updateErrorData(initialFormData);
     console.log(errorData);
   }, [refresh])
 
@@ -25,6 +25,10 @@ function SignIn() {
     updateFormData({
       ...formData,
       [e.target.name]: e.target.value.trim(),
+    })
+    updateErrorData({
+      ...errorData,
+      [e.target.name]: '',
     })
   }
   
@@ -50,7 +54,7 @@ function SignIn() {
         if(response.status == 200)
         {
           setFlagData(true);
-          history.push('/');
+          history.push('/HomePage');
           window.location.reload(true);
           return response.json();
         } 

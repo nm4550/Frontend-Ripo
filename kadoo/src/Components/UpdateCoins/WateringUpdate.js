@@ -2,12 +2,27 @@ import React, { useEffect, useState } from 'react'
 import ShowCoins from '../ShowCoins/ShowCoins';
 import { Button } from '@mui/material';
 import { Grid } from '@mui/material';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
 
 export default function WateringUpdate() {
     const[watering,setWatering]=useState(false)
     const[handle,setHandle]=useState(false)
     const[load,setLoad]=useState(false)
     const [coins, setCoinsNumber] = useState(0)
+    const [text, setText] = useState('')
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+      setOpen(false);
+    };
 
     const reload=()=>{
       const requestOptions = {
@@ -60,6 +75,7 @@ export default function WateringUpdate() {
     fetch('http://127.0.0.1:8000/api/coin/daily-watering-update/', requestOptions)
     .then((response) => response.json())
     .then((data) => {
+      setText(data)
       console.log(data)
       setLoad(load? false:true)
     })}
@@ -71,7 +87,22 @@ export default function WateringUpdate() {
     
     return (
         <div style={{backgroundColor:'darkblue'}}>
-        <Button variant="contained" onClick={handleClick}>TEST</Button>
+        <Button variant="contained" onClick={handleClick} onClick={handleClickOpen}>TEST</Button>
         <ShowCoins coins={coins}/>
+        <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Notification"}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            {text}
+          </DialogContentText>
+        </DialogContent>
+      </Dialog>
         </div>
         )}
