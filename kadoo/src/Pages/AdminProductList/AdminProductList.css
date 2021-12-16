@@ -1,10 +1,25 @@
 .productList{
+    width: 500px;
+    height: 440px;
     flex: 4;
+}
+
+.MuiDataGrid-colCellTitle {
+    display: block;
+    text-align:center;
+    width: 100%;
+  }
+
+.DataTable{
+    justify-content: center;
 }
 
 .productListItem{
     display: flex;
     align-items: center;
+    justify-items: center !important;
+    justify-content: center !important;
+    text-align: center;
 }
 
 .productListImg {
