@@ -8,6 +8,13 @@ import Typography from '@mui/material/Typography'
 import Alert from '@mui/material/Alert'
 import Chip from '@mui/material/Chip'
 import Grid from '@mui/material/Grid'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import './Basket.css'
 
 export default function Basket(props) {
   const { cartItems, toolCartItems, CheckoutCart } = props
@@ -19,46 +26,52 @@ export default function Basket(props) {
   return (
     <Box>
       <Card sx={{ p: 1 }}>
-        <Typography variant='h4' sx={{ m: 1 }}>
+        <Typography variant='h4' sx={{ m: 1, ml: 2.6 }} align='left'>
           Cart Items
         </Typography>
-        <Box sx={{ p: 1 }}>
-          {cartItems.length != 0 && (
-            <Box>
-              <Typography variant='h5' sx={{ m: 0.5 }}>
-                Plants
-              </Typography>
-              <Divider variant='middle' />
-              {cartItems.map((item) => (
-                <Box
-                  key={item.id}
-                  sx={{ display: 'flex', mr: 2, ml: 2, mt: 1 }}
-                >
-                  <Box sx={{ display: 'flex', flex: 1, textAlign: 'left' }}>
-                    <Typography component='div' variant='body' align='left'>
-                      {item.name}
-                    </Typography>
-                  </Box>
-                  <Box sx={{ display: 'flex', flex: 1, textAlign: 'right' }}>
-                    <Typography component='div' variant='body' align='right'>
-                      {item.count}
-                    </Typography>
-                  </Box>
-                  <Box sx={{ textAlign: 'right' }}>
-                    <Typography component='div' variant='body' align='right'>
-                      {'$ ' + item.count * item.price}
-                    </Typography>
-                  </Box>
-                </Box>
-              ))}
-            </Box>
-          )}
-        </Box>
+        {cartItems.length != 0 && (
+          <TableContainer component={Box}>
+            <Table aria-label='simple table'>
+              <TableHead>
+                <TableRow>
+                  <TableCell align='left'>Name</TableCell>
+                  <TableCell align='center'>Count</TableCell>
+                  <TableCell align='center'>Price</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {cartItems.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}
+                  >
+                    <TableCell
+                      style={{
+                        whiteSpace: 'normal',
+                        wordBreak: 'break-word',
+                        borderBottom: 'none',
+                      }}
+                      align='left'
+                    >
+                      {row.name}
+                    </TableCell>
+                    <TableCell align='center' sx={{ borderBottom: 'none' }}>
+                      {row.count}
+                    </TableCell>
+                    <TableCell align='center' sx={{ borderBottom: 'none' }}>
+                      ${row.price}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        )}
 
         <Box sx={{ p: 1 }}>
           {toolCartItems.length != 0 && (
             <Box>
-              <Typography variant='h5' sx={{ m: 0.5 }}>
+              <Typography variant='h5' sx={{ m: 0.5, ml: 2.6 }} align='left'>
                 Tools
               </Typography>
               <Divider variant='middle' />
