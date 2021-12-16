@@ -24,10 +24,6 @@ function SignUp() {
     console.log(formData)
   }
 
-  const errorHandle = () => {
-    
-  }
-
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log(formData)

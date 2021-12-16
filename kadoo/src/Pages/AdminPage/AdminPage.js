@@ -10,8 +10,37 @@ import AdminProductList from "../../Pages/AdminProductList/AdminProductList";
 import AdminProduct from "../../Pages/AdminProduct/AdminProduct";
 import AdminNewProduct from "../../Pages/AdminNewProduct/AdminNewProduct";
 import UserList from "../../Pages/AdminUserList/AdminUserList";
+import { useState , useEffect } from "react";
 
 function App() {
+  const [page, setPage] = useState(1)
+  const [allPage, setAllPage] = useState(1)
+  const [products, setProducts] = useState([])
+
+  const fetchPagination = () => {
+    fetch('http://127.0.0.1:8000/api/allPagination/', {
+      method: 'Post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ count: '6', page: `${page}` }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data.data)
+        setAllPage(data.pageCount)
+      })
+  }
+
+  useEffect(()=>{
+    fetchPagination();
+    console.log('1');
+  },[])
+
+  useEffect(()=>{
+    console.log(products);
+  },[products])
+
   return (
     <Router>
       <Topbar />
@@ -24,14 +53,10 @@ function App() {
           <Route path="/users">
             <UserList/>
           </Route>
-          <Route exact path="/products">
-            <AdminProduct/>
-          </Route>
-          <Route exact path="/products">
+          <Route exact path="/productsList">
             <AdminProduct/>
           </Route>
         </Switch>
-        <AdminHome/>
       </div>
     </Router>
   );
