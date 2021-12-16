@@ -23,6 +23,7 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import Plantmanagement from './Pages/Plantmanagement/Plantmanagement'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import ShowCoins from './Components/ShowCoins/ShowCoins'
+import WateringUpdate from './Components/UpdateCoins/WateringUpdate'
 import AdminHome from './Pages/AdminHome/AdminHome'
 import UserList from "./Pages/AdminUserList/AdminUserList";
 import AdminProduct from "./Pages/AdminProduct/AdminProduct";
@@ -36,11 +37,13 @@ function App() {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Router>
             <Switch>
+              <Route exact path='/test' component={WateringUpdate} />
               <Route exact path='/Coins' component={ShowCoins} />
               <Route exact path='/' component={LandingPage} />
               <Route exact path='/signin' component={SignIn} />
               <Route exact path='/signup' component={SignUp} />
-              <Route exact path='/search' component={SearchResultProduct} />
+              <Route exact path='/search/:text' component={SearchResultProduct} />
+              <Route exact path='/search/' component={SearchResultProduct} />
               <Route exact path='/Homepage' exact component={HomePage} />
               <Route path='/cart' exact component={Cart} />
               <Route path='/categories' exact component={CategoriesPage} />
