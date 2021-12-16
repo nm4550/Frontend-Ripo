@@ -23,6 +23,10 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import Plantmanagement from './Pages/Plantmanagement/Plantmanagement'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import ShowCoins from './Components/ShowCoins/ShowCoins'
+import AdminHome from './Pages/AdminHome/AdminHome'
+import UserList from "./Pages/AdminUserList/AdminUserList";
+import AdminProduct from "./Pages/AdminProduct/AdminProduct";
+import AdminProductList from "./Pages/AdminProductList/AdminProductList";
 
 function App() {
   return (
@@ -43,6 +47,10 @@ function App() {
               <Route path='/Reminder' exact component={Reminder} />
               <Route path='/greenhouse' exact component={Plantmanagement} />
               <Route exact path='/AdminPage' component={AdminPage} />
+              <Route exact path='/AdminPage/AdminHome' component={AdminHome} />
+              <Route exact path='/AdminPage/users' component={UserList} />
+              <Route exact path='/products' component={AdminProduct} />
+              <Route exact path='/productsList' component={AdminProductList} />
               <Route
                 exact
                 path='/ProductPlantsPage/:id'
