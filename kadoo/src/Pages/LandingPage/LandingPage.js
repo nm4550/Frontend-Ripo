@@ -192,7 +192,7 @@ export default function LandingPage() {
           <Typography variant="h4" className="TypographyContactUs" align='center'>
             <h4>Meet The<span className="Span"> Team</span> :</h4>
           </Typography>
-          <Typography align='center' marginLeft={4} marginRight={4} sx={{ marginTop: {sm: 20 , xs: 5 , md: 8} }}> 
+          <Typography align='center' marginLeft={4} marginRight={4} sx={{ marginTop: {sm: 20 , xs: 5 , md: 8} }} color="white"> 
             We were founded to transform spaces into attractive plantscapes that improve the quality of people’s lives.
             Research shows that plants support wellbeing, increase creativity, improve productivity, and provide many other benefits. 
             We proudly use Biophilic principles in our plantscape designs; Principles that are rooted in the intrinsic bond between humans and other living organisms.
