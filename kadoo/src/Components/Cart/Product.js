@@ -33,7 +33,7 @@ export default function Product(props) {
   const theme = useTheme()
 
   return (
-    <Card sx={{ mt: 2, p: 2 }}>
+    <Card sx={{ mb: 2, p: 2 }}>
       <Grid container sx={{ display: 'flex' }}>
         <Grid
           item
@@ -44,12 +44,11 @@ export default function Product(props) {
           justifyContent='center'
           alignItems='center'
         >
-          <Grid>
+          <Grid className='productIconImageContainer' sx={{ p: 1 }}>
             <CardMedia
               component='img'
               image={product.image}
-              alt={product.name.trim()}
-              sx={{ maxHeight: 180 }}
+              className='productIconImage'
             />
           </Grid>
         </Grid>

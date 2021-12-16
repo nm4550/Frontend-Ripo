@@ -13,17 +13,42 @@ import ShowProduct from '../../Components/ShowProduct/ShowProduct'
 import SkeletonArticle from '../../Components/Cart/SkeletonArticle'
 import GreenHouseCard from '../../Components/ProductsCart/GreenHouseCard'
 import ShowGreenHouse from '../../Components/ShowProduct/ShowGreenHouse'
+import Fab from '@mui/material/Fab'
+import { useTheme } from '@mui/material/styles'
+import Zoom from '@mui/material/Zoom'
+import AddIcon from '@mui/icons-material/Add'
 import './Plantmanagement.css'
 // Import Theme Files
 import { ThemeProvider } from '@mui/material/styles'
 import Theme from '../../Theme/ThemeGenerator'
 
 function Plantmanagment(props) {
+  const theme = useTheme()
+  const fabStyle = {
+    position: 'absolute',
+    bottom: 16,
+    right: 16,
+  }
+
+  const transitionDuration = {
+    enter: theme.transitions.duration.enteringScreen,
+    exit: theme.transitions.duration.leavingScreen,
+  }
+
+  const fabs = [
+    {
+      color: 'primary',
+      sx: fabStyle,
+      icon: <AddIcon />,
+      label: 'Add',
+    },
+  ]
   ///const containerRef = React.useRef(null)
   const [openDrawer, setOpenDrawer] = React.useState([false])
   const [plantData, setPlantData] = React.useState([])
   const [plantId, setPlantId] = React.useState([])
   const [plantDataLoaded, setPlantDataLoaded] = React.useState(false)
+  const [value, setValue] = React.useState(0)
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true)
@@ -166,6 +191,23 @@ function Plantmanagment(props) {
               )}
             </Box>
           </Grid>
+          {fabs.map((fab, index) => (
+            <Zoom
+              key={fab.color}
+              in={value === index}
+              timeout={transitionDuration}
+              style={{
+                transitionDelay: `${
+                  value === index ? transitionDuration.exit : 0
+                }ms`,
+              }}
+              unmountOnExit
+            >
+              <Fab sx={fab.sx} aria-label={fab.label} color={fab.color}>
+                {fab.icon}
+              </Fab>
+            </Zoom>
+          ))}
         </Grid>
       </ThemeProvider>
     </div>
