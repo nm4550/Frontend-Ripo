@@ -57,7 +57,13 @@ export default function LandingPage() {
   return (
     <div>
       <Box sx={{ flexGrow: 1 }}>
-         <AppBar/>
+        <AppBar
+          SearchOption={false}
+          TicketOption={false}
+          CartOption={false}
+          DrawerOption={false}
+          AuthorizationOption={true}
+        />
       </Box>
       <Box 
       style={{backgroundImage:`url(${Background})`, 
