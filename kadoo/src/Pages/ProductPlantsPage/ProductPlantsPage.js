@@ -12,6 +12,7 @@ import IconButton from '@mui/material/IconButton';
 import Alert from '@mui/material/Alert';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import AppBar from '../../Components/AppBar/AppBar'
 
 class ProductPlantsPage extends React.Component {
     constructor(props) {
@@ -119,10 +120,18 @@ class ProductPlantsPage extends React.Component {
         
       return (
         <div>
-        <Navbar/>  
+        <Box>
+            <AppBar
+              SearchOption={true}
+              TicketOption={true}
+              CartOption={true}
+              AuthorizationOption={true}
+              DrawerOption={false}
+            />
+          </Box>
     
           <Grid container justifyContent = "center" alignItems = "center" sx={{pl : {xs:2 , sm:10} , pr : {xs:2 , sm:10}}} >
-                <Grid container item justifyContent = "center"  className="ProductPageProductContainer">
+                <Grid container item justifyContent = "center" sx={{mt:15}} className="ProductPageProductContainer">
                     <Grid item xs={12} md={6} lg={6} container justifyContent = "center" alignItems = "center" className="ProductPageImageContainer">
                         <Grid item container justifyContent = "center" alignItems = "center">
                             <Grid container item justifyContent = "center" alignItems = "center" direction = "row">
