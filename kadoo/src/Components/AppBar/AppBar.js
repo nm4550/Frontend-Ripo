@@ -66,6 +66,33 @@ export default function KadooAppBar(props) {
   const [numberOfTicket, setNumberOfTicket] = useState([3])
   const [numberOfItems, setNumberOfItems] = useState(0)
   const [userData, setUserData] = React.useState([])
+  const [coins, setCoinsNumber] = useState(0)
+  const [searchText,setSearchText] = useState('')
+
+  function handleChange(e) {
+    setSearchText(e.target.value.trim())
+  }
+
+  const reload=()=>{
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+       'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+       'Content-Type': 'application/json',
+      },
+
+    }
+  fetch('http://127.0.0.1:8000/api/coin/get/', requestOptions)
+  .then((response) => response.json())
+  .then((data) => {
+    setCoinsNumber(data.coin_value)
+    console.log(data)
+  })
+  }
+  useEffect(() => {
+      reload()
+      }, []);
+      
 
   useEffect(() => {
     const requestOptions = {
@@ -132,7 +159,7 @@ export default function KadooAppBar(props) {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position='fixed'>
+      <AppBar sx={{ position: {xs:'fixed' ,sm:'static'} }}>
         <Toolbar>
         <Grid display={{xs:'flex' ,sm:'none'}}>
           {props.DrawerOption && (
@@ -170,7 +197,7 @@ export default function KadooAppBar(props) {
                   <StyledColorSerchIconButton
                     sx={{ ml: 2, p: 1 }}
                     size='small'
-                    href='/search'
+                    href={'/search/'+ searchText}
                   >
                     <SearchIconWrapper>
                       <SearchIcon />
@@ -179,6 +206,7 @@ export default function KadooAppBar(props) {
                 </Grid>
                 <Grid item>
                   <StyledInputBase
+                    onChange={handleChange}
                     sx={{ ml: 0 }}
                     placeholder='Search for …'
                     inputProps={{ 'aria-label': 'search' }}
@@ -193,7 +221,7 @@ export default function KadooAppBar(props) {
 
             {props.AuthorizationOption &&
               isAuthorized === true &&(
-                <ShowCoins/>
+                <ShowCoins coins={coins}/>
               )}
 
             {props.AuthorizationOption &&
@@ -211,7 +239,7 @@ export default function KadooAppBar(props) {
               isAuthorized === true &&
               props.CartOption &&
               props.numberOfItems !== 0 && (
-                <IconButton size='large' color='inherit'>
+                <IconButton size='large' color='inherit' href='/cart'>
                   <Badge badgeContent={numberOfItems} color='secondary'>
                     <ShoppingCartIcon />
                   </Badge>

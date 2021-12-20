@@ -23,6 +23,11 @@ import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import Plantmanagement from './Pages/Plantmanagement/Plantmanagement'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import ShowCoins from './Components/ShowCoins/ShowCoins'
+import WateringUpdate from './Components/UpdateCoins/WateringUpdate'
+import AdminHome from './Pages/AdminHome/AdminHome'
+import UserList from "./Pages/AdminUserList/AdminUserList";
+import AdminProduct from "./Pages/AdminProduct/AdminProduct";
+import AdminProductList from "./Pages/AdminProductList/AdminProductList";
 
 function App() {
   return (
@@ -32,17 +37,23 @@ function App() {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Router>
             <Switch>
+              <Route exact path='/test' component={WateringUpdate} />
               <Route exact path='/Coins' component={ShowCoins} />
               <Route exact path='/' component={LandingPage} />
               <Route exact path='/signin' component={SignIn} />
               <Route exact path='/signup' component={SignUp} />
-              <Route exact path='/search' component={SearchResultProduct} />
+              <Route exact path='/search/:text' component={SearchResultProduct} />
+              <Route exact path='/search/' component={SearchResultProduct} />
               <Route exact path='/Homepage' exact component={HomePage} />
               <Route path='/cart' exact component={Cart} />
               <Route path='/categories' exact component={CategoriesPage} />
               <Route path='/Reminder' exact component={Reminder} />
               <Route path='/greenhouse' exact component={Plantmanagement} />
               <Route exact path='/AdminPage' component={AdminPage} />
+              <Route exact path='/AdminPage/AdminHome' component={AdminHome} />
+              <Route exact path='/AdminPage/users' component={UserList} />
+              <Route exact path='/products' component={AdminProduct} />
+              <Route exact path='/productsList' component={AdminProductList} />
               <Route
                 exact
                 path='/ProductPlantsPage/:id'
