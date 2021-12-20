@@ -220,6 +220,7 @@ export default function KadooAppBar(props) {
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
 
             {props.AuthorizationOption &&
+              props.CartOption &&
               isAuthorized === true &&(
                 <ShowCoins coins={coins}/>
               )}

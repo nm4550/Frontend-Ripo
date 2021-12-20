@@ -289,7 +289,7 @@ export default function HomePage() {
             timeout={900}
           >
             <Box>
-              <ContentHeader />
+              {/* <ContentHeader /> */}
               <ProductTabs />
               <Grid item display={{ xs: 'none', sm: 'flex' }}>
                 <ProductWithCategory />
@@ -298,13 +298,13 @@ export default function HomePage() {
               <Card
                 style={{ backgroundColor: '#f5f4f4' }}
                 sx={{
+                  display: { xs: 'flex', sm: 'none' },
                   m: { xs: 3, sm: 5 },
                   pl: { xs: 1, sm: 2, md: 2 },
                   pr: { xs: 1, sm: 2, md: 8 },
                   pt: 2,
                   pb: 2,
                 }}
-                display={{ xs: 'flex', sm: 'none' }}
               >
                 <Grid
                   display={{xs:'flex' ,sm:'none'}}

@@ -28,6 +28,7 @@ import AdminHome from './Pages/AdminHome/AdminHome'
 import UserList from "./Pages/AdminUserList/AdminUserList";
 import AdminProduct from "./Pages/AdminProduct/AdminProduct";
 import AdminProductList from "./Pages/AdminProductList/AdminProductList";
+import TicketPage from './Pages/TicketPage/TicketPage'
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Router>
             <Switch>
+              <Route exact path='/TicketPage' component={TicketPage} />
               <Route exact path='/test' component={WateringUpdate} />
               <Route exact path='/Coins' component={ShowCoins} />
               <Route exact path='/' component={LandingPage} />
