@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState , useEffect} from 'react'
 import Background from '../../Images/SignUp/SignUpBG.png'
 import { Grid, TextField, Button, InputAdornment } from '@mui/material'
 import { AccountCircle, VpnKey, EmailSharp, Create } from '@mui/icons-material'
@@ -15,17 +15,18 @@ function SignUp() {
   })
   const [formData, updateFormData] = useState(initialFormData);
   const [errorData, updateErrorData] = useState(initialFormData);
-
+  const [refresh, setRefresh] = useState(false)
+  
   const handleChange = (e) => {
     updateFormData({
       ...formData,
       [e.target.name]: e.target.value.trim(),
     })
+    updateErrorData({
+      ...errorData,
+      [e.target.name]: '',
+    })
     console.log(formData)
-  }
-
-  const errorHandle = () => {
-    
   }
 
   const handleSubmit = (e) => {

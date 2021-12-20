@@ -33,7 +33,7 @@ export default function Product(props) {
   const theme = useTheme()
 
   return (
-    <Card sx={{ mt: 2, p: 2 }}>
+    <Card sx={{ mb: 2, p: 2 }}>
       <Grid container sx={{ display: 'flex' }}>
         <Grid
           item

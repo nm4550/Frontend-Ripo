@@ -20,7 +20,7 @@ export default function Sidebar() {
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">Dashboard</h3>
           <ul className="sidebarList">
-            <Link to="/" className="link">
+            <Link to="/AdminHome" className="link">
             <li className="sidebarListItem active">
               <LineStyleIcon className="sidebarIcon" />
               Home
@@ -45,7 +45,7 @@ export default function Sidebar() {
                 Users
               </li>
             </Link>
-            <Link to="/products" className="link">
+            <Link to="/productsList" className="link">
               <li className="sidebarListItem">
                 <StorefrontIcon className="sidebarIcon" />
                 Products
