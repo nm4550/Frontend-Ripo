@@ -23,6 +23,10 @@ import Fab from '@mui/material/Fab'
 // Import Theme Files
 import { ThemeProvider } from '@mui/material/styles'
 import Theme from '../../Theme/ThemeGenerator'
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -48,11 +52,79 @@ function GreenHouseCard(props) {
   const mediaStyles = useSlopeCardMediaStyles()
   const shadowStyles = useSoftRiseShadowStyles()
   const textCardContentStyles = useN01TextInfoContentStyles()
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <ThemeProvider theme={Theme}>
       <Card className={cx(cardStyles.root, shadowStyles.root)}>
-        <Link to={'/ProductPlantsPage/' + props.data.id}>
-          <Grid className='productIconImageContainer' sx={{ p: 1 }}>
+        <div className='layer'>
+          <Grid  container justifyContent = ' flex-end'> 
+          <Grid item >   
+
+             <IconButton
+        aria-label="more"
+        id="long-button"
+        aria-controls="long-menu"
+        aria-expanded={open ? 'true' : undefined}
+        aria-haspopup="true"
+        onClick={handleClick}
+      >
+        <MoreVertIcon />
+
+      </IconButton>
+         </Grid>
+           
+          </Grid> 
+      
+      <Menu
+        id="long-menu"
+        MenuListProps={{
+          'aria-labelledby': 'long-button',
+        }}
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        PaperProps={{
+          style: {
+           
+            width: '20ch',
+          },
+        }}
+      >
+        
+          <MenuItem  onClick={handleClose}>
+            <Box>
+          
+          <IconButton size='small'>
+            <DeleteIcon  sx={{ mr:2 }} />
+            Delete
+          </IconButton>
+        </Box>
+          </MenuItem>
+
+           <MenuItem  onClick={handleClose}>
+            <Box>
+          <IconButton size='small'>
+            <EditIcon sx={{ mr:2 }} />
+            Edit
+          </IconButton>
+          
+        </Box>
+          </MenuItem>
+       
+      </Menu>
+    </div>
+        <Link to={'/ProductPlantsPage/' + props.data.id} className='productIconImageContainer'>
+          <Grid  sx={{ p: 1 , mt: -5 }}>
+  
             <CardMedia
               classes={mediaStyles}
               image={props.data.image}
@@ -89,14 +161,6 @@ function GreenHouseCard(props) {
             }
           />
         </CardContent>
-        <Box px={2} pb={2} mt={-1}>
-          <IconButton size='small'>
-            <EditIcon />
-          </IconButton>
-          <IconButton size='small'>
-            <DeleteIcon />
-          </IconButton>
-        </Box>
       </Card>
     </ThemeProvider>
   )
