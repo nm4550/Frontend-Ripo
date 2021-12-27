@@ -23,10 +23,9 @@ import Fab from '@mui/material/Fab'
 // Import Theme Files
 import { ThemeProvider } from '@mui/material/styles'
 import Theme from '../../Theme/ThemeGenerator'
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-
+import Menu from '@mui/material/Menu'
+import MenuItem from '@mui/material/MenuItem'
+import MoreVertIcon from '@mui/icons-material/MoreVert'
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -40,7 +39,7 @@ const useStyles = makeStyles(() => ({
     width: 50,
     height: 50,
     border: '2px solid #fff',
-    margin: '-48px 32px 0 auto',
+    margin: '-62px 32px 0 auto',
     '& > img': {
       margin: 0,
     },
@@ -53,78 +52,74 @@ function GreenHouseCard(props) {
   const shadowStyles = useSoftRiseShadowStyles()
   const textCardContentStyles = useN01TextInfoContentStyles()
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const open = Boolean(anchorEl)
   const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
   return (
     <ThemeProvider theme={Theme}>
       <Card className={cx(cardStyles.root, shadowStyles.root)}>
         <div className='layer'>
-          <Grid  container justifyContent = ' flex-end'> 
-          <Grid item >   
+          <Grid className='layer' container justifyContent=' flex-end'>
+            <Grid className='layer' item>
+              <IconButton
+                className='layer'
+                aria-label='more'
+                id='long-button'
+                aria-controls='long-menu'
+                aria-expanded={open ? 'true' : undefined}
+                aria-haspopup='true'
+                onClick={handleClick}
+                sx={{ mt: 1, mr: 1 }}
+              >
+                <MoreVertIcon style={{ color: 'white' }} />
+              </IconButton>
+            </Grid>
+          </Grid>
 
-             <IconButton
-        aria-label="more"
-        id="long-button"
-        aria-controls="long-menu"
-        aria-expanded={open ? 'true' : undefined}
-        aria-haspopup="true"
-        onClick={handleClick}
-      >
-        <MoreVertIcon />
+          <Menu
+            id='long-menu'
+            MenuListProps={{
+              'aria-labelledby': 'long-button',
+            }}
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+            PaperProps={{
+              style: {
+                width: '20ch',
+              },
+            }}
+          >
+            <MenuItem onClick={handleClose}>
+              <Box>
+                <IconButton sx={{ mr: 2 }} size='small'>
+                  <DeleteIcon />
+                </IconButton>
+                Delete
+              </Box>
+            </MenuItem>
 
-      </IconButton>
-         </Grid>
-           
-          </Grid> 
-      
-      <Menu
-        id="long-menu"
-        MenuListProps={{
-          'aria-labelledby': 'long-button',
-        }}
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleClose}
-        PaperProps={{
-          style: {
-           
-            width: '20ch',
-          },
-        }}
-      >
-        
-          <MenuItem  onClick={handleClose}>
-            <Box>
-          
-          <IconButton size='small'>
-            <DeleteIcon  sx={{ mr:2 }} />
-            Delete
-          </IconButton>
-        </Box>
-          </MenuItem>
-
-           <MenuItem  onClick={handleClose}>
-            <Box>
-          <IconButton size='small'>
-            <EditIcon sx={{ mr:2 }} />
-            Edit
-          </IconButton>
-          
-        </Box>
-          </MenuItem>
-       
-      </Menu>
-    </div>
-        <Link to={'/ProductPlantsPage/' + props.data.id} className='productIconImageContainer'>
-          <Grid  sx={{ p: 1 , mt: -5 }}>
-  
+            <MenuItem onClick={handleClose}>
+              <Box>
+                <IconButton sx={{ mr: 2 }} size='small'>
+                  <EditIcon />
+                </IconButton>
+                Edit
+              </Box>
+            </MenuItem>
+          </Menu>
+        </div>
+        <Link
+          to={'/ProductPlantsPage/' + props.data.id}
+          className='productIconImageContainer'
+        >
+          <Grid sx={{ p: 1, mt: -6 }}>
             <CardMedia
               classes={mediaStyles}
               image={props.data.image}
