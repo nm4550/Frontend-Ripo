@@ -129,7 +129,7 @@ export default function HomePage() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ count: '6', page: `${page}` }),
+      body: JSON.stringify({ count: '12', page: `${page}` }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -146,7 +146,7 @@ export default function HomePage() {
           name: null,
           price: { lower: null, higher: null },
           tags: [`${name}`],
-          pagination: { count: '6', page: `${page}` },
+          pagination: { count: '12', page: `${page}` },
           sort: { kind: null, order: null },
         })
       )
@@ -159,7 +159,7 @@ export default function HomePage() {
           name: null,
           price: { lower: null, higher: null },
           tags: [`${name}`],
-          pagination: { count: '6', page: `${page}` },
+          pagination: { count: '12', page: `${page}` },
           sort: { kind: null, order: null },
         }),
       })
@@ -173,7 +173,7 @@ export default function HomePage() {
         JSON.stringify({
           name: null,
           price: { lower: null, higher: null },
-          pagination: { count: '6', page: `${page}` },
+          pagination: { count: '12', page: `${page}` },
           sort: { kind: null, order: null },
         })
       )
@@ -185,7 +185,7 @@ export default function HomePage() {
         body: JSON.stringify({
           name: null,
           price: { lower: null, higher: null },
-          pagination: { count: '6', page: `${page}` },
+          pagination: { count: '12', page: `${page}` },
           sort: { kind: null, order: null },
         }),
       })
@@ -207,7 +207,7 @@ export default function HomePage() {
           name: null,
           price: { lower: null, higher: null },
           tags: [`${name}`],
-          pagination: { count: '6', page: `${page}` },
+          pagination: { count: '12', page: `${page}` },
           sort: { kind: null, order: null },
         }),
       })
@@ -225,7 +225,7 @@ export default function HomePage() {
         body: JSON.stringify({
           name: null,
           price: { lower: null, higher: null },
-          pagination: { count: '6', page: `${page}` },
+          pagination: { count: '12', page: `${page}` },
           sort: { kind: null, order: null },
         }),
       })
