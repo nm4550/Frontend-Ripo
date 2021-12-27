@@ -78,7 +78,7 @@ function Plantmanagment(props) {
       plantId.map((p) => {
         console.log('plant Id' + p.plant)
         fetch(
-          'http://127.0.0.1:8000/api/myPlantsRUD/' + p.plant + '/',
+          'http://127.0.0.1:8000/api/plantsRUD/' + p.plant + '/',
           requestOptions
         ).then(async (response) => {
           let isJson = response.headers
