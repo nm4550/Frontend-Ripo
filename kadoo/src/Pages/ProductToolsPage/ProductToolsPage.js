@@ -30,8 +30,8 @@ class ProductToolsPage extends React.Component {
     }
     
     componentDidMount() {
-      console.log('http://127.0.0.1:8000/api/toolDetail/' + this.state.id)
-        fetch('http://127.0.0.1:8000/api/toolDetail/' + this.state.id + '/')
+      console.log('http://127.0.0.1:8000/api/toolsRUD/' + this.state.id)
+        fetch('http://127.0.0.1:8000/api/toolsRUD/' + this.state.id + '/')
           .then(response => response.json())
           .then(data => this.setState({ product: data }));
 

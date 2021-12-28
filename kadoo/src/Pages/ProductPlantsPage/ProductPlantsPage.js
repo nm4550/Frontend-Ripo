@@ -30,8 +30,8 @@ class ProductPlantsPage extends React.Component {
   }
 
   componentDidMount() {
-    console.log('http://127.0.0.1:8000/api/plantDetail/' + this.state.id)
-    fetch('http://127.0.0.1:8000/api/plantDetail/' + this.state.id + '/')
+    console.log('http://127.0.0.1:8000/api/plantsRUD/' + this.state.id)
+    fetch('http://127.0.0.1:8000/api/plantsRUD/' + this.state.id + '/')
       .then((response) => response.json())
       .then((data) => this.setState({ product: data }))
 
