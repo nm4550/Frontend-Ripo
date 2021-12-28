@@ -19,15 +19,16 @@ import ProductToolsPage from './Pages/ProductToolsPage/ProductToolsPage'
 import LandingPage from './Pages/LandingPage/LandingPage'
 import AdminPage from './Pages/AdminPage/AdminPage'
 import Reminder from './Pages/ReminderTest/ReminderTest'
+import GreenHouseEdit from './Pages/GreenHouseEdit/GreenHouseEdit'
 import AdapterDateFns from '@mui/lab/AdapterDateFns'
 import Plantmanagement from './Pages/Plantmanagement/Plantmanagement'
 import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import ShowCoins from './Components/ShowCoins/ShowCoins'
 import WateringUpdate from './Components/UpdateCoins/WateringUpdate'
 import AdminHome from './Pages/AdminHome/AdminHome'
-import UserList from "./Pages/AdminUserList/AdminUserList";
-import AdminProduct from "./Pages/AdminProduct/AdminProduct";
-import AdminProductList from "./Pages/AdminProductList/AdminProductList";
+import UserList from './Pages/AdminUserList/AdminUserList'
+import AdminProduct from './Pages/AdminProduct/AdminProduct'
+import AdminProductList from './Pages/AdminProductList/AdminProductList'
 
 function App() {
   return (
@@ -42,7 +43,11 @@ function App() {
               <Route exact path='/' component={LandingPage} />
               <Route exact path='/signin' component={SignIn} />
               <Route exact path='/signup' component={SignUp} />
-              <Route exact path='/search/:text' component={SearchResultProduct} />
+              <Route
+                exact
+                path='/search/:text'
+                component={SearchResultProduct}
+              />
               <Route exact path='/search/' component={SearchResultProduct} />
               <Route exact path='/Homepage' exact component={HomePage} />
               <Route path='/cart' exact component={Cart} />
@@ -63,6 +68,11 @@ function App() {
                 exact
                 path='/ProductToolsPage/:id'
                 component={ProductToolsPage}
+              />
+              <Route
+                exact
+                path='/greenHouseEdit/:id'
+                component={GreenHouseEdit}
               />
             </Switch>
           </Router>
