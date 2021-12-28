@@ -95,7 +95,7 @@ export default function BasicTabs() {
     }
 
     setTimeout(async () => {
-      const res = await fetch('http://127.0.0.1:8000/api/plantsList/')
+      const res = await fetch('http://127.0.0.1:8000/api/plants/')
       const data = await res.json()
       setPlnatsData(data)
       setPlnatsDataLoaded(true)
@@ -103,7 +103,7 @@ export default function BasicTabs() {
     }, 0)
 
     setTimeout(async () => {
-      const res = await fetch('http://127.0.0.1:8000/api/toolsList/')
+      const res = await fetch('http://127.0.0.1:8000/api/tools/')
       const data = await res.json()
       setToolsData(data)
       setToolsDataLoaded(true)
