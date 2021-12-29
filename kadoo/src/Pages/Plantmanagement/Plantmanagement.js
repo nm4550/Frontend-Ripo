@@ -17,6 +17,7 @@ import Fab from '@mui/material/Fab'
 import { useTheme } from '@mui/material/styles'
 import Zoom from '@mui/material/Zoom'
 import AddIcon from '@mui/icons-material/Add'
+import { Link } from 'react-router-dom'
 import './Plantmanagement.css'
 // Import Theme Files
 import { ThemeProvider } from '@mui/material/styles'
@@ -25,7 +26,7 @@ import Theme from '../../Theme/ThemeGenerator'
 function Plantmanagment(props) {
   const theme = useTheme()
   const fabStyle = {
-    position: 'absolute',
+    position: 'fixed',
     bottom: 16,
     right: 16,
   }
@@ -49,6 +50,7 @@ function Plantmanagment(props) {
   const [plantId, setPlantId] = React.useState([])
   const [plantDataLoaded, setPlantDataLoaded] = React.useState(false)
   const [value, setValue] = React.useState(0)
+  const [reload, setReload] = React.useState(false)
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true)
@@ -56,6 +58,10 @@ function Plantmanagment(props) {
 
   const handleDrawerClose = () => {
     setOpenDrawer(false)
+  }
+
+  const handleReload = () => {
+    setReload(reload ? false : true)
   }
 
   useEffect(() => {
@@ -68,7 +74,7 @@ function Plantmanagment(props) {
     const requestOptions = {
       method: 'GET',
       headers: {
-        //'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+        Authorization: 'JWT ' + localStorage.getItem('access_token'),
         'Content-Type': 'application/json',
       },
     }
@@ -76,9 +82,9 @@ function Plantmanagment(props) {
     setPlantDataLoaded(false)
     setTimeout(async () => {
       plantId.map((p) => {
-        console.log('plant Id' + p.plant)
+        console.log('plant Id' + p.id)
         fetch(
-          'http://127.0.0.1:8000/api/plantsRUD/' + p.plant + '/',
+          'http://127.0.0.1:8000/api/myPlantsRUD/' + p.id + '/',
           requestOptions
         ).then(async (response) => {
           let isJson = response.headers
@@ -135,7 +141,7 @@ function Plantmanagment(props) {
           setPlantDataLoaded(true)
         })
     }, 0)
-  }, [])
+  }, [reload])
   return (
     <div className='FontRight'>
       <ThemeProvider theme={Theme}>
@@ -169,7 +175,10 @@ function Plantmanagment(props) {
                   sx={{ width: '100%' }}
                 >
                   <Grid item sx={{ width: '100%' }}>
-                    <ShowGreenHouse data={plantData} />
+                    <ShowGreenHouse
+                      data={plantData}
+                      reloadFunc={handleReload}
+                    />
                   </Grid>
                 </Grid>
               )}
@@ -203,9 +212,11 @@ function Plantmanagment(props) {
               }}
               unmountOnExit
             >
-              <Fab sx={fab.sx} aria-label={fab.label} color={fab.color}>
-                {fab.icon}
-              </Fab>
+              <Link to='/greenHouseCreate/'>
+                <Fab sx={fab.sx} aria-label={fab.label} color={fab.color}>
+                  {fab.icon}
+                </Fab>
+              </Link>
             </Zoom>
           ))}
         </Grid>

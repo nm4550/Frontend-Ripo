@@ -74,6 +74,11 @@ function App() {
                 path='/greenHouseEdit/:id'
                 component={GreenHouseEdit}
               />
+              <Route
+                exact
+                path='/greenHouseCreate/'
+                component={GreenHouseEdit}
+              />
             </Switch>
           </Router>
         </LocalizationProvider>

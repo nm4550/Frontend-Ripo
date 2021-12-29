@@ -61,6 +61,29 @@ function GreenHouseCard(props) {
     setAnchorEl(null)
   }
 
+  const handleDelete = () => {
+    const requestOptions = {
+      method: 'DELETE',
+      headers: {
+        Authorization: 'JWT ' + localStorage.getItem('access_token'),
+        'Content-Type': 'application/json',
+      },
+    }
+
+    setTimeout(async () => {
+      fetch(
+        'http://127.0.0.1:8000/api/myPlantsRUD/' + props.data.id + '/',
+        requestOptions
+      ).then(async (response) => {
+        let isJson = response.headers
+          .get('content-type')
+          ?.includes('application/json')
+        let data = isJson ? await response.json() : null
+        props.reloadFunc()
+      })
+    }, 3000)
+  }
+
   return (
     <ThemeProvider theme={Theme}>
       <Card className={cx(cardStyles.root, shadowStyles.root)}>
@@ -96,7 +119,12 @@ function GreenHouseCard(props) {
               },
             }}
           >
-            <MenuItem onClick={handleClose}>
+            <MenuItem
+              onClick={() => {
+                handleClose()
+                handleDelete()
+              }}
+            >
               <Box>
                 <IconButton sx={{ mr: 2 }} size='small'>
                   <DeleteIcon />
@@ -115,18 +143,13 @@ function GreenHouseCard(props) {
             </MenuItem>
           </Menu>
         </div>
-        <Link
-          to={'/ProductPlantsPage/' + props.data.id}
-          className='productIconImageContainer'
-        >
-          <Grid sx={{ p: 1, mt: -6 }}>
-            <CardMedia
-              classes={mediaStyles}
-              image={props.data.image}
-              className='productIconImage'
-            />
-          </Grid>
-        </Link>
+        <Grid sx={{ p: 1, mt: -6 }}>
+          <CardMedia
+            classes={mediaStyles}
+            image={props.data.image}
+            className='productIconImage'
+          />
+        </Grid>
         <Avatar className={cardStyles.avatar}>
           <Fab color='primary' aria-label='add'>
             <OpacityIcon />

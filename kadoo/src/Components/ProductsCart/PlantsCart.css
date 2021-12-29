@@ -1,14 +1,11 @@
-.css-o69gx8-MuiCardMedia-root {
-  object-fit: cover !important;
-}
 .productIconImageContainer {
   width: 100%;
   height: 15rem;
 }
-.productIconImage {
+.plantIconImage {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: cover !important;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
 }
@@ -56,14 +53,14 @@
   }
 }
 
-@media (min-width: 900px){
+@media (min-width: 900px) {
   .css-iltpxr-MuiGrid-root {
-    max-width: 100%!important;
+    max-width: 100% !important;
   }
 }
 
-@media (min-width: 600px){
+@media (min-width: 600px) {
   .css-iltpxr-MuiGrid-root {
-    max-width: 100%!important;
+    max-width: 100% !important;
   }
 }
