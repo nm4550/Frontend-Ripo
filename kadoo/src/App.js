@@ -29,7 +29,6 @@ import AdminHome from './Pages/AdminHome/AdminHome'
 import UserList from './Pages/AdminUserList/AdminUserList'
 import AdminProduct from './Pages/AdminProduct/AdminProduct'
 import AdminProductList from './Pages/AdminProductList/AdminProductList'
-import AdminProductEdit from './Components/adminProductEdit/adminProductEdit'
 
 function App() {
   return (
@@ -60,7 +59,6 @@ function App() {
               <Route exact path='/AdminPage/users' component={UserList} />
               <Route exact path='/products' component={AdminProduct} />
               <Route exact path='/productsList' component={AdminProductList} />
-              <Route path='/AdminProductEdit' exact component={AdminProductEdit} />
               <Route
                 exact
                 path='/ProductPlantsPage/:id'
