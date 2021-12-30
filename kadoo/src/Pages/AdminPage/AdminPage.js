@@ -34,6 +34,9 @@ function App() {
           <Route exact path="/productsList">
             <AdminProductList/>
           </Route>
+          <Route path="/newProduct">
+            <AdminNewProduct/>
+          </Route>
         </Switch>
       </div>
     </Router>
