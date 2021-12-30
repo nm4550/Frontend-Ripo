@@ -109,7 +109,7 @@ export default function ProductList() {
 
   return (
     <div className="productList">
-      <Link to="/newProduct" className="LinkFab">
+      <Link to="/AdminPage/newProduct" className="LinkFab">
         <Fab variant="extended" className="userAddButton">
           <AddIcon sx={{ mr: 1 }} />
           Add Specialist

@@ -23,6 +23,7 @@
   .sidebarList {
     list-style: none;
     padding: 5px;
+    position: relative;
   }
   
   .sidebarListItem {
@@ -30,14 +31,45 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    border-radius: 10px;
+    position: relative;
+    left: 0;
+    margin: 4px 0;
+    border-left: 2px solid #ffb300;
+    transition: 0.5s;
   }
   
-  .sidebarListItem.active,
+  .sidebarListItem ::before{
+    content: ' ';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #ffb300;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: 0.5s
+  }
+
+  .sidebarListItem:hover ::before{
+    transform: scaleX(1);
+  } 
+
   .sidebarListItem:hover {
-    background-color: rgb(240, 240, 255);
+    background-color: #ffb300;
+    left: 10px;
   }
+
+  .sidebarListItem span{
+    position: relative;
+    padding: 8px;
+    display: inline-block;
+    z-index: 1;
+    transition: 0.5s;
+  } 
   
+  .sidebarListItem:hover span{
+    color: rgb(187, 186, 186)
+  }
+
   .sidebarIcon{
       margin-right: 5px;
       font-size: 20px !important;

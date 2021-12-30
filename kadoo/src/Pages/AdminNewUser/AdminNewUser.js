@@ -1,25 +1,14 @@
 import "./AdminNewUser.css";
 import { TextField } from "@mui/material";
 import React from "react";
-
-const currencies = [
-  {
-    value: 'YES',
-    label: 'Yes',
-  },
-  {
-    value: 'NO',
-    label: 'No',
-  },
-];
+import AdapterDateFns from '@mui/lab/AdapterDateFns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
+import { Link } from "react-router-dom";
 
 export default function NewUser() {
-
-  const [currency, setCurrency] = React.useState('EUR');
-
-  const handleChange = (event) => {
-    setCurrency(event.target.value);
-  };
+  
+  const [value, setValue] = React.useState(null);
 
   return (
     <div className="newUser">
@@ -32,10 +21,10 @@ export default function NewUser() {
           <TextField id="standard-basic" label="Username" variant="standard" type="text" required/>
         </div>
         <div className="newUserItem">
-          <TextField id="standard-basic" label="Fisrt name" variant="standard" type="text" required/>
+          <TextField id="standard-basic" label="Fisrt Name" variant="standard" type="text" required/>
         </div>
         <div className="newUserItem">
-          <TextField id="standard-basic" label="Last name" variant="standard" type="text" required/>
+          <TextField id="standard-basic" label="Last Name" variant="standard" type="text" required/>
         </div>
         <div className="newUserItem">
           <TextField
@@ -48,11 +37,18 @@ export default function NewUser() {
           />
         </div>
         <div className="newUserItem">
-          <TextField id="standard-basic" label="ID" variant="standard" />
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <DatePicker
+          label="Birth Date"
+          value={value}
+          onChange={(newValue) => {
+          setValue(newValue);
+          }}
+          renderInput={(params) => <TextField variant="standard" {...params} />}
+          />
+          </LocalizationProvider>
         </div>
         <div className="newUserItem">
-          <TextField id="standard-basic" label="Birth date" variant="standard"/>
-        </div><div className="newUserItem">
           <TextField id="standard-basic" label="Degree" variant="standard"/>
         </div>
         <div className="newUserItem">
@@ -67,30 +63,13 @@ export default function NewUser() {
         <div className="newUserItem">
           <TextField id="standard-basic" label="Address" variant="standard"/>
         </div>
-        <div className="newUserItem">
-          <TextField id="standard-basic" label="Rate" variant="standard" type="number"/>
-        </div>
-        <div className="newUserItem">
-          <TextField
-            id="standard-select-currency-native"
-            select
-            label="Active"
-            value={currency}
-            onChange={handleChange}
-            SelectProps={{
-            native: true,
-            }}
-            variant="standard"
-            >
-            {currencies.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </TextField>
-        </div>
       </form>
-      <button className="newUserButton">Add Specialist</button>
+      <Link to="/AdminPage/specialist">
+        <button className="newUserButton">Confirm</button>
+      </Link>
+      <Link to="/AdminPage/specialist">
+        <button className="newUserButton">Cancel</button>
+      </Link>
     </div>
   );
 }

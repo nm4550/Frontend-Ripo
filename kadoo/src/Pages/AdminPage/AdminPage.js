@@ -19,22 +19,22 @@ function App() {
       <div className="containerAdmin">
         <Sidebar />
         <Switch>
-          <Route exact path="/AdminHome">
+          <Route exact path="/AdminPage/AdminHome">
             <AdminHome/>
           </Route>
-          <Route path="/specialist">
+          <Route path="/AdminPage/specialist">
             <UserList/>
           </Route>
-          <Route path="/user/:userId">
+          <Route path="/AdminPage/user/:userId">
             <AdminUser/>
           </Route>
-          <Route path="/newUser">
+          <Route path="/AdminPage/newUser">
             <AdminNewUser/>
           </Route>
-          <Route exact path="/productsList">
+          <Route exact path="/AdminPage/productsList">
             <AdminProductList/>
           </Route>
-          <Route path="/newProduct">
+          <Route path="/AdminPage/newProduct">
             <AdminNewProduct/>
           </Route>
         </Switch>
