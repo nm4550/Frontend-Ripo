@@ -77,8 +77,8 @@ export default function UserList() {
     renderCell: () => {
       return (
         <div>
-          <Link to="/user/:userId">
-            <IconButton >
+          <Link to="/AdminPage/user/:userId">
+            <IconButton>
               <EditIcon/>
             </IconButton>
           </Link>
@@ -120,7 +120,7 @@ export default function UserList() {
 
   return (
     <div className="productList">
-      <Link to="/newUser" className="LinkFab">
+      <Link to="/AdminPage/newUser" className="LinkFab">
         <Fab variant="extended" className="userAddButton">
           <AddIcon sx={{ mr: 1 }} />
           Add Specialist
