@@ -78,7 +78,7 @@ export default function UserList() {
       return (
         <div>
           <Link to="/user/:userId">
-            <IconButton>
+            <IconButton >
               <EditIcon/>
             </IconButton>
           </Link>
