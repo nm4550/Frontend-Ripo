@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { IconButton } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
+import Fab from '@mui/material/Fab';
 
 export default function UserList() {
   const [page, setPage] = useState(1)
@@ -21,54 +22,66 @@ export default function UserList() {
   };
 
   const columns = [
-    { field: "name", headerName: "Name", width: 180 , headerAlign: 'center' ,
+    { 
+      field: "id", headerName: "ID", width: 80 , headerAlign: 'center' ,
+      renderCell: (params) => {
+      return (
+        <div className="productListItem">
+          {params.row.id}
+        </div>
+      );
+    }, 
+    },
+    { field: "first_name", headerName: "First name", width: 120 , headerAlign: 'center',
     renderCell: (params) => {
       return (
         <div className="productListItem">
-          {params.row.name}
+          {params.row.first_name}
+        </div>
+      );
+    }, 
+    },
+    { field: "last_name", headerName: "Last name", width: 120 , headerAlign: 'center' ,
+    renderCell: (params) => {
+      return (
+        <div className="productListItem">
+          {params.row.last_name}
         </div>
       );
     }, 
     },
     {
-      field: "image",
-      headerName: "Image", 
+      field: "user_name",
+      headerName: "User name", 
       headerAlign: 'center' ,
-      width: 80,
+      width: 120,
       renderCell: (params) => {
-        console.log(params.row.name);
         return (
           <div className="productListItem">
-            <img className="productListImg" src={params.row.image} alt="" />
+            {params.row.user_name}
           </div>
         );
       },
     },
-    { field: "price", headerName: "Price", width: 70 , headerAlign: 'center',
-    renderCell: (params) => {
+    { 
+      field: "email", headerName: "Email", width: 180 , headerAlign: 'center' ,
+      renderCell: (params) => {
       return (
         <div className="productListItem">
-          ${params.row.price}
+          {params.row.email}
         </div>
       );
     }, 
-    },
-    { field: "count", headerName: "Count", width: 80 , headerAlign: 'center' ,
-    renderCell: (params) => {
-      return (
-        <div className="productListItem">
-          {params.row.count}
-        </div>
-      );
-    }, 
-    },
+    },  
     { field: "Actions", headerName: "Actions", width: 100 , headerAlign: 'center' ,
     renderCell: () => {
       return (
         <div>
-          <IconButton>
-            <EditIcon/>
-          </IconButton>
+          <Link to="/user/:userId">
+            <IconButton>
+              <EditIcon/>
+            </IconButton>
+          </Link>
           <IconButton>
             <DeleteOutlineIcon/>
           </IconButton> 
@@ -84,17 +97,15 @@ export default function UserList() {
   //   }
   // ];
   const fetchPagination = () => {
-    fetch('http://127.0.0.1:8000/api/allPagination/', {
-      method: 'Post',
+    fetch('http://127.0.0.1:8000/api/specialist/all-primary/', {
+      method: 'Get',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ count: '999', page: `${page}` }),
     })
       .then((res) => res.json())
       .then((data) => {
-        setProducts(data.data)
-        setAllPage(data.pageCount)
+        setProducts(data)
       })
   }
 
@@ -109,6 +120,12 @@ export default function UserList() {
 
   return (
     <div className="productList">
+      <Link to="/newUser" className="LinkFab">
+        <Fab variant="extended" className="userAddButton">
+          <AddIcon sx={{ mr: 1 }} />
+          Add Specialist
+        </Fab>
+      </Link>
       <DataGrid
         align= 'center'
         textCenter

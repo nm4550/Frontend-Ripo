@@ -1,4 +1,5 @@
 .newUser {
+    margin-left: 10px !important;
     flex: 4;
   }
   
@@ -47,7 +48,7 @@
   .newUserButton{
       width: 200px;
       border: none;
-      background-color: darkblue;
+      background-color: #009688;
       color: white;
       padding: 7px 10px;
       font-weight: 600;
