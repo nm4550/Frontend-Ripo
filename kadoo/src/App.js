@@ -31,9 +31,6 @@ import AdminProduct from "./Pages/AdminProduct/AdminProduct";
 import AdminProductList from "./Pages/AdminProductList/AdminProductList";
 import TicketCard from './Components/TicketCard/TicketCard'
 import WriteTicket from './Components/WriteTicket/WriteTicket'
-import UserList from './Pages/AdminUserList/AdminUserList'
-import AdminProduct from './Pages/AdminProduct/AdminProduct'
-import AdminProductList from './Pages/AdminProductList/AdminProductList'
 
 function App() {
   return (

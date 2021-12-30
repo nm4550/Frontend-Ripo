@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import ContactMailIcon from '@mui/icons-material/ContactMail';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
@@ -13,15 +13,39 @@ import { useTheme } from '@mui/material/styles';
 
 export default function WriteTicket() {
     const [open, setOpen] = React.useState(false);
+    const [send, setSend] = React.useState(false);
+    const [disable, setDisable] = React.useState(false);
+    const [text, setText] = React.useState('');
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
     const handleClickOpen = () => {
         setOpen(true);
     };
 
     const handleClose = () => {
         setOpen(false);
+        setSend(true);
+        setDisable(true);
     };
+
+    useEffect(() => {
+        if(text!=''){
+        const requestOptions = {
+          method: 'POST',
+          headers: { 'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+          'Content-Type': 'application/json' },
+          body: JSON.stringify({
+              body: text
+          }),
+        }
+        fetch('http://127.0.0.1:8000/api/ticket/create-support-ticket/', requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(text)
+            console.log(requestOptions.body)
+        })
+        }}, [send]);
 
     return (
         <div>
@@ -46,7 +70,9 @@ export default function WriteTicket() {
             placeholder="Message"
             multiline
             variant="standard"
-
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            disabled={disable}
             />
             </DialogContent>
             <DialogActions>

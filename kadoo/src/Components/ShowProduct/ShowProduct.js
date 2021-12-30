@@ -19,7 +19,6 @@ function ShowProduct(props) {
           {props.data.map((p) => (
             <Grid item xs={12} sm={6} md={4}>
               {p.kind == 'Plant' && <PlantsCart product={p} />}
-
               {p.kind == 'Tool' && <ToolsCart product={p} />}
             </Grid>
           ))}
