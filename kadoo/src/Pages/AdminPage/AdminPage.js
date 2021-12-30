@@ -22,8 +22,14 @@ function App() {
           <Route exact path="/AdminHome">
             <AdminHome/>
           </Route>
-          <Route path="/users">
+          <Route path="/specialist">
             <UserList/>
+          </Route>
+          <Route path="/user/:userId">
+            <AdminUser/>
+          </Route>
+          <Route path="/newUser">
+            <AdminNewUser/>
           </Route>
           <Route exact path="/productsList">
             <AdminProductList/>
