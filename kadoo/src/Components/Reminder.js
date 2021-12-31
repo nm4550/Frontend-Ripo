@@ -24,16 +24,6 @@ import Divider from '@mui/material/Divider'
 import TimePicker from '@mui/lab/TimePicker'
 
 export default function Reminder() {
-  function handleClick(index) {
-    if (weekDays[index]) {
-      setWeekDays((pre) => [{ ...pre, [pre[index]]: false }])
-      // setPlantData((prestate) => [...prestate, data])
-    }
-    // else{
-    //   setWeekDays((pre)=>[{...pre ,[pre[index]]:true}])
-    // }
-    console.log('You clicked the Chip.')
-  }
   const [value, setValue] = React.useState(null)
   const [weekDays, setWeekDays] = React.useState([
     false,
@@ -44,6 +34,23 @@ export default function Reminder() {
     false,
     false,
   ])
+
+  function handleClick(index) {
+    if (weekDays[index]) {
+      setWeekDays((pre) => [
+        ...pre.slice(0, index),
+        false,
+        ...pre.slice(index + 1),
+      ])
+    } else {
+      setWeekDays((pre) => [
+        ...pre.slice(0, index),
+        true,
+        ...pre.slice(index + 1),
+      ])
+    }
+    console.log('You clicked the Chip.')
+  }
   // render() {
   //             var increaseBought=()=>{
   //           var nob=this.state.numberOfBuy
