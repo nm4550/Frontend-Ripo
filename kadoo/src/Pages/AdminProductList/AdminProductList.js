@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { IconButton } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
+import { Fab } from "@mui/material";
 
 export default function ProductList() {
   const [page, setPage] = useState(1)
@@ -108,6 +109,12 @@ export default function ProductList() {
 
   return (
     <div className="productList">
+      <Link to="/AdminPage/newProduct" className="LinkFab">
+        <Fab variant="extended" className="userAddButton">
+          <AddIcon sx={{ mr: 1 }} />
+          Add Specialist
+        </Fab>
+      </Link>
       <DataGrid
         align= 'center'
         textCenter
