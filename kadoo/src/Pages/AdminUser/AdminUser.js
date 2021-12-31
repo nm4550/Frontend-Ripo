@@ -21,7 +21,7 @@ export default function NewUser() {
           <TextField id="standard-basic" label="Username" variant="standard" type="text" required/>
         </div>
         <div className="newUserItem">
-          <TextField id="standard-basic" label="Fisrt Name" variant="standard" type="text" required/>
+          <TextField id="standard-basic" label="First Name" variant="standard" type="text" required/>
         </div>
         <div className="newUserItem">
           <TextField id="standard-basic" label="Last Name" variant="standard" type="text" required/>
