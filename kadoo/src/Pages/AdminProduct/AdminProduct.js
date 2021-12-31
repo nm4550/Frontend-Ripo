@@ -19,6 +19,9 @@ import Tooltip from "@mui/material/Tooltip";
 import { makeStyles } from "@mui/styles";
 import { useTheme } from "@mui/material/styles";
 import Divider from "@mui/material/Divider";
+import { MenuItem } from "@mui/material";
+import { TextField } from "@mui/material";
+import { Select } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,19 +29,41 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
     },
   },
-  input: {
+  TextField: {
     display: "none",
   },
   faceImage: {
     color: theme.palette.primary.light,
   },
 }));
+
 export default function Product() {
+  const initialFormData = Object.freeze({
+    name: "",
+    description: "",
+    count: "",
+    image: "",
+    price: "",
+    kind: "",
+    environment: "",
+    water: "",
+    light: "",
+    growthRate: "",
+  });
   const [numberOfBuy, setNumberOfBuy] = React.useState(0);
-  const [selectedFile, setSelectedFile] = React.useState(null);
+  const [SelectedFile, setSelectedFile] = React.useState(null);
+  const [formData, updateFormData] = React.useState(initialFormData);
   const classes = useStyles();
   const handleCapture = (event) => {
     setSelectedFile(event.target.files[0]);
+  };
+
+  const handleChange = (e) => {
+    updateFormData({
+      ...formData,
+      [e.target.name]: e.target.value.trim(),
+    });
+    console.log(formData);
   };
   var increaseBought = () => {
     var nob = numberOfBuy;
@@ -55,7 +80,8 @@ export default function Product() {
     <Grid container>
       <Grid container item>
         <Grid
-          container item
+          container
+          item
           // justifyContent="center"
           // alignItems="center"
           sx={{
@@ -64,7 +90,7 @@ export default function Product() {
             pt: 1,
           }}
         >
-          <Grid container alignItems= 'flex-start' item>
+          <Grid container alignItems="flex-start" item>
             <h1>Product</h1>
           </Grid>
 
@@ -75,13 +101,23 @@ export default function Product() {
                   <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <div>
                       <label>Product Name</label>
-                      <input type="text" placeholder="Name" />
+                      <TextField
+                        name="name"
+                        onChange={handleChange}
+                        type="text"
+                        placeholder="Name"
+                      />
                     </div>
                   </Grid>
                   <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <div>
                       <label>Description</label>
-                      <input type="text" placeholder="Description" />
+                      <TextField
+                        name="description"
+                        onChange={handleChange}
+                        type="text"
+                        placeholder="Description"
+                      />
                     </div>
                   </Grid>
                 </Grid>
@@ -89,55 +125,68 @@ export default function Product() {
                 <Grid container>
                   <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Price</label>
-                    <input type="text" placeholder="Price" />
+                    <TextField
+                      name="price"
+                      onChange={handleChange}
+                      type="text"
+                      placeholder="Price"
+                    />
                   </Grid>
 
                   <Grid item xs={4} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Kind</label>
-                    <select name="Kind" id="Kind">
-                      <option value="plant">Plant</option>
-                      <option value="tool">Tool</option>
-                    </select>
+                    <Select name="kind" onChange={handleChange} id="Kind">
+                      <MenuItem value="plant">Plant</MenuItem>
+                      <MenuItem value="tool">Tool</MenuItem>
+                    </Select>
                   </Grid>
                 </Grid>
 
                 <Grid container>
                   <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Light</label>
-                    <select name="Light" id="Light">
-                      <option value="low">Low</option>
-                      <option value="medium">Medium</option>
-                      <option value="much">Much</option>
-                    </select>
+                    <Select name="light" onChange={handleChange} id="Light">
+                      <MenuItem value="low">Low</MenuItem>
+                      <MenuItem value="medium">Medium</MenuItem>
+                      <MenuItem value="much">Much</MenuItem>
+                    </Select>
                   </Grid>
 
                   <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Water</label>
-                    <select name="Water" id="Water">
-                      <option value="low">Low</option>
-                      <option value="medium">Medium</option>
-                      <option value="much">Much</option>
-                    </select>
+                    <Select name="water" onChange={handleChange} id="Water">
+                      <MenuItem value="low">Low</MenuItem>
+                      <MenuItem value="medium">Medium</MenuItem>
+                      <MenuItem value="much">Much</MenuItem>
+                    </Select>
                   </Grid>
                 </Grid>
 
                 <Grid container>
                   <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Growth Rate</label>
-                    <select name="GrowthRate" id="GrowthRate">
-                      <option value="low">Low</option>
-                      <option value="medium">Medium</option>
-                      <option value="much">Much</option>
-                    </select>
+                    <Select
+                      name="growthRate"
+                      onChange={handleChange}
+                      id="GrowthRate"
+                    >
+                      <MenuItem value="low">Low</MenuItem>
+                      <MenuItem value="medium">Medium</MenuItem>
+                      <MenuItem value="much">Much</MenuItem>
+                    </Select>
                   </Grid>
 
                   <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Environment</label>
-                    <select name="Environment" id="Environment">
-                      <option value="none">None</option>
-                      <option value="tropical">Tropical</option>
-                      <option value="cold">Cold</option>
-                    </select>
+                    <Select
+                      name="environment"
+                      onChange={handleChange}
+                      id="Environment"
+                    >
+                      <MenuItem value="none">None</MenuItem>
+                      <MenuItem value="tropical">Tropical</MenuItem>
+                      <MenuItem value="cold">Cold</MenuItem>
+                    </Select>
                   </Grid>
                 </Grid>
 
@@ -175,13 +224,13 @@ export default function Product() {
                       <label for="file">
                       <PublishIcon/>
                       </label>
-                      <input type="file" id="file" style={{display:"none"}} />
+                      <TextField type="file" id="file" style={{display:"none"}} />
                       </div>
                       
                     <button className="productButton">Update</button> */}
-                  <input
+                  <TextField
                     accept="image/jpeg"
-                    className={classes.input}
+                    className={classes.TextField}
                     id="faceImage"
                     type="file"
                     onChange={handleCapture}
@@ -199,7 +248,7 @@ export default function Product() {
                     </label>
                   </Tooltip>
                   <label>
-                    {selectedFile ? selectedFile.name : "Select Image"}
+                    {SelectedFile ? SelectedFile.name : "Select Image"}
                   </label>
                   . . .<Button color="primary">Save</Button>
                 </div>
