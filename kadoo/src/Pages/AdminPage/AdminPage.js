@@ -37,6 +37,9 @@ function App() {
           <Route path="/AdminPage/newProduct">
             <AdminNewProduct/>
           </Route>
+          <Route path="/AdminPage/product/:productId">
+            <AdminProduct/>
+          </Route>
         </Switch>
       </div>
     </Router>

@@ -8,13 +8,33 @@ import { IconButton } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import { Fab } from "@mui/material";
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import * as React from 'react';
+import Button from '@mui/material/Button';
 
 export default function ProductList() {
   const [page, setPage] = useState(1)
   const [allPage, setAllPage] = useState(1)
   const [products, setProducts] = useState([])
   const [data, setData] = useState(productRows);
-  
+  const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
@@ -66,12 +86,38 @@ export default function ProductList() {
     renderCell: () => {
       return (
         <div>
-          <IconButton>
-            <EditIcon/>
-          </IconButton>
-          <IconButton>
+          <Link to="/AdminPage/product/:productId">
+            <IconButton>
+              <EditIcon/>
+            </IconButton>
+          </Link>
+          <IconButton  onClick={handleClickOpen}
+          >
             <DeleteOutlineIcon/>
-          </IconButton> 
+          </IconButton>
+          <Dialog
+              fullScreen={fullScreen}
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="responsive-dialog-title"
+              >
+                <DialogTitle id="responsive-dialog-title">
+                {"Delete confirmation"}
+                </DialogTitle>
+                <DialogContent>
+                  <DialogContentText>
+                    Are you sure you want to delete this item?
+                  </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                  <Button autoFocus onClick={handleClose}>
+                    No
+                  </Button>
+                  <Button onClick={handleClose} autoFocus>
+                    Yes
+                  </Button>
+                </DialogActions>
+            </Dialog> 
         </div>
               
       );
