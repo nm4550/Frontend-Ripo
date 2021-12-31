@@ -52,36 +52,33 @@ export default function Product() {
   };
 
   return (
-    <Grid>
-      <Grid container>
+    <Grid container>
+      <Grid container item>
         <Grid
-          container
+          container item
           // justifyContent="center"
           // alignItems="center"
           sx={{
             pl: { xs: 2, sm: 5 },
             pr: { xs: 2, sm: 5 },
-            pt: 5,
+            pt: 1,
           }}
         >
-          <Grid container>
-            <div>
-              <h1>Product</h1>
-            </div>
+          <Grid container alignItems= 'flex-start' item>
+            <h1>Product</h1>
           </Grid>
-          <Divider sx={{ m: 2 }} style={{ width: "100%" }} />
 
-          <Grid container>
+          <Grid container item>
             <div>
               <form>
                 <Grid container>
-                  <Grid item xs={6} sm={6} lg={6} sx={{ m: 2 }}>
+                  <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <div>
                       <label>Product Name</label>
                       <input type="text" placeholder="Name" />
                     </div>
                   </Grid>
-                  <Grid item xs={6} sm={6} lg={6} sx={{ m: 2 }}>
+                  <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <div>
                       <label>Description</label>
                       <input type="text" placeholder="Description" />
@@ -90,12 +87,12 @@ export default function Product() {
                 </Grid>
 
                 <Grid container>
-                  <Grid item xs={6} sm={6} lg={6} sx={{ m: 2 }}>
+                  <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Price</label>
                     <input type="text" placeholder="Price" />
                   </Grid>
 
-                  <Grid item xs={4} sm={6} lg={6} sx={{ m: 2 }}>
+                  <Grid item xs={4} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Kind</label>
                     <select name="Kind" id="Kind">
                       <option value="plant">Plant</option>
@@ -105,7 +102,7 @@ export default function Product() {
                 </Grid>
 
                 <Grid container>
-                  <Grid item xs={6} sm={6} lg={6} sx={{ m: 2 }}>
+                  <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Light</label>
                     <select name="Light" id="Light">
                       <option value="low">Low</option>
@@ -114,7 +111,7 @@ export default function Product() {
                     </select>
                   </Grid>
 
-                  <Grid item xs={6} sm={6} lg={6} sx={{ m: 2 }}>
+                  <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Water</label>
                     <select name="Water" id="Water">
                       <option value="low">Low</option>
@@ -125,7 +122,7 @@ export default function Product() {
                 </Grid>
 
                 <Grid container>
-                  <Grid item xs={6} sm={6} lg={6} sx={{ m: 2 }}>
+                  <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Growth Rate</label>
                     <select name="GrowthRate" id="GrowthRate">
                       <option value="low">Low</option>
@@ -134,7 +131,7 @@ export default function Product() {
                     </select>
                   </Grid>
 
-                  <Grid item xs={6} sm={6} lg={6} sx={{ m: 2 }}>
+                  <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Environment</label>
                     <select name="Environment" id="Environment">
                       <option value="none">None</option>
@@ -144,7 +141,13 @@ export default function Product() {
                   </Grid>
                 </Grid>
 
-                <Grid item container alignItems="center" direction="row" sx={{ m: 2 }}>
+                <Grid
+                  item
+                  container
+                  alignItems="center"
+                  direction="row"
+                  sx={{ m: 2 }}
+                >
                   <label>Count</label>
                   <IconButton
                     size="large"
