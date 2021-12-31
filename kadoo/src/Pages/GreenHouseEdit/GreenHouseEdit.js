@@ -17,6 +17,11 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
+import { styled } from '@mui/material/styles'
+
+const Input = styled('input')({
+  display: 'none',
+})
 
 function GreenHouseEdit(props) {
   ///const containerRef = React.useRef(null)
@@ -26,15 +31,12 @@ function GreenHouseEdit(props) {
   const [plantDataLoaded, setPlantDataLoaded] = React.useState(false)
   const [value, setValue] = React.useState(0)
 
+  const handleChange = (e) => {
+    props.change(e)
+  }
+
   return (
     <div>
-      <AppBar
-        SearchOption={true}
-        TicketOption={true}
-        CartOption={true}
-        DrawerOption={false}
-        AuthorizationOption={true}
-      />
       <Grid
         container
         justifyContent='center'
@@ -74,6 +76,7 @@ function GreenHouseEdit(props) {
               >
                 <img
                   className='ProductPageImage'
+                  src={'http://127.0.0.1:8000' + props.data.image}
                   alt={'alt'}
                   sx={{
                     width: { xs: '300px', sm: '400px' },
@@ -87,9 +90,17 @@ function GreenHouseEdit(props) {
                   sx={{ p: 0.5, Color: '#12824C' }}
                   className='ProductPageTitle'
                 >
-                  <Button variant='contained' className='productsPageAdd'>
-                    Add Image
-                  </Button>
+                  <label htmlFor='contained-button-file'>
+                    <Input
+                      accept='image/*'
+                      id='contained-button-file'
+                      multiple
+                      type='file'
+                    />
+                    <Button variant='contained' component='span'>
+                      Upload
+                    </Button>
+                  </label>
                 </Grid>
               </Grid>
             </Grid>
@@ -104,7 +115,14 @@ function GreenHouseEdit(props) {
                 className='ProductPageTitle'
                 sx={{ m: 1 }}
               >
-                <TextField fullWidth label='Name' id='Name' />
+                <TextField
+                  fullWidth
+                  label='Name'
+                  id='name'
+                  name='name'
+                  defaultValue={props.data.name}
+                  onChange={handleChange}
+                />
                 <Divider sx={{ mt: 1 }} />
               </Grid>
 
@@ -121,14 +139,17 @@ function GreenHouseEdit(props) {
                   <TextField
                     fullWidth
                     id='description'
+                    name='description'
                     label='Description'
                     multiline
                     maxRows={3}
+                    defaultValue={props.data.description}
+                    onChange={handleChange}
                   />
                 </div>
               </Grid>
 
-              <Grid
+              {/*<Grid
                 container
                 item
                 xs={12}
@@ -189,9 +210,9 @@ function GreenHouseEdit(props) {
                     </Select>
                   </FormControl>
                 </Grid>
-              </Grid>
-              <Grid container item className='ProductPageText'>
-                <FormControl fullWidth sx={{ mt: 1, mb: 1, minWidth: '135px' }}>
+              </Grid>*/}
+              <Grid container item className='ProductPageText' sx={{ m: 1 }}>
+                <FormControl fullWidth sx={{ minWidth: '135px' }}>
                   <InputLabel
                     id='demo-simple-select-label'
                     sx={{ Width: '100px' }}
@@ -200,8 +221,11 @@ function GreenHouseEdit(props) {
                   </InputLabel>
                   <Select
                     labelId='demo-simple-select-label'
-                    id='demo-simple-select'
+                    id='location'
+                    name='location'
                     label='Light'
+                    defaultValue={props.data.location}
+                    onChange={handleChange}
                   >
                     <MenuItem value={'Living room'}>Living room</MenuItem>
                     <MenuItem value={'Kitchen'}>Kitchen</MenuItem>

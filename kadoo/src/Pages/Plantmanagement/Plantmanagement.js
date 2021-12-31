@@ -7,21 +7,31 @@ import { styled } from '@mui/material/styles'
 import Paper from '@mui/material/Paper'
 import ProductIcon2 from '../../Components/productIcon/productIcon2'
 import AppBar from '../../Components/AppBar/AppBar'
+import DefAppBar from '@mui/material/AppBar'
 import Stack from '@mui/material/Stack'
+import Button from '@mui/material/Button'
+import IconButton from '@mui/material/IconButton'
 import Alert from '@mui/material/Alert'
 import ShowProduct from '../../Components/ShowProduct/ShowProduct'
 import SkeletonArticle from '../../Components/Cart/SkeletonArticle'
+import Dialog from '@mui/material/Dialog'
 import GreenHouseCard from '../../Components/ProductsCart/GreenHouseCard'
 import ShowGreenHouse from '../../Components/ShowProduct/ShowGreenHouse'
+import CloseIcon from '@mui/icons-material/Close'
+import Toolbar from '@mui/material/Toolbar'
 import Fab from '@mui/material/Fab'
 import { useTheme } from '@mui/material/styles'
 import Zoom from '@mui/material/Zoom'
 import AddIcon from '@mui/icons-material/Add'
-import { Link } from 'react-router-dom'
+import GreenHouseEdit from '../GreenHouseEdit/GreenHouseEdit'
 import './Plantmanagement.css'
 // Import Theme Files
 import { ThemeProvider } from '@mui/material/styles'
 import Theme from '../../Theme/ThemeGenerator'
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction='up' ref={ref} {...props} />
+})
 
 function Plantmanagment(props) {
   const theme = useTheme()
@@ -45,12 +55,46 @@ function Plantmanagment(props) {
     },
   ]
   ///const containerRef = React.useRef(null)
+  const initialData = Object.freeze({
+    id: '',
+    name: '',
+    description: '',
+    image: '',
+    location: '',
+    isArchived: false,
+    created: '',
+    modified: '',
+    user: 0,
+  })
   const [openDrawer, setOpenDrawer] = React.useState([false])
   const [plantData, setPlantData] = React.useState([])
   const [plantId, setPlantId] = React.useState([])
   const [plantDataLoaded, setPlantDataLoaded] = React.useState(false)
   const [value, setValue] = React.useState(0)
   const [reload, setReload] = React.useState(false)
+  const [open, setOpen] = React.useState(false)
+  const [enable, setEnable] = React.useState(false)
+  const [newPlant, setNewPlant] = React.useState(true)
+  const [plantInfo, setPlantInfo] = React.useState(initialData)
+  const [newPlantInfo, setNewPlantInfo] = React.useState(initialData)
+
+  const handleClickOpen = () => {
+    setPlantInfo(initialData)
+    setNewPlant(true)
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setNewPlant(true)
+    setOpen(false)
+  }
+
+  const handleClickOpenEdit = (data) => {
+    setPlantInfo(data)
+    setNewPlantInfo(data)
+    setNewPlant(false)
+    setOpen(true)
+  }
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true)
@@ -58,6 +102,23 @@ function Plantmanagment(props) {
 
   const handleDrawerClose = () => {
     setOpenDrawer(false)
+  }
+
+  useEffect(() => {
+    if (JSON.stringify(plantInfo) == JSON.stringify(newPlantInfo)) {
+      setEnable(false)
+    } else {
+      setEnable(true)
+    }
+  }, [newPlantInfo])
+
+  const handleChangeInfo = (e) => {
+    setNewPlantInfo({
+      ...newPlantInfo,
+      [e.target.name]: e.target.value.trim(),
+    })
+
+    console.log(newPlantInfo)
   }
 
   const handleReload = () => {
@@ -178,6 +239,7 @@ function Plantmanagment(props) {
                     <ShowGreenHouse
                       data={plantData}
                       reloadFunc={handleReload}
+                      OpenDialog={handleClickOpenEdit}
                     />
                   </Grid>
                 </Grid>
@@ -212,14 +274,49 @@ function Plantmanagment(props) {
               }}
               unmountOnExit
             >
-              <Link to='/greenHouseCreate/'>
-                <Fab sx={fab.sx} aria-label={fab.label} color={fab.color}>
-                  {fab.icon}
-                </Fab>
-              </Link>
+              <Fab
+                sx={fab.sx}
+                aria-label={fab.label}
+                color={fab.color}
+                onClick={handleClickOpen}
+              >
+                {fab.icon}
+              </Fab>
             </Zoom>
           ))}
         </Grid>
+        <Dialog
+          fullScreen
+          open={open}
+          onClose={handleClose}
+          TransitionComponent={Transition}
+        >
+          <DefAppBar sx={{ position: 'relative' }}>
+            <Toolbar>
+              <IconButton
+                edge='start'
+                color='inherit'
+                onClick={handleClose}
+                aria-label='close'
+                sx={{ mr: 1 }}
+              >
+                <CloseIcon />
+              </IconButton>
+              <Typography sx={{ ml: 2, flex: 1 }} variant='h6' component='div'>
+                {newPlant ? 'New plant' : 'Edit'}
+              </Typography>
+              <Button
+                autoFocus
+                color='inherit'
+                onClick={handleClose}
+                disabled={!newPlant && !enable}
+              >
+                {newPlant ? 'Add' : 'Edit'}
+              </Button>
+            </Toolbar>
+          </DefAppBar>
+          <GreenHouseEdit data={plantInfo} change={handleChangeInfo} />
+        </Dialog>
       </ThemeProvider>
     </div>
   )

@@ -133,7 +133,12 @@ function GreenHouseCard(props) {
               </Box>
             </MenuItem>
 
-            <MenuItem onClick={handleClose}>
+            <MenuItem
+              onClick={() => {
+                handleClose()
+                props.OpenDialog(props.data)
+              }}
+            >
               <Box>
                 <IconButton sx={{ mr: 2 }} size='small'>
                   <EditIcon />
@@ -146,7 +151,7 @@ function GreenHouseCard(props) {
         <Grid sx={{ p: 1, mt: -6 }}>
           <CardMedia
             classes={mediaStyles}
-            image={props.data.image}
+            image={'http://127.0.0.1:8000' + props.data.image}
             className='productIconImage'
           />
         </Grid>
@@ -166,14 +171,6 @@ function GreenHouseCard(props) {
                   {props.data.description.length > 99
                     ? props.data.description.substring(0, 99) + ' ...'
                     : props.data.description}
-                </div>
-                <div className='featButton'>
-                  <WbSunnyIcon className='lightButton' />
-                  <a className='Message'> {props.data.light} </a>
-                  <OpacityIcon className='waterButton' />
-                  <a className='Message'> {props.data.water} </a>
-                  <NatureIcon className='growButton' />
-                  <a className='Message'> {props.data.growthRate} </a>
                 </div>
               </div>
             }

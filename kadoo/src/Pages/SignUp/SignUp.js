@@ -1,9 +1,9 @@
-import React, { useState , useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import Background from '../../Images/SignUp/SignUpBG.png'
 import { Grid, TextField, Button, InputAdornment } from '@mui/material'
 import { AccountCircle, VpnKey, EmailSharp, Create } from '@mui/icons-material'
 import history from '../../history'
-import "./SignUp.css"
+import './SignUp.css'
 
 function SignUp() {
   const initialFormData = Object.freeze({
@@ -13,10 +13,10 @@ function SignUp() {
     email: '',
     password: '',
   })
-  const [formData, updateFormData] = useState(initialFormData);
-  const [errorData, updateErrorData] = useState(initialFormData);
+  const [formData, updateFormData] = useState(initialFormData)
+  const [errorData, updateErrorData] = useState(initialFormData)
   const [refresh, setRefresh] = useState(false)
-  
+
   const handleChange = (e) => {
     updateFormData({
       ...formData,
@@ -41,7 +41,7 @@ function SignUp() {
         password: formData.password,
       })
     )
-    
+
     updateErrorData({
       ...errorData,
       name: '',
@@ -62,7 +62,7 @@ function SignUp() {
       ...errorData,
       password: '',
     })
-    console.log(errorData);
+    console.log(errorData)
 
     const requestOptions = {
       method: 'POST',
@@ -77,60 +77,57 @@ function SignUp() {
     }
     fetch('http://127.0.0.1:8000/api/user/register/', requestOptions)
       .then((response) => {
-        if(response.status === 201)
-        {
-          alert("User registered!");
-          history.push("/signin")
-          window.location.reload(true);
-        } 
-        else
-        {
-          throw response;
+        if (response.status === 201) {
+          alert('User registered!')
+          history.push('/signin')
+          window.location.reload(true)
+        } else {
+          throw response
         }
       })
-      .catch( err => {
-        err.text().then( errorMessage => {
+      .catch((err) => {
+        err.text().then((errorMessage) => {
           const errors = JSON.parse(errorMessage)
-          console.log("e " + errors.email)
-          
-          if(errors.first_name !== undefined) {
+          console.log('e ' + errors.email)
+
+          if (errors.first_name !== undefined) {
             updateErrorData({
               ...errorData,
               name: errors.first_name,
             })
-            return;
+            return
           }
 
-          if(errors.last_name !== undefined) {
+          if (errors.last_name !== undefined) {
             updateErrorData({
               ...errorData,
               lastName: errors.last_name,
             })
-            return;
+            return
           }
 
-          if(errors.user_name !== undefined) {
+          if (errors.user_name !== undefined) {
             updateErrorData({
               ...errorData,
               userName: errors.user_name,
             })
-            return;
+            return
           }
 
-          if(errors.email !== undefined) {
+          if (errors.email !== undefined) {
             updateErrorData({
               ...errorData,
               email: errors.email,
             })
-            return;
+            return
           }
-          
-          if(errors.password !== undefined) {
+
+          if (errors.password !== undefined) {
             updateErrorData({
               ...errorData,
               password: errors.password,
             })
-            return;
+            return
           }
         })
       })
@@ -138,7 +135,11 @@ function SignUp() {
 
   return (
     <div>
-      <Grid container style={{ minHeight: '100vh' }} sx={{pl:{sm:20 , xs:0} , pr:{sm:20 , xs:0}}} >
+      <Grid
+        container
+        style={{ minHeight: '100vh' }}
+        sx={{ pl: { sm: 20, xs: 0 }, pr: { sm: 20, xs: 0 } }}
+      >
         <Grid item xs={12} sm={6}>
           <img
             src={Background}
@@ -154,7 +155,7 @@ function SignUp() {
           alignItems='center'
           direction='column'
           justify='space-between'
-          className="centerElement"
+          className='centerElement'
         >
           <div />
           <div
@@ -163,7 +164,7 @@ function SignUp() {
               flexDirection: 'column',
               maxWidth: 400,
               minWidth: 300,
-              margin:0
+              margin: 0,
             }}
           >
             <TextField
@@ -257,26 +258,27 @@ function SignUp() {
               }}
               onChange={handleChange}
             />
-            <div style={{ height: 20 }}/>
+            <div style={{ height: 20 }} />
             <a
-              className="ButtonStyle"
+              className='ButtonStyle'
               variant='contained'
               onClick={handleSubmit}
-              href="/"
+              href='/'
             >
               Sign Up
             </a>
-            <div style={{ height: 30 }}  className="Buttons" />
-            <div className="divSignUp">
-              <a 
-              href="/signin" 
-              onClick={() => history.push("/signin")}
-              className="aSignUp">
-              Have an account ?
-            </a>
+            <div style={{ height: 30 }} className='Buttons' />
+            <div className='divSignUp'>
+              <a
+                href='/signin'
+                onClick={() => history.push('/signin')}
+                className='aSignUp'
+              >
+                Have an account ?
+              </a>
             </div>
           </div>
-          <div style={{height:40}}/>
+          <div style={{ height: 40 }} />
         </Grid>
       </Grid>
     </div>
