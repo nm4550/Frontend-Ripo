@@ -81,7 +81,7 @@ function GreenHouseCard(props) {
         let data = isJson ? await response.json() : null
         props.reloadFunc()
       })
-    }, 3000)
+    }, 500)
   }
 
   return (
@@ -168,9 +168,11 @@ function GreenHouseCard(props) {
             body={
               <div>
                 <div className='lighWeightFont'>
-                  {props.data.description.length > 99
-                    ? props.data.description.substring(0, 99) + ' ...'
-                    : props.data.description}
+                  {props.data.description != null
+                    ? props.data.description.length > 99
+                      ? props.data.description.substring(0, 99) + ' ...'
+                      : props.data.description
+                    : ''}
                 </div>
               </div>
             }

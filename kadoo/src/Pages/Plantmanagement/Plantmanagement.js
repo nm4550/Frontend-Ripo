@@ -28,6 +28,7 @@ import './Plantmanagement.css'
 // Import Theme Files
 import { ThemeProvider } from '@mui/material/styles'
 import Theme from '../../Theme/ThemeGenerator'
+import { SignalCellularNullOutlined } from '@material-ui/icons'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='up' ref={ref} {...props} />
@@ -77,6 +78,230 @@ function Plantmanagment(props) {
   const [newPlant, setNewPlant] = React.useState(true)
   const [plantInfo, setPlantInfo] = React.useState(initialData)
   const [newPlantInfo, setNewPlantInfo] = React.useState(initialData)
+  const [errorData, updateErrorData] = useState(initialData)
+  const [selectedFile, setSelectedFile] = React.useState(null)
+  const [preview, setPreview] = React.useState(null)
+  const [imageChange, setImageChange] = React.useState(false)
+
+  useEffect(() => {
+    // create the preview
+    if (selectedFile != null) {
+      console.log(selectedFile)
+      const objectUrl = URL.createObjectURL(selectedFile)
+      setPreview(objectUrl)
+      return () => URL.revokeObjectURL(objectUrl)
+    }
+  }, [selectedFile])
+
+  const handleCapture = (event) => {
+    setSelectedFile(event.target.files[0])
+    setImageChange(true)
+  }
+
+  const handleSubmit = () => {
+    if (newPlant) {
+      handleCreate()
+    } else {
+      handleUpdate()
+    }
+  }
+
+  const handleUpdate = () => {
+    console.log(newPlantInfo)
+
+    updateErrorData({
+      ...errorData,
+      name: '',
+    })
+    updateErrorData({
+      ...errorData,
+      description: '',
+    })
+    updateErrorData({
+      ...errorData,
+      location: '',
+    })
+    updateErrorData({
+      ...errorData,
+      image: '',
+    })
+    console.log('----------------')
+    console.log(newPlantInfo)
+    const formData = new FormData()
+    if (newPlantInfo.name != '') {
+      formData.append('name', newPlantInfo.name)
+    } else {
+      alert('Enter the name of plant!')
+      return
+    }
+    formData.append('description', newPlantInfo.description)
+    formData.append('location', newPlantInfo.location)
+    if (selectedFile !== null) {
+      formData.append('image', selectedFile, selectedFile.name)
+    } else {
+      formData.append('image', '')
+    }
+
+    //console.log(formData)
+    const requestOptions = {
+      method: 'PUT',
+      headers: { Authorization: 'JWT ' + localStorage.getItem('access_token') },
+      body: formData,
+    }
+    console.log(requestOptions.body)
+    fetch(
+      'http://127.0.0.1:8000/api/myPlantsRUD/' + plantInfo.id + '/',
+      requestOptions
+    )
+      .then((response) => {
+        if (response.status === 401 || response.status === 400) {
+          throw response
+        } else {
+          alert('Plant Updated!')
+          handleReload()
+          handleClose()
+        }
+      })
+      .catch((err) => {
+        err.text().then((errorMessage) => {
+          const errors = JSON.parse(errorMessage)
+          console.log('e ' + errors.email)
+
+          if (errors.first_name !== undefined) {
+            updateErrorData({
+              ...errorData,
+              name: errors.name,
+            })
+            return
+          }
+
+          if (errors.last_name !== undefined) {
+            updateErrorData({
+              ...errorData,
+              description: errors.description,
+            })
+            return
+          }
+
+          if (errors.user_name !== undefined) {
+            updateErrorData({
+              ...errorData,
+              location: errors.location,
+            })
+            return
+          }
+
+          if (errors.email !== undefined) {
+            updateErrorData({
+              ...errorData,
+              image: errors.image,
+            })
+            return
+          }
+        })
+      })
+  }
+
+  const handleCreate = () => {
+    console.log(newPlantInfo)
+
+    updateErrorData({
+      ...errorData,
+      name: '',
+    })
+    updateErrorData({
+      ...errorData,
+      description: '',
+    })
+    updateErrorData({
+      ...errorData,
+      location: '',
+    })
+    updateErrorData({
+      ...errorData,
+      image: '',
+    })
+    console.log('----------------')
+    console.log(newPlantInfo)
+    const formData = new FormData()
+    if (newPlantInfo.name != '') {
+      formData.append('name', newPlantInfo.name)
+    } else {
+      alert('Enter the name of plant!')
+      return
+    }
+    formData.append('description', newPlantInfo.description)
+    formData.append('location', newPlantInfo.location)
+    if (selectedFile !== null) {
+      formData.append('image', selectedFile, selectedFile.name)
+    } else {
+      formData.append('image', '')
+    }
+
+    //console.log(formData)
+    const requestOptions = {
+      method: 'POST',
+      headers: { Authorization: 'JWT ' + localStorage.getItem('access_token') },
+      body: formData,
+    }
+    console.log(requestOptions.body)
+    fetch('http://127.0.0.1:8000/api/myPlants/', requestOptions)
+      .then((response) => {
+        if (response.status === 401 || response.status === 400) {
+          throw response
+        } else {
+          alert('Plant Added!')
+          handleReload()
+          handleClose()
+        }
+      })
+      .catch((err) => {
+        err.text().then((errorMessage) => {
+          const errors = JSON.parse(errorMessage)
+          console.log('e ' + errors.email)
+
+          if (errors.first_name !== undefined) {
+            updateErrorData({
+              ...errorData,
+              name: errors.name,
+            })
+            return
+          }
+
+          if (errors.last_name !== undefined) {
+            updateErrorData({
+              ...errorData,
+              description: errors.description,
+            })
+            return
+          }
+
+          if (errors.user_name !== undefined) {
+            updateErrorData({
+              ...errorData,
+              location: errors.location,
+            })
+            return
+          }
+
+          if (errors.email !== undefined) {
+            updateErrorData({
+              ...errorData,
+              image: errors.image,
+            })
+            return
+          }
+        })
+      })
+  }
+
+  const handleReset = () => {
+    setSelectedFile(null)
+    setImageChange(false)
+    setPreview(null)
+    setPlantInfo(initialData)
+    setNewPlantInfo(initialData)
+  }
 
   const handleClickOpen = () => {
     setPlantInfo(initialData)
@@ -85,6 +310,7 @@ function Plantmanagment(props) {
   }
 
   const handleClose = () => {
+    handleReset()
     setNewPlant(true)
     setOpen(false)
   }
@@ -117,7 +343,10 @@ function Plantmanagment(props) {
       ...newPlantInfo,
       [e.target.name]: e.target.value.trim(),
     })
-
+    updateErrorData({
+      ...errorData,
+      [e.target.name]: '',
+    })
     console.log(newPlantInfo)
   }
 
@@ -126,8 +355,10 @@ function Plantmanagment(props) {
   }
 
   useEffect(() => {
-    if (plantData.lenght === plantId.lenght) {
+    if (plantData.length === plantId.length) {
       setPlantDataLoaded(true)
+    } else {
+      setPlantDataLoaded(false)
     }
   }, [plantData])
 
@@ -142,6 +373,7 @@ function Plantmanagment(props) {
 
     setPlantDataLoaded(false)
     setTimeout(async () => {
+      setPlantData([])
       plantId.map((p) => {
         console.log('plant Id' + p.id)
         fetch(
@@ -154,6 +386,7 @@ function Plantmanagment(props) {
           let data = isJson ? await response.json() : null
           console.log('1')
           console.log(plantData)
+
           setPlantData((prestate) => [...prestate, data])
           console.log(data)
         })
@@ -170,6 +403,7 @@ function Plantmanagment(props) {
       },
     }
     setTimeout(async () => {
+      setPlantDataLoaded(false)
       fetch('http://127.0.0.1:8000/api/myPlants/', requestOptions)
         .then(async (response) => {
           const isJson = response.headers
@@ -308,14 +542,25 @@ function Plantmanagment(props) {
               <Button
                 autoFocus
                 color='inherit'
-                onClick={handleClose}
+                onClick={() => {
+                  handleSubmit()
+                }}
                 disabled={!newPlant && !enable}
               >
                 {newPlant ? 'Add' : 'Edit'}
               </Button>
             </Toolbar>
           </DefAppBar>
-          <GreenHouseEdit data={plantInfo} change={handleChangeInfo} />
+          <GreenHouseEdit
+            data={plantInfo}
+            change={handleChangeInfo}
+            selectedFile={selectedFile}
+            handleCapture={handleCapture}
+            preview={preview}
+            imageChange={imageChange}
+            errorData={errorData}
+            handleSubmit={handleSubmit}
+          />
         </Dialog>
       </ThemeProvider>
     </div>
