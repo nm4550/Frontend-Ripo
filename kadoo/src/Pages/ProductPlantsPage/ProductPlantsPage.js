@@ -172,7 +172,7 @@ class ProductPlantsPage extends React.Component {
                     alt={this.state.imageName.name}
                     sx={{
                       width: { xs: '300px', sm: '400px' },
-                      heiyyght: { xs: '300px', sm: '400px' },
+                      height: { xs: '300px', sm: '400px' },
                     }}
                   ></img>
                   <IconButton
@@ -285,7 +285,7 @@ class ProductPlantsPage extends React.Component {
                       sx={{ justifyContent: { xs: 'flex-end', sm: 'center' } }}
                       className='ProductPageCounter'
                     >
-                      <Grid item container alignItems='center' diraction='row'>
+                      <Grid item container alignItems='center' direction='row'>
                         <IconButton
                           size='large'
                           aria-label='show 4 new mails'
