@@ -14,7 +14,7 @@ function ShowGreenHouse(props) {
     <div>
       <Box sx={{ width: '100%' }}>
         <Typography variant='h4' gutterBottom component='div'>
-          My Plnats
+          My Plants
         </Typography>
         <Grid
           container
