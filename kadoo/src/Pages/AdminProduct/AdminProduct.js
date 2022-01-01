@@ -1,75 +1,262 @@
 import { Link } from "react-router-dom";
-import "./AdminProduct.css";
-import Chart from "../../Components/chart/Chart"
-import {productData} from "../../dummyData"
-import PublishIcon from '@mui/icons-material/Publish';
+//import "./AdminProduct.css";
+import Chart from "../../Components/chart/Chart";
+import { productData } from "../../dummyData";
+import PublishIcon from "@mui/icons-material/Publish";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import IconButton from "@mui/material/IconButton";
+import React from "react";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import { makeStyles } from "@mui/styles";
+import { useTheme } from "@mui/material/styles";
+import Divider from "@mui/material/Divider";
+import { MenuItem } from "@mui/material";
+import { TextField } from "@mui/material";
+import { Select } from "@mui/material";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    "& > *": {
+      margin: theme.spacing(1),
+    },
+  },
+  TextField: {
+    display: "none",
+  },
+  faceImage: {
+    color: theme.palette.primary.light,
+  },
+}));
 
 export default function Product() {
+  const initialFormData = Object.freeze({
+    name: "",
+    description: "",
+    count: "",
+    image: "",
+    price: "",
+    kind: "",
+    environment: "",
+    water: "",
+    light: "",
+    growthRate: "",
+  });
+  const [numberOfBuy, setNumberOfBuy] = React.useState(0);
+  const [SelectedFile, setSelectedFile] = React.useState(null);
+  const [formData, updateFormData] = React.useState(initialFormData);
+  const classes = useStyles();
+  const handleCapture = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  const handleChange = (e) => {
+    updateFormData({
+      ...formData,
+      [e.target.name]: e.target.value.trim(),
+    });
+    console.log(formData);
+  };
+  var increaseBought = () => {
+    var nob = numberOfBuy;
+    setNumberOfBuy(nob + 1);
+  };
+  var decreaseBought = () => {
+    var nob = numberOfBuy;
+    if (nob > 0) {
+      setNumberOfBuy(nob - 1);
+    }
+  };
+
   return (
-    <div className="product">
-      <div className="productTitleContainer">
-        <h1 className="productTitle">Product</h1>
-        <Link to="/newproduct">
-          <button className="productAddButton">Create</button>
-        </Link>
-      </div>
-      <div className="productTop">
-          <div className="productTopLeft">
-              <Chart data={productData} dataKey="Sales" title="Sales Performance"/>
-          </div>
-          <div className="productTopRight">
-              <div className="productInfoTop">
-                  <img src="https://images.pexels.com/photos/7156886/pexels-photo-7156886.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="productInfoImg" />
-                  <span className="productName">Apple Airpods</span>
-              </div>
-              <div className="productInfoBottom">
-                  <div className="productInfoItem">
-                      <span className="productInfoKey">id:</span>
-                      <span className="productInfoValue">123</span>
-                  </div>
-                  <div className="productInfoItem">
-                      <span className="productInfoKey">sales:</span>
-                      <span className="productInfoValue">5123</span>
-                  </div>
-                  <div className="productInfoItem">
-                      <span className="productInfoKey">active:</span>
-                      <span className="productInfoValue">yes</span>
-                  </div>
-                  <div className="productInfoItem">
-                      <span className="productInfoKey">in stock:</span>
-                      <span className="productInfoValue">no</span>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div className="productBottom">
-          <form className="productForm">
-              <div className="productFormLeft">
-                  <label>Product Name</label>
-                  <input type="text" placeholder="Apple AirPod" />
-                  <label>In Stock</label>
-                  <select name="inStock" id="idStock">
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                  </select>
-                  <label>Active</label>
-                  <select name="active" id="active">
-                      <option value="yes">Yes</option>
-                      <option value="no">No</option>
-                  </select>
-              </div>
-              <div className="productFormRight">
-                  <div className="productUpload">
-                      <img src="https://images.pexels.com/photos/7156886/pexels-photo-7156886.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500" alt="" className="productUploadImg" />
+    <Grid container>
+      <Grid container item>
+        <Grid
+          container
+          item
+          // justifyContent="center"
+          // alignItems="center"
+          sx={{
+            pl: { xs: 2, sm: 5 },
+            pr: { xs: 2, sm: 5 },
+            pt: 1,
+          }}
+        >
+          <Grid container alignItems="flex-start" item>
+            <h1>Product</h1>
+          </Grid>
+
+          <Grid container item>
+            <div>
+              <form>
+                <Grid container>
+                  <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
+                    <div>
+                      <label>Product Name</label>
+                      <TextField
+                        name="name"
+                        onChange={handleChange}
+                        type="text"
+                        placeholder="Name"
+                      />
+                    </div>
+                  </Grid>
+                  <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
+                    <div>
+                      <label>Description</label>
+                      <TextField
+                        name="description"
+                        onChange={handleChange}
+                        type="text"
+                        placeholder="Description"
+                      />
+                    </div>
+                  </Grid>
+                </Grid>
+
+                <Grid container>
+                  <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
+                    <label>Price</label>
+                    <TextField
+                      name="price"
+                      onChange={handleChange}
+                      type="text"
+                      placeholder="Price"
+                    />
+                  </Grid>
+
+                  <Grid item xs={4} sm={6} lg={6} sx={{ p: 2 }}>
+                    <label>Kind</label>
+                    <Select name="kind" onChange={handleChange} id="Kind">
+                      <MenuItem value="plant">Plant</MenuItem>
+                      <MenuItem value="tool">Tool</MenuItem>
+                    </Select>
+                  </Grid>
+                </Grid>
+
+                <Grid container>
+                  <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
+                    <label>Light</label>
+                    <Select name="light" onChange={handleChange} id="Light">
+                      <MenuItem value="low">Low</MenuItem>
+                      <MenuItem value="medium">Medium</MenuItem>
+                      <MenuItem value="much">Much</MenuItem>
+                    </Select>
+                  </Grid>
+
+                  <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
+                    <label>Water</label>
+                    <Select name="water" onChange={handleChange} id="Water">
+                      <MenuItem value="low">Low</MenuItem>
+                      <MenuItem value="medium">Medium</MenuItem>
+                      <MenuItem value="much">Much</MenuItem>
+                    </Select>
+                  </Grid>
+                </Grid>
+
+                <Grid container>
+                  <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
+                    <label>Growth Rate</label>
+                    <Select
+                      name="growthRate"
+                      onChange={handleChange}
+                      id="GrowthRate"
+                    >
+                      <MenuItem value="low">Low</MenuItem>
+                      <MenuItem value="medium">Medium</MenuItem>
+                      <MenuItem value="much">Much</MenuItem>
+                    </Select>
+                  </Grid>
+
+                  <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
+                    <label>Environment</label>
+                    <Select
+                      name="environment"
+                      onChange={handleChange}
+                      id="Environment"
+                    >
+                      <MenuItem value="none">None</MenuItem>
+                      <MenuItem value="tropical">Tropical</MenuItem>
+                      <MenuItem value="cold">Cold</MenuItem>
+                    </Select>
+                  </Grid>
+                </Grid>
+
+                <Grid
+                  item
+                  container
+                  alignItems="center"
+                  direction="row"
+                  sx={{ m: 2 }}
+                >
+                  <label>Count</label>
+                  <IconButton
+                    size="large"
+                    aria-label="show 4 new mails"
+                    color="inherit"
+                    sx={{ color: "error.main" }}
+                    onClick={decreaseBought}
+                  >
+                    <RemoveIcon />
+                  </IconButton>
+                  <div className="ProductPageCounterNum">{numberOfBuy}</div>
+                  <IconButton
+                    size="large"
+                    aria-label="show 4 new mails"
+                    color="inherit"
+                    sx={{ color: "success.main" }}
+                    onClick={increaseBought}
+                  >
+                    <AddIcon />
+                  </IconButton>
+                </Grid>
+                <div className="productFormRight">
+                  {/* <div className="productUpload">
+                      <img/>
                       <label for="file">
-                          <PublishIcon/>
+                      <PublishIcon/>
                       </label>
-                      <input type="file" id="file" style={{display:"none"}} />
-                  </div>
-                  <button className="productButton">Update</button>
-              </div>
-          </form>
-      </div>
-    </div>
+                      <TextField type="file" id="file" style={{display:"none"}} />
+                      </div>
+                      
+                    <button className="productButton">Update</button> */}
+                  <TextField
+                    accept="image/jpeg"
+                    className={classes.TextField}
+                    id="faceImage"
+                    type="file"
+                    onChange={handleCapture}
+                  />
+                  <Tooltip title="Select Image">
+                    <label htmlFor="faceImage">
+                      <IconButton
+                        className={classes.faceImage}
+                        color="primary"
+                        aria-label="upload picture"
+                        component="span"
+                      >
+                        <PublishIcon />
+                      </IconButton>
+                    </label>
+                  </Tooltip>
+                  <label>
+                    {SelectedFile ? SelectedFile.name : "Select Image"}
+                  </label>
+                  . . .<Button color="primary">Save</Button>
+                </div>
+              </form>
+            </div>
+          </Grid>
+        </Grid>
+      </Grid>
+    </Grid>
   );
 }
