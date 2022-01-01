@@ -22,6 +22,7 @@ import Tooltip from '@mui/material/Tooltip'
 import { makeStyles } from '@mui/styles'
 import Skeleton from '@mui/material/Skeleton'
 import Theme from '../../Theme/ThemeGenerator'
+import Reminder from '../../Components/Reminder'
 
 const Input = styled('input')({
   display: 'none',
@@ -285,6 +286,13 @@ function GreenHouseEdit(props) {
                     <MenuItem value={'bedroom'}>Bedroom</MenuItem>
                   </Select>
                 </FormControl>
+              </Grid>
+              <Grid item container>
+                <Reminder
+                  summary={props.data.name}
+                  location={props.data.location}
+                  description={props.data.description}
+                />
               </Grid>
               <Grid
                 item

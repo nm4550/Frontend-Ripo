@@ -23,7 +23,7 @@ import Stack from '@mui/material/Stack'
 import Divider from '@mui/material/Divider'
 import TimePicker from '@mui/lab/TimePicker'
 
-export default function Reminder() {
+export default function Reminder(props) {
   const [value, setValue] = React.useState(null)
   const [num, setNum] = React.useState(1)
   const [satEnable, setSatEnable] = React.useState(false)
@@ -33,6 +33,12 @@ export default function Reminder() {
   const [wedEnable, setWedEnable] = React.useState(false)
   const [thuEnable, setThuEnable] = React.useState(false)
   const [friEnable, setFriEnable] = React.useState(false)
+
+  const [dates, setDates] = React.useState([])
+  const [endDates, setEndDates] = React.useState([])
+  const [dateTimes, setDateTimes] = React.useState([])
+  const [infoCount, setInfoCount] = React.useState(0)
+  const [count, setCount] = React.useState(0)
 
   const [timeEnable1, setTimeEnable1] = React.useState(true)
   const [timeEnable2, setTimeEnable2] = React.useState(false)
@@ -52,29 +58,235 @@ export default function Reminder() {
   function handleClick(index) {
     switch (index) {
       case 0:
+        if (satEnable) {
+          setInfoCount(infoCount - 1)
+        } else {
+          setInfoCount(infoCount + 1)
+        }
         setSatEnable(satEnable ? false : true)
         break
       case 1:
+        if (sunEnable) {
+          setInfoCount(infoCount - 1)
+        } else {
+          setInfoCount(infoCount + 1)
+        }
         setSunEnable(sunEnable ? false : true)
         break
       case 2:
+        if (monEnable) {
+          setInfoCount(infoCount - 1)
+        } else {
+          setInfoCount(infoCount + 1)
+        }
         setMonEnable(monEnable ? false : true)
         break
       case 3:
+        if (tueEnable) {
+          setInfoCount(infoCount - 1)
+        } else {
+          setInfoCount(infoCount + 1)
+        }
         setTueEnable(tueEnable ? false : true)
         break
       case 4:
+        if (wedEnable) {
+          setInfoCount(infoCount - 1)
+        } else {
+          setInfoCount(infoCount + 1)
+        }
         setWedEnable(wedEnable ? false : true)
         break
       case 5:
+        if (thuEnable) {
+          setInfoCount(infoCount - 1)
+        } else {
+          setInfoCount(infoCount + 1)
+        }
         setThuEnable(thuEnable ? false : true)
         break
       case 6:
+        if (friEnable) {
+          setInfoCount(infoCount - 1)
+        } else {
+          setInfoCount(infoCount + 1)
+        }
         setFriEnable(friEnable ? false : true)
         break
     }
     console.log('You clicked the Chip.')
   }
+
+  function SetReminder() {
+    dateTimes.map((p) => {
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          Authorization: 'JWT ' + localStorage.getItem('access_token'),
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          summary: props.summary,
+          location: props.location,
+          description: props.description,
+          start: {
+            dateTime: p,
+          },
+          end: {
+            dateTime: p,
+          },
+          recurrence: ['RRULE:FREQ=WEEKLY;COUNT=52'],
+          reminders: {
+            useDefault: false,
+            overrides: [
+              { method: 'email', minutes: 60 },
+              { method: 'popup', minutes: 10 },
+            ],
+          },
+        }),
+      }
+      console.log(requestOptions.body)
+      setTimeout(async () => {
+        fetch('http://127.0.0.1:8000/api/reminder/', requestOptions)
+          .then(async (response) => {
+            const isJson = response.headers
+              .get('content-type')
+              ?.includes('application/json')
+            const data = isJson ? await response.json() : null
+            console.log(data)
+            // check for error response
+            console.log(response.status)
+            if (!response.ok) {
+              // get error message from body or default to response status
+              const error = response.status
+              return Promise.reject(error)
+            }
+            console.log(data)
+          })
+          .catch((error) => {
+            if (error === 401) {
+              alert('You should login first!')
+              return
+            }
+            console.error('There was an error!', error)
+          })
+      }, 0)
+    })
+  }
+
+  useEffect(() => {
+    if (num * infoCount === dateTimes.length) {
+      SetReminder()
+    }
+  }, [dateTimes])
+
+  useEffect(() => {
+    console.log(infoCount)
+  }, [infoCount])
+
+  useEffect(() => {
+    console.log(count)
+  }, [count])
+
+  useEffect(() => {
+    console.log(dateTimes)
+  }, [dateTimes])
+
+  useEffect(() => {
+    if (dates.length === infoCount) {
+      SetTimes()
+      setCount(0)
+    }
+    console.log(dates)
+  }, [dates])
+
+  const SetTimes = () => {
+    for (let i = 0; i < dates.length; i++) {
+      const element = dates[i]
+      if (timeEnable1) {
+        setDateTimes((prestate) => [
+          ...prestate,
+          element +
+            'T' +
+            time1.toISOString().split('T')[1].split('.')[0] +
+            '-00:00',
+        ])
+      }
+      if (timeEnable2) {
+        setDateTimes((prestate) => [
+          ...prestate,
+          element +
+            'T' +
+            time2.toISOString().split('T')[1].split('.')[0] +
+            '-00:00',
+        ])
+      }
+      if (timeEnable3) {
+        setDateTimes((prestate) => [
+          ...prestate,
+          element +
+            'T' +
+            time3.toISOString().split('T')[1].split('.')[0] +
+            '-00:00',
+        ])
+      }
+      if (timeEnable4) {
+        setDateTimes((prestate) => [
+          ...prestate,
+          element +
+            'T' +
+            time4.toISOString().split('T')[1].split('.')[0] +
+            '-00:00',
+        ])
+      }
+    }
+  }
+
+  const SetDates = () => {
+    if (satEnable) {
+      setDates((prestate) => [
+        ...prestate,
+        getNextDayOfWeek(6, Date.now()).toISOString().split('T')[0],
+      ])
+    }
+    if (sunEnable) {
+      setDates((prestate) => [
+        ...prestate,
+        getNextDayOfWeek(0, Date.now()).toISOString().split('T')[0],
+      ])
+    }
+    if (monEnable) {
+      setDates((prestate) => [
+        ...prestate,
+        getNextDayOfWeek(1, Date.now()).toISOString().split('T')[0],
+      ])
+    }
+    if (tueEnable) {
+      setDates((prestate) => [
+        ...prestate,
+        getNextDayOfWeek(2, Date.now()).toISOString().split('T')[0],
+      ])
+    }
+    if (wedEnable) {
+      setDates((prestate) => [
+        ...prestate,
+        getNextDayOfWeek(3, Date.now()).toISOString().split('T')[0],
+      ])
+    }
+    if (thuEnable) {
+      setDates((prestate) => [
+        ...prestate,
+        getNextDayOfWeek(4, Date.now()).toISOString().split('T')[0],
+      ])
+    }
+    if (friEnable) {
+      setDates((prestate) => [
+        ...prestate,
+        getNextDayOfWeek(5, Date.now()).toISOString().split('T')[0],
+      ])
+    }
+  }
+
   const updateText = () => {
     switch (num) {
       case 1:
@@ -116,6 +328,41 @@ export default function Reminder() {
       setNum(num - 1)
     }
   }
+
+  function getNextDayOfWeek(dayOfWeek) {
+    // Code to check that date and dayOfWeek are valid left as an exercise ;)
+    /*let nowDate = new Date(Date.now())
+    console.log(nowDate.getDate() + 1)
+    console.log(nowDate.getDay())
+    return new Date(
+      nowDate.getDate() + ((7 + dayOfWeek - nowDate.getDay()) % 7)
+    )*/
+    let nowDate = new Date(Date.now())
+    return new Date(
+      Date.now() + ((7 + dayOfWeek - nowDate.getDay()) % 7) * 86400000
+    )
+  }
+
+  useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        Authorization: 'JWT ' + localStorage.getItem('access_token'),
+        'Content-Type': 'application/json',
+      },
+    }
+    fetch('http://127.0.0.1:8000/api/reminder/', requestOptions)
+      .then((response) => {
+        if (response.status == 401) {
+          throw response
+        }
+      })
+      .catch((err) => {
+        err.text().then((errorMessage) => {
+          alert(errorMessage)
+        })
+      })
+  }, [])
 
   return (
     <Grid>
@@ -307,11 +554,12 @@ export default function Reminder() {
             variant='contained'
             className='productsPageAdd'
             sx={{ mr: 3 }}
+            onClick={SetDates}
           >
             ADD REMINDER
           </Button>
           <Button variant='contained' className='productsPageAdd'>
-            CANSEL
+            CANCEL
           </Button>
         </Grid>
       </Grid>
