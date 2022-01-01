@@ -55,10 +55,6 @@ function App() {
               <Route path='/Reminder' exact component={Reminder} />
               <Route path='/greenhouse' exact component={Plantmanagement} />
               <Route exact path='/AdminPage' component={AdminPage} />
-              <Route exact path='/AdminPage/AdminHome' component={AdminHome} />
-              <Route exact path='/AdminPage/users' component={UserList} />
-              <Route exact path='/products' component={AdminProduct} />
-              <Route exact path='/productsList' component={AdminProductList} />
               <Route
                 exact
                 path='/ProductPlantsPage/:id'
