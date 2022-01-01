@@ -1,56 +1,80 @@
-import { Link } from 'react-router-dom'
+import { Link } from "react-router-dom";
 //import "./AdminProduct.css";
-import Chart from '../../Components/chart/Chart'
-import { productData } from '../../dummyData'
-import PublishIcon from '@mui/icons-material/Publish'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
-import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
-import AddIcon from '@mui/icons-material/Add'
-import RemoveIcon from '@mui/icons-material/Remove'
-import IconButton from '@mui/material/IconButton'
-import React from 'react'
-import Button from '@mui/material/Button'
-import Tooltip from '@mui/material/Tooltip'
-import { makeStyles } from '@mui/styles'
-import Typography from '@mui/material/Typography'
-import { useTheme } from '@mui/material/styles'
-import Divider from '@mui/material/Divider'
+import Chart from "../../Components/chart/Chart";
+import { productData } from "../../dummyData";
+import PublishIcon from "@mui/icons-material/Publish";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import AddIcon from "@mui/icons-material/Add";
+import RemoveIcon from "@mui/icons-material/Remove";
+import IconButton from "@mui/material/IconButton";
+import React from "react";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import { makeStyles } from "@mui/styles";
+import { useTheme } from "@mui/material/styles";
+import Divider from "@mui/material/Divider";
+import { MenuItem } from "@mui/material";
+import { TextField } from "@mui/material";
+import { Select } from "@mui/material";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    '& > *': {
+    "& > *": {
       margin: theme.spacing(1),
     },
   },
-  input: {
-    display: 'none',
+  TextField: {
+    display: "none",
   },
   faceImage: {
     color: theme.palette.primary.light,
   },
-}))
+}));
+
 export default function Product() {
-  const [numberOfBuy, setNumberOfBuy] = React.useState(0)
-  const [selectedFile, setSelectedFile] = React.useState(null)
-  const classes = useStyles()
+  const initialFormData = Object.freeze({
+    name: "",
+    description: "",
+    count: "",
+    image: "",
+    price: "",
+    kind: "",
+    environment: "",
+    water: "",
+    light: "",
+    growthRate: "",
+  });
+  const [numberOfBuy, setNumberOfBuy] = React.useState(0);
+  const [SelectedFile, setSelectedFile] = React.useState(null);
+  const [formData, updateFormData] = React.useState(initialFormData);
+  const classes = useStyles();
   const handleCapture = (event) => {
-    setSelectedFile(event.target.files[0])
-  }
+    setSelectedFile(event.target.files[0]);
+  };
+
+  const handleChange = (e) => {
+    updateFormData({
+      ...formData,
+      [e.target.name]: e.target.value.trim(),
+    });
+    console.log(formData);
+  };
   var increaseBought = () => {
-    var nob = numberOfBuy
-    setNumberOfBuy(nob + 1)
-  }
+    var nob = numberOfBuy;
+    setNumberOfBuy(nob + 1);
+  };
   var decreaseBought = () => {
-    var nob = numberOfBuy
+    var nob = numberOfBuy;
     if (nob > 0) {
-      setNumberOfBuy(nob - 1)
+      setNumberOfBuy(nob - 1);
     }
-  }
+  };
 
   return (
     <Grid container>
@@ -66,10 +90,8 @@ export default function Product() {
             pt: 1,
           }}
         >
-          <Grid container alignItems='flex-start' item>
-            <Typography variant='h5' component='div' gutterBottom>
-              Product
-            </Typography>
+          <Grid container alignItems="flex-start" item>
+            <h1>Product</h1>
           </Grid>
 
           <Grid container item>
@@ -79,13 +101,23 @@ export default function Product() {
                   <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <div>
                       <label>Product Name</label>
-                      <input type='text' placeholder='Name' />
+                      <TextField
+                        name="name"
+                        onChange={handleChange}
+                        type="text"
+                        placeholder="Name"
+                      />
                     </div>
                   </Grid>
                   <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <div>
                       <label>Description</label>
-                      <input type='text' placeholder='Description' />
+                      <TextField
+                        name="description"
+                        onChange={handleChange}
+                        type="text"
+                        placeholder="Description"
+                      />
                     </div>
                   </Grid>
                 </Grid>
@@ -93,119 +125,132 @@ export default function Product() {
                 <Grid container>
                   <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Price</label>
-                    <input type='text' placeholder='Price' />
+                    <TextField
+                      name="price"
+                      onChange={handleChange}
+                      type="text"
+                      placeholder="Price"
+                    />
                   </Grid>
 
                   <Grid item xs={4} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Kind</label>
-                    <select name='Kind' id='Kind'>
-                      <option value='plant'>Plant</option>
-                      <option value='tool'>Tool</option>
-                    </select>
+                    <Select name="kind" onChange={handleChange} id="Kind">
+                      <MenuItem value="plant">Plant</MenuItem>
+                      <MenuItem value="tool">Tool</MenuItem>
+                    </Select>
                   </Grid>
                 </Grid>
 
                 <Grid container>
                   <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Light</label>
-                    <select name='Light' id='Light'>
-                      <option value='low'>Low</option>
-                      <option value='medium'>Medium</option>
-                      <option value='much'>Much</option>
-                    </select>
+                    <Select name="light" onChange={handleChange} id="Light">
+                      <MenuItem value="low">Low</MenuItem>
+                      <MenuItem value="medium">Medium</MenuItem>
+                      <MenuItem value="much">Much</MenuItem>
+                    </Select>
                   </Grid>
 
                   <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Water</label>
-                    <select name='Water' id='Water'>
-                      <option value='low'>Low</option>
-                      <option value='medium'>Medium</option>
-                      <option value='much'>Much</option>
-                    </select>
+                    <Select name="water" onChange={handleChange} id="Water">
+                      <MenuItem value="low">Low</MenuItem>
+                      <MenuItem value="medium">Medium</MenuItem>
+                      <MenuItem value="much">Much</MenuItem>
+                    </Select>
                   </Grid>
                 </Grid>
 
                 <Grid container>
                   <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Growth Rate</label>
-                    <select name='GrowthRate' id='GrowthRate'>
-                      <option value='low'>Low</option>
-                      <option value='medium'>Medium</option>
-                      <option value='much'>Much</option>
-                    </select>
+                    <Select
+                      name="growthRate"
+                      onChange={handleChange}
+                      id="GrowthRate"
+                    >
+                      <MenuItem value="low">Low</MenuItem>
+                      <MenuItem value="medium">Medium</MenuItem>
+                      <MenuItem value="much">Much</MenuItem>
+                    </Select>
                   </Grid>
 
                   <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Environment</label>
-                    <select name='Environment' id='Environment'>
-                      <option value='none'>None</option>
-                      <option value='tropical'>Tropical</option>
-                      <option value='cold'>Cold</option>
-                    </select>
+                    <Select
+                      name="environment"
+                      onChange={handleChange}
+                      id="Environment"
+                    >
+                      <MenuItem value="none">None</MenuItem>
+                      <MenuItem value="tropical">Tropical</MenuItem>
+                      <MenuItem value="cold">Cold</MenuItem>
+                    </Select>
                   </Grid>
                 </Grid>
 
                 <Grid
                   item
                   container
-                  alignItems='center'
-                  direction='row'
+                  alignItems="center"
+                  direction="row"
                   sx={{ m: 2 }}
                 >
                   <label>Count</label>
                   <IconButton
-                    size='large'
-                    aria-label='show 4 new mails'
-                    color='inherit'
-                    sx={{ color: 'error.main' }}
+                    size="large"
+                    aria-label="show 4 new mails"
+                    color="inherit"
+                    sx={{ color: "error.main" }}
                     onClick={decreaseBought}
                   >
                     <RemoveIcon />
                   </IconButton>
-                  <div className='ProductPageCounterNum'>{numberOfBuy}</div>
+                  <div className="ProductPageCounterNum">{numberOfBuy}</div>
                   <IconButton
-                    size='large'
-                    aria-label='show 4 new mails'
-                    color='inherit'
-                    sx={{ color: 'success.main' }}
+                    size="large"
+                    aria-label="show 4 new mails"
+                    color="inherit"
+                    sx={{ color: "success.main" }}
                     onClick={increaseBought}
                   >
                     <AddIcon />
                   </IconButton>
                 </Grid>
-                <div className='productFormRight'>
+                <div className="productFormRight">
                   {/* <div className="productUpload">
                       <img/>
                       <label for="file">
                       <PublishIcon/>
                       </label>
-                      <input type="file" id="file" style={{display:"none"}} />
+                      <TextField type="file" id="file" style={{display:"none"}} />
                       </div>
                       
                     <button className="productButton">Update</button> */}
-                  <input
-                    accept='image/jpeg'
-                    className={classes.input}
-                    id='faceImage'
-                    type='file'
+                  <TextField
+                    accept="image/jpeg"
+                    className={classes.TextField}
+                    id="faceImage"
+                    type="file"
                     onChange={handleCapture}
                   />
-                  <Tooltip title='Select Image'>
-                    <label htmlFor='faceImage'>
+                  <Tooltip title="Select Image">
+                    <label htmlFor="faceImage">
                       <IconButton
                         className={classes.faceImage}
-                        color='primary'
-                        aria-label='upload picture'
-                        component='span'
+                        color="primary"
+                        aria-label="upload picture"
+                        component="span"
                       >
                         <PublishIcon />
                       </IconButton>
                     </label>
                   </Tooltip>
                   <label>
-                    {selectedFile ? selectedFile.name : 'Select Image'}
+                    {SelectedFile ? SelectedFile.name : "Select Image"}
                   </label>
-                  . . .<Button color='primary'>Save</Button>
+                  . . .<Button color="primary">Save</Button>
                 </div>
               </form>
             </div>
@@ -213,5 +258,5 @@ export default function Product() {
         </Grid>
       </Grid>
     </Grid>
-  )
+  );
 }
