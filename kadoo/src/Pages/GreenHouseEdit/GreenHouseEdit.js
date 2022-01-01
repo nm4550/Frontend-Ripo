@@ -17,6 +17,27 @@ import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
+import { styled } from '@mui/material/styles'
+import Tooltip from '@mui/material/Tooltip'
+import { makeStyles } from '@mui/styles'
+import Skeleton from '@mui/material/Skeleton'
+import Theme from '../../Theme/ThemeGenerator'
+import Reminder from '../../Components/Reminder'
+
+const Input = styled('input')({
+  display: 'none',
+})
+
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  input: {
+    display: 'none',
+  },
+}))
 
 function GreenHouseEdit(props) {
   ///const containerRef = React.useRef(null)
@@ -26,15 +47,14 @@ function GreenHouseEdit(props) {
   const [plantDataLoaded, setPlantDataLoaded] = React.useState(false)
   const [value, setValue] = React.useState(0)
 
+  const classes = useStyles()
+
+  const handleChange = (e) => {
+    props.change(e)
+  }
+
   return (
     <div>
-      <AppBar
-        SearchOption={true}
-        TicketOption={true}
-        CartOption={true}
-        DrawerOption={false}
-        AuthorizationOption={true}
-      />
       <Grid
         container
         justifyContent='center'
@@ -72,14 +92,33 @@ function GreenHouseEdit(props) {
                 alignItems='center'
                 direction='row'
               >
-                <img
-                  className='ProductPageImage'
-                  alt={'alt'}
-                  sx={{
-                    width: { xs: '300px', sm: '400px' },
-                    height: { xs: '300px', sm: '400px' },
-                  }}
-                ></img>
+                {props.data.image === '' && props.preview === null && (
+                  <Grid>
+                    <Skeleton
+                      variant='rectangular'
+                      width={300}
+                      height={300}
+                      animation={false}
+                      sx={{ mb: 2 }}
+                    />
+                  </Grid>
+                )}
+                {(props.data.image !== '' || props.preview !== null) && (
+                  <img
+                    className='ProductPageImage'
+                    src={
+                      !props.imageChange
+                        ? 'http://127.0.0.1:8000' + props.data.image
+                        : props.preview
+                    }
+                    alt={'alt'}
+                    sx={{
+                      width: { xs: '300px', sm: '400px' },
+                      height: { xs: '300px', sm: '400px' },
+                    }}
+                  ></img>
+                )}
+
                 <Grid
                   container
                   item
@@ -87,9 +126,32 @@ function GreenHouseEdit(props) {
                   sx={{ p: 0.5, Color: '#12824C' }}
                   className='ProductPageTitle'
                 >
-                  <Button variant='contained' className='productsPageAdd'>
-                    Add Image
-                  </Button>
+                  {/*<label htmlFor='contained-button-file'>
+                    <Input
+                      accept='image/*'
+                      id='contained-button-file'
+                      multiple
+                      type='file'
+                    />
+                    <Button variant='contained' component='span'>
+                      Upload
+                </Button>
+
+                </label>*/}
+                  <input
+                    accept='image/jpeg'
+                    className={classes.input}
+                    id='faceImage'
+                    type='file'
+                    onChange={props.handleCapture}
+                  />
+                  <Tooltip title='Select Image'>
+                    <label htmlFor='faceImage'>
+                      <Button variant='contained' component='span'>
+                        Upload
+                      </Button>
+                    </label>
+                  </Tooltip>
                 </Grid>
               </Grid>
             </Grid>
@@ -104,7 +166,17 @@ function GreenHouseEdit(props) {
                 className='ProductPageTitle'
                 sx={{ m: 1 }}
               >
-                <TextField fullWidth label='Name' id='Name' />
+                <TextField
+                  fullWidth
+                  label='Name'
+                  id='name'
+                  name='name'
+                  defaultValue={props.data.name}
+                  helperText={
+                    props.errorData.name != '' ? props.errorData.name : ''
+                  }
+                  onChange={handleChange}
+                />
                 <Divider sx={{ mt: 1 }} />
               </Grid>
 
@@ -121,14 +193,17 @@ function GreenHouseEdit(props) {
                   <TextField
                     fullWidth
                     id='description'
+                    name='description'
                     label='Description'
                     multiline
                     maxRows={3}
+                    defaultValue={props.data.description}
+                    onChange={handleChange}
                   />
                 </div>
               </Grid>
 
-              <Grid
+              {/*<Grid
                 container
                 item
                 xs={12}
@@ -189,9 +264,9 @@ function GreenHouseEdit(props) {
                     </Select>
                   </FormControl>
                 </Grid>
-              </Grid>
-              <Grid container item className='ProductPageText'>
-                <FormControl fullWidth sx={{ mt: 1, mb: 1, minWidth: '135px' }}>
+              </Grid>*/}
+              <Grid container item className='ProductPageText' sx={{ m: 1 }}>
+                <FormControl fullWidth sx={{ minWidth: '135px' }}>
                   <InputLabel
                     id='demo-simple-select-label'
                     sx={{ Width: '100px' }}
@@ -200,14 +275,24 @@ function GreenHouseEdit(props) {
                   </InputLabel>
                   <Select
                     labelId='demo-simple-select-label'
-                    id='demo-simple-select'
+                    id='location'
+                    name='location'
                     label='Light'
+                    defaultValue={props.data.location}
+                    onChange={handleChange}
                   >
                     <MenuItem value={'Living room'}>Living room</MenuItem>
                     <MenuItem value={'Kitchen'}>Kitchen</MenuItem>
                     <MenuItem value={'bedroom'}>Bedroom</MenuItem>
                   </Select>
                 </FormControl>
+              </Grid>
+              <Grid item container>
+                <Reminder
+                  summary={props.data.name}
+                  location={props.data.location}
+                  description={props.data.description}
+                />
               </Grid>
               <Grid
                 item
@@ -223,7 +308,11 @@ function GreenHouseEdit(props) {
                   sx={{ p: 0.5, Color: '#12824C' }}
                   className='ProductPageTitle'
                 >
-                  <Button variant='contained' className='productsPageAdd'>
+                  <Button
+                    variant='contained'
+                    className='productsPageAdd'
+                    onClick={props.handleSubmit}
+                  >
                     Submit
                   </Button>
                 </Grid>

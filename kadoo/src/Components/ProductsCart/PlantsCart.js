@@ -21,7 +21,7 @@ export default function PlantsCart(props) {
               height='200'
               image={props.product.image}
               alt='picture'
-              className='productIconImage'
+              className='plantIconImage'
             />
           </Grid>
         </Link>
