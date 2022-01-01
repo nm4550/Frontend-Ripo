@@ -38,7 +38,7 @@ export default function UserList() {
   
   
   const handleDelete = (id) => {
-    fetch('http://127.0.0.1:8000/api/specialist/delete/:id', { method: 'DELETE' })
+    fetch('http://127.0.0.1:8000/api/specialist/delete/'+id+"/", { method: 'DELETE' })
     .then(() => alert('Delete successful'));
   };
 
