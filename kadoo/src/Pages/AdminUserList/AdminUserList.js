@@ -9,16 +9,37 @@ import { IconButton } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import EditIcon from '@mui/icons-material/Edit';
 import Fab from '@mui/material/Fab';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { useTheme } from '@mui/material/styles';
+import * as React from 'react';
+import Button from '@mui/material/Button';
 
 export default function UserList() {
   const [page, setPage] = useState(1)
   const [allPage, setAllPage] = useState(1)
   const [products, setProducts] = useState([])
   const [data, setData] = useState(productRows);
+  const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
   
   
   const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+    fetch('http://127.0.0.1:8000/api/specialist/delete/:id', { method: 'DELETE' })
+    .then(() => alert('Delete successful'));
   };
 
   const columns = [
@@ -32,7 +53,7 @@ export default function UserList() {
       );
     }, 
     },
-    { field: "first_name", headerName: "First name", width: 120 , headerAlign: 'center',
+    { field: "first_name", headerName: "First name", width: 180 , headerAlign: 'center',
     renderCell: (params) => {
       return (
         <div className="productListItem">
@@ -41,7 +62,7 @@ export default function UserList() {
       );
     }, 
     },
-    { field: "last_name", headerName: "Last name", width: 120 , headerAlign: 'center' ,
+    { field: "last_name", headerName: "Last name", width: 250 , headerAlign: 'center' ,
     renderCell: (params) => {
       return (
         <div className="productListItem">
@@ -54,7 +75,7 @@ export default function UserList() {
       field: "user_name",
       headerName: "User name", 
       headerAlign: 'center' ,
-      width: 120,
+      width: 200,
       renderCell: (params) => {
         return (
           <div className="productListItem">
@@ -64,7 +85,7 @@ export default function UserList() {
       },
     },
     { 
-      field: "email", headerName: "Email", width: 180 , headerAlign: 'center' ,
+      field: "email", headerName: "Email", width: 280 , headerAlign: 'center' ,
       renderCell: (params) => {
       return (
         <div className="productListItem">
@@ -82,9 +103,32 @@ export default function UserList() {
               <EditIcon/>
             </IconButton>
           </Link>
-          <IconButton>
+          <IconButton onClick={handleClickOpen}>
             <DeleteOutlineIcon/>
           </IconButton> 
+          <Dialog
+          fullScreen={fullScreen}
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="responsive-dialog-title"
+          >
+            <DialogTitle id="responsive-dialog-title">
+            {"Delete confirmation"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText>
+                Are you sure you want to delete this item?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button autoFocus onClick={handleClose}>
+                No
+              </Button>
+              <Button onClick={handleDelete} autoFocus>
+                Yes
+              </Button>
+            </DialogActions>
+          </Dialog>
         </div>
               
       );
