@@ -52,7 +52,7 @@ function AddtoCart() {
     async function fetchUserData() {
       await axiosInstance
         .post(`user/token/`, {
-          email: '1@1.com',
+          email: 'sadasda@asddasd.com',
           password: 'Tahlil1400',
         })
         .then((res) => {
