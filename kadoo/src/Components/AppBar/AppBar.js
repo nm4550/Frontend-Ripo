@@ -20,6 +20,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart'
 import Grid from '@mui/material/Grid'
 import UserDropDown from '../UserDropDown/UserDropDown'
 import ShowCoins from '../ShowCoins/ShowCoins'
+import SpecialistDropDown from '../SpecialistDropDown/SpecialistDropDown'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -66,6 +67,7 @@ export default function KadooAppBar(props) {
   const [numberOfTicket, setNumberOfTicket] = useState([3])
   const [numberOfItems, setNumberOfItems] = useState(0)
   const [userData, setUserData] = React.useState([])
+  const [userType, setUserType] = React.useState("")
   const [coins, setCoinsNumber] = useState(0)
   const [searchText,setSearchText] = useState('')
 
@@ -141,6 +143,7 @@ export default function KadooAppBar(props) {
           .then((response) => response.json())
           .then((data) => {
             setUserData(data)
+            setUserType(data.type)
             console.log(data)
           })
       }
@@ -148,6 +151,8 @@ export default function KadooAppBar(props) {
       FetchCountCart()
     }
   }, [isAuthorized])
+
+  
 
   const handelDrawer = () => {
     if (props.isopen === false) {
@@ -247,7 +252,7 @@ export default function KadooAppBar(props) {
                 </IconButton>
               )}
 
-            {props.AuthorizationOption && isAuthorized === true && (
+            {props.AuthorizationOption && isAuthorized === true && userType != "ADMIN" && (
               <UserDropDown />
             )}
             {props.AuthorizationOption && isAuthorized === false && (

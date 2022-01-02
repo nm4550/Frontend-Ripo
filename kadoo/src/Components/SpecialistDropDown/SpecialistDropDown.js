@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import './UserDropDown.css'
 import Box from '@mui/material/Box'
 import Avatar from '@mui/material/Avatar'
 import Menu from '@mui/material/Menu'
@@ -22,7 +21,6 @@ import CoinsIcon from '../../Images/Coins/coins.png'
 function SpecialistDropDown(props) {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const [numberOfTicket, setNumberOfTicket] = useState(0)
-  const [numberOfItems, setNumberOfItems] = useState(0)
   const [userData, setUserData] = React.useState([])
   const open = Boolean(anchorEl)
   const [coins, setCoinsNumber] = useState(0)
@@ -33,55 +31,6 @@ function SpecialistDropDown(props) {
   const handleClose = () => {
     setAnchorEl(null)
   }
-
-  useEffect(() => {
-
-    const requestOptions = {
-        method: 'GET',
-        headers: {
-         'Authorization': 'JWT ' + localStorage.getItem('access_token'),
-         'Content-Type': 'application/json',
-        },
-  
-      }
-    fetch('http://127.0.0.1:8000/api/coin/get/', requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-      setCoinsNumber(data.coin_value)
-      console.log(data)
-    })
-    }, []);
-
-  useEffect(() => {
-    const requestOptions = {
-      method: 'GET',
-      headers: {
-        Authorization: 'JWT ' + localStorage.getItem('access_token'),
-        'Content-Type': 'application/json',
-      },
-    }
-    async function FetchCountCart() {
-      await fetch(
-        'http://127.0.0.1:8000/api/cart/user-count-cart/',
-        requestOptions
-      )
-        .then((response) => response.json())
-        .then((data) => {
-          setNumberOfItems(data)
-          console.log(data)
-        })
-    }
-    async function FetchUserData() {
-      await fetch('http://127.0.0.1:8000/api/user/userinfo/', requestOptions)
-        .then((response) => response.json())
-        .then((data) => {
-          setUserData(data)
-          console.log(data)
-        })
-    }
-    FetchUserData()
-    FetchCountCart()
-  }, [])
 
   return (
     <React.Fragment>
@@ -129,24 +78,7 @@ function SpecialistDropDown(props) {
         <MenuItem>
           <Avatar /> {userData.user_name}
         </MenuItem>
-        <MenuItem sx={{ display: { xs: 'flex', md: 'none' } }}>
-          <img className='coinIcon' src={CoinsIcon} width={30}/>
-          <Typography sx={{ pl: 1.2 }}>Coins: {coins}</Typography>
-        </MenuItem>
         <Divider />
-        <MenuItem sx={{ display: { xs: 'flex', md: 'none' } }}>
-          <Box>
-            <ListItemIcon>
-              {numberOfItems !== 0 && (
-                <Badge badgeContent={numberOfItems} color='secondary'>
-                  <ShoppingCartIcon fontSize='small' />
-                </Badge>
-              )}
-              {numberOfItems === 0 && <ShoppingCartIcon fontSize='small' />}
-            </ListItemIcon>
-            Cart
-          </Box>
-        </MenuItem>
         <MenuItem sx={{ display: { xs: 'flex', md: 'none' } }}>
           <Box>
             <ListItemIcon>
@@ -162,28 +94,10 @@ function SpecialistDropDown(props) {
         </MenuItem>
         <MenuItem>
           <ListItemIcon>
-            <TodayIcon fontSize='small' />
-          </ListItemIcon>
-          Reminder
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
             <ExitToAppIcon fontSize='small' />
           </ListItemIcon>
           Logout
         </MenuItem>
-        {/*<MenuItem>
-          <ListItemIcon>
-            <ShoppingCartIcon fontSize='small' />
-          </ListItemIcon>
-          Ongoing Orders
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <HistoryIcon fontSize='small' />
-          </ListItemIcon>
-          Purchase History
-        </MenuItem>*/}
       </Menu>
     </React.Fragment>
   )

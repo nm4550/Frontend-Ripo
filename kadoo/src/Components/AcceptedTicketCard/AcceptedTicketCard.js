@@ -7,7 +7,7 @@ import Avatar from '@mui/material/Avatar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { red } from '@mui/material/colors';
-import ReplyIcon from '@mui/icons-material/Reply';
+import DoneIcon from '@mui/icons-material/Done';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -28,12 +28,11 @@ const ExpandMore = styled((props) => {
 }));
 
 
-export default function TicketCard(props) {
+export default function AcceptedTicketCard(props) {
   const[username,setUsername]=React.useState("Username")
   const[email,setEmail]=React.useState("Email")
   const[text,setText]=React.useState(" ")
-  const[id,setID]=React.useState("24")
-  const[handle,setHandle]=React.useState(false)
+  const[id,setID]=React.useState("23")
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -45,10 +44,6 @@ export default function TicketCard(props) {
   const handleClose = () => {
     setOpen(false);
   };
-
-  const handleReply = () => {
-    setHandle(handle? false:true);
-  };
   
   useEffect(() => {
     const requestOptions = {
@@ -57,27 +52,13 @@ export default function TicketCard(props) {
       'Content-Type': 'application/json' },
       body: JSON.stringify(),
     }
-    fetch('http://127.0.0.1:8000/api/user/userinfo/'+`${props.ticket.ticket_author}/`, requestOptions)
+    fetch('http://127.0.0.1:8000/api/user/userinfo/'+`${id}/`, requestOptions)
     .then((response) => response.json())
     .then((data) => {
         setUsername(data.user_name)
         setEmail(data.email)
     })
     }, []);
-
-    useEffect(() => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Authorization': 'JWT ' + localStorage.getItem('access_token'),
-      'Content-Type': 'application/json' },
-      body: JSON.stringify(),
-    }
-    fetch('http://127.0.0.1:8000/api/ticket/accept-ticket/'+`${props.ticket.id}/`, requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-        console.log("hiiii")
-    })
-    }, [handle]);
 
 
   return (
@@ -105,8 +86,8 @@ export default function TicketCard(props) {
           </Avatar>
         }
         action={
-          <IconButton aria-label="reply" onClick={handleReply}>
-            <ReplyIcon />
+          <IconButton aria-label="reply">
+            <DoneIcon />
           </IconButton>
         }
         title={username}
