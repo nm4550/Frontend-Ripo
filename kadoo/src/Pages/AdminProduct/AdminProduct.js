@@ -88,13 +88,14 @@ export default function Product() {
             pl: { xs: 2, sm: 5 },
             pr: { xs: 2, sm: 5 },
             pt: 1,
+            height: 0,
           }}
         >
           <Grid container alignItems="flex-start" item>
             <h1>Product</h1>
           </Grid>
 
-          <Grid container item>
+          <Grid container>
             <div>
               <form>
                 <Grid container>
@@ -102,6 +103,15 @@ export default function Product() {
                     <div>
                       <label>Product Name</label>
                       <TextField
+                        component="form"
+                        sx={{
+                          "& > :not(style)": {
+                            width: "20ch",
+                            height: 30,
+                          },
+                        }}
+                        noValidate
+                        autoComplete="off"
                         name="name"
                         onChange={handleChange}
                         type="text"
@@ -113,6 +123,15 @@ export default function Product() {
                     <div>
                       <label>Description</label>
                       <TextField
+                        component="form"
+                        sx={{
+                          "& > :not(style)": {
+                            width: "20ch",
+                            height: 30,
+                          },
+                        }}
+                        noValidate
+                        autoComplete="off"
                         name="description"
                         onChange={handleChange}
                         type="text"
@@ -126,6 +145,13 @@ export default function Product() {
                   <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Price</label>
                     <TextField
+                      component="form"
+                      sx={{
+                        "& > :not(style)": { width: "20ch", height: 30 },
+                        flex:1
+                      }}
+                      noValidate
+                      autoComplete="off"
                       name="price"
                       onChange={handleChange}
                       type="text"
@@ -135,7 +161,15 @@ export default function Product() {
 
                   <Grid item xs={4} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Kind</label>
-                    <Select name="kind" onChange={handleChange} id="Kind">
+                    <Select
+                      component="form"
+                      sx={{ width: "20ch", height: 30 }}
+                      noValidate
+                      autoComplete="off"
+                      name="kind"
+                      onChange={handleChange}
+                      id="Kind"
+                    >
                       <MenuItem value="plant">Plant</MenuItem>
                       <MenuItem value="tool">Tool</MenuItem>
                     </Select>
@@ -145,7 +179,15 @@ export default function Product() {
                 <Grid container>
                   <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Light</label>
-                    <Select name="light" onChange={handleChange} id="Light">
+                    <Select
+                      component="form"
+                      sx={{ width: "20ch", height: 30 }}
+                      noValidate
+                      autoComplete="off"
+                      name="light"
+                      onChange={handleChange}
+                      id="Light"
+                    >
                       <MenuItem value="low">Low</MenuItem>
                       <MenuItem value="medium">Medium</MenuItem>
                       <MenuItem value="much">Much</MenuItem>
@@ -154,7 +196,15 @@ export default function Product() {
 
                   <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Water</label>
-                    <Select name="water" onChange={handleChange} id="Water">
+                    <Select
+                      component="form"
+                      sx={{ width: "20ch", height: 30 }}
+                      noValidate
+                      autoComplete="off"
+                      name="water"
+                      onChange={handleChange}
+                      id="Water"
+                    >
                       <MenuItem value="low">Low</MenuItem>
                       <MenuItem value="medium">Medium</MenuItem>
                       <MenuItem value="much">Much</MenuItem>
@@ -166,6 +216,10 @@ export default function Product() {
                   <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Growth Rate</label>
                     <Select
+                      component="form"
+                      sx={{ width: "20ch", height: 30 }}
+                      noValidate
+                      autoComplete="off"
                       name="growthRate"
                       onChange={handleChange}
                       id="GrowthRate"
@@ -179,6 +233,10 @@ export default function Product() {
                   <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
                     <label>Environment</label>
                     <Select
+                      component="form"
+                      sx={{ width: "20ch", height: 30 }}
+                      noValidate
+                      autoComplete="off"
                       name="environment"
                       onChange={handleChange}
                       id="Environment"
@@ -190,68 +248,74 @@ export default function Product() {
                   </Grid>
                 </Grid>
 
-                <Grid
-                  item
-                  container
-                  alignItems="center"
-                  direction="row"
-                  sx={{ m: 2 }}
-                >
-                  <label>Count</label>
-                  <IconButton
-                    size="large"
-                    aria-label="show 4 new mails"
-                    color="inherit"
-                    sx={{ color: "error.main" }}
-                    onClick={decreaseBought}
+                <Grid container>
+                  <Grid
+                    item
+                    sx={{ p: 2 }}
+                    alignItems="center"
+                    direction="row"
                   >
-                    <RemoveIcon />
-                  </IconButton>
-                  <div className="ProductPageCounterNum">{numberOfBuy}</div>
-                  <IconButton
-                    size="large"
-                    aria-label="show 4 new mails"
-                    color="inherit"
-                    sx={{ color: "success.main" }}
-                    onClick={increaseBought}
+                    <div className="productPagePrice">
+                      {" "}
+                      <b>Count</b>
+                    </div>
+                  </Grid>
+                  <Grid
+                    item
+                    // xs={6}
+                    // md={6}
+                    // lg={4}
+                    // sx={{ justifyContent: { xs: "flex-end", sm: "center" } }}
+                    className="ProductPageCounter"
                   >
-                    <AddIcon />
-                  </IconButton>
-                </Grid>
-                <div className="productFormRight">
-                  {/* <div className="productUpload">
-                      <img/>
-                      <label for="file">
-                      <PublishIcon/>
-                      </label>
-                      <TextField type="file" id="file" style={{display:"none"}} />
-                      </div>
-                      
-                    <button className="productButton">Update</button> */}
-                  <TextField
-                    accept="image/jpeg"
-                    className={classes.TextField}
-                    id="faceImage"
-                    type="file"
-                    onChange={handleCapture}
-                  />
-                  <Tooltip title="Select Image">
-                    <label htmlFor="faceImage">
+                    <Grid item container alignItems="center" direction="row">
                       <IconButton
-                        className={classes.faceImage}
-                        color="primary"
-                        aria-label="upload picture"
-                        component="span"
+                        size="large"
+                        aria-label="show 4 new mails"
+                        color="inherit"
+                        sx={{ color: "error.main" }}
+                        onClick={decreaseBought}
                       >
-                        <PublishIcon />
+                        <RemoveIcon />
                       </IconButton>
+                      <div className="ProductPageCounterNum">{numberOfBuy}</div>
+                      <IconButton
+                        size="large"
+                        aria-label="show 4 new mails"
+                        color="inherit"
+                        sx={{ color: "success.main" }}
+                        onClick={increaseBought}
+                      >
+                        <AddIcon />
+                      </IconButton>
+                    </Grid>
+                  </Grid>
+                  <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
+                    <TextField
+                      accept="image/jpeg"
+                      className={classes.TextField}
+                      id="faceImage"
+                      type="file"
+                      onChange={handleCapture}
+                    />
+                    <Tooltip title="Select Image">
+                      <label htmlFor="faceImage">
+                        <IconButton
+                          className={classes.faceImage}
+                          color="primary"
+                          aria-label="upload picture"
+                          component="span"
+                        >
+                          <PublishIcon />
+                        </IconButton>
+                      </label>
+                    </Tooltip>
+                    <label>
+                      {SelectedFile ? SelectedFile.name : "Select Image"}
                     </label>
-                  </Tooltip>
-                  <label>
-                    {SelectedFile ? SelectedFile.name : "Select Image"}
-                  </label>
-                  . . .<Button color="primary">Save</Button>
-                </div>
+                    . . .<Button color="primary">Save</Button>
+                  </Grid>
+                </Grid>
               </form>
             </div>
           </Grid>
