@@ -32,7 +32,7 @@ import AdminProductList from './Pages/AdminProductList/AdminProductList'
 
 function App() {
   return (
-    <React.Fragment>
+    <React.Fragment className='no-select'>
       <CssBaseline />
       <ThemeProvider theme={Theme}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>

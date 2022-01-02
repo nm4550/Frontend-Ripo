@@ -264,16 +264,10 @@ class ProductPlantsPage extends React.Component {
                   className='ProductPageBuyContainer'
                 >
                   <Grid container spacing={0} alignItems='center'>
-                    <Grid
-                      item
-                      xs={6}
-                      md={6}
-                      lg={2}
-                      className='ProductPageTitle'
-                    >
+                    <Grid item container className='ProductPageTitle'>
                       <div className='productPagePrice'>
                         {' '}
-                        <b>Price:</b> {this.state.product.price} $
+                        <b>Price:{this.state.product.price}$</b>
                       </div>
                     </Grid>
                     <Grid

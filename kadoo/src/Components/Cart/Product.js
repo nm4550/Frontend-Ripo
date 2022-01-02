@@ -44,12 +44,13 @@ export default function Product(props) {
           justifyContent='center'
           alignItems='center'
         >
-          <Grid className='productIconImageContainer' sx={{ p: 1 }}>
-            <CardMedia
-              component='img'
-              image={product.image}
-              className='productIconImage'
-            />
+          <Grid className='productIconImageContainer1' sx={{ p: 1 }}>
+            <CardMedia>
+              <img
+                src={'http://127.0.0.1:8000' + product.image}
+                className='productIconImage'
+              />
+            </CardMedia>
           </Grid>
         </Grid>
         <Grid item xs={12} sm={6} md={8}>
