@@ -135,11 +135,6 @@ export default function UserList() {
     }, 
     },
   ];
-  // const rows = [
-  //   {
-  //     id:1 , id:"Elnaz"
-  //   }
-  // ];
   const fetchPagination = () => {
     fetch('http://127.0.0.1:8000/api/specialist/all-primary/', {
       method: 'Get',
