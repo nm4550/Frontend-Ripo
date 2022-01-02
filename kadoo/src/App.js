@@ -29,7 +29,7 @@ import AdminHome from './Pages/AdminHome/AdminHome'
 import UserList from "./Pages/AdminUserList/AdminUserList";
 import AdminProduct from "./Pages/AdminProduct/AdminProduct";
 import AdminProductList from "./Pages/AdminProductList/AdminProductList";
-import TicketCard from './Components/TicketCard/TicketCard'
+import TicketPage from './Pages/TicketPage/TicketPage'
 import WriteTicket from './Components/WriteTicket/WriteTicket'
 
 function App() {
@@ -40,7 +40,7 @@ function App() {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <Router>
             <Switch>
-              <Route exact path='/TicketPage' component={TicketCard} />
+              <Route exact path='/TicketPage' component={TicketPage} />
               <Route exact path='/WriteTicket' component={WriteTicket} />
               <Route exact path='/WateringUpdateTest' component={WateringUpdate} />
               <Route exact path='/Coins' component={ShowCoins} />

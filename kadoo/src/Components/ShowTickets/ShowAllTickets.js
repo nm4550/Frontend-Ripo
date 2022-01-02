@@ -4,12 +4,12 @@ import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import TicketCard from '../TicketCard/TicketCard'
 
-function ShowTickets(props) {
+function ShowAllTickets(props) {
   return (
     <div>
       <Box sx={{ width: '100%' }}>
         <Typography variant='h4' gutterBottom component='div'>
-          Tickets
+          All Tickets
         </Typography>
         <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           {props.data.map((T) => (
@@ -23,4 +23,4 @@ function ShowTickets(props) {
   )
 }
 
-export default ShowTickets
+export default ShowAllTickets

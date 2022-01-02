@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react'
 import { styled } from '@mui/material/styles';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
@@ -28,10 +28,11 @@ const ExpandMore = styled((props) => {
 }));
 
 
-export default function TicketCard() {
+export default function TicketCard(props) {
   const[username,setUsername]=React.useState("Username")
   const[email,setEmail]=React.useState("Email")
-  const[text,setText]=React.useState("[TICKET TEXT]This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels,if you like.")
+  const[text,setText]=React.useState(" ")
+  const[id,setID]=React.useState("23")
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -43,6 +44,22 @@ export default function TicketCard() {
   const handleClose = () => {
     setOpen(false);
   };
+  
+  useEffect(() => {
+    const requestOptions = {
+      method: 'GET',
+      headers: { 'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+      'Content-Type': 'application/json' },
+      body: JSON.stringify(),
+    }
+    fetch('http://127.0.0.1:8000/api/user/userinfo/'+`${id}/`, requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+        setUsername(data.user_name)
+        setEmail(data.email)
+    })
+    }, []);
+
 
   return (
     <div>
@@ -57,7 +74,7 @@ export default function TicketCard() {
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {text}
+            {props.ticket.body}
           </DialogContentText>
         </DialogContent>
       </Dialog>
@@ -83,7 +100,7 @@ export default function TicketCard() {
       >
       <CardContent>
         <Typography variant="body2" color="text.secondary">
-          {text.substring(
+          {props.ticket.body.substring(
                 0,
                 40
               )}...
