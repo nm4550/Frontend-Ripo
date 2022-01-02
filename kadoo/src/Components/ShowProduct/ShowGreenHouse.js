@@ -14,7 +14,7 @@ function ShowGreenHouse(props) {
     <div>
       <Box sx={{ width: '100%' }}>
         <Typography variant='h4' gutterBottom component='div'>
-          My Plnats
+          My Plants
         </Typography>
         <Grid
           container
@@ -24,7 +24,11 @@ function ShowGreenHouse(props) {
         >
           {props.data.map((p) => (
             <Grid item xs={12} sm={6} md={4}>
-              <GreenHouseCard data={p} />
+              <GreenHouseCard
+                data={p}
+                reloadFunc={props.reloadFunc}
+                OpenDialog={props.OpenDialog}
+              />
             </Grid>
           ))}
         </Grid>

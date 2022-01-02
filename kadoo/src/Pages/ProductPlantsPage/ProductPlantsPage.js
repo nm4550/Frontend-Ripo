@@ -136,7 +136,7 @@ class ProductPlantsPage extends React.Component {
             container
             item
             justifyContent='center'
-            sx={{ mt: 15 }}
+            sx={{ mt: 10 }}
             className='ProductPageProductContainer'
           >
             <Grid
@@ -172,7 +172,7 @@ class ProductPlantsPage extends React.Component {
                     alt={this.state.imageName.name}
                     sx={{
                       width: { xs: '300px', sm: '400px' },
-                      heiyyght: { xs: '300px', sm: '400px' },
+                      height: { xs: '300px', sm: '400px' },
                     }}
                   ></img>
                   <IconButton
@@ -264,16 +264,10 @@ class ProductPlantsPage extends React.Component {
                   className='ProductPageBuyContainer'
                 >
                   <Grid container spacing={0} alignItems='center'>
-                    <Grid
-                      item
-                      xs={6}
-                      md={6}
-                      lg={2}
-                      className='ProductPageTitle'
-                    >
+                    <Grid item container className='ProductPageTitle'>
                       <div className='productPagePrice'>
                         {' '}
-                        <b>Price:</b> {this.state.product.price} $
+                        <b>Price:{this.state.product.price}$</b>
                       </div>
                     </Grid>
                     <Grid
@@ -285,7 +279,7 @@ class ProductPlantsPage extends React.Component {
                       sx={{ justifyContent: { xs: 'flex-end', sm: 'center' } }}
                       className='ProductPageCounter'
                     >
-                      <Grid item container alignItems='center' diraction='row'>
+                      <Grid item container alignItems='center' direction='row'>
                         <IconButton
                           size='large'
                           aria-label='show 4 new mails'

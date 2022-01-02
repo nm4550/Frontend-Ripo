@@ -10,7 +10,7 @@ import AdminProductList from "../../Pages/AdminProductList/AdminProductList";
 import AdminProduct from "../../Pages/AdminProduct/AdminProduct";
 import AdminNewProduct from "../../Pages/AdminNewProduct/AdminNewProduct";
 import UserList from "../../Pages/AdminUserList/AdminUserList";
-import { useState , useEffect } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   return (
@@ -19,14 +19,26 @@ function App() {
       <div className="containerAdmin">
         <Sidebar />
         <Switch>
-          <Route exact path="/AdminHome">
-            <AdminHome/>
+          <Route exact path="/AdminPage/AdminHome">
+            <AdminHome />
           </Route>
-          <Route path="/users">
-            <UserList/>
+          <Route path="/AdminPage/specialist">
+            <UserList />
           </Route>
-          <Route exact path="/productsList">
-            <AdminProductList/>
+          <Route path="/AdminPage/user/:userId">
+            <AdminUser />
+          </Route>
+          <Route path="/AdminPage/newUser">
+            <AdminNewUser />
+          </Route>
+          <Route exact path="/AdminPage/productsList">
+            <AdminProductList />
+          </Route>
+          <Route path="/AdminPage/newProduct">
+            <AdminNewProduct />
+          </Route>
+          <Route path="/AdminPage/product/:productId">
+            <AdminProduct />
           </Route>
         </Switch>
       </div>

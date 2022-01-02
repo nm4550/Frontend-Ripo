@@ -34,7 +34,7 @@ import WriteTicket from './Components/WriteTicket/WriteTicket'
 
 function App() {
   return (
-    <React.Fragment>
+    <React.Fragment className='no-select'>
       <CssBaseline />
       <ThemeProvider theme={Theme}>
         <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -59,10 +59,6 @@ function App() {
               <Route path='/Reminder' exact component={Reminder} />
               <Route path='/greenhouse' exact component={Plantmanagement} />
               <Route exact path='/AdminPage' component={AdminPage} />
-              <Route exact path='/AdminPage/AdminHome' component={AdminHome} />
-              <Route exact path='/AdminPage/users' component={UserList} />
-              <Route exact path='/products' component={AdminProduct} />
-              <Route exact path='/productsList' component={AdminProductList} />
               <Route
                 exact
                 path='/ProductPlantsPage/:id'
@@ -76,6 +72,11 @@ function App() {
               <Route
                 exact
                 path='/greenHouseEdit/:id'
+                component={GreenHouseEdit}
+              />
+              <Route
+                exact
+                path='/greenHouseCreate/'
                 component={GreenHouseEdit}
               />
             </Switch>

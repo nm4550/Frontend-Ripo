@@ -1,14 +1,11 @@
-.css-o69gx8-MuiCardMedia-root {
-  object-fit: contain !important;
-}
 .productIconImageContainer {
   width: 100%;
   height: 15rem;
 }
-.productIconImage {
+.toolIconImage {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: contain !important;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
 }

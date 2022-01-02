@@ -19,7 +19,7 @@ export default function ToolsCart(props) {
               height='200'
               image={props.product.image}
               alt='picture'
-              className='productIconImage'
+              className='toolIconImage'
             />
           </Grid>
         </Link>

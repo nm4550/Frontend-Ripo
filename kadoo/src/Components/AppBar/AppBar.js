@@ -21,6 +21,8 @@ import Grid from '@mui/material/Grid'
 import UserDropDown from '../UserDropDown/UserDropDown'
 import ShowCoins from '../ShowCoins/ShowCoins'
 import SpecialistDropDown from '../SpecialistDropDown/SpecialistDropDown'
+import { Link } from 'react-router-dom'
+import './AppBar.css'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -69,32 +71,30 @@ export default function KadooAppBar(props) {
   const [userData, setUserData] = React.useState([])
   const [userType, setUserType] = React.useState("")
   const [coins, setCoinsNumber] = useState(0)
-  const [searchText,setSearchText] = useState('')
+  const [searchText, setSearchText] = useState('')
 
   function handleChange(e) {
     setSearchText(e.target.value.trim())
   }
 
-  const reload=()=>{
+  const reload = () => {
     const requestOptions = {
       method: 'GET',
       headers: {
-       'Authorization': 'JWT ' + localStorage.getItem('access_token'),
-       'Content-Type': 'application/json',
+        Authorization: 'JWT ' + localStorage.getItem('access_token'),
+        'Content-Type': 'application/json',
       },
-
     }
-  fetch('http://127.0.0.1:8000/api/coin/get/', requestOptions)
-  .then((response) => response.json())
-  .then((data) => {
-    setCoinsNumber(data.coin_value)
-    console.log(data)
-  })
+    fetch('http://127.0.0.1:8000/api/coin/get/', requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        setCoinsNumber(data.coin_value)
+        console.log(data)
+      })
   }
   useEffect(() => {
-      reload()
-      }, []);
-      
+    reload()
+  }, [])
 
   useEffect(() => {
     const requestOptions = {
@@ -164,31 +164,34 @@ export default function KadooAppBar(props) {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar sx={{ position: {xs:'fixed' ,sm:'static'} }}>
+      <AppBar sx={{ position: { xs: 'fixed', sm: 'static' } }}>
         <Toolbar>
-        <Grid display={{xs:'flex' ,sm:'none'}}>
-          {props.DrawerOption && (
-            <IconButton
-              size='large'
-              edge='start'
-              color='inherit'
-              aria-label='open drawer'
-              sx={{ mr: 2 }}
-              onClick={handelDrawer}
-            >
-              <MenuIcon />
-            </IconButton>
-          )}
+          <Grid display={{ xs: 'flex', sm: 'none' }}>
+            {props.DrawerOption && (
+              <IconButton
+                size='large'
+                edge='start'
+                color='inherit'
+                aria-label='open drawer'
+                sx={{ mr: 2 }}
+                onClick={handelDrawer}
+              >
+                <MenuIcon />
+              </IconButton>
+            )}
           </Grid>
           {props.DrawerOption && (
-            <Typography
-              variant='h4'
-              noWrap
-              component='div'
-              sx={{ display: { xs: 'none', sm: 'block' } }}
-            >
-              Kadoo
-            </Typography>
+            <Link to='/Homepage'>
+              <Typography
+                variant='h4'
+                noWrap
+                component='div'
+                sx={{ display: { xs: 'none', sm: 'block' } }}
+                className='Title'
+              >
+                Kadoo
+              </Typography>
+            </Link>
           )}
           {!props.DrawerOption && (
             <Typography variant='h4' noWrap component='div'>
@@ -202,7 +205,7 @@ export default function KadooAppBar(props) {
                   <StyledColorSerchIconButton
                     sx={{ ml: 2, p: 1 }}
                     size='small'
-                    href={'/search/'+ searchText}
+                    href={'/search/' + searchText}
                   >
                     <SearchIconWrapper>
                       <SearchIcon />
@@ -229,6 +232,9 @@ export default function KadooAppBar(props) {
               isAuthorized === true &&(
                 <ShowCoins coins={coins}/>
               )}
+            {props.AuthorizationOption && isAuthorized === true && (
+              <ShowCoins coins={coins} />
+            )}
 
             {props.AuthorizationOption &&
               isAuthorized === true &&

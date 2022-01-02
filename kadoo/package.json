@@ -22,6 +22,7 @@
     "axios": "^0.24.0",
     "chartjs-adapter-date-fns": "^1.1.0-beta.1",
     "date-fns": "^2.27.0",
+    "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-admin": "^3.19.5",
     "react-awesome-reveal": "^3.8.1",

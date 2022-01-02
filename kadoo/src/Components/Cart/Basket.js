@@ -59,7 +59,30 @@ export default function Basket(props) {
                       {row.count}
                     </TableCell>
                     <TableCell align='center' sx={{ borderBottom: 'none' }}>
-                      ${row.price}
+                      {'$' + row.count * row.price}
+                    </TableCell>
+                  </TableRow>
+                ))}
+                {toolCartItems.map((row) => (
+                  <TableRow
+                    key={row.id}
+                    style={{ whiteSpace: 'normal', wordBreak: 'break-word' }}
+                  >
+                    <TableCell
+                      style={{
+                        whiteSpace: 'normal',
+                        wordBreak: 'break-word',
+                        borderBottom: 'none',
+                      }}
+                      align='left'
+                    >
+                      {row.name}
+                    </TableCell>
+                    <TableCell align='center' sx={{ borderBottom: 'none' }}>
+                      {row.count}
+                    </TableCell>
+                    <TableCell align='center' sx={{ borderBottom: 'none' }}>
+                      {'$' + row.count * row.price}
                     </TableCell>
                   </TableRow>
                 ))}
@@ -67,39 +90,6 @@ export default function Basket(props) {
             </Table>
           </TableContainer>
         )}
-
-        <Box sx={{ p: 1 }}>
-          {toolCartItems.length != 0 && (
-            <Box>
-              <Typography variant='h5' sx={{ m: 0.5, ml: 2.6 }} align='left'>
-                Tools
-              </Typography>
-              <Divider variant='middle' />
-              {toolCartItems.map((item) => (
-                <Box
-                  key={item.id}
-                  sx={{ display: 'flex', mr: 2, ml: 2, mt: 1 }}
-                >
-                  <Box sx={{ display: 'flex', flex: 1, textAlign: 'left' }}>
-                    <Typography component='div' variant='body' align='left'>
-                      {item.name}
-                    </Typography>
-                  </Box>
-                  <Box sx={{ display: 'flex', flex: 1, textAlign: 'right' }}>
-                    <Typography component='div' variant='body' align='right'>
-                      {item.count}
-                    </Typography>
-                  </Box>
-                  <Box sx={{ textAlign: 'right' }}>
-                    <Typography component='div' variant='body' align='right'>
-                      {'$ ' + item.count * item.price}
-                    </Typography>
-                  </Box>
-                </Box>
-              ))}
-            </Box>
-          )}
-        </Box>
       </Card>
 
       <Card sx={{ pr: 3, pl: 3, pt: 1.5, pb: 1.5, mt: 1.5 }}>
