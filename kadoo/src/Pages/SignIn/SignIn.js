@@ -17,6 +17,40 @@ function SignIn() {
   const [refresh, setRefresh] = useState(false)
 
   useEffect(() => {
+    console.log('access_token Come')
+    console.log(localStorage.getItem('access_token'))
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        Authorization: 'JWT ' + localStorage.getItem('access_token'),
+        'Content-Type': 'application/json',
+      },
+    }
+    fetch('http://127.0.0.1:8000/api/user/userinfo/', requestOptions)
+      .then((response) => {
+        console.log(localStorage.getItem('access_token'))
+        if (response.status != 401) {
+          response.json().then((data) => {
+            console.log(data.type)
+            if (data.type === 'MEMBER') {
+              history.push('/HomePage')
+              window.location.reload(true)
+            } else if (data.type === 'SPECIALIST') {
+              history.push('/TicketPage')
+              window.location.reload(true)
+            } else if (data.type === 'ADMIN') {
+              history.push('/AdminPage')
+              window.location.reload(true)
+            }
+          })
+        } else {
+          throw response
+        }
+      })
+      .catch((err) => {})
+  }, [flagData])
+
+  useEffect(() => {
     updateErrorData(initialFormData)
     console.log(errorData)
   }, [refresh])
@@ -49,21 +83,19 @@ function SignIn() {
     fetch('http://127.0.0.1:8000/api/user/token/', requestOptions)
       .then((response) => {
         if (response.status == 200) {
-          setFlagData(true)
-          history.push('/HomePage')
-          window.location.reload(true)
           console.log('response')
           response.json().then((data) => {
             console.log(data)
             localStorage.setItem('access_token', data.access)
             localStorage.setItem('refresh_token', data.refresh)
+            setFlagData(flagData ? false : true)
           })
+
           //console.log(data)
         } else {
           throw response
         }
       })
-
       .catch((err) => {
         if (err.status === 401) {
           alert('Your email or password is incorrect!')
@@ -87,14 +119,6 @@ function SignIn() {
             return
           }
         })
-      })
-      .then((data) => {
-        if (flagData == true) {
-          localStorage.setItem('access_token', data.access)
-          localStorage.setItem('refresh_token', data.refresh)
-          alert('Welcome !')
-        }
-        setFlagData(false)
       })
   }
   return (
