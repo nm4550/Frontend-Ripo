@@ -83,7 +83,7 @@ function ProductWithCategory(props) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ count: '6', page: `${page}` }),
+      body: JSON.stringify({ count: '12', page: `${page}` }),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -100,7 +100,7 @@ function ProductWithCategory(props) {
           name: null,
           price: { lower: null, higher: null },
           tags: [`${name}`],
-          pagination: { count: '6', page: `${page}` },
+          pagination: { count: '12', page: `${page}` },
           sort: { kind: null, order: null },
         })
       )
@@ -113,7 +113,7 @@ function ProductWithCategory(props) {
           name: null,
           price: { lower: null, higher: null },
           tags: [`${name}`],
-          pagination: { count: '6', page: `${page}` },
+          pagination: { count: '12', page: `${page}` },
           sort: { kind: null, order: null },
         }),
       })
@@ -127,7 +127,7 @@ function ProductWithCategory(props) {
         JSON.stringify({
           name: null,
           price: { lower: null, higher: null },
-          pagination: { count: '6', page: `${page}` },
+          pagination: { count: '12', page: `${page}` },
           sort: { kind: null, order: null },
         })
       )
@@ -139,7 +139,7 @@ function ProductWithCategory(props) {
         body: JSON.stringify({
           name: null,
           price: { lower: null, higher: null },
-          pagination: { count: '6', page: `${page}` },
+          pagination: { count: '12', page: `${page}` },
           sort: { kind: null, order: null },
         }),
       })
@@ -161,7 +161,7 @@ function ProductWithCategory(props) {
           name: null,
           price: { lower: null, higher: null },
           tags: [`${name}`],
-          pagination: { count: '6', page: `${page}` },
+          pagination: { count: '12', page: `${page}` },
           sort: { kind: null, order: null },
         }),
       })
@@ -179,7 +179,7 @@ function ProductWithCategory(props) {
         body: JSON.stringify({
           name: null,
           price: { lower: null, higher: null },
-          pagination: { count: '6', page: `${page}` },
+          pagination: { count: '12', page: `${page}` },
           sort: { kind: null, order: null },
         }),
       })

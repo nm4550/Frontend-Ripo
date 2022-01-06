@@ -469,7 +469,7 @@ export default function NewUser() {
         <button className="newUserButton" onClick={handleSubmit}>Confirm</button>
       </Link>
       <Link to="/AdminPage/specialist">
-        <button className="newUserButton">Cancel</button>
+        <button className="CancelEditBtn">Cancel</button>
       </Link>
     </div>
   );
