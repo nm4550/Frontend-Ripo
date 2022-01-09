@@ -23,6 +23,7 @@ import ShowCoins from '../ShowCoins/ShowCoins'
 import SpecialistDropDown from '../SpecialistDropDown/SpecialistDropDown'
 import { Link } from 'react-router-dom'
 import './AppBar.css'
+import WriteTicket from '../WriteTicket/WriteTicket'
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -232,19 +233,12 @@ export default function KadooAppBar(props) {
               isAuthorized === true &&(
                 <ShowCoins coins={coins}/>
               )}
-            {props.AuthorizationOption && isAuthorized === true && (
-              <ShowCoins coins={coins} />
-            )}
 
             {props.AuthorizationOption &&
               isAuthorized === true &&
               props.TicketOption &&
               props.numberOfTicket !== 0 && (
-                <IconButton size='large' color='inherit'>
-                  <Badge badgeContent={numberOfTicket} color='secondary'>
-                    <ForumIcon />
-                  </Badge>
-                </IconButton>
+                <WriteTicket/>
               )}
 
             {props.AuthorizationOption &&

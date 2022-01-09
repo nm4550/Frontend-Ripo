@@ -17,6 +17,7 @@ import PaymentIcon from '@mui/icons-material/Payment'
 import ForumIcon from '@mui/icons-material/Forum'
 import Badge from '@mui/material/Badge'
 import CoinsIcon from '../../Images/Coins/coins.png'
+import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
 
 
 function UserDropDown(props) {
@@ -160,30 +161,18 @@ function UserDropDown(props) {
             Tickets
           </Box>
         </MenuItem>
-        <MenuItem>
+        {/* <MenuItem>
           <ListItemIcon>
             <TodayIcon fontSize='small' />
           </ListItemIcon>
           Reminder
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem>
           <ListItemIcon>
             <ExitToAppIcon fontSize='small' />
           </ListItemIcon>
           Logout
         </MenuItem>
-        {/*<MenuItem>
-          <ListItemIcon>
-            <ShoppingCartIcon fontSize='small' />
-          </ListItemIcon>
-          Ongoing Orders
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <HistoryIcon fontSize='small' />
-          </ListItemIcon>
-          Purchase History
-        </MenuItem>*/}
       </Menu>
     </React.Fragment>
   )

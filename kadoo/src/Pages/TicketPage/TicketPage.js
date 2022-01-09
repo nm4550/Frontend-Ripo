@@ -111,6 +111,10 @@ export default function TicketPage() {
                 >
                     <Grid item>
                         <ShowAllTickets data={ticketsData} />
+                        {ticketsData.length == "0" &&
+                          <Alert sx={{mt:3}}
+                           severity="info" color="warning">No Tickets Yet</Alert>
+                        }
                     </Grid>
                 </Grid>
             </Card>

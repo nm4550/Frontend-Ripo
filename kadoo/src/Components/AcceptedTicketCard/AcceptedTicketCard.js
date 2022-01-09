@@ -33,6 +33,7 @@ export default function AcceptedTicketCard(props) {
   const[email,setEmail]=React.useState("Email")
   const[text,setText]=React.useState(" ")
   const[id,setID]=React.useState("23")
+  const[done,setHandle]=React.useState(false)
   const [open, setOpen] = React.useState(false);
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
@@ -45,6 +46,10 @@ export default function AcceptedTicketCard(props) {
     setOpen(false);
   };
   
+  const handleDone = () => {
+    setHandle(true);
+  };
+
   useEffect(() => {
     const requestOptions = {
       method: 'GET',
@@ -59,6 +64,21 @@ export default function AcceptedTicketCard(props) {
         setEmail(data.email)
     })
     }, []);
+    
+    // useEffect(() => {
+    //   if(!done){
+    // const requestOptions = {
+    //   method: 'POST',
+    //   headers: { 'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+    //   'Content-Type': 'application/json' },
+    //   body: JSON.stringify(),
+    // }
+    // fetch('http://127.0.0.1:8000/api/ticket/done-ticket-specialist/'+`${props.ticket.id}/`, requestOptions)
+    // .then((response) => response.json())
+    // .then((data) => {
+    //     console.log("hellooo")
+    // })
+    // }}, [done]);
 
 
   return (
@@ -86,7 +106,7 @@ export default function AcceptedTicketCard(props) {
           </Avatar>
         }
         action={
-          <IconButton aria-label="reply">
+          <IconButton aria-label="accept" onClick={()=>{handleDone()}}>
             <DoneIcon />
           </IconButton>
         }

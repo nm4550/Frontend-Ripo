@@ -47,7 +47,7 @@ export default function TicketCard(props) {
   };
 
   const handleReply = () => {
-    setHandle(handle? false:true);
+    setHandle(true);
   };
   
   useEffect(() => {
@@ -65,19 +65,20 @@ export default function TicketCard(props) {
     })
     }, []);
 
-    useEffect(() => {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Authorization': 'JWT ' + localStorage.getItem('access_token'),
-      'Content-Type': 'application/json' },
-      body: JSON.stringify(),
-    }
-    fetch('http://127.0.0.1:8000/api/ticket/accept-ticket/'+`${props.ticket.id}/`, requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-        console.log("hiiii")
-    })
-    }, [handle]);
+    // useEffect(() => {
+    //   if(!handle){
+    // const requestOptions = {
+    //   method: 'POST',
+    //   headers: { 'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+    //   'Content-Type': 'application/json' },
+    //   body: JSON.stringify(),
+    // }
+    // fetch('http://127.0.0.1:8000/api/ticket/accept-ticket/'+`${props.ticket.id}/`, requestOptions)
+    // .then((response) => response.json())
+    // .then((data) => {
+    //     console.log("hiiii")
+    // })
+    // }}, [handle]);
 
 
   return (
@@ -105,7 +106,7 @@ export default function TicketCard(props) {
           </Avatar>
         }
         action={
-          <IconButton aria-label="reply" onClick={handleReply}>
+          <IconButton aria-label="reply" onClick={()=>{handleReply()}}>
             <ReplyIcon />
           </IconButton>
         }
