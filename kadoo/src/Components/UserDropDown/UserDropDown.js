@@ -17,8 +17,6 @@ import PaymentIcon from '@mui/icons-material/Payment'
 import ForumIcon from '@mui/icons-material/Forum'
 import Badge from '@mui/material/Badge'
 import CoinsIcon from '../../Images/Coins/coins.png'
-import ContactPhoneIcon from '@mui/icons-material/ContactPhone';
-
 
 function UserDropDown(props) {
   const [anchorEl, setAnchorEl] = React.useState(null)
@@ -35,23 +33,28 @@ function UserDropDown(props) {
     setAnchorEl(null)
   }
 
-  useEffect(() => {
+  const handleLogOut = () => {
+    console.log('logout')
+    window.localStorage.removeItem('access_token')
+    window.localStorage.removeItem('refresh_token')
+    window.location.reload(true)
+  }
 
+  useEffect(() => {
     const requestOptions = {
-        method: 'GET',
-        headers: {
-         'Authorization': 'JWT ' + localStorage.getItem('access_token'),
-         'Content-Type': 'application/json',
-        },
-  
-      }
+      method: 'GET',
+      headers: {
+        Authorization: 'JWT ' + localStorage.getItem('access_token'),
+        'Content-Type': 'application/json',
+      },
+    }
     fetch('http://127.0.0.1:8000/api/coin/get/', requestOptions)
-    .then((response) => response.json())
-    .then((data) => {
-      setCoinsNumber(data.coin_value)
-      console.log(data)
-    })
-    }, []);
+      .then((response) => response.json())
+      .then((data) => {
+        setCoinsNumber(data.coin_value)
+        console.log(data)
+      })
+  }, [])
 
   useEffect(() => {
     const requestOptions = {
@@ -131,7 +134,7 @@ function UserDropDown(props) {
           <Avatar /> {userData.user_name}
         </MenuItem>
         <MenuItem sx={{ display: { xs: 'flex', md: 'none' } }}>
-          <img className='coinIcon' src={CoinsIcon} width={30}/>
+          <img className='coinIcon' src={CoinsIcon} width={30} />
           <Typography sx={{ pl: 1.2 }}>Coins: {coins}</Typography>
         </MenuItem>
         <Divider />
@@ -161,18 +164,30 @@ function UserDropDown(props) {
             Tickets
           </Box>
         </MenuItem>
-        {/* <MenuItem>
+        <MenuItem>
           <ListItemIcon>
             <TodayIcon fontSize='small' />
           </ListItemIcon>
           Reminder
-        </MenuItem> */}
-        <MenuItem>
+        </MenuItem>
+        <MenuItem onClick={handleLogOut}>
           <ListItemIcon>
             <ExitToAppIcon fontSize='small' />
           </ListItemIcon>
           Logout
         </MenuItem>
+        {/*<MenuItem>
+          <ListItemIcon>
+            <ShoppingCartIcon fontSize='small' />
+          </ListItemIcon>
+          Ongoing Orders
+        </MenuItem>
+        <MenuItem>
+          <ListItemIcon>
+            <HistoryIcon fontSize='small' />
+          </ListItemIcon>
+          Purchase History
+        </MenuItem>*/}
       </Menu>
     </React.Fragment>
   )

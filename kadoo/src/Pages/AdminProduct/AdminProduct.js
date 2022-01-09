@@ -18,6 +18,8 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import { makeStyles } from "@mui/styles";
+import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import { styled } from '@mui/material/styles';
 
 const kind = [
   {
@@ -120,8 +122,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NewUser() {
+const Input = styled('input')({
+  display: 'none',
+});
 
+export default function NewUser() {
     const initialFormData = Object.freeze({
       name: "",
       description: "",
@@ -449,6 +454,57 @@ export default function NewUser() {
       <h1 className="newUserTitle">Product</h1>
       <form className="newUserForm">
         <div className="newUserItem">
+          <label htmlFor="icon-button-file">
+          <Input accept="image/*" id="icon-button-file" type="file" />
+            <IconButton color="primary" aria-label="upload picture" component="span">
+              <PhotoCamera />
+            </IconButton>
+      </label>
+        </div>
+        
+        <div className="newUserItem">
+        <Grid container>
+          <Grid item sx={{ p: 2 }} alignItems="center" direction="row">
+            <div className="productPagePrice">
+              {" "}
+              <b>Count</b>
+            </div>
+          </Grid>
+          <Grid
+            item
+            // xs={6}
+            // md={6}
+            // lg={4}
+            // sx={{ justifyContent: { xs: "flex-end", sm: "center" } }}
+            className="ProductPageCounter"
+          >
+            <Grid item container alignItems="center" direction="row">
+              <IconButton
+                size="large"
+                aria-label="show 4 new mails"
+                color="inherit"
+                sx={{ color: "error.main" }}
+                onClick={decreaseBought}
+              >
+                <RemoveIcon />
+              </IconButton>
+              <div className="ProductPageCounterNum">{numberOfBuy}</div>
+              <IconButton
+                size="large"
+                aria-label="show 4 new mails"
+                color="inherit"
+                sx={{ color: "success.main" }}
+                onClick={increaseBought}
+              >
+                <AddIcon />
+              </IconButton>
+            </Grid>
+          </Grid>
+          
+        </Grid>
+          
+        </div>
+        <div className="newUserItem">
           <TextField
             // id="standard-basic"
             name="name"
@@ -458,7 +514,7 @@ export default function NewUser() {
             // helperText={errorData.email != "" ? errorData.email : ""}
             // onChange={handleChange}
             required
-          />
+          />          
         </div>
         <div className="newUserItem">
           <TextField
@@ -595,69 +651,9 @@ export default function NewUser() {
           </TextField>
         </div>
 
-        <Grid container>
-          <Grid item sx={{ p: 2 }} alignItems="center" direction="row">
-            <div className="productPagePrice">
-              {" "}
-              <b>Count</b>
-            </div>
-          </Grid>
-          <Grid
-            item
-            // xs={6}
-            // md={6}
-            // lg={4}
-            // sx={{ justifyContent: { xs: "flex-end", sm: "center" } }}
-            className="ProductPageCounter"
-          >
-            <Grid item container alignItems="center" direction="row">
-              <IconButton
-                size="large"
-                aria-label="show 4 new mails"
-                color="inherit"
-                sx={{ color: "error.main" }}
-                onClick={decreaseBought}
-              >
-                <RemoveIcon />
-              </IconButton>
-              <div className="ProductPageCounterNum">{numberOfBuy}</div>
-              <IconButton
-                size="large"
-                aria-label="show 4 new mails"
-                color="inherit"
-                sx={{ color: "success.main" }}
-                onClick={increaseBought}
-              >
-                <AddIcon />
-              </IconButton>
-            </Grid>
-          </Grid>
-          <Grid item xs={6} sm={6} lg={6} sx={{ p: 2 }}>
-            <TextField
-              accept="image/jpeg"
-              className={classes.TextField}
-              id="faceImage"
-              type="file"
-              onChange={handleCapture}
-            />
-            <Tooltip title="Select Image">
-              <label htmlFor="faceImage">
-                <IconButton
-                  className={classes.faceImage}
-                  color="primary"
-                  aria-label="upload picture"
-                  component="span"
-                >
-                  <PublishIcon />
-                </IconButton>
-              </label>
-            </Tooltip>
-            <label>{SelectedFile ? SelectedFile.name : "Select Image"}</label>.
-            . .<Button color="primary">Save</Button>
-          </Grid>
-        </Grid>
+        
       </form>
-      <Link to="/AdminPage/specialist">
+      <Link to="/AdminPage/productsList">
         <button
           className="newUserButton"
           //  onClick={handleSubmit}
@@ -665,8 +661,8 @@ export default function NewUser() {
           Confirm
         </button>
       </Link>
-      <Link to="/AdminPage/specialist">
-        <button className="newUserButton">Cancel</button>
+      <Link to="/AdminPage/productsList">
+        <button className="CancelEditBtn">Cancel</button>
       </Link>
     </div>
   );
