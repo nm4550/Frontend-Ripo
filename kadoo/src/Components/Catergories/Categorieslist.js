@@ -52,17 +52,25 @@ export default function Categorieslist(props) {
 
   const handleReset = () => {
     props.bindall()
+    if (props.hasClose) {
+      props.CloseScroll()
+    }
     setPlantSelectedId(0)
     setToolSelectedId(0)
+    props.ChangeBg(0)
   }
 
   const handlePlantListItemClick = (event, Id, name) => {
     setToolSelectedId(0)
     setPlantSelectedId(Id)
+    if (props.hasClose) {
+      props.CloseScroll()
+    }
     //setPlnatsData([])
     //setPlnatsDataLoaded(false)
     setTimeout(async () => {
       fetchPlantsPagination(name, props.givenpage)
+      props.ChangeBg(1)
     }, 0)
   }
   const handleToolListItemClick = (event, Id, name) => {
@@ -70,8 +78,12 @@ export default function Categorieslist(props) {
     setToolSelectedId(Id)
     //setToolsData([])
     //setToolsDataLoaded(false)
+    if (props.hasClose) {
+      props.CloseScroll()
+    }
     setTimeout(async () => {
       fetchToolsPagination(name, props.givenpage)
+      props.ChangeBg(2)
     }, 0)
   }
 
@@ -80,6 +92,9 @@ export default function Categorieslist(props) {
     setToolSelectedId(0)
     //setPlnatsDataLoaded(false)
     setPlantSelectedId(1)
+    if (props.hasClose) {
+      props.CloseScroll()
+    }
     setTimeout(async () => {
       const res = await fetch(
         'http://127.0.0.1:8000/api/plantsAdvanceSearch/',
@@ -98,10 +113,12 @@ export default function Categorieslist(props) {
       )
 
       const data = await res.json()
+      console.log('page : ' + data.pageCount)
       props.bindplants(data.data)
       props.setpageall(data.pageCount)
       props.settext('All plants')
       props.setgivenpage(1)
+      props.ChangeBg(1)
       //setPlnatsDataLoaded(true)
       console.log(data)
     }, 0)
@@ -112,6 +129,9 @@ export default function Categorieslist(props) {
     //setToolsDataLoaded(false)
     setPlantSelectedId(0)
     setToolSelectedId(1)
+    if (props.hasClose) {
+      props.CloseScroll()
+    }
     setTimeout(async () => {
       const res = await fetch('http://127.0.0.1:8000/api/toolsAdvanceSearch/', {
         method: 'Post',
@@ -131,6 +151,7 @@ export default function Categorieslist(props) {
       props.setpageall(data.pageCount)
       props.settext('All tools')
       props.setgivenpage(1)
+      props.ChangeBg(2)
       //setToolsDataLoaded(true)
       console.log(data)
     }, 0)
@@ -218,8 +239,8 @@ export default function Categorieslist(props) {
       <Grid container spacing={0} justifyContent='center' alignItems='flex-end'>
         <Grid item xs={12} md={12} sx={{ mr: 2 }}>
           <BoxItem>
-            <Box sx={{ width: '100%', mt: 1.2 }}>
-              <List component='nav'>
+            <Box sx={{ width: '100%', mt: 0 }}>
+              <List component='nav' className='NavOver'>
                 <ListItemButton
                   selected={plantSelectedId === 0 && toolSelectedId === 0}
                   onClick={handleReset}
@@ -228,9 +249,9 @@ export default function Categorieslist(props) {
                 </ListItemButton>
               </List>
               <Typography
-                variant="h5"
+                variant='h6'
                 align='left'
-                sx={{ width: '100%', pl: 1, pb: 1, mt: 1 }}
+                sx={{ width: '100%', pl: 1, pb: 1, mt: 1, opacity: 0.5 }}
               >
                 Plant Categories
               </Typography>
@@ -254,9 +275,16 @@ export default function Categorieslist(props) {
                 ))}
               </List>
               <Typography
-                variant="h5"
+                variant='h6'
                 align='left'
-                sx={{ width: '100%', flexShrink: 0, pl: 1, pb: 1, mt: 1 }}
+                sx={{
+                  width: '100%',
+                  flexShrink: 0,
+                  pl: 1,
+                  pb: 1,
+                  mt: 1,
+                  opacity: 0.5,
+                }}
               >
                 Tool Categories
               </Typography>

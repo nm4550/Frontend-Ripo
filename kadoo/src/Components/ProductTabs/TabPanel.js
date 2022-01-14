@@ -36,7 +36,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ pt: 3 }}>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -122,14 +122,17 @@ export default function BasicTabs() {
     <BgAnimation
       style={{ backgroundColor: bgColor }}
       sx={{
-        m: { xs: 3, sm: 5 },
-        pl: { xs: 1, sm: 2, md: 8 },
-        pr: { xs: 1, sm: 2, md: 8 },
+        mt: { xs: 3, sm: 5 },
+        mr: { xs: 3, sm: 5 },
+        ml: { xs: 3, sm: 5 },
+        mb: 2,
+        pl: { xs: 2, sm: 2, md: 3.25 },
+        pr: { xs: 2, sm: 2, md: 3.25 },
         pt: 2,
         pb: 2,
       }}
     >
-      <Typography variant='h4' sx={{ mt: 2 }}>
+      <Typography variant='h4' sx={{ mt: 0 }}>
         Explore our Newest products
       </Typography>
       <Box sx={{ width: '100%', mt: 3 }}>

@@ -49,28 +49,8 @@ function AddtoCart() {
         })
     }
 
-    async function fetchUserData() {
-      await axiosInstance
-        .post(`user/token/`, {
-          email: 'sadasda@asddasd.com',
-          password: 'Tahlil1400',
-        })
-        .then((res) => {
-          localStorage.setItem('access_token', res.data.access)
-          localStorage.setItem('refresh_token', res.data.refresh)
-          axiosInstance.defaults.headers['Authorization'] =
-            'JWT ' + localStorage.getItem('access_token')
-          //history.push('/')
-          console.log('Register')
-          console.log(res)
-          console.log(res.data)
-        })
-    }
-
-    fetchUserData().then(() => {
-      fetchAllProductData()
-      fetchAllToolsData()
-    })
+    fetchAllProductData()
+    fetchAllToolsData()
   }, [])
 
   const onAdd = (product) => {
