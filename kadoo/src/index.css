@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
 body {
   margin: 0;
-  font-family: "Quicksand";
+  font-family: 'Quicksand';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  cursor:url('tree-leaf.png'), auto;
+  cursor: url('tree-leaf.png'), auto;
+  background-color: whitesmoke;
+  overflow-x: hidden;
 }
 
 code {
@@ -12,22 +14,21 @@ code {
     monospace;
 }
 
-
-::-webkit-scrollbar-track{
+::-webkit-scrollbar-track {
   background-color: white;
 }
 
-::-webkit-scrollbar{
+::-webkit-scrollbar {
   width: 13px;
-  background-color: rgba(223,230,238,255);
+  background-color: rgba(223, 230, 238, 255);
 }
 
-::-webkit-scrollbar-thumb{
-  border-radius: 15px;
+::-webkit-scrollbar-thumb {
+  border-radius: 0px;
   height: 150px;
-  background-color: rgba(223,230,238,255);
+  background-color: rgba(223, 230, 238, 255);
   background-image: -webkit-linear-gradient(
-    90deg,
+    270deg,
     #009688 5%,
     #26a69a 25%,
     transparent 100%,
@@ -35,9 +36,9 @@ code {
     transparent
   );
 }
-::-webkit-scrollbar-thumb:hover{
+::-webkit-scrollbar-thumb:hover {
   background-image: -webkit-linear-gradient(
-    90deg,
+    270deg,
     #024942 5%,
     #0a6d63 25%,
     transparent 100%,
@@ -45,4 +46,3 @@ code {
     transparent
   );
 }
-
