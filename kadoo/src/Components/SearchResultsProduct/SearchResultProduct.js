@@ -45,6 +45,7 @@ import SearchBar from './SearchBar'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import ShowProduct from '../../Components/ShowProduct/ShowProduct'
 import Badge from '@mui/material/Badge'
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft'
 import CloseIcon from '@mui/icons-material/Close'
 
 const drawerWidth = 340
@@ -120,6 +121,7 @@ const marks = [
 function SearchResultProduct(props) {
   const xsScreen = useMediaQuery('(min-width: 900px)')
 
+  const [hasDefault, setHasDefault] = useState(false)
   const [searchPlantDataLoaded, setSearchPlantDataLoaded] = useState(false)
   const [searchToolDataLoaded, setSearchToolDataLoaded] = useState(false)
   const [searchProductDataLoaded, setSearchProductDataLoaded] = useState(false)
@@ -258,6 +260,9 @@ function SearchResultProduct(props) {
         'http://127.0.0.1:8000/api/plantsAdvanceSearch/',
         requestOptions
       )
+      if (res.status === 500) {
+        setSearchProductDataLoaded(true)
+      }
       const data = await res.json()
       console.log(3)
       setSearchPlantData(data.data)
@@ -293,7 +298,7 @@ function SearchResultProduct(props) {
         },
       }),
     }
-    console.log('body : ' + requestOptions.body)
+    console.log('all body : ' + requestOptions.body)
     setSearchProductData([])
     setSearchProductDataLoaded(false)
     setTimeout(async () => {
@@ -301,6 +306,9 @@ function SearchResultProduct(props) {
         'http://127.0.0.1:8000/api/allAdvanceSearch/',
         requestOptions
       )
+      if (res.status === 500) {
+        setSearchProductDataLoaded(true)
+      }
       const data = await res.json()
       setSearchProductData(data.data)
       console.log('product page: ' + data.pageCount)
@@ -340,6 +348,9 @@ function SearchResultProduct(props) {
         'http://127.0.0.1:8000/api/toolsAdvanceSearch/',
         requestOptions
       )
+      if (res.status === 500) {
+        setSearchProductDataLoaded(true)
+      }
       const data = await res.json()
       setSearchToolData(data.data)
       setResultPaginationPageTools(data.pageCount)
@@ -546,47 +557,69 @@ function SearchResultProduct(props) {
   }
 
   useEffect(() => {
-    if (sortKindPlants !== '' && sortOrderPlants !== '') {
+    setSearchPlantDataLoaded(false)
+    if (sortKindPlants !== '' && sortOrderPlants !== '' && hasDefault) {
       PlantsAdvanceSearch()
     }
-    if (sortKindTools !== '' && sortOrderTools !== '') {
+    if (sortKindTools !== '' && sortOrderTools !== '' && hasDefault) {
       ToolsAdvanceSearch()
     }
-    if (sortKindProducts !== '' && sortOrderProducts !== '') {
+    if (sortKindProducts !== '' && sortOrderProducts !== '' && hasDefault) {
       ToolsAdvanceSearch()
     }
     if (
-      filterGrowthRatePlants !== '' ||
-      filterLightPlants !== '' ||
-      filterEnvironmentPlants !== '' ||
-      filterWaterPlants !== '' ||
-      filterPriceHigherPlants !== '' ||
-      filterPriceLowerPlants !== ''
+      (filterGrowthRatePlants !== '' ||
+        filterLightPlants !== '' ||
+        filterEnvironmentPlants !== '' ||
+        filterWaterPlants !== '' ||
+        filterPriceHigherPlants !== '' ||
+        filterPriceLowerPlants !== '') &&
+      hasDefault
     ) {
       PlantsAdvanceSearch()
     }
-    if (filterPriceHigherTools !== '' && filterPriceLowerTools !== '') {
+    if (
+      filterPriceHigherTools !== '' &&
+      filterPriceLowerTools !== '' &&
+      hasDefault
+    ) {
       ToolsAdvanceSearch()
     }
-    if (searchTextPlants !== '') {
+    if (searchTextPlants !== '' && hasDefault) {
       PlantsAdvanceSearch()
     }
-    if (searchTextTools !== '') {
+    if (searchTextTools !== '' && hasDefault) {
       ToolsAdvanceSearch()
     }
-    if (paginationCountPlants !== '' && paginationPagePlants !== '') {
+    if (
+      paginationCountPlants !== '' &&
+      paginationPagePlants !== '' &&
+      hasDefault
+    ) {
       PlantsAdvanceSearch()
     }
-    if (paginationCountTools !== '' && paginationPageTools !== '') {
+    if (
+      paginationCountTools !== '' &&
+      paginationPageTools !== '' &&
+      hasDefault
+    ) {
       ToolsAdvanceSearch()
     }
-    if (filterPriceHigherProducts !== '' && filterPriceLowerProducts !== '') {
+    if (
+      filterPriceHigherProducts !== '' &&
+      filterPriceLowerProducts !== '' &&
+      hasDefault
+    ) {
       ProductsAdvanceSearch()
     }
     if (searchTextProducts !== '') {
       ProductsAdvanceSearch()
     }
-    if (paginationCountProducts !== '' && paginationPageProducts !== '') {
+    if (
+      paginationCountProducts !== '' &&
+      paginationPageProducts !== '' &&
+      hasDefault
+    ) {
       ProductsAdvanceSearch()
     }
     if (
@@ -636,22 +669,46 @@ function SearchResultProduct(props) {
   ])
 
   useEffect(() => {
-    if (filterType === 0) {
-      ProductsAdvanceSearch()
-    }
-    if (filterType === 1) {
-      PlantsAdvanceSearch()
-    }
-    if (filterType === 2) {
-      ToolsAdvanceSearch()
+    if (hasDefault) {
+      console.log('VOROOOOOOOOOOD')
+      if (filterType === 0) {
+        ProductsAdvanceSearch()
+      }
+      if (filterType === 1) {
+        PlantsAdvanceSearch()
+      }
+      if (filterType === 2) {
+        ToolsAdvanceSearch()
+      }
     }
   }, [paginationPagePlants, paginationPageTools, paginationPageProducts])
 
   useEffect(() => {
-    setSearchTextPlants(props.match.params.text)
-    setSearchTextTools(props.match.params.text)
-    setSearchTextProducts(props.match.params.text)
+    console.log('HASSSSSSSS ' + hasDefault)
+  }, [hasDefault])
+
+  useEffect(() => {
+    if (
+      searchTextPlants != '' &&
+      searchTextProducts != '' &&
+      searchTextTools != ''
+    ) {
+      setHasDefault(true)
+    }
+  }, [searchTextPlants, searchTextProducts, searchTextTools])
+
+  useEffect(() => {
+    if (props.match.params.text != undefined) {
+      setSearchTextProducts(props.match.params.text)
+      setSearchTextPlants(props.match.params.text)
+      setSearchTextTools(props.match.params.text)
+    } else {
+      setSearchTextProducts(null)
+      setSearchTextPlants(null)
+      setSearchTextTools(null)
+    }
   }, [])
+
   return (
     <div>
       <Box sx={{ display: 'flex' }}>
@@ -671,6 +728,9 @@ function SearchResultProduct(props) {
           open={openDrawer}
         >
           <DrawerHeader>
+            <IconButton onClick={handleDrawerClose}>
+              <ChevronLeftIcon />
+            </IconButton>
             <Typography variant='h6' noWrap component='div'>
               Filters
             </Typography>
@@ -855,7 +915,12 @@ function SearchResultProduct(props) {
               OpenMenu={handleDrawerOpen}
               CloseMenu={handleDrawerClose}
             />
-            <Grid container style={{ minHeight: '100vh' }} xs={24}>
+            <Grid
+              container
+              style={{ minHeight: '100vh' }}
+              sx={{ mt: { xs: 8, sm: 0 } }}
+              xs={24}
+            >
               <Grid
                 container
                 item
@@ -865,13 +930,18 @@ function SearchResultProduct(props) {
                 direction='column'
                 style={{ padding: 10 }}
               >
-                <Grid item sx={{ width: '100%' }}>
+                <Grid
+                  item
+                  sx={{ width: '100%' }}
+                  style={{ minHeight: '100vh' }}
+                >
                   <Box sx={{ width: '100%' }}>
                     {/* ////////////////////////// NavBar Sort ////////////////////////// */}
                     <Grid
                       container
                       alignItems={xsScreen ? 'center' : 'left'}
                       direction={xsScreen ? 'row' : 'column'}
+                      sx={{ pr: 2, pl: 2 }}
                     >
                       <Grid item>
                         {!xsScreen && (
@@ -933,6 +1003,7 @@ function SearchResultProduct(props) {
                           <SearchBar
                             funcSearchPlantsByName={handleSearchPlantsByName}
                             funcSearchToolsByName={handleSearchToolsByName}
+                            default={searchTextProducts}
                             funcSearchProductsByName={
                               handleSearchProductsByName
                             }
@@ -946,7 +1017,7 @@ function SearchResultProduct(props) {
                     {/* <Button onClick={() => handleToolsSortBy_Name_ASC()}></Button> */}
                     <Box sx={{ width: '100%' }}>
                       {searchProductData.length != 0 && filterType === 0 && (
-                        <Grid sx={{ display: 'flex' }}>
+                        <Grid sx={{ display: 'flex', ml: 2 }}>
                           {/*<div className='showProductSubs'>Products</div>
                           <Divider variant='middle' />*/}
                           <Grid container item spacing={2} sx={{ p: 2 }}>
@@ -957,12 +1028,12 @@ function SearchResultProduct(props) {
                       {searchProductData.length === 0 && filterType === 0 && (
                         <div>
                           {searchProductDataLoaded === true && (
-                            <Alert severity='error'>
+                            <Alert severity='info'>
                               There is NO Product right now! Come Back soon ...
                             </Alert>
                           )}
                           {searchProductDataLoaded === false && (
-                            <Grid sx={{ width: '100%' }} sx={{ p: 2 }}>
+                            <Grid sx={{ width: '100%' }} sx={{ p: 0 }}>
                               <SkeletonArticle />
                             </Grid>
                           )}
@@ -971,18 +1042,18 @@ function SearchResultProduct(props) {
                     </Box>
                     <Box sx={{ width: '100%' }}>
                       {searchPlantData.length != 0 && filterType === 1 && (
-                        <div>
+                        <Grid sx={{ display: 'flex', ml: 2 }}>
                           {/*<div className='showProductSubs'>Plants</div>
                           <Divider variant='middle' />*/}
                           <Grid container spacing={2} sx={{ p: 2 }}>
                             <ShowProduct data={searchPlantData} />
                           </Grid>
-                        </div>
+                        </Grid>
                       )}
                       {searchPlantData.length === 0 && filterType === 1 && (
                         <div>
                           {searchPlantDataLoaded === true && (
-                            <Alert severity='error'>
+                            <Alert severity='info'>
                               There is NO plant right now! Come Back soon ...
                             </Alert>
                           )}
@@ -996,18 +1067,18 @@ function SearchResultProduct(props) {
                     </Box>
                     <Box>
                       {searchToolData.length != 0 && filterType === 2 && (
-                        <div>
+                        <Grid sx={{ display: 'flex', ml: 2 }}>
                           {/*<div className='showProductSubs'>Tools</div>
                           <Divider variant='middle' />*/}
                           <Grid container spacing={2} sx={{ p: 2 }}>
                             <ShowProduct data={searchToolData} />
                           </Grid>
-                        </div>
+                        </Grid>
                       )}
                       {searchToolData.length === 0 && filterType === 2 && (
                         <div>
                           {searchToolDataLoaded === true && (
-                            <Alert severity='error'>
+                            <Alert severity='info'>
                               There is NO plant right now! Come Back soon ...
                             </Alert>
                           )}

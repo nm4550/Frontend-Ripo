@@ -28,9 +28,9 @@ const Search = styled('div')(({ theme }) => ({
   '&:hover': {
     backgroundColor: alpha(theme.palette.common.black, 0.07),
   },
-  marginRight: theme.spacing(2),
+  marginRight: theme.spacing(0),
   [theme.breakpoints.up('sm')]: {
-    marginLeft: theme.spacing(3),
+    marginLeft: theme.spacing(2),
   },
 }))
 
@@ -107,6 +107,7 @@ function SearchBar(props) {
                   <StyledInputBase
                     sx={{ ml: 0 }}
                     placeholder='Search for …'
+                    defaultValue={props.default}
                     inputProps={{ 'aria-label': 'search' }}
                     onChange={(e) => handleChange(e)}
                   />
@@ -114,11 +115,11 @@ function SearchBar(props) {
               </Grid>
             </Search>
           </Grid>
-          <Grid item>
+          {/*<Grid item>
             {searchedText !== '' && (
               <Chip label={searchedText} variant='outlined' />
             )}
-          </Grid>
+          </Grid>*/}
         </Grid>
       </Grid>
     </div>

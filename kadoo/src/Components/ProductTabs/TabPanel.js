@@ -122,6 +122,7 @@ export default function BasicTabs() {
     <BgAnimation
       style={{ backgroundColor: bgColor }}
       sx={{
+        boxShadow: 3,
         mt: { xs: 3, sm: 5 },
         mr: { xs: 3, sm: 5 },
         ml: { xs: 3, sm: 5 },
