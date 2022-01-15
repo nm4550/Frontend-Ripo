@@ -9,7 +9,7 @@ import { Home } from '@mui/icons-material'
 import './SearchResultProduct.css'
 import history from '../../history'
 import { Chip } from '@mui/material'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Pagination from '@mui/material/Pagination'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
@@ -121,6 +121,10 @@ const marks = [
 function SearchResultProduct(props) {
   const xsScreen = useMediaQuery('(min-width: 900px)')
 
+  let myRef0 = useRef()
+  let myRef1 = useRef()
+  let myRef2 = useRef()
+
   const [hasDefault, setHasDefault] = useState(false)
   const [searchPlantDataLoaded, setSearchPlantDataLoaded] = useState(false)
   const [searchToolDataLoaded, setSearchToolDataLoaded] = useState(false)
@@ -192,12 +196,21 @@ function SearchResultProduct(props) {
   const [resultPaginationPageTools, setResultPaginationPageTools] = useState(0)
 
   const handleChangePlant = (event, value) => {
+    setTimeout(() => {
+      window.scrollTo({ behavior: 'smooth', top: myRef1.current.offsetTop })
+    }, 3500)
     setPaginationPagePlants(value)
   }
   const handleChangeTool = (event, value) => {
+    setTimeout(() => {
+      window.scrollTo({ behavior: 'smooth', top: myRef2.current.offsetTop })
+    }, 3500)
     setPaginationPageTools(value)
   }
   const handleChangeProduct = (event, value) => {
+    setTimeout(() => {
+      window.scrollTo({ behavior: 'smooth', top: myRef0.current.offsetTop })
+    }, 3500)
     setPaginationPageProducts(value)
   }
 
@@ -1015,7 +1028,7 @@ function SearchResultProduct(props) {
                     {/* ////////////////////////// Samples ////////////////////////// */}
                     {/* /////// Sort /////// */}
                     {/* <Button onClick={() => handleToolsSortBy_Name_ASC()}></Button> */}
-                    <Box sx={{ width: '100%' }}>
+                    <Box sx={{ width: '100%' }} ref={myRef0}>
                       {searchProductData.length != 0 && filterType === 0 && (
                         <Grid sx={{ display: 'flex', ml: 2 }}>
                           {/*<div className='showProductSubs'>Products</div>
@@ -1040,7 +1053,7 @@ function SearchResultProduct(props) {
                         </div>
                       )}
                     </Box>
-                    <Box sx={{ width: '100%' }}>
+                    <Box sx={{ width: '100%' }} ref={myRef1}>
                       {searchPlantData.length != 0 && filterType === 1 && (
                         <Grid sx={{ display: 'flex', ml: 2 }}>
                           {/*<div className='showProductSubs'>Plants</div>
@@ -1065,7 +1078,7 @@ function SearchResultProduct(props) {
                         </div>
                       )}
                     </Box>
-                    <Box>
+                    <Box sx={{ width: '100%' }} ref={myRef2}>
                       {searchToolData.length != 0 && filterType === 2 && (
                         <Grid sx={{ display: 'flex', ml: 2 }}>
                           {/*<div className='showProductSubs'>Tools</div>
@@ -1079,7 +1092,7 @@ function SearchResultProduct(props) {
                         <div>
                           {searchToolDataLoaded === true && (
                             <Alert severity='info'>
-                              There is NO plant right now! Come Back soon ...
+                              There is NO Tool right now! Come Back soon ...
                             </Alert>
                           )}
                           {searchToolDataLoaded === false && (
