@@ -132,7 +132,7 @@ class ProductPlantsPage extends React.Component {
           container
           justifyContent='center'
           alignItems='center'
-          sx={{ pl: { xs: 2, sm: 10 }, pr: { xs: 2, sm: 10 } }}
+          sx={{ pl: { xs: 2, md: 5 }, pr: { xs: 2, nd: 5 } }}
           style={{ height: '100%' }}
         >
           <Grid>
@@ -152,11 +152,10 @@ class ProductPlantsPage extends React.Component {
                 container
                 justifyContent='center'
                 alignItems='center'
-                style={{ height: '62vh' }}
+                sx={{ height: { xs: 'auto', md: '62vh' } }}
               >
                 <Card
-                  sx={{ boxShadow: 2 }}
-                  style={{ height: '62vh' }}
+                  sx={{ boxShadow: 2, height: { xs: 'auto', md: '62vh' } }}
                   className='ProductPageImageContainer'
                 >
                   <Grid
@@ -164,8 +163,7 @@ class ProductPlantsPage extends React.Component {
                     container
                     justifyContent='center'
                     alignItems='center'
-                    style={{ height: '62vh' }}
-                    sx={{ ml: -1 }}
+                    sx={{ height: { xs: 'auto', md: '62vh' } }}
                   >
                     <Grid item container className='blurred'>
                       <Image
@@ -188,66 +186,95 @@ class ProductPlantsPage extends React.Component {
                         justifyContent='center'
                         alignItems='center'
                         direction='row'
+                        className='widthResize'
+                        sx={{ mr: { md: 1.5, xs: 0 } }}
                       >
                         <Grid
+                          item
                           sx={{ display: { xs: 'none', md: 'flex' } }}
-                          md={2}
-                        ></Grid>
-                        <Grid xs={12} md={8}></Grid>
+                          md={1}
+                          alignItems='center'
+                          justifyContent='center'
+                        >
+                          <IconButton
+                            size='small'
+                            aria-label='show 4 new mails'
+                            color='primary'
+                            onClick={backWardImageClick}
+                          >
+                            <ArrowBackIosIcon />
+                          </IconButton>
+                        </Grid>
                         <Grid
+                          item
+                          xs={12}
+                          md={10}
+                          alignItems='center'
+                          justifyContent='center'
+                          sx={{
+                            display: 'flex',
+                            height: { xs: '70%', md: '100%' },
+                          }}
+                        >
+                          <Image
+                            src={this.state.imageName.image}
+                            className='mainImage'
+                            shift='bottom'
+                            shiftDuration={320}
+                            fit='cover'
+                          />
+                        </Grid>
+                        <Grid
+                          item
                           sx={{ display: { xs: 'none', md: 'flex' } }}
-                          md={2}
-                        ></Grid>
+                          md={1}
+                          alignItems='center'
+                          justifyContent='flex-start'
+                        >
+                          <IconButton
+                            sx={{ m: 1 }}
+                            size='small'
+                            aria-label='show 4 new mails'
+                            color='primary'
+                            onClick={forWardImageClick}
+                          >
+                            <ArrowForwardIosIcon />
+                          </IconButton>
+                        </Grid>
                         <Grid
-                          sx={{ display: { xs: 'flex', md: 'none' }, m: 1 }}
+                          item
+                          sx={{ display: { xs: 'flex', md: 'none' }, p: 1 }}
                           xs={6}
-                        ></Grid>
+                          alignItems='center'
+                          justifyContent='flex-end'
+                        >
+                          <IconButton
+                            sx={{ display: { xs: 'flex', md: 'none' }, p: 1 }}
+                            size='small'
+                            aria-label='show 4 new mails'
+                            color='primary'
+                            onClick={backWardImageClick}
+                          >
+                            <ArrowBackIosIcon />
+                          </IconButton>
+                        </Grid>
                         <Grid
-                          sx={{ display: { xs: 'flex', md: 'none' }, m: 1 }}
+                          item
+                          sx={{ display: { xs: 'flex', md: 'none' }, p: 1 }}
                           xs={6}
-                        ></Grid>
-                        <IconButton
-                          size='small'
-                          aria-label='show 4 new mails'
-                          color='primary'
-                          onClick={backWardImageClick}
+                          alignItems='center'
+                          justifyContent='flex-start'
                         >
-                          <ArrowBackIosIcon />
-                        </IconButton>
-                        {/*<img
-                      className='ProductPageImage'
-                      src={this.state.imageName.image}
-                      alt={this.state.imageName.name}
-                      sx={{
-                        width: { xs: '300px', sm: '400px' },
-                        height: { xs: '300px', sm: '400px' },
-                      }}
-                    ></img>*/}
-                        <Image
-                          src={this.state.imageName.image}
-                          className='mainImage'
-                          shift='bottom'
-                          shiftDuration={320}
-                          fit='cover'
-                        />
-                        <IconButton
-                          sx={{ display: { xs: 'flex', md: 'none' }, m: 1 }}
-                          size='small'
-                          aria-label='show 4 new mails'
-                          color='primary'
-                          onClick={backWardImageClick}
-                        >
-                          <ArrowBackIosIcon />
-                        </IconButton>
-                        <IconButton
-                          sx={{ m: 1 }}
-                          size='small'
-                          aria-label='show 4 new mails'
-                          color='primary'
-                          onClick={forWardImageClick}
-                        >
-                          <ArrowForwardIosIcon />
-                        </IconButton>
+                          <IconButton
+                            sx={{ m: 1 }}
+                            size='small'
+                            aria-label='show 4 new mails'
+                            color='primary'
+                            onClick={forWardImageClick}
+                          >
+                            <ArrowForwardIosIcon />
+                          </IconButton>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>

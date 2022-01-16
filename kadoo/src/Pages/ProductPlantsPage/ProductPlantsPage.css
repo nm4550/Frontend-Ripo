@@ -19,14 +19,27 @@
   position: relative;
 }
 
-.front .mui-image-wrapper {
-  width: 80% !important;
-  height: 80% !important;
+@media (min-width: 901px) {
+  .front .mui-image-wrapper {
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+@media (min-width: 0px) and (max-width: 900px) {
+  .front .mui-image-wrapper {
+    width: 80% !important;
+    height: 80% !important;
+  }
 }
 
 .mainImage {
-  width: 80% !important;
-  height: 80% !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.widthResize {
+  width: calc(100% - 40px) !important;
 }
 
 .BringFront {
