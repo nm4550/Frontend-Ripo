@@ -8,17 +8,42 @@
   justify-content: center;
 }
 .ProductPageProductContainer {
-  background-color: white;
-  border: 1px solid rgb(190, 190, 190);
   min-height: 30rem;
   border-radius: 15px;
 }
 
 .ProductPageImageContainer {
-  background-color: rgb(243, 241, 241);
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
+  background-color: #ebf7f6;
+  width: 100%;
+  height: 100%;
+  position: relative;
 }
+
+.front .mui-image-wrapper {
+  width: 80% !important;
+  height: 80% !important;
+}
+
+.mainImage {
+  width: 80% !important;
+  height: 80% !important;
+}
+
+.blurred {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  filter: blur(5px) opacity(30%);
+}
+
+.front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
 .ProductPageBuyContainer {
   background-color: white;
   border-bottom-left-radius: 15px;

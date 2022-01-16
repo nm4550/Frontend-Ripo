@@ -12,7 +12,9 @@ import IconButton from '@mui/material/IconButton'
 import Alert from '@mui/material/Alert'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
+import Card from '@mui/material/Card'
 import AppBar from '../../Components/AppBar/AppBar'
+import Image from 'mui-image'
 
 class ProductPlantsPage extends React.Component {
   constructor(props) {
@@ -115,8 +117,8 @@ class ProductPlantsPage extends React.Component {
     }
 
     return (
-      <div>
-        <Box>
+      <Grid container style={{ minHeight: '100vh' }} sx={{ pb: 2 }}>
+        <Box style={{ width: '100%' }}>
           <AppBar
             SearchOption={true}
             TicketOption={true}
@@ -131,203 +133,268 @@ class ProductPlantsPage extends React.Component {
           justifyContent='center'
           alignItems='center'
           sx={{ pl: { xs: 2, sm: 10 }, pr: { xs: 2, sm: 10 } }}
+          style={{ height: '100%' }}
         >
-          <Grid
-            container
-            item
-            justifyContent='center'
-            sx={{ mt: 10 }}
-            className='ProductPageProductContainer'
-          >
+          <Grid>
             <Grid
-              item
-              xs={12}
-              md={6}
-              lg={6}
               container
+              item
               justifyContent='center'
-              alignItems='center'
-              className='ProductPageImageContainer'
+              sx={{ mt: 0 }}
+              className='ProductPageProductContainer'
             >
-              <Grid item container justifyContent='center' alignItems='center'>
+              <Grid
+                item
+                xs={12}
+                md={6}
+                lg={6}
+                container
+                justifyContent='center'
+                alignItems='center'
+                className='ProductPageImageContainer'
+                style={{ height: '70vh' }}
+              >
+                <Grid item container className='blurred'>
+                  <Image
+                    src={this.state.imageName.image}
+                    width='100%'
+                    height='100%'
+                    fit='cover'
+                  />
+                </Grid>
                 <Grid
-                  container
+                  className='front'
                   item
+                  container
                   justifyContent='center'
                   alignItems='center'
-                  direction='row'
                 >
-                  <IconButton
-                    sx={{ display: { xs: 'none', md: 'inline-block' } }}
-                    size='large'
-                    aria-label='show 4 new mails'
-                    color='primary'
-                    onClick={backWardImageClick}
-                  >
-                    <ArrowBackIosIcon />
-                  </IconButton>
-                  <img
-                    className='ProductPageImage'
-                    src={this.state.imageName.image}
-                    alt={this.state.imageName.name}
-                    sx={{
-                      width: { xs: '300px', sm: '400px' },
-                      height: { xs: '300px', sm: '400px' },
-                    }}
-                  ></img>
-                  <IconButton
-                    sx={{ display: { xs: 'inline-block', md: 'none' } }}
-                    size='large'
-                    aria-label='show 4 new mails'
-                    color='primary'
-                    onClick={backWardImageClick}
-                  >
-                    <ArrowBackIosIcon />
-                  </IconButton>
-                  <IconButton
-                    size='large'
-                    aria-label='show 4 new mails'
-                    color='primary'
-                    onClick={forWardImageClick}
-                  >
-                    <ArrowForwardIosIcon />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={12} md={6} lg={6} sx={{ p: 2 }}>
-              <Grid container spacing={1}>
-                <Grid item xs={12} md={12} lg={12} className='ProductPageTitle'>
-                  <div className='productPageTitle'>
-                    {this.state.product.name}
-                  </div>
-                  <hr />
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  md={12}
-                  lg={12}
-                  spacing={1}
-                  className='ProductPageText'
-                >
-                  <div className='ProductPageText'>
-                    {' '}
-                    <b>Description:</b> {this.state.product.description}{' '}
-                  </div>
-                  <Box sx={{ mt: 0.5, mb: 1.5 }}>
-                    {this.state.tags.length !== 0 && (
-                      <Box>
-                        <b>Tags: </b>
-                        {this.state.tags.map((item) => (
-                          <Chip
-                            sx={{ mr: 0.5 }}
-                            label={item.name}
-                            variant='outlined'
-                          />
-                        ))}
-                      </Box>
-                    )}
-                  </Box>
-                  <hr />
-                </Grid>
-
-                <Grid item xs={12} sm={6} lg={6} className='ProductPageText'>
-                  <div className='ProductPageText'>
-                    {' '}
-                    <b>Environment:</b> {this.state.product.environment}{' '}
-                  </div>
-                </Grid>
-                <Grid item xs={12} sm={6} lg={6} className='ProductPageText'>
-                  <div className='ProductPageText'>
-                    {' '}
-                    <b>Water:</b> {this.state.product.water}
-                  </div>
-                </Grid>
-                <Grid item xs={12} sm={6} lg={6} className='ProductPageText'>
-                  <div className='ProductPageText'>
-                    {' '}
-                    <b>Light:</b> {this.state.product.light}{' '}
-                  </div>
-                </Grid>
-                <Grid item xs={12} sm={6} lg={6} className='ProductPageText'>
-                  <div className='ProductPageText'>
-                    {' '}
-                    <b>GrowthRate:</b> {this.state.product.growthRate}{' '}
-                  </div>
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  md={12}
-                  lg={12}
-                  className='ProductPageBuyContainer'
-                >
-                  <Grid container spacing={0} alignItems='center'>
-                    <Grid item container className='ProductPageTitle'>
-                      <div className='productPagePrice'>
-                        {' '}
-                        <b>Price:{this.state.product.price}$</b>
-                      </div>
-                    </Grid>
-                    <Grid
-                      container
-                      item
-                      xs={6}
-                      md={6}
-                      lg={4}
-                      sx={{ justifyContent: { xs: 'flex-end', sm: 'center' } }}
-                      className='ProductPageCounter'
-                    >
-                      <Grid item container alignItems='center' direction='row'>
-                        <IconButton
-                          size='large'
-                          aria-label='show 4 new mails'
-                          color='inherit'
-                          sx={{ color: 'error.main' }}
-                          onClick={decreaseBought}
-                        >
-                          <RemoveIcon />
-                        </IconButton>
-                        <div className='ProductPageCounterNum'>
-                          {this.state.numberOfBuy}
-                        </div>
-                        <IconButton
-                          size='large'
-                          aria-label='show 4 new mails'
-                          color='inherit'
-                          sx={{ color: 'success.main' }}
-                          onClick={increaseBought}
-                        >
-                          <AddIcon />
-                        </IconButton>
-                      </Grid>
-                    </Grid>
-                    <Grid item sm={6} className='ProductPageTitle'>
-                      Total Price : {this.state.totalPrice}$
-                    </Grid>
-                  </Grid>
                   <Grid
                     container
                     item
-                    justifyContent='flex-end'
-                    sx={{ p: 3, Color: '#12824C' }}
-                    className='ProductPageTitle'
+                    justifyContent='center'
+                    alignItems='center'
+                    direction='row'
                   >
-                    <Button
-                      variant='contained'
-                      className='productsPageAdd'
-                      onClick={addToBasket}
+                    <IconButton
+                      sx={{ display: { xs: 'none', md: 'flex' }, m: 1 }}
+                      size='small'
+                      aria-label='show 4 new mails'
+                      color='primary'
+                      onClick={backWardImageClick}
                     >
-                      Add To Bascket
-                    </Button>
+                      <ArrowBackIosIcon />
+                    </IconButton>
+                    {/*<img
+                      className='ProductPageImage'
+                      src={this.state.imageName.image}
+                      alt={this.state.imageName.name}
+                      sx={{
+                        width: { xs: '300px', sm: '400px' },
+                        height: { xs: '300px', sm: '400px' },
+                      }}
+                    ></img>*/}
+                    <Image
+                      src={this.state.imageName.image}
+                      className='mainImage'
+                      shift='bottom'
+                      shiftDuration={320}
+                      fit='cover'
+                    />
+                    <IconButton
+                      sx={{ display: { xs: 'flex', md: 'none' }, m: 1 }}
+                      size='small'
+                      aria-label='show 4 new mails'
+                      color='primary'
+                      onClick={backWardImageClick}
+                    >
+                      <ArrowBackIosIcon />
+                    </IconButton>
+                    <IconButton
+                      sx={{ m: 1 }}
+                      size='small'
+                      aria-label='show 4 new mails'
+                      color='primary'
+                      onClick={forWardImageClick}
+                    >
+                      <ArrowForwardIosIcon />
+                    </IconButton>
                   </Grid>
                 </Grid>
+              </Grid>
+              <Grid item xs={12} md={6} lg={6} sx={{ p: 2 }}>
+                <Card sx={{ boxShadow: 3 }}>
+                  <Grid container spacing={1}>
+                    <Grid
+                      item
+                      xs={12}
+                      md={12}
+                      lg={12}
+                      className='ProductPageTitle'
+                    >
+                      <div className='productPageTitle'>
+                        {this.state.product.name}
+                      </div>
+                      <hr />
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      md={12}
+                      lg={12}
+                      spacing={1}
+                      className='ProductPageText'
+                    >
+                      <div className='ProductPageText'>
+                        {' '}
+                        <b>Description:</b> {this.state.product.description}{' '}
+                      </div>
+                      <Box sx={{ mt: 0.5, mb: 1.5 }}>
+                        {this.state.tags.length !== 0 && (
+                          <Box>
+                            <b>Tags: </b>
+                            {this.state.tags.map((item) => (
+                              <Chip
+                                sx={{ mr: 0.5 }}
+                                label={item.name}
+                                variant='outlined'
+                              />
+                            ))}
+                          </Box>
+                        )}
+                      </Box>
+                      <hr />
+                    </Grid>
+
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      lg={6}
+                      className='ProductPageText'
+                    >
+                      <div className='ProductPageText'>
+                        {' '}
+                        <b>Environment:</b> {this.state.product.environment}{' '}
+                      </div>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      lg={6}
+                      className='ProductPageText'
+                    >
+                      <div className='ProductPageText'>
+                        {' '}
+                        <b>Water:</b> {this.state.product.water}
+                      </div>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      lg={6}
+                      className='ProductPageText'
+                    >
+                      <div className='ProductPageText'>
+                        {' '}
+                        <b>Light:</b> {this.state.product.light}{' '}
+                      </div>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      sm={6}
+                      lg={6}
+                      className='ProductPageText'
+                    >
+                      <div className='ProductPageText'>
+                        {' '}
+                        <b>GrowthRate:</b> {this.state.product.growthRate}{' '}
+                      </div>
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      md={12}
+                      lg={12}
+                      className='ProductPageBuyContainer'
+                    >
+                      <Grid container spacing={0} alignItems='center'>
+                        <Grid item container className='ProductPageTitle'>
+                          <div className='productPagePrice'>
+                            {' '}
+                            <b>Price:{this.state.product.price}$</b>
+                          </div>
+                        </Grid>
+                        <Grid
+                          container
+                          item
+                          xs={6}
+                          md={6}
+                          lg={4}
+                          sx={{
+                            justifyContent: { xs: 'flex-end', sm: 'center' },
+                          }}
+                          className='ProductPageCounter'
+                        >
+                          <Grid
+                            item
+                            container
+                            alignItems='center'
+                            direction='row'
+                          >
+                            <IconButton
+                              size='large'
+                              aria-label='show 4 new mails'
+                              color='inherit'
+                              sx={{ color: 'error.main' }}
+                              onClick={decreaseBought}
+                            >
+                              <RemoveIcon />
+                            </IconButton>
+                            <div className='ProductPageCounterNum'>
+                              {this.state.numberOfBuy}
+                            </div>
+                            <IconButton
+                              size='large'
+                              aria-label='show 4 new mails'
+                              color='inherit'
+                              sx={{ color: 'success.main' }}
+                              onClick={increaseBought}
+                            >
+                              <AddIcon />
+                            </IconButton>
+                          </Grid>
+                        </Grid>
+                        <Grid item sm={6} className='ProductPageTitle'>
+                          Total Price : {this.state.totalPrice}$
+                        </Grid>
+                      </Grid>
+                      <Grid
+                        container
+                        item
+                        justifyContent='flex-end'
+                        sx={{ p: 3, Color: '#12824C' }}
+                        className='ProductPageTitle'
+                      >
+                        <Button
+                          variant='contained'
+                          className='productsPageAdd'
+                          onClick={addToBasket}
+                        >
+                          Add To Bascket
+                        </Button>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Card>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </div>
+      </Grid>
     )
   }
 }

@@ -192,9 +192,11 @@ export default function KadooAppBar(props) {
             </Link>
           )}
           {!props.DrawerOption && (
-            <Typography variant='h4' noWrap component='div'>
-              Kadoo
-            </Typography>
+            <Link to='/Homepage'>
+              <Typography variant='h4' noWrap component='div' className='Title'>
+                Kadoo
+              </Typography>
+            </Link>
           )}
           {props.SearchOption && (
             <Search>

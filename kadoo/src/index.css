@@ -5,7 +5,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   cursor: url('tree-leaf.png'), auto;
-  background-color: whitesmoke;
+  background-color: whitesmoke !important;
   overflow-x: hidden;
 }
 
