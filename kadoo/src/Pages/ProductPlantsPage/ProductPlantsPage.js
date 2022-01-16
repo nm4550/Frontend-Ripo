@@ -14,6 +14,9 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import Card from '@mui/material/Card'
 import AppBar from '../../Components/AppBar/AppBar'
+import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
+import TagIcon from '@mui/icons-material/Tag'
 import Image from 'mui-image'
 
 class ProductPlantsPage extends React.Component {
@@ -289,7 +292,12 @@ class ProductPlantsPage extends React.Component {
                 className='BringFront'
               >
                 <Card sx={{ boxShadow: 3 }}>
-                  <Grid container spacing={1} style={{ minHeight: '75vh' }}>
+                  <Grid
+                    container
+                    spacing={1}
+                    style={{ minHeight: '75vh' }}
+                    sx={{ p: 2 }}
+                  >
                     <Grid
                       item
                       xs={12}
@@ -297,10 +305,14 @@ class ProductPlantsPage extends React.Component {
                       lg={12}
                       className='ProductPageTitle'
                     >
-                      <div className='productPageTitle'>
+                      <Typography
+                        variant='h5'
+                        sx={{ pb: 2 }}
+                        className='productPageTitle'
+                      >
                         {this.state.product.name}
-                      </div>
-                      <hr />
+                      </Typography>
+                      <Divider />
                     </Grid>
                     <Grid
                       item
@@ -310,21 +322,33 @@ class ProductPlantsPage extends React.Component {
                       spacing={1}
                       className='ProductPageText'
                     >
-                      <div className='ProductPageText'>
-                        {' '}
-                        <b>Description:</b> {this.state.product.description}{' '}
-                      </div>
-                      <Box sx={{ mt: 0.5, mb: 1.5 }}>
+                      <Box sx={{ p: 2, mt: 1, mb: 1 }} className='BgText'>
+                        <Typography className='ProductPageText'>
+                          {this.state.product.description}{' '}
+                        </Typography>
+                      </Box>
+                      <Box sx={{ ml: 0, mt: 1, mb: 1.5 }}>
                         {this.state.tags.length !== 0 && (
-                          <Box>
-                            <b>Tags: </b>
-                            {this.state.tags.map((item) => (
-                              <Chip
-                                sx={{ mr: 0.5 }}
-                                label={item.name}
-                                variant='outlined'
-                              />
-                            ))}
+                          <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                            <Box alignItems='center' sx={{ display: 'flex' }}>
+                              <TagIcon color='action' />
+                              <Typography>Tags:</Typography>
+                            </Box>
+                            <Box
+                              sx={{
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                                ml: 0.5,
+                              }}
+                            >
+                              {this.state.tags.map((item) => (
+                                <Chip
+                                  sx={{ mr: 0.5, mt: 0.5 }}
+                                  label={item.name}
+                                  variant='outlined'
+                                />
+                              ))}
+                            </Box>
                           </Box>
                         )}
                       </Box>
