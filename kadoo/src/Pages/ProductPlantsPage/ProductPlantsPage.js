@@ -147,8 +147,8 @@ class ProductPlantsPage extends React.Component {
               <Grid
                 item
                 xs={12}
-                md={6}
-                lg={6}
+                md={5}
+                lg={5}
                 container
                 justifyContent='center'
                 alignItems='center'
@@ -189,8 +189,24 @@ class ProductPlantsPage extends React.Component {
                         alignItems='center'
                         direction='row'
                       >
+                        <Grid
+                          sx={{ display: { xs: 'none', md: 'flex' } }}
+                          md={2}
+                        ></Grid>
+                        <Grid xs={12} md={8}></Grid>
+                        <Grid
+                          sx={{ display: { xs: 'none', md: 'flex' } }}
+                          md={2}
+                        ></Grid>
+                        <Grid
+                          sx={{ display: { xs: 'flex', md: 'none' }, m: 1 }}
+                          xs={6}
+                        ></Grid>
+                        <Grid
+                          sx={{ display: { xs: 'flex', md: 'none' }, m: 1 }}
+                          xs={6}
+                        ></Grid>
                         <IconButton
-                          sx={{ display: { xs: 'none', md: 'flex' }, m: 1 }}
                           size='small'
                           aria-label='show 4 new mails'
                           color='primary'
@@ -240,8 +256,8 @@ class ProductPlantsPage extends React.Component {
               <Grid
                 item
                 xs={12}
-                md={6}
-                lg={6}
+                md={7}
+                lg={7}
                 sx={{ p: 2, ml: -5 }}
                 className='BringFront'
               >
