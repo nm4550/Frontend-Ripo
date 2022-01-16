@@ -29,6 +29,10 @@
   height: 80% !important;
 }
 
+.BringFront {
+  z-index: 5;
+}
+
 .blurred {
   position: relative;
   width: 100%;
