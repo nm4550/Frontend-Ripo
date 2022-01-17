@@ -61,25 +61,58 @@
   z-index: 1;
 }
 
-.ProductPageBuyContainer {
-  background-color: white;
-  border-bottom-left-radius: 15px;
-  border-bottom-right-radius: 15px;
-  min-height: 1rem;
-}
-
 .ProductPageImage {
   object-fit: fit;
   height: 400px;
   width: 400px;
 }
 
-.BgText {
-  background-color: whitesmoke;
+.TableContainer {
+  background-color: rgba(255, 255, 255, 0.726);
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
+}
+
+.tempButton1 {
+  color: #ff9191;
+}
+
+.waterButton1 {
+  color: #a0d4f1;
+}
+
+.growButton1 {
+  color: #5ef09f;
+}
+
+.lightButton1 {
+  color: #fce61d;
+}
+
+.BgButton {
+  background-color: whitesmoke;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
+}
+
+.BgText {
+  background-color: whitesmoke;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 0px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.BgChip {
+  background-color: rgb(255, 255, 255);
+  border-bottom-left-radius: 99px;
+  border-bottom-right-radius: 99px;
+  border-top-left-radius: 99px;
+  border-top-right-radius: 99px;
 }
 
 .ProductPageTitle {
@@ -138,7 +171,11 @@
   transition: all 0.3s ease-in-out;
 }
 .ProductPageCounterNum {
-  border: 1px solid rgb(153, 153, 153);
+  background-color: white;
+  border-bottom-left-radius: 99px;
+  border-bottom-right-radius: 99px;
+  border-top-left-radius: 99px;
+  border-top-right-radius: 99px;
   width: 1.5rem;
   text-align: center;
   text-justify: auto;
