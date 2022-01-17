@@ -13,6 +13,20 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import AppBar from '../../Components/AppBar/AppBar'
 import Typography from '@mui/material/Typography'
+import Divider from '@mui/material/Divider'
+import Card from '@mui/material/Card'
+import TagIcon from '@mui/icons-material/Tag'
+import Image from 'mui-image'
+import ThermostatIcon from '@mui/icons-material/Thermostat'
+import NatureIcon from '@mui/icons-material/Nature'
+import OpacityIcon from '@mui/icons-material/Opacity'
+import WbSunnyIcon from '@mui/icons-material/WbSunny'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
 
 class ProductToolsPage extends React.Component {
   constructor(props) {
@@ -21,7 +35,7 @@ class ProductToolsPage extends React.Component {
       product: [],
       tooltags: '',
       id: this.props.match.params.id,
-      numberOfBuy: 0,
+      numberOfBuy: 1,
       totalPrice: 0,
       album: [],
       currentImage: 0,
@@ -34,6 +48,11 @@ class ProductToolsPage extends React.Component {
     fetch('http://127.0.0.1:8000/api/toolsRUD/' + this.state.id + '/')
       .then((response) => response.json())
       .then((data) => this.setState({ product: data }))
+      .then(() => {
+        this.setState({
+          totalPrice: this.state.product.price,
+        })
+      })
 
     fetch('http://127.0.0.1:8000/api/toolTags/' + this.state.id + '/')
       .then((response) => response.json())
@@ -56,14 +75,16 @@ class ProductToolsPage extends React.Component {
   render() {
     var increaseBought = () => {
       var nob = this.state.numberOfBuy
-      this.setState({
-        numberOfBuy: nob + 1,
-        totalPrice: (nob + 1) * this.state.product.price,
-      })
+      if (nob < 9) {
+        this.setState({
+          numberOfBuy: nob + 1,
+          totalPrice: (nob + 1) * this.state.product.price,
+        })
+      }
     }
     var decreaseBought = () => {
       var nob = this.state.numberOfBuy
-      if (nob > 0) {
+      if (nob > 1) {
         this.setState({
           numberOfBuy: nob - 1,
           totalPrice: (nob - 1) * this.state.product.price,
@@ -117,8 +138,8 @@ class ProductToolsPage extends React.Component {
     }
 
     return (
-      <div>
-        <Box>
+      <Grid container style={{ minHeight: '100vh' }} sx={{ pb: 2 }}>
+        <Box style={{ width: '100%' }}>
           <AppBar
             SearchOption={true}
             TicketOption={true}
@@ -132,185 +153,432 @@ class ProductToolsPage extends React.Component {
           container
           justifyContent='center'
           alignItems='center'
-          sx={{ pl: { xs: 2, sm: 10 }, pr: { xs: 2, sm: 10 } }}
+          sx={{
+            pl: { xs: 2, md: 5 },
+            pr: { xs: 2, nd: 5 },
+            pt: { xs: 10, sm: 3, md: 0 },
+          }}
+          style={{ height: '100%' }}
         >
-          <Grid
-            container
-            item
-            justifyContent='center'
-            sx={{ mt: 10 }}
-            className='ProductPageProductContainer'
-          >
+          <Grid>
             <Grid
-              item
-              xs={12}
-              md={6}
-              lg={6}
               container
+              item
               justifyContent='center'
               alignItems='center'
-              className='ProductPageImageContainer'
+              sx={{ mt: 0 }}
+              className='ProductPageProductContainer'
             >
-              <Grid item container justifyContent='center' alignItems='center'>
-                <Grid
-                  container
-                  item
-                  justifyContent='center'
-                  alignItems='center'
+              <Grid
+                item
+                xs={12}
+                md={5}
+                lg={5}
+                container
+                justifyContent='center'
+                alignItems='center'
+                sx={{
+                  height: { xs: 'auto', md: '70vh' },
+                }}
+              >
+                <Card
+                  sx={{
+                    boxShadow: 2,
+                    height: { xs: 'auto', md: '70vh' },
+                  }}
+                  className='ProductPageImageContainer'
                 >
-                  <IconButton
-                    sx={{ display: { xs: 'none', md: 'flex' } }}
-                    size='large'
-                    aria-label='show 4 new mails'
-                    color='primary'
-                    onClick={backWardImageClick}
-                  >
-                    <ArrowBackIosIcon />
-                  </IconButton>
-                  <img
-                    className='ProductPageImage'
-                    src={this.state.imageName.image}
-                    alt={this.state.imageName.name}
+                  <Grid
+                    item
+                    container
+                    justifyContent='center'
+                    alignItems='center'
                     sx={{
-                      width: { xs: '300px', sm: '400px' },
-                      height: { xs: '300px', sm: '400px' },
+                      height: { xs: 'auto', md: '70vh' },
+                      pb: { xs: 0, md: 0 },
                     }}
-                  ></img>
-                  <IconButton
-                    sx={{ display: { xs: 'flex', md: 'none' } }}
-                    size='large'
-                    aria-label='show 4 new mails'
-                    color='primary'
-                    onClick={backWardImageClick}
                   >
-                    <ArrowBackIosIcon />
-                  </IconButton>
-                  <IconButton
-                    size='large'
-                    aria-label='show 4 new mails'
-                    color='primary'
-                    onClick={forWardImageClick}
-                  >
-                    <ArrowForwardIosIcon />
-                  </IconButton>
-                </Grid>
-              </Grid>
-            </Grid>
-            <Grid item xs={12} md={6} lg={6} sx={{ p: 2 }}>
-              <Grid container spacing={1}>
-                <Grid item xs={12} md={12} lg={12} className='ProductPageTitle'>
-                  <div className='productPageTitle'>
-                    {this.state.product.name}
-                  </div>
-                  <hr />
-                </Grid>
-                <Grid
-                  item
-                  xs={12}
-                  md={12}
-                  lg={12}
-                  spacing={1}
-                  className='ProductPageText'
-                >
-                  <div className='ProductPageText'>
-                    {' '}
-                    <b>Description:</b> {this.state.product.description}{' '}
-                  </div>
-                  <Box sx={{ mt: 0.5, mb: 1.5 }}>
-                    {this.state.tooltags.length !== 0 && (
-                      <Box>
-                        <b>Tags: </b>
-                        {this.state.tooltags.map((item) => (
-                          <Chip
-                            sx={{ mr: 0.5 }}
-                            label={item.name}
-                            variant='outlined'
-                          />
-                        ))}
-                      </Box>
-                    )}
-                  </Box>
-                  <hr />
-                </Grid>
-                <Grid
-                  item
-                  container
-                  xs={12}
-                  md={12}
-                  lg={12}
-                  className='ProductPageBuyContainer'
-                >
-                  <Grid container item spacing={0} alignItems='center'>
-                    <Grid item container className='ProductPageTitle'>
-                      <div className='productPagePrice'>
-                        {' '}
-                        <b>Price:</b> {this.state.product.price} $
-                      </div>
+                    <Grid item container className='blurred-tool'>
+                      <Image
+                        src={this.state.imageName.image}
+                        width='100%'
+                        height='100%'
+                        fit='cover'
+                      />
                     </Grid>
                     <Grid
-                      container
+                      className='front'
                       item
-                      sx={{ justifyContent: { xs: 'center', sm: 'left' } }}
-                      className='ProductPageCounter'
+                      container
+                      justifyContent='center'
+                      alignItems='center'
                     >
-                      <Grid item xs={6} className='ProductPageTitle'>
-                        Total Price : {this.state.totalPrice}$
-                      </Grid>
-                      <Grid item xs={6}>
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            flexDirection: 'row',
-                            alignItems: 'center',
-                            justifyContent: 'flex-end',
-                          }}
+                      <Grid
+                        container
+                        item
+                        justifyContent='center'
+                        alignItems='center'
+                        direction='row'
+                        className='widthResize'
+                        sx={{ mr: { md: 1.5, xs: 0 } }}
+                      >
+                        <Grid
+                          item
+                          sx={{ display: { xs: 'none', md: 'flex' } }}
+                          md={1}
+                          alignItems='center'
+                          justifyContent='center'
                         >
                           <IconButton
-                            size='large'
+                            size='small'
                             aria-label='show 4 new mails'
-                            color='inherit'
-                            sx={{ color: 'error.main' }}
-                            onClick={decreaseBought}
+                            color='primary'
+                            onClick={backWardImageClick}
                           >
-                            <RemoveIcon />
+                            <ArrowBackIosIcon />
                           </IconButton>
-                          <Typography className='ProductPageCounterNum'>
-                            {this.state.numberOfBuy}
-                          </Typography>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={10}
+                          alignItems='center'
+                          justifyContent='center'
+                          sx={{
+                            display: 'flex',
+                            height: { xs: '70%', md: '100%' },
+                          }}
+                        >
+                          <Image
+                            src={this.state.imageName.image}
+                            className='mainImage'
+                            shift='bottom'
+                            shiftDuration={320}
+                            fit='cover'
+                          />
+                        </Grid>
+                        <Grid
+                          item
+                          sx={{ display: { xs: 'none', md: 'flex' } }}
+                          md={1}
+                          alignItems='center'
+                          justifyContent='flex-start'
+                        >
                           <IconButton
-                            size='large'
+                            sx={{ m: 1 }}
+                            size='small'
                             aria-label='show 4 new mails'
-                            color='inherit'
-                            sx={{ color: 'success.main' }}
-                            onClick={increaseBought}
+                            color='primary'
+                            onClick={forWardImageClick}
                           >
-                            <AddIcon />
+                            <ArrowForwardIosIcon />
                           </IconButton>
-                        </Box>
+                        </Grid>
+                        <Grid
+                          item
+                          sx={{ display: { xs: 'flex', md: 'none' }, p: 1 }}
+                          xs={6}
+                          alignItems='center'
+                          justifyContent='flex-end'
+                        >
+                          <IconButton
+                            sx={{ display: { xs: 'flex', md: 'none' }, p: 1 }}
+                            size='small'
+                            aria-label='show 4 new mails'
+                            color='primary'
+                            onClick={backWardImageClick}
+                          >
+                            <ArrowBackIosIcon />
+                          </IconButton>
+                        </Grid>
+                        <Grid
+                          item
+                          sx={{ display: { xs: 'flex', md: 'none' }, p: 1 }}
+                          xs={6}
+                          alignItems='center'
+                          justifyContent='flex-start'
+                        >
+                          <IconButton
+                            sx={{ m: 1 }}
+                            size='small'
+                            aria-label='show 4 new mails'
+                            color='primary'
+                            onClick={forWardImageClick}
+                          >
+                            <ArrowForwardIosIcon />
+                          </IconButton>
+                        </Grid>
                       </Grid>
                     </Grid>
                   </Grid>
-                  <Grid
-                    container
-                    item
-                    justifyContent='flex-end'
-                    sx={{ p: 3, Color: '#12824C' }}
-                    className='ProductPageTitle'
-                  >
-                    <Button
-                      variant='contained'
-                      className='productsPageAdd'
-                      onClick={addToBasket}
+                </Card>
+              </Grid>
+              <Grid
+                item
+                xs={12}
+                md={7}
+                lg={7}
+                sx={{ p: 2, ml: { xs: 0, md: -5 }, mt: { xs: -4.5, md: 0 } }}
+                className='BringFront'
+              >
+                <Card sx={{ boxShadow: 3 }}>
+                  <Grid container spacing={1} sx={{ p: 2 }}>
+                    <Grid
+                      item
+                      xs={12}
+                      md={12}
+                      lg={12}
+                      className='ProductPageTitle'
                     >
-                      Add To Bascket
-                    </Button>
+                      <Typography
+                        variant='h5'
+                        sx={{ pb: 2 }}
+                        className='productPageTitle'
+                      >
+                        {this.state.product.name}
+                      </Typography>
+                      <Divider />
+                    </Grid>
+                    <Grid
+                      item
+                      xs={12}
+                      md={12}
+                      lg={12}
+                      spacing={1}
+                      className='ProductPageText'
+                    >
+                      <Box sx={{ p: 2, mt: 1, mb: 0.5 }} className='BgText'>
+                        <Typography className='ProductPageText'>
+                          {this.state.product.description}{' '}
+                        </Typography>
+                      </Box>
+                      <Grid container item alignItems='flex-start'>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          sx={{ display: { xs: 'none', md: 'flex' } }}
+                        >
+                          <Box sx={{ ml: 0, mt: 1, mb: 1.5 }}>
+                            {this.state.tooltags.length !== 0 && (
+                              <Box
+                                sx={{ display: 'flex', flexDirection: 'row' }}
+                              >
+                                <Box
+                                  alignItems='center'
+                                  sx={{ display: 'flex' }}
+                                >
+                                  <TagIcon color='action' />
+                                  <Typography>Tags:</Typography>
+                                </Box>
+                                <Box
+                                  sx={{
+                                    display: 'flex',
+                                    flexWrap: 'wrap',
+                                    ml: 0.5,
+                                  }}
+                                >
+                                  {this.state.tooltags.map((item) => (
+                                    <Chip
+                                      sx={{ mr: 0.5, mt: 0.5 }}
+                                      label={
+                                        <Typography>{item.name}</Typography>
+                                      }
+                                      variant='outlined'
+                                    />
+                                  ))}
+                                </Box>
+                              </Box>
+                            )}
+                          </Box>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          sx={{ mt: { xs: 0.25, md: 0 } }}
+                        >
+                          <Box className='BgButton'>
+                            <Grid item xs={12} md={12} lg={12}>
+                              <Grid
+                                container
+                                spacing={0}
+                                alignItems='center'
+                                justifyContent='center'
+                              >
+                                <Grid
+                                  item
+                                  container
+                                  className='ProductPageTitle'
+                                  justifyContent='center'
+                                >
+                                  <Box
+                                    sx={{ display: 'flex' }}
+                                    className='BgChip'
+                                    sx={{ p: 1, mt: -2.75, boxShadow: 2 }}
+                                  >
+                                    <Chip
+                                      label={
+                                        <Typography variant='h6'>
+                                          {this.state.product.price + '$'}
+                                        </Typography>
+                                      }
+                                      color='success'
+                                      variant='outlined'
+                                      style={{ fontSize: '1.1rem' }}
+                                      sx={{
+                                        pt: 0.5,
+                                        pb: 0.5,
+                                        pr: 1.5,
+                                        pl: 1.5,
+                                      }}
+                                    />
+                                  </Box>
+                                </Grid>
+                                <Grid
+                                  item
+                                  container
+                                  xs={12}
+                                  md={12}
+                                  lg={12}
+                                  className='ProductPageCounter'
+                                  alignItems='center'
+                                  justifyContent='space-between'
+                                  direction='row'
+                                  sx={{
+                                    flexWrap: 'wrap',
+                                    pl: 1,
+                                    pr: 1.5,
+                                    pb: 1,
+                                    pt: 0.5,
+                                  }}
+                                >
+                                  <Grid
+                                    item
+                                    alignItems='center'
+                                    justifyContent='space-between'
+                                    direction='row'
+                                    sx={{
+                                      flexWrap: 'nowrap',
+                                      alignSelf: 'center',
+                                    }}
+                                  >
+                                    <Box
+                                      sx={{
+                                        display: 'flex',
+                                        flexDirection: 'row',
+                                        alignItems: 'center',
+                                      }}
+                                    >
+                                      <IconButton
+                                        size='large'
+                                        aria-label='show 4 new mails'
+                                        color='inherit'
+                                        sx={{ color: 'error.main' }}
+                                        onClick={decreaseBought}
+                                      >
+                                        <RemoveIcon />
+                                      </IconButton>
+                                      <Box
+                                        className='ProductPageCounterNum'
+                                        sx={{
+                                          display: 'flex',
+                                          pr: 3,
+                                          pl: 2,
+                                          boxShadow: 1,
+                                        }}
+                                      >
+                                        {
+                                          <Typography>
+                                            {this.state.numberOfBuy}
+                                          </Typography>
+                                        }
+                                      </Box>
+                                      <IconButton
+                                        size='large'
+                                        aria-label='show 4 new mails'
+                                        color='inherit'
+                                        sx={{ color: 'success.main' }}
+                                        onClick={increaseBought}
+                                      >
+                                        <AddIcon />
+                                      </IconButton>
+                                    </Box>
+                                  </Grid>
+                                  <Grid
+                                    item
+                                    justifyContent='flex-end'
+                                    sx={{
+                                      pt: 1,
+                                      pb: 1,
+                                      Color: '#12824C',
+                                      alignSelf: 'center',
+                                    }}
+                                    className='ProductPageTitle'
+                                  >
+                                    <Button
+                                      variant='contained'
+                                      className='productsPageAdd'
+                                      onClick={addToBasket}
+                                    >
+                                      {'Add To Basket (' +
+                                        this.state.totalPrice +
+                                        '$)'}
+                                    </Button>
+                                  </Grid>
+                                </Grid>
+                              </Grid>
+                            </Grid>
+                          </Box>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          sx={{ display: { xs: 'flex', md: 'none' }, mt: 1 }}
+                        >
+                          <Box sx={{ ml: 0, mt: 1, mb: 1.5 }}>
+                            {this.state.tooltags.length !== 0 && (
+                              <Box
+                                sx={{ display: 'flex', flexDirection: 'row' }}
+                              >
+                                <Box
+                                  alignItems='center'
+                                  sx={{ display: 'flex' }}
+                                >
+                                  <TagIcon color='action' />
+                                  <Typography>Tags:</Typography>
+                                </Box>
+                                <Box
+                                  sx={{
+                                    display: 'flex',
+                                    flexWrap: 'wrap',
+                                    ml: 0.5,
+                                  }}
+                                >
+                                  {this.state.tooltags.map((item) => (
+                                    <Chip
+                                      sx={{ mr: 0.5, mt: 0.5 }}
+                                      label={
+                                        <Typography>{item.name}</Typography>
+                                      }
+                                      variant='outlined'
+                                    />
+                                  ))}
+                                </Box>
+                              </Box>
+                            )}
+                          </Box>
+                        </Grid>
+                      </Grid>
+                    </Grid>
                   </Grid>
-                </Grid>
+                </Card>
               </Grid>
             </Grid>
           </Grid>
         </Grid>
-      </div>
+      </Grid>
     )
   }
 }
