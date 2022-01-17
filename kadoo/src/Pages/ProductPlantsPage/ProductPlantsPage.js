@@ -36,7 +36,7 @@ class ProductPlantsPage extends React.Component {
       product: [],
       tags: [],
       id: this.props.match.params.id,
-      numberOfBuy: 0,
+      numberOfBuy: 1,
       totalPrice: 0,
       album: [],
       currentImage: 0,
@@ -49,6 +49,11 @@ class ProductPlantsPage extends React.Component {
     fetch('http://127.0.0.1:8000/api/plantsRUD/' + this.state.id + '/')
       .then((response) => response.json())
       .then((data) => this.setState({ product: data }))
+      .then(() => {
+        this.setState({
+          totalPrice: this.state.product.price,
+        })
+      })
 
     fetch('http://127.0.0.1:8000/api/plantTags/' + this.state.id + '/')
       .then((response) => response.json())
@@ -69,14 +74,16 @@ class ProductPlantsPage extends React.Component {
   render() {
     var increaseBought = () => {
       var nob = this.state.numberOfBuy
-      this.setState({
-        numberOfBuy: nob + 1,
-        totalPrice: (nob + 1) * this.state.product.price,
-      })
+      if (nob < 9) {
+        this.setState({
+          numberOfBuy: nob + 1,
+          totalPrice: (nob + 1) * this.state.product.price,
+        })
+      }
     }
     var decreaseBought = () => {
       var nob = this.state.numberOfBuy
-      if (nob > 0) {
+      if (nob > 1) {
         this.setState({
           numberOfBuy: nob - 1,
           totalPrice: (nob - 1) * this.state.product.price,
@@ -145,7 +152,11 @@ class ProductPlantsPage extends React.Component {
           container
           justifyContent='center'
           alignItems='center'
-          sx={{ pl: { xs: 2, md: 5 }, pr: { xs: 2, nd: 5 } }}
+          sx={{
+            pl: { xs: 2, md: 5 },
+            pr: { xs: 2, nd: 5 },
+            pt: { xs: 10, sm: 3, md: 0 },
+          }}
           style={{ height: '100%' }}
         >
           <Grid>
@@ -165,10 +176,15 @@ class ProductPlantsPage extends React.Component {
                 container
                 justifyContent='center'
                 alignItems='center'
-                sx={{ height: { xs: 'auto', md: '70vh' } }}
+                sx={{
+                  height: { xs: 'auto', md: '70vh' },
+                }}
               >
                 <Card
-                  sx={{ boxShadow: 2, height: { xs: 'auto', md: '70vh' } }}
+                  sx={{
+                    boxShadow: 2,
+                    height: { xs: 'auto', md: '70vh' },
+                  }}
                   className='ProductPageImageContainer'
                 >
                   <Grid
@@ -176,7 +192,10 @@ class ProductPlantsPage extends React.Component {
                     container
                     justifyContent='center'
                     alignItems='center'
-                    sx={{ height: { xs: 'auto', md: '70vh' } }}
+                    sx={{
+                      height: { xs: 'auto', md: '70vh' },
+                      pb: { xs: 0, md: 0 },
+                    }}
                   >
                     <Grid item container className='blurred'>
                       <Image
@@ -298,7 +317,7 @@ class ProductPlantsPage extends React.Component {
                 xs={12}
                 md={7}
                 lg={7}
-                sx={{ p: 2, ml: -5 }}
+                sx={{ p: 2, ml: { xs: 0, md: -5 }, mt: { xs: -4.5, md: 0 } }}
                 className='BringFront'
               >
                 <Card sx={{ boxShadow: 3 }}>
@@ -402,7 +421,12 @@ class ProductPlantsPage extends React.Component {
                         </TableContainer>
                       </Box>
                       <Grid container item alignItems='flex-start'>
-                        <Grid item xs={12} md={7.5}>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          sx={{ display: { xs: 'none', md: 'flex' } }}
+                        >
                           <Box sx={{ ml: 0, mt: 1, mb: 1.5 }}>
                             {this.state.tags.length !== 0 && (
                               <Box
@@ -436,7 +460,12 @@ class ProductPlantsPage extends React.Component {
                             )}
                           </Box>
                         </Grid>
-                        <Grid item xs={12} md={4.5}>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          sx={{ mt: { xs: 0.25, md: 0 } }}
+                        >
                           <Box className='BgButton'>
                             <Grid item xs={12} md={12} lg={12}>
                               <Grid
@@ -485,7 +514,7 @@ class ProductPlantsPage extends React.Component {
                                   justifyContent='space-between'
                                   direction='row'
                                   sx={{
-                                    flexWrap: 'nowrap',
+                                    flexWrap: 'wrap',
                                     pl: 1,
                                     pr: 1.5,
                                     pb: 1,
@@ -497,7 +526,10 @@ class ProductPlantsPage extends React.Component {
                                     alignItems='center'
                                     justifyContent='space-between'
                                     direction='row'
-                                    sx={{ flexWrap: 'nowrap' }}
+                                    sx={{
+                                      flexWrap: 'nowrap',
+                                      alignSelf: 'center',
+                                    }}
                                   >
                                     <Box
                                       sx={{
@@ -544,7 +576,12 @@ class ProductPlantsPage extends React.Component {
                                   <Grid
                                     item
                                     justifyContent='flex-end'
-                                    sx={{ pt: 1, pb: 1, Color: '#12824C' }}
+                                    sx={{
+                                      pt: 1,
+                                      pb: 1,
+                                      Color: '#12824C',
+                                      alignSelf: 'center',
+                                    }}
                                     className='ProductPageTitle'
                                   >
                                     <Button
@@ -560,6 +597,45 @@ class ProductPlantsPage extends React.Component {
                                 </Grid>
                               </Grid>
                             </Grid>
+                          </Box>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          md={6}
+                          sx={{ display: { xs: 'flex', md: 'none' }, mt: 1 }}
+                        >
+                          <Box sx={{ ml: 0, mt: 1, mb: 1.5 }}>
+                            {this.state.tags.length !== 0 && (
+                              <Box
+                                sx={{ display: 'flex', flexDirection: 'row' }}
+                              >
+                                <Box
+                                  alignItems='center'
+                                  sx={{ display: 'flex' }}
+                                >
+                                  <TagIcon color='action' />
+                                  <Typography>Tags:</Typography>
+                                </Box>
+                                <Box
+                                  sx={{
+                                    display: 'flex',
+                                    flexWrap: 'wrap',
+                                    ml: 0.5,
+                                  }}
+                                >
+                                  {this.state.tags.map((item) => (
+                                    <Chip
+                                      sx={{ mr: 0.5, mt: 0.5 }}
+                                      label={
+                                        <Typography>{item.name}</Typography>
+                                      }
+                                      variant='outlined'
+                                    />
+                                  ))}
+                                </Box>
+                              </Box>
+                            )}
                           </Box>
                         </Grid>
                       </Grid>
