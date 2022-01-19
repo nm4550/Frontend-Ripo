@@ -17,6 +17,15 @@ import ProductTabs from '../../Components/ProductTabs/TabPanel'
 import Button from '@mui/material/Button'
 import Categorieslist from '../Catergories/Categorieslist'
 
+const BgAnimation = styled(Card)`
+  ${({ theme }) => `
+  background-color: ${theme.palette.primary.main};
+  transition: ${theme.transitions.create(['background-color', 'transform'], {
+    duration: theme.transitions.duration.Long,
+  })};
+  `}
+`
+
 function ProductWithCategory(props) {
   const [openDrawer, setOpenDrawer] = React.useState(false)
   const [plantsData, setPlantsData] = React.useState([])
@@ -26,6 +35,9 @@ function ProductWithCategory(props) {
   const [page, setPage] = useState(1)
   const [allPage, setAllPage] = useState(1)
   const [products, setProducts] = useState([])
+  const [bgColor, setBgColor] = React.useState('#ebf7f6')
+
+  let myRef = useRef()
 
   const handlePlantsData = (value) => {
     setPlantsData(value)
@@ -53,20 +65,39 @@ function ProductWithCategory(props) {
     setIsPlant(2)
   }
 
+  const ChangeBg = (p) => {
+    if (p === 0) {
+      setBgColor('#ebf7f6')
+    }
+    if (p === 1) {
+      setBgColor('#e1fde6')
+    }
+    if (p === 2) {
+      setBgColor('#fcf6d7')
+    }
+  }
+
   useEffect(() => {
     if (isplant === 0) {
       fetchPagination()
+      setBgColor('#ebf7f6')
     }
     if (isplant === 1) {
       fetchPlantsPagination(categoryText)
+      setBgColor('#e1fde6')
     }
     if (isplant === 2) {
       fetchToolsPagination(categoryText)
+      setBgColor('#fcf6d7')
     }
   }, [page])
 
   const handleChange = (event, value) => {
+    setTimeout(() => {
+      window.scrollTo({ behavior: 'smooth', top: myRef.current.offsetTop })
+    }, 500)
     setPage(value)
+    console.log('rrrrrrrrrrrr')
   }
 
   const handleChangePage = (value) => {
@@ -192,13 +223,15 @@ function ProductWithCategory(props) {
   }
 
   return (
-    <div>
-      <Card
-        style={{ backgroundColor: '#f5f4f4' }}
+    <Grid container sx={{ width: '100%' }}>
+      <BgAnimation
+        style={{ backgroundColor: bgColor }}
         sx={{
+          boxShadow: 3,
+          flex: 1,
           m: { xs: 3, sm: 5 },
-          pl: { xs: 1, sm: 2, md: 2 },
-          pr: { xs: 1, sm: 2, md: 8 },
+          pl: { xs: 2, sm: 2, md: 2 },
+          pr: { xs: 2, sm: 2, md: 3.5 },
           pt: 2,
           pb: 2,
         }}
@@ -210,8 +243,12 @@ function ProductWithCategory(props) {
           alignItems='flex-start'
         >
           <Grid
-          sx={{ display: { xs: 'none', sm: 'none', md: 'flex' } }}
-          item xs={12} sm={12} md={2}>
+            sx={{ display: { xs: 'none', sm: 'none', md: 'flex' } }}
+            item
+            xs={12}
+            sm={12}
+            md={2}
+          >
             <Categorieslist
               bindplants={handlePlantsData}
               bindtools={handleToolsData}
@@ -219,9 +256,11 @@ function ProductWithCategory(props) {
               settext={handleCategoryText}
               setpageall={handleChangeAllPage}
               setgivenpage={handleChangePage}
+              ChangeBg={ChangeBg}
+              hasClose={false}
             />
           </Grid>
-          <Grid item xs={12} sm={12} md={10}>
+          <Grid ref={myRef} item xs={12} sm={12} md={10} sx={{ pt: 0 }}>
             {isplant === 0 && <ShowProduct data={products} />}
             {isplant === 1 && <ShowProduct data={plantsData} />}
             {isplant === 2 && <ShowProduct data={toolsData} />}
@@ -261,8 +300,8 @@ function ProductWithCategory(props) {
             </Grid>
           </Grid>
         </Grid>
-      </Card>
-    </div>
+      </BgAnimation>
+    </Grid>
   )
 }
 

@@ -5,6 +5,10 @@
   max-width: 100%;
 }
 
-.css-1bi20rk-MuiTypography-root{
-  font-weight: 800!important;
+.NavOver {
+  margin-top: -8px !important;
+}
+
+.css-1bi20rk-MuiTypography-root {
+  font-weight: 800 !important;
 }
