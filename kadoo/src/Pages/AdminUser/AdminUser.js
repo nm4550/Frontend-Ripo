@@ -36,7 +36,7 @@ export default function NewUser(props) {
   const initialPrimaryFormData = Object.freeze({
     id: "",
     type: "",
-    name: "",
+    first_name: "",
     last_name: "",
     user_name: "",
     email: "",
@@ -65,7 +65,10 @@ export default function NewUser(props) {
   const [id, setId] = useState('');
   const [userId , setUserId] = useState('');
 
-  
+  useEffect(() => {
+    console.log(value);
+  }, [value])
+
   useEffect(() => {
     setUserId(props.match.params.userId)
   }, [])
@@ -101,33 +104,31 @@ export default function NewUser(props) {
   }, [userId])
 
   useEffect(() => {
-    if(id != '')
-    {
       updateSecondaryErrorData({
-        ...errorData,
+        ...secondaryerrorData,
         birth_date: "",
       });
       updateSecondaryErrorData({
-        ...errorData,
+        ...secondaryerrorData,
         degree: "",
       });
       updateSecondaryErrorData({
-        ...errorData,
+        ...secondaryerrorData,
         major: "",
       });
       updateSecondaryErrorData({
-        ...errorData,
+        ...secondaryerrorData,
         phone_number: "",
       });
       updateSecondaryErrorData({
-        ...errorData,
+        ...secondaryerrorData,
         about: "",
       });
       updateSecondaryErrorData({
-        ...errorData,
+        ...secondaryerrorData,
         address: "",
       });
-      console.log(errorData);
+      console.log("errorData");
   
       const requestOptions = {
         method: "POST",
@@ -144,11 +145,13 @@ export default function NewUser(props) {
           address: secondaryFormData.address,
         }),
       };
+      console.log("ine");
       console.log(requestOptions.body);
-      fetch("http://127.0.0.1:8000/api/specialist/update-secondary/" + id + "/", requestOptions)
+      console.log("id :" + id);
+      fetch("http://127.0.0.1:8000/api/specialist/update-secondary/" + userId + "/", requestOptions)
         .then((response) => {
           if (response.status === 200) {
-            alert("Specialist registered!");
+            alert("Specialist updated!");
           } 
           else {
             throw response;
@@ -208,9 +211,8 @@ export default function NewUser(props) {
             }
           });
         });
-    }
     
-  }, [primaryConfirmation , id])
+  }, [primaryAccepted])
 
   const handleChange = (e) => {
     updateFormData({
@@ -248,7 +250,7 @@ export default function NewUser(props) {
       JSON.stringify({
         email: formData.email,
         user_name: formData.user_name,
-        first_name: formData.name,
+        first_name: formData.first_name,
         last_name: formData.last_name,
         password: formData.password,
       })
@@ -256,7 +258,7 @@ export default function NewUser(props) {
 
       updateErrorData({
         ...errorData,
-        name: "",
+        first_name: "",
       });
       updateErrorData({
         ...errorData,
@@ -282,14 +284,14 @@ export default function NewUser(props) {
         body: JSON.stringify({
           email: formData.email,
           user_name: formData.user_name,
-          first_name: formData.name,
+          first_name: formData.first_name,
           last_name: formData.last_name,
           password: formData.password,
         }),
       };
-      fetch("http://127.0.0.1:8000/api/specialist/register/", requestOptions)
+      fetch("http://127.0.0.1:8000/api/specialist/update-primary/" + userId + "/", requestOptions)
         .then(async(response) => {
-          if (response.status === 201) {
+          if (response.status === 200) {
             let isJson = response.headers
             .get('content-type')
             ?.includes('application/json')
@@ -329,7 +331,7 @@ export default function NewUser(props) {
             if (errors.first_name !== undefined) {
               updateErrorData({
                 ...errorData,
-                name: errors.first_name,
+                first_name: errors.first_name,
               });
               return;
             }
@@ -391,14 +393,14 @@ export default function NewUser(props) {
         </div>
         <div className="newUserItem">
           <TextField
-            name='name'
+            name='first_name'
             id="standard-basic"
             label="First Name"
             variant="standard"
             type="text"
-            helperText={errorData.name != '' ? errorData.name : ''}
+            helperText={errorData.first_name != '' ? errorData.first_name : ''}
             onChange={handleChange}
-            value={formData.name}
+            value={formData.first_name}
             required
           />
         </div>
@@ -416,25 +418,11 @@ export default function NewUser(props) {
           />
         </div>
         <div className="newUserItem">
-          <TextField
-            id="outlined-password-input"
-            name='password'
-            label="Password"
-            variant="standard"
-            type="password"
-            autoComplete="current-password"
-            helperText={errorData.password != '' ? errorData.password : ''}
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="newUserItem">
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               name="birth_date"
               label="Birth Date"
-              value={value}
+              value={value === null ? new Date(secondaryFormData.birth_date) : value}
               onChange={(newValue) => {
                 setValue(newValue)
                 updateSecondaryFormData({
@@ -449,7 +437,7 @@ export default function NewUser(props) {
                 {...params} 
                 name="birth_date"
                 helperText={secondaryerrorData.birth_date != '' ? secondaryerrorData.birth_date : ''}
-                value={secondaryFormData.birth_date}
+                value={value === null ? new Date(secondaryFormData.birth_date) : value}
                 onChange={handleChangeSecondary}/>
               )}
             />
