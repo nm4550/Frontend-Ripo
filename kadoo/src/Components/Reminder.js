@@ -26,6 +26,7 @@ import TimePicker from '@mui/lab/TimePicker'
 export default function Reminder(props) {
   const [value, setValue] = React.useState(null)
   const [num, setNum] = React.useState(1)
+  const [enable, setEnable] = React.useState(false)
   const [satEnable, setSatEnable] = React.useState(false)
   const [sunEnable, setSunEnable] = React.useState(false)
   const [monEnable, setMonEnable] = React.useState(false)
@@ -54,6 +55,44 @@ export default function Reminder(props) {
   const [timeFormat2, setTimeFormat2] = React.useState('')
   const [timeFormat3, setTimeFormat3] = React.useState('')
   const [timeFormat4, setTimeFormat4] = React.useState('')
+
+  useEffect(() => {
+    switch (num) {
+      case 1:
+        if (time1 !== null) {
+          setEnable(true)
+        } else {
+          setEnable(false)
+        }
+        break
+      case 2:
+        if (time1 !== null && time2 !== null) {
+          setEnable(true)
+        } else {
+          setEnable(false)
+        }
+        break
+      case 3:
+        if (time1 !== null && time2 !== null && time3 !== null) {
+          setEnable(true)
+        } else {
+          setEnable(false)
+        }
+        break
+      case 4:
+        if (
+          time1 !== null &&
+          time2 !== null &&
+          time3 !== null &&
+          time4 !== null
+        ) {
+          setEnable(true)
+        } else {
+          setEnable(false)
+        }
+        break
+    }
+  }, [num, time1, time2, time3, time4])
 
   function handleClick(index) {
     switch (index) {
@@ -118,60 +157,63 @@ export default function Reminder(props) {
   }
 
   function SetReminder() {
-    dateTimes.map((p) => {
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          Authorization: 'JWT ' + localStorage.getItem('access_token'),
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          summary: props.summary,
-          location: props.location,
-          description: props.description,
-          start: {
-            dateTime: p,
-          },
-          end: {
-            dateTime: p,
-          },
-          recurrence: ['RRULE:FREQ=WEEKLY;COUNT=52'],
-          reminders: {
-            useDefault: false,
-            overrides: [
-              { method: 'email', minutes: 60 },
-              { method: 'popup', minutes: 10 },
-            ],
-          },
-        }),
-      }
-      console.log(requestOptions.body)
-      setTimeout(async () => {
-        fetch('http://127.0.0.1:8000/api/reminder/', requestOptions)
-          .then(async (response) => {
-            const isJson = response.headers
-              .get('content-type')
-              ?.includes('application/json')
-            const data = isJson ? await response.json() : null
-            console.log(data)
-            // check for error response
-            console.log(response.status)
-            if (!response.ok) {
-              // get error message from body or default to response status
-              const error = response.status
-              return Promise.reject(error)
-            }
-            console.log(data)
-          })
-          .catch((error) => {
-            if (error === 401) {
-              alert('You should login first!')
-              return
-            }
-            console.error('There was an error!', error)
-          })
-      }, 0)
-    })
+    Promise.all(
+      dateTimes.map((p, index) => {
+        setTimeout(async () => {
+          const requestOptions = {
+            method: 'POST',
+            headers: {
+              Authorization: 'JWT ' + localStorage.getItem('access_token'),
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              summary: props.summary,
+              location: props.location,
+              description: props.description,
+              start: {
+                dateTime: p,
+              },
+              end: {
+                dateTime: p,
+              },
+              recurrence: ['RRULE:FREQ=WEEKLY;COUNT=52'],
+              reminders: {
+                useDefault: false,
+                overrides: [
+                  { method: 'email', minutes: 60 },
+                  { method: 'popup', minutes: 10 },
+                ],
+              },
+            }),
+          }
+          console.log(requestOptions.body)
+          fetch('http://127.0.0.1:8000/api/reminder/', requestOptions)
+            .then(async (response) => {
+              const isJson = response.headers
+                .get('content-type')
+                ?.includes('application/json')
+              const data = isJson ? await response.json() : null
+              console.log(data)
+              // check for error response
+              console.log(response.status)
+              if (!response.ok) {
+                // get error message from body or default to response status
+                const error = response.status
+
+                return Promise.reject(error)
+              }
+              console.log(data)
+            })
+            .catch((error) => {
+              if (error === 401) {
+                alert('You should login first!')
+                return
+              }
+              console.error('There was an error!', error)
+            })
+        }, index * 1000)
+      })
+    ).then(props.onClose())
   }
 
   useEffect(() => {
@@ -555,10 +597,15 @@ export default function Reminder(props) {
             className='productsPageAdd'
             sx={{ mr: 3 }}
             onClick={SetDates}
+            disabled={!enable}
           >
             ADD REMINDER
           </Button>
-          <Button variant='contained' className='productsPageAdd'>
+          <Button
+            variant='contained'
+            className='productsPageAdd'
+            onClick={props.onClose}
+          >
             CANCEL
           </Button>
         </Grid>

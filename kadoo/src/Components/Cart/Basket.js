@@ -30,7 +30,7 @@ export default function Basket(props) {
           Cart Items
         </Typography>
         {cartItems.length != 0 && (
-          <TableContainer component={Box}>
+          <TableContainer component={Box} sx={{ ml: 0.25, mr: 0.25 }}>
             <Table aria-label='simple table'>
               <TableHead>
                 <TableRow>
@@ -97,12 +97,7 @@ export default function Basket(props) {
           {cartItems.length !== 0 && (
             <>
               <Box sx={{ display: 'flex', mt: 1 }}>
-                <Typography
-                  component='div'
-                  variant='body'
-                  align='left'
-                  sx={{ flex: 1 }}
-                >
+                <Typography component='div' align='left' sx={{ flex: 1 }}>
                   Items Price
                 </Typography>
                 <Typography className='text-right'>
@@ -110,12 +105,7 @@ export default function Basket(props) {
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', mt: 1 }}>
-                <Typography
-                  component='div'
-                  variant='body'
-                  align='left'
-                  sx={{ flex: 1 }}
-                >
+                <Typography component='div' align='left' sx={{ flex: 1 }}>
                   Tax Price
                 </Typography>
                 <Typography className='text-right'>
@@ -123,12 +113,7 @@ export default function Basket(props) {
                 </Typography>
               </Box>
               <Box sx={{ display: 'flex', mt: 1 }}>
-                <Typography
-                  component='div'
-                  variant='body'
-                  align='left'
-                  sx={{ flex: 1 }}
-                >
+                <Typography component='div' align='left' sx={{ flex: 1 }}>
                   Shipping Price
                 </Typography>
                 <Typography className='text-right'>

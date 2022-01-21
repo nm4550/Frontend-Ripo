@@ -5,11 +5,13 @@ import React, { useEffect, useState } from 'react'
 import axiosInstance from '../Components/Cart/axios'
 import AppBar from '../Components/AppBar/AppBar'
 import 'react-router-dom'
-
+import { Link } from 'react-router-dom'
 import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
+import Typography from '@mui/material/Typography'
 
 const Item = styled(Box)(({ theme }) => ({
   ...theme.typography.body2,
@@ -22,8 +24,26 @@ const Item = styled(Box)(({ theme }) => ({
 
 function AddtoCart() {
   const [cartItems, setCartItems] = useState([])
-
+  const [numberOfItems, setNumberOfItems] = useState(null)
   const [toolCartItems, setToolCartItems] = useState([])
+  const requestOptions = {
+    method: 'GET',
+    headers: {
+      Authorization: 'JWT ' + localStorage.getItem('access_token'),
+      'Content-Type': 'application/json',
+    },
+  }
+  async function FetchCountCart() {
+    await fetch(
+      'http://127.0.0.1:8000/api/cart/user-count-cart/',
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setNumberOfItems(data)
+        console.log(data)
+      })
+  }
 
   useEffect(() => {
     //Login a Sample User
@@ -51,6 +71,7 @@ function AddtoCart() {
 
     fetchAllProductData()
     fetchAllToolsData()
+    FetchCountCart()
   }, [])
 
   const onAdd = (product) => {
@@ -113,7 +134,9 @@ function AddtoCart() {
           id: product.id,
         },
       }
-      axiosInstance.delete(`cart/delete-plant-cart/`, config)
+      axiosInstance.delete(`cart/delete-plant-cart/`, config).then(() => {
+        FetchCountCart()
+      })
     } else {
       setCartItems(
         cartItems.map((x) =>
@@ -148,7 +171,9 @@ function AddtoCart() {
           id: product.id,
         },
       }
-      axiosInstance.delete(`cart/delete-tool-cart/`, config)
+      axiosInstance.delete(`cart/delete-tool-cart/`, config).then(() => {
+        FetchCountCart()
+      })
     } else {
       setToolCartItems(
         toolCartItems.map((x) =>
@@ -183,40 +208,106 @@ function AddtoCart() {
 
   return (
     <div className='App'>
-      <AppBar
-        SearchOption={true}
-        TicketOption={false}
-        CartOption={true}
-        AuthorizationOption={true}
-        DrawerOption={true}
-      />
-      <Box sx={{ flexGrow: 1, m: 4 }}>
-        <Grid container spacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid item xs={12} md={8}>
-            <Item>
-              <Main
-                plants={cartItems}
-                tools={toolCartItems}
-                onAddPlant={onAdd}
-                onAddTool={onAddTool}
-                onRemovePlant={onRemove}
-                onRemoveTool={onRemoveTool}
-              ></Main>
-            </Item>
+      {numberOfItems !== 0 && (
+        <Grid>
+          <AppBar
+            SearchOption={true}
+            TicketOption={false}
+            CartOption={false}
+            AuthorizationOption={true}
+            DrawerOption={false}
+          />
+          <Box sx={{ flexGrow: 1, m: 4 }}>
+            <Grid
+              container
+              spacing={1}
+              columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+              sx={{ mt: { xs: 8, sm: 0 } }}
+            >
+              <Grid item xs={12} md={8}>
+                <Item>
+                  <Main
+                    plants={cartItems}
+                    tools={toolCartItems}
+                    onAddPlant={onAdd}
+                    onAddTool={onAddTool}
+                    onRemovePlant={onRemove}
+                    onRemoveTool={onRemoveTool}
+                  ></Main>
+                </Item>
+              </Grid>
+              <Grid item xs={12} md={4}>
+                <Item>
+                  <Basket
+                    id='basket-part'
+                    cartItems={cartItems}
+                    toolCartItems={toolCartItems}
+                    CheckoutCart={Checkout}
+                  ></Basket>
+                </Item>
+              </Grid>
+            </Grid>
+          </Box>
+          <div className='row'></div>
+        </Grid>
+      )}
+      {numberOfItems === 0 && (
+        <Grid
+          container
+          justifyContent='center'
+          alignItems='center'
+          direction='row'
+        >
+          <AppBar
+            SearchOption={true}
+            TicketOption={false}
+            CartOption={false}
+            AuthorizationOption={true}
+            DrawerOption={false}
+          />
+          <Grid
+            container
+            item
+            justifyContent='center'
+            alignItems='center'
+            height='400px'
+            sx={{ pt: 5, pr: 10, pl: 10 }}
+          >
+            <img
+              src='undraw_empty_cart_co35.svg'
+              style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+              alt='Background'
+            />
           </Grid>
-          <Grid item xs={12} md={4}>
-            <Item>
-              <Basket
-                id='basket-part'
-                cartItems={cartItems}
-                toolCartItems={toolCartItems}
-                CheckoutCart={Checkout}
-              ></Basket>
-            </Item>
+          <Grid
+            container
+            item
+            justifyContent='center'
+            alignItems='center'
+            direction='row'
+            sx={{ mt: 3 }}
+          >
+            <Grid item justifyContent='center' alignItems='center'>
+              <Typography variant='h5' sx={{ flex: 1 }}>
+                Cart is empty right now!
+              </Typography>
+            </Grid>
+            <Grid
+              container
+              item
+              justifyContent='center'
+              alignItems='center'
+              sx={{ mt: 1 }}
+            >
+              <Link to={'/search/'}>
+                <Button variant='contained' sx={{ mt: 1.5 }}>
+                  Let's shop
+                </Button>
+              </Link>
+            </Grid>
           </Grid>
         </Grid>
-      </Box>
-      <div className='row'></div>
+      )}
     </div>
   )
 }
