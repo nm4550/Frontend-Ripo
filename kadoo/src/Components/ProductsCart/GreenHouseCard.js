@@ -26,6 +26,54 @@ import Theme from '../../Theme/ThemeGenerator'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import AddAlarmIcon from '@mui/icons-material/AddAlarm'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import Dialog from '@mui/material/Dialog'
+import Reminder from '../../Components/Reminder'
+import Button from '@mui/material/Button'
+import { styled } from '@mui/material/styles'
+import PropTypes from 'prop-types'
+import CloseIcon from '@mui/icons-material/Close'
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2),
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}))
+
+const BootstrapDialogTitle = (props) => {
+  const { children, onClose, ...other } = props
+
+  return (
+    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+      {children}
+      {onClose ? (
+        <IconButton
+          aria-label='close'
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </DialogTitle>
+  )
+}
+
+BootstrapDialogTitle.propTypes = {
+  children: PropTypes.node,
+  onClose: PropTypes.func.isRequired,
+}
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -51,9 +99,17 @@ function GreenHouseCard(props) {
   const mediaStyles = useSlopeCardMediaStyles()
   const shadowStyles = useSoftRiseShadowStyles()
   const textCardContentStyles = useN01TextInfoContentStyles()
-
+  const [reminderOpen, setReminderOpen] = React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
+
+  const handleClickReminderOpen = () => {
+    setReminderOpen(true)
+  }
+  const handleClickReminderClose = () => {
+    setReminderOpen(false)
+  }
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
@@ -146,6 +202,20 @@ function GreenHouseCard(props) {
                 Edit
               </Box>
             </MenuItem>
+
+            <MenuItem
+              onClick={() => {
+                handleClose()
+                handleClickReminderOpen()
+              }}
+            >
+              <Box>
+                <IconButton sx={{ mr: 2 }} size='small'>
+                  <AddAlarmIcon />
+                </IconButton>
+                Add Reminder
+              </Box>
+            </MenuItem>
           </Menu>
         </div>
         <Grid sx={{ p: 1, mt: -6 }}>
@@ -179,6 +249,32 @@ function GreenHouseCard(props) {
           />
         </CardContent>
       </Card>
+      <BootstrapDialog
+        onClose={handleClickReminderClose}
+        aria-labelledby='customized-dialog-title'
+        open={reminderOpen}
+      >
+        <BootstrapDialogTitle
+          id='customized-dialog-title'
+          onClose={handleClickReminderClose}
+        >
+          Modal title
+        </BootstrapDialogTitle>
+        <DialogContent dividers>
+          <Grid item container>
+            <Reminder
+              summary={props.data.name}
+              location={props.data.location}
+              description={props.data.description}
+            />
+          </Grid>
+        </DialogContent>
+        <DialogActions>
+          <Button autoFocus onClick={handleClose}>
+            Save changes
+          </Button>
+        </DialogActions>
+      </BootstrapDialog>
     </ThemeProvider>
   )
 }
