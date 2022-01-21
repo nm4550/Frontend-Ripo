@@ -131,7 +131,7 @@ function SignIn() {
         <Grid item xs={12} sm={6}>
           <img
             src={Background}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
             alt='Background'
           />
         </Grid>
