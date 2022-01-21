@@ -27,6 +27,7 @@ import ButtonGroup from '@mui/material/ButtonGroup'
 import TextField from '@mui/material/TextField'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
+import './Product.css'
 
 export default function Product(props) {
   const { product, onAddTool, onRemoveTool } = props
@@ -44,13 +45,13 @@ export default function Product(props) {
           justifyContent='center'
           alignItems='center'
         >
-          <Grid>
-            <CardMedia
-              component='img'
-              image={product.image}
-              alt={product.name.trim()}
-              sx={{ maxHeight: 180 }}
-            />
+          <Grid className='productIconImageContainer1' sx={{ p: 1 }}>
+            <CardMedia className='productContainerImage'>
+              <img
+                src={'http://127.0.0.1:8000' + product.image}
+                className='ToolProductIconImage1'
+              />
+            </CardMedia>
           </Grid>
         </Grid>
         <Grid item xs={12} sm={6} md={8}>
@@ -169,7 +170,6 @@ export default function Product(props) {
                 >
                   <Typography
                     component='div'
-                    variant='body'
                     sx={{ flex: 1, mt: 1 }}
                     overflow='hidden'
                     whiteSpace='pre-line'
@@ -188,10 +188,11 @@ export default function Product(props) {
                       sm: 'flex-end',
                       xs: 'center',
                     },
+                    mt: 1,
                   }}
                 >
                   <Chip
-                    label={product.price + ' $'}
+                    label={product.price + '$'}
                     color='success'
                     variant='outlined'
                     style={{ fontSize: '1.1rem' }}

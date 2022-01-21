@@ -27,6 +27,7 @@ import ButtonGroup from '@mui/material/ButtonGroup'
 import TextField from '@mui/material/TextField'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
+import './Product.css'
 
 export default function Product(props) {
   const { product, onAddPlant, onRemovePlant } = props
@@ -45,10 +46,10 @@ export default function Product(props) {
           alignItems='center'
         >
           <Grid className='productIconImageContainer1' sx={{ p: 1 }}>
-            <CardMedia>
+            <CardMedia className='productContainerImage'>
               <img
                 src={'http://127.0.0.1:8000' + product.image}
-                className='productIconImage'
+                className='productIconImage1'
               />
             </CardMedia>
           </Grid>
@@ -207,7 +208,7 @@ export default function Product(props) {
                     </ListItem>
                     <ListItem>
                       <Chip
-                        label={product.price + ' $'}
+                        label={product.price + '$'}
                         color='success'
                         variant='outlined'
                         style={{ fontSize: '1.1rem' }}
