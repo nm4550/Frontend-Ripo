@@ -83,6 +83,8 @@ function Plantmanagment(props) {
   const [preview, setPreview] = React.useState(null)
   const [imageChange, setImageChange] = React.useState(false)
 
+  const childRef = useRef()
+
   useEffect(() => {
     // create the preview
     if (selectedFile != null) {
@@ -104,6 +106,7 @@ function Plantmanagment(props) {
     } else {
       handleUpdate()
     }
+    childRef.current.reloadAll()
   }
 
   const handleUpdate = () => {
@@ -449,6 +452,7 @@ function Plantmanagment(props) {
           isopen={openDrawer}
           OpenMenu={handleDrawerOpen}
           CloseMenu={handleDrawerClose}
+          ref={childRef}
         />
         <Grid
           container

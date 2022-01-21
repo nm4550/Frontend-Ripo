@@ -16,6 +16,7 @@ import Typography from '@mui/material/Typography'
 import Divider from '@mui/material/Divider'
 import Card from '@mui/material/Card'
 import TagIcon from '@mui/icons-material/Tag'
+import { Link } from 'react-router-dom'
 import Image from 'mui-image'
 import ThermostatIcon from '@mui/icons-material/Thermostat'
 import NatureIcon from '@mui/icons-material/Nature'
@@ -125,9 +126,7 @@ class ProductToolsPage extends React.Component {
         requestOptions
       ).then((response) => {
         console.log(response.status)
-        if (response.status === 201) {
-          alert('successfully add!')
-        } else if (response.status === 401) {
+        if (response.status === 401) {
           console.log(response)
           alert('You are not login!')
         } else if (response.status === 400) {
@@ -516,15 +515,17 @@ class ProductToolsPage extends React.Component {
                                     }}
                                     className='ProductPageTitle'
                                   >
-                                    <Button
-                                      variant='contained'
-                                      className='productsPageAdd'
-                                      onClick={addToBasket}
-                                    >
-                                      {'Add To Basket (' +
-                                        this.state.totalPrice +
-                                        '$)'}
-                                    </Button>
+                                    <Link to={'/cart/'}>
+                                      <Button
+                                        variant='contained'
+                                        className='productsPageAdd'
+                                        onClick={addToBasket}
+                                      >
+                                        {'Add To Cart (' +
+                                          this.state.totalPrice +
+                                          '$)'}
+                                      </Button>
+                                    </Link>
                                   </Grid>
                                 </Grid>
                               </Grid>

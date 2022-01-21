@@ -6,6 +6,7 @@ import CardContent from '@mui/material/CardContent'
 import CardMedia from '@mui/material/CardMedia'
 import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
+import DeleteIcon from '@mui/icons-material/Delete'
 import SkipPreviousIcon from '@mui/icons-material/SkipPrevious'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
 import SkipNextIcon from '@mui/icons-material/SkipNext'
@@ -113,7 +114,7 @@ export default function Product(props) {
                       }}
                       onClick={() => onRemovePlant(product)}
                     >
-                      <RemoveIcon />
+                      {product.count === 1 ? <DeleteIcon /> : <RemoveIcon />}
                     </IconButton>
                     <TextField
                       id='outlined-number'

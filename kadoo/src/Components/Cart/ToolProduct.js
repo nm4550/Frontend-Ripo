@@ -27,6 +27,7 @@ import ButtonGroup from '@mui/material/ButtonGroup'
 import TextField from '@mui/material/TextField'
 import AddIcon from '@mui/icons-material/Add'
 import RemoveIcon from '@mui/icons-material/Remove'
+import DeleteIcon from '@mui/icons-material/Delete'
 import './Product.css'
 
 export default function Product(props) {
@@ -113,7 +114,7 @@ export default function Product(props) {
                       }}
                       onClick={() => onRemoveTool(product)}
                     >
-                      <RemoveIcon />
+                      {product.count === 1 ? <DeleteIcon /> : <RemoveIcon />}
                     </IconButton>
                     <TextField
                       id='outlined-number'
