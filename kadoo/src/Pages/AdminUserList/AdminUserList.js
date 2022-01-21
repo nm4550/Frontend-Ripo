@@ -38,8 +38,21 @@ export default function UserList() {
   
   
   const handleDelete = (id) => {
-    fetch('http://127.0.0.1:8000/api/specialist/delete/'+id+"/", { method: 'DELETE' })
-    .then(() => alert('Delete successful'));
+    console.log("id : " + id);
+    const requestOptions = {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json',
+         Authorization: 'JWT ' + localStorage.getItem('access_token')
+      },
+      body: JSON.stringify({
+        id : id,
+      }),
+    };
+    fetch('http://127.0.0.1:8000/api/specialist/delete/', requestOptions )
+    .then(() => {alert('Delete successful');
+    handleClose();
+  });
   };
 
   const columns = [
@@ -95,10 +108,10 @@ export default function UserList() {
     }, 
     },  
     { field: "Actions", headerName: "Actions", width: 100 , headerAlign: 'center' ,
-    renderCell: () => {
+    renderCell: (params) => {
       return (
         <div>
-          <Link to="/AdminPage/user/:userId">
+          <Link to={"/AdminPage/user/" + params.row.id + "/"}>
             <IconButton>
               <EditIcon/>
             </IconButton>
@@ -124,7 +137,7 @@ export default function UserList() {
               <Button autoFocus onClick={handleClose}>
                 No
               </Button>
-              <Button onClick={handleDelete} autoFocus>
+              <Button onClick={() => handleDelete(params.row.id)} autoFocus>
                 Yes
               </Button>
             </DialogActions>

@@ -139,8 +139,8 @@ function SearchResultProduct(props) {
   //Search
   const [searchTextPlants, setSearchTextPlants] = useState('')
   //Sort
-  const [sortKindPlants, setSortKindPlants] = useState('')
-  const [sortOrderPlants, setSortOrderPlants] = useState('')
+  const [sortKindPlants, setSortKindPlants] = useState('name')
+  const [sortOrderPlants, setSortOrderPlants] = useState('ASC')
   //Filter
   const [filterPriceLowerPlants, setFilterPriceLowerPlants] = useState('')
   const [filterPriceHigherPlants, setFilterPriceHigherPlants] = useState('')
@@ -163,8 +163,8 @@ function SearchResultProduct(props) {
   //Search
   const [searchTextProducts, setSearchTextProducts] = useState('')
   //Sort
-  const [sortKindProducts, setSortKindProducts] = useState('')
-  const [sortOrderProducts, setSortOrderProducts] = useState('')
+  const [sortKindProducts, setSortKindProducts] = useState('name')
+  const [sortOrderProducts, setSortOrderProducts] = useState('ASC')
   //Filter
   const [filterPriceLowerProducts, setFilterPriceLowerProducts] = useState('')
   const [filterPriceHigherProducts, setFilterPriceHigherProducts] = useState('')
@@ -182,8 +182,8 @@ function SearchResultProduct(props) {
   //Search
   const [searchTextTools, setSearchTextTools] = useState('')
   //Sort
-  const [sortKindTools, setSortKindTools] = useState('')
-  const [sortOrderTools, setSortOrderTools] = useState('')
+  const [sortKindTools, setSortKindTools] = useState('name')
+  const [sortOrderTools, setSortOrderTools] = useState('ASC')
   //Filter
   const [filterPriceLowerTools, setFilterPriceLowerTools] = useState('')
   const [filterPriceHigherTools, setFilterPriceHigherTools] = useState('')
