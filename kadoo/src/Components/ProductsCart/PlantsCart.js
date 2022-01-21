@@ -12,8 +12,8 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny'
 
 export default function PlantsCart(props) {
   return (
-    <Card>
-      <CardActionArea>
+    <Card sx={{ height: '100%' }}>
+      <CardActionArea sx={{ height: '100%' }}>
         <Link to={'/ProductPlantsPage/' + props.product.id}>
           <Grid className='productIconImageContainer' sx={{ p: 1 }}>
             <CardMedia
@@ -26,13 +26,18 @@ export default function PlantsCart(props) {
           </Grid>
         </Link>
         <CardContent>
-          <Typography gutterBottom variant='h5' component='div'>
+          <Typography
+            gutterBottom
+            variant='h5'
+            component='div'
+            className='textClass'
+          >
             {props.product.name}
           </Typography>
           <Typography gutterBottom variant='h6' component='div'>
             $ {props.product.price}
           </Typography>
-          <div className='featButton'>
+          <div className='featButton' sx={{ alignSelf: 'flex-end' }}>
             <WbSunnyIcon className='lightButton' />
             <a className='Message'> {props.product.light} </a>
             <OpacityIcon className='waterButton' />

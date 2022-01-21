@@ -10,7 +10,7 @@ import ToolsCart from '../ProductsCart/ToolsCart'
 
 function ShowProduct(props) {
   return (
-    <div>
+    <Grid container sx={{ width: '100%' }}>
       <Box sx={{ width: '100%' }}>
         <Typography variant='h4' gutterBottom component='div'>
           Products
@@ -24,7 +24,7 @@ function ShowProduct(props) {
           ))}
         </Grid>
       </Box>
-    </div>
+    </Grid>
   )
 }
 

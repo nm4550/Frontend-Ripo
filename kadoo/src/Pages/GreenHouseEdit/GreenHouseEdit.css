@@ -136,9 +136,11 @@
   border-top-right-radius: 99px;
 }
 
-.ProductPageTitle {
+.PlantPageTitle {
   font-size: 18px;
   font-weight: bolder;
+  font-weight: 800 !important;
+  font-family: Quicksand !important;
 }
 
 .ProductPageText {
@@ -160,6 +162,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#demo-simple-select-label {
+  margin-right: 3px;
 }
 
 .ProductPageCounterMin:hover {

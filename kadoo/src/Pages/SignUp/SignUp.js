@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Background from '../../Images/SignUp/SignUpBG.png'
 import { Grid, TextField, Button, InputAdornment } from '@mui/material'
 import { AccountCircle, VpnKey, EmailSharp, Create } from '@mui/icons-material'
+import AppBar from '../../Components/AppBar/AppBar'
 import history from '../../history'
 import './SignUp.css'
 
@@ -135,6 +136,13 @@ function SignUp() {
 
   return (
     <div>
+      <AppBar
+        SearchOption={true}
+        TicketOption={false}
+        CartOption={false}
+        DrawerOption={false}
+        AuthorizationOption={false}
+      />
       <Grid
         container
         style={{ minHeight: '100vh' }}
@@ -143,7 +151,7 @@ function SignUp() {
         <Grid item xs={12} sm={6}>
           <img
             src={Background}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
             alt='Background'
           />
         </Grid>

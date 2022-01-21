@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 //import Navbar from '../../Components/Navbar/Navbar'
 import AppBar from '../../Components/AppBar/AppBar'
 import ShowProduct from '../../Components/ShowProduct/ShowProduct'
@@ -34,6 +34,15 @@ import ProductWithCategory from '../../Components/ProductsWithCategory/ProductWi
 import Card from '@mui/material/Card'
 
 const drawerWidth = 240
+
+const BgAnimation = styled(Card)`
+  ${({ theme }) => `
+  background-color: ${theme.palette.primary.main};
+  transition: ${theme.transitions.create(['background-color', 'transform'], {
+    duration: theme.transitions.duration.Long,
+  })};
+  `}
+`
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' })(
   ({ theme, open }) => ({
@@ -72,6 +81,22 @@ export default function HomePage() {
   const [allPage, setAllPage] = useState(1)
   const [products, setProducts] = useState([])
 
+  const [bgColor, setBgColor] = React.useState('#ebf7f6')
+
+  const ChangeBg = (p) => {
+    if (p === 0) {
+      setBgColor('#ebf7f6')
+    }
+    if (p === 1) {
+      setBgColor('#e1fde6')
+    }
+    if (p === 2) {
+      setBgColor('#fcf6d7')
+    }
+  }
+
+  let myRef = useRef()
+
   const handlePlantsData = (value) => {
     setPlantsData(value)
     setIsPlant(1)
@@ -109,9 +134,25 @@ export default function HomePage() {
     if (isplant === 2) {
       fetchToolsPagination(categoryText)
     }
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      left: 0,
+      behavior: 'auto',
+    })
   }, [page])
 
+  const CloseScroll = () => {
+    handleDrawerClose()
+    setTimeout(() => {
+      window.scrollTo({ behavior: 'smooth', top: myRef.current.offsetTop })
+    }, 500)
+  }
+
   const handleChange = (event, value) => {
+    console.log('askfjdskjfksdfj')
+    setTimeout(() => {
+      window.scrollTo({ behavior: 'smooth', top: myRef.current.offsetTop })
+    }, 500)
     setPage(value)
   }
 
@@ -266,6 +307,9 @@ export default function HomePage() {
             settext={handleCategoryText}
             setpageall={handleChangeAllPage}
             setgivenpage={handleChangePage}
+            ChangeBg={ChangeBg}
+            hasClose={true}
+            CloseScroll={CloseScroll}
           />
         </Drawer>
         <Main open={openDrawer}>
@@ -288,26 +332,27 @@ export default function HomePage() {
             unmountOnExit
             timeout={900}
           >
-            <Box>
+            <Box sx={{ pt: { xs: 6, sm: 0 } }}>
               {/* <ContentHeader /> */}
               <ProductTabs />
-              <Grid item display={{ xs: 'none', sm: 'flex' }}>
+              <Grid container display={{ xs: 'none', md: 'block' }}>
                 <ProductWithCategory />
               </Grid>
 
-              <Card
-                style={{ backgroundColor: '#f5f4f4' }}
+              <BgAnimation
+                style={{ backgroundColor: bgColor }}
                 sx={{
-                  display: { xs: 'flex', sm: 'none' },
+                  display: { xs: 'flex', md: 'none' },
                   m: { xs: 3, sm: 5 },
-                  pl: { xs: 1, sm: 2, md: 2 },
-                  pr: { xs: 1, sm: 2, md: 8 },
+                  pl: { xs: 2, sm: 2, md: 2 },
+                  pr: { xs: 2, sm: 2, md: 8 },
                   pt: 2,
                   pb: 2,
                 }}
+                ref={myRef}
               >
                 <Grid
-                  display={{xs:'flex' ,sm:'none'}}
+                  display={{ xs: 'flex', md: 'none' }}
                   container
                   direction='row'
                   justifyContent='center'
@@ -353,7 +398,7 @@ export default function HomePage() {
                     </Grid>
                   </Grid>
                 </Grid>
-              </Card>
+              </BgAnimation>
             </Box>
           </Slide>
         </Main>
