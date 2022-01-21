@@ -174,9 +174,8 @@ export default function Product(props) {
                     overflow='hidden'
                     whiteSpace='pre-line'
                     textOverflow='ellipsis'
-                    height={80}
                   >
-                    {product.description + ' ...'}
+                    {product.description.split('\n')[0] + '..'}
                   </Typography>
                 </Box>
                 <Grid

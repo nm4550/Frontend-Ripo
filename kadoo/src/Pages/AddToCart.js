@@ -186,12 +186,17 @@ function AddtoCart() {
       <AppBar
         SearchOption={true}
         TicketOption={false}
-        CartOption={true}
+        CartOption={false}
         AuthorizationOption={true}
-        DrawerOption={true}
+        DrawerOption={false}
       />
       <Box sx={{ flexGrow: 1, m: 4 }}>
-        <Grid container spacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid
+          container
+          spacing={1}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+          sx={{ mt: { xs: 8, sm: 0 } }}
+        >
           <Grid item xs={12} md={8}>
             <Item>
               <Main
