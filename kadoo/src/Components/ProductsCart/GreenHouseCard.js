@@ -258,7 +258,7 @@ function GreenHouseCard(props) {
           id='customized-dialog-title'
           onClose={handleClickReminderClose}
         >
-          Modal title
+          Add Reminder
         </BootstrapDialogTitle>
         <DialogContent dividers>
           <Grid item container>
@@ -266,14 +266,10 @@ function GreenHouseCard(props) {
               summary={props.data.name}
               location={props.data.location}
               description={props.data.description}
+              onClose={handleClickReminderClose}
             />
           </Grid>
         </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Save changes
-          </Button>
-        </DialogActions>
       </BootstrapDialog>
     </ThemeProvider>
   )

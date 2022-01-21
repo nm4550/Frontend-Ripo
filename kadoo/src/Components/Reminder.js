@@ -157,60 +157,63 @@ export default function Reminder(props) {
   }
 
   function SetReminder() {
-    dateTimes.map((p) => {
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          Authorization: 'JWT ' + localStorage.getItem('access_token'),
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          summary: props.summary,
-          location: props.location,
-          description: props.description,
-          start: {
-            dateTime: p,
-          },
-          end: {
-            dateTime: p,
-          },
-          recurrence: ['RRULE:FREQ=WEEKLY;COUNT=52'],
-          reminders: {
-            useDefault: false,
-            overrides: [
-              { method: 'email', minutes: 60 },
-              { method: 'popup', minutes: 10 },
-            ],
-          },
-        }),
-      }
-      console.log(requestOptions.body)
-      setTimeout(async () => {
-        fetch('http://127.0.0.1:8000/api/reminder/', requestOptions)
-          .then(async (response) => {
-            const isJson = response.headers
-              .get('content-type')
-              ?.includes('application/json')
-            const data = isJson ? await response.json() : null
-            console.log(data)
-            // check for error response
-            console.log(response.status)
-            if (!response.ok) {
-              // get error message from body or default to response status
-              const error = response.status
-              return Promise.reject(error)
-            }
-            console.log(data)
-          })
-          .catch((error) => {
-            if (error === 401) {
-              alert('You should login first!')
-              return
-            }
-            console.error('There was an error!', error)
-          })
-      }, 0)
-    })
+    Promise.all(
+      dateTimes.map((p, index) => {
+        setTimeout(async () => {
+          const requestOptions = {
+            method: 'POST',
+            headers: {
+              Authorization: 'JWT ' + localStorage.getItem('access_token'),
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              summary: props.summary,
+              location: props.location,
+              description: props.description,
+              start: {
+                dateTime: p,
+              },
+              end: {
+                dateTime: p,
+              },
+              recurrence: ['RRULE:FREQ=WEEKLY;COUNT=52'],
+              reminders: {
+                useDefault: false,
+                overrides: [
+                  { method: 'email', minutes: 60 },
+                  { method: 'popup', minutes: 10 },
+                ],
+              },
+            }),
+          }
+          console.log(requestOptions.body)
+          fetch('http://127.0.0.1:8000/api/reminder/', requestOptions)
+            .then(async (response) => {
+              const isJson = response.headers
+                .get('content-type')
+                ?.includes('application/json')
+              const data = isJson ? await response.json() : null
+              console.log(data)
+              // check for error response
+              console.log(response.status)
+              if (!response.ok) {
+                // get error message from body or default to response status
+                const error = response.status
+
+                return Promise.reject(error)
+              }
+              console.log(data)
+            })
+            .catch((error) => {
+              if (error === 401) {
+                alert('You should login first!')
+                return
+              }
+              console.error('There was an error!', error)
+            })
+        }, index * 1000)
+      })
+    ).then(props.onClose())
   }
 
   useEffect(() => {
@@ -598,7 +601,11 @@ export default function Reminder(props) {
           >
             ADD REMINDER
           </Button>
-          <Button variant='contained' className='productsPageAdd'>
+          <Button
+            variant='contained'
+            className='productsPageAdd'
+            onClick={props.onClose}
+          >
             CANCEL
           </Button>
         </Grid>
