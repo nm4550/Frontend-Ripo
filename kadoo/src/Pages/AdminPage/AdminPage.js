@@ -25,9 +25,7 @@ function App() {
           <Route path="/AdminPage/specialist">
             <UserList />
           </Route>
-          <Route path="/AdminPage/user/:userId">
-            <AdminUser />
-          </Route>
+          <Route path="/AdminPage/user/:userId/" component={AdminUser}/>
           <Route path="/AdminPage/newUser">
             <AdminNewUser />
           </Route>

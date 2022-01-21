@@ -29,18 +29,25 @@ const currencies = [
   },
 ];
 
-export default function NewUser() {
+export default function NewUser(props) {
   const [currency, setCurrency] = React.useState('EUR');
 
   const [value, setValue] = React.useState(null);
   const initialPrimaryFormData = Object.freeze({
-    name: "",
-    lastName: "",
-    userName: "",
+    id: "",
+    type: "",
+    first_name: "",
+    last_name: "",
+    user_name: "",
     email: "",
     password: "",
   });
   const initialSecondaryFormData = Object.freeze({
+    id: "",
+    id_code: "",
+    is_online: "",
+    rate: "",
+    user: "",
     birth_date: "",
     degree: "",
     major: "",
@@ -56,35 +63,72 @@ export default function NewUser() {
   const [primaryConfirmation, setPrimaryConfirmation] = useState(false);
   const [primaryAccepted, setPrimaryAccepted] = useState(false);
   const [id, setId] = useState('');
+  const [userId , setUserId] = useState('');
 
   useEffect(() => {
-    if(id != '')
+    console.log(value);
+  }, [value])
+
+  useEffect(() => {
+    setUserId(props.match.params.userId)
+  }, [])
+
+  useEffect(() => {
+    if(userId != '')
     {
+      fetch('http://127.0.0.1:8000/api/specialist/primary/' + userId + '/' , {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+           Authorization: 'JWT ' + localStorage.getItem('access_token')
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          updateFormData(data)
+        })
+        fetch('http://127.0.0.1:8000/api/specialist/secondary/' + userId + '/' , {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+           Authorization: 'JWT ' + localStorage.getItem('access_token')
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          updateSecondaryFormData(data)
+        })
+    }
+  }, [userId])
+
+  useEffect(() => {
       updateSecondaryErrorData({
-        ...errorData,
+        ...secondaryerrorData,
         birth_date: "",
       });
       updateSecondaryErrorData({
-        ...errorData,
+        ...secondaryerrorData,
         degree: "",
       });
       updateSecondaryErrorData({
-        ...errorData,
+        ...secondaryerrorData,
         major: "",
       });
       updateSecondaryErrorData({
-        ...errorData,
+        ...secondaryerrorData,
         phone_number: "",
       });
       updateSecondaryErrorData({
-        ...errorData,
+        ...secondaryerrorData,
         about: "",
       });
       updateSecondaryErrorData({
-        ...errorData,
+        ...secondaryerrorData,
         address: "",
       });
-      console.log(errorData);
+      console.log("errorData");
   
       const requestOptions = {
         method: "POST",
@@ -101,11 +145,13 @@ export default function NewUser() {
           address: secondaryFormData.address,
         }),
       };
+      console.log("ine");
       console.log(requestOptions.body);
-      fetch("http://127.0.0.1:8000/api/specialist/update-secondary/" + id + "/", requestOptions)
+      console.log("id :" + id);
+      fetch("http://127.0.0.1:8000/api/specialist/update-secondary/" + userId + "/", requestOptions)
         .then((response) => {
           if (response.status === 200) {
-            alert("Specialist registered!");
+            alert("Specialist updated!");
           } 
           else {
             throw response;
@@ -165,9 +211,8 @@ export default function NewUser() {
             }
           });
         });
-    }
     
-  }, [primaryConfirmation , id])
+  }, [primaryAccepted])
 
   const handleChange = (e) => {
     updateFormData({
@@ -204,24 +249,24 @@ export default function NewUser() {
       console.log(
       JSON.stringify({
         email: formData.email,
-        user_name: formData.userName,
-        first_name: formData.name,
-        last_name: formData.lastName,
+        user_name: formData.user_name,
+        first_name: formData.first_name,
+        last_name: formData.last_name,
         password: formData.password,
       })
       );
 
       updateErrorData({
         ...errorData,
-        name: "",
+        first_name: "",
       });
       updateErrorData({
         ...errorData,
-        lastName: "",
+        last_name: "",
       });
       updateErrorData({
         ...errorData,
-        userName: "",
+        user_name: "",
       });
       updateErrorData({
         ...errorData,
@@ -238,15 +283,15 @@ export default function NewUser() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: formData.email,
-          user_name: formData.userName,
-          first_name: formData.name,
-          last_name: formData.lastName,
+          user_name: formData.user_name,
+          first_name: formData.first_name,
+          last_name: formData.last_name,
           password: formData.password,
         }),
       };
-      fetch("http://127.0.0.1:8000/api/specialist/register/", requestOptions)
+      fetch("http://127.0.0.1:8000/api/specialist/update-primary/" + userId + "/", requestOptions)
         .then(async(response) => {
-          if (response.status === 201) {
+          if (response.status === 200) {
             let isJson = response.headers
             .get('content-type')
             ?.includes('application/json')
@@ -278,7 +323,7 @@ export default function NewUser() {
             if (errors.user_name !== undefined) {
               updateErrorData({
                 ...errorData,
-                userName: errors.user_name,
+                user_name: errors.user_name,
               });
               return;
             }
@@ -286,7 +331,7 @@ export default function NewUser() {
             if (errors.first_name !== undefined) {
               updateErrorData({
                 ...errorData,
-                name: errors.first_name,
+                first_name: errors.first_name,
               });
               return;
             }
@@ -294,7 +339,7 @@ export default function NewUser() {
             if (errors.last_name !== undefined) {
               updateErrorData({
                 ...errorData,
-                lastName: errors.last_name,
+                last_name: errors.last_name,
               });
               return;
             }
@@ -329,54 +374,45 @@ export default function NewUser() {
             type="email"
             helperText={errorData.email != '' ? errorData.email : ''}
             onChange={handleChange}
+            value={formData.email}
             required
           />
         </div>
         <div className="newUserItem">
           <TextField
-            name='userName'
+            name='user_name'
             id="standard-basic"
-            label="Username"
+            label="user_name"
             variant="standard"
             type="text"
-            helperText={errorData.userName != '' ? errorData.userName : ''}
+            helperText={errorData.user_name != '' ? errorData.user_name : ''}
             onChange={handleChange}
+            value={formData.user_name}
             required
           />
         </div>
         <div className="newUserItem">
           <TextField
-            name='name'
+            name='first_name'
             id="standard-basic"
             label="First Name"
             variant="standard"
             type="text"
-            helperText={errorData.name != '' ? errorData.name : ''}
+            helperText={errorData.first_name != '' ? errorData.first_name : ''}
             onChange={handleChange}
+            value={formData.first_name}
             required
           />
         </div>
         <div className="newUserItem">
           <TextField
-            name='lastName'
+            name='last_name'
             id="standard-basic"
             label="Last Name"
             variant="standard"
             type="text"
-            helperText={errorData.lastName != '' ? errorData.lastName : ''}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="newUserItem">
-          <TextField
-            id="outlined-password-input"
-            name='password'
-            label="Password"
-            variant="standard"
-            type="password"
-            autoComplete="current-password"
-            helperText={errorData.password != '' ? errorData.password : ''}
+            helperText={errorData.last_name != '' ? errorData.last_name : ''}
+            value={formData.last_name}
             onChange={handleChange}
             required
           />
@@ -386,7 +422,7 @@ export default function NewUser() {
             <DatePicker
               name="birth_date"
               label="Birth Date"
-              value={value}
+              value={value === null ? new Date(secondaryFormData.birth_date) : value}
               onChange={(newValue) => {
                 setValue(newValue)
                 updateSecondaryFormData({
@@ -401,6 +437,7 @@ export default function NewUser() {
                 {...params} 
                 name="birth_date"
                 helperText={secondaryerrorData.birth_date != '' ? secondaryerrorData.birth_date : ''}
+                value={value === null ? new Date(secondaryFormData.birth_date) : value}
                 onChange={handleChangeSecondary}/>
               )}
             />
@@ -418,6 +455,7 @@ export default function NewUser() {
             native: true,
           }}
           variant="standard"
+          value={secondaryFormData.degree}
           >
           {currencies.map((option) => (
             <option key={option.value} value={option.value}>
@@ -434,6 +472,7 @@ export default function NewUser() {
           label="Major" 
           variant="standard" 
           helperText={secondaryerrorData.major != '' ? secondaryerrorData.major : ''}
+          value={secondaryFormData.major}
           onChange={handleChangeSecondary}/>
         </div>
         <div className="newUserItem">
@@ -443,6 +482,7 @@ export default function NewUser() {
             label="Phone number"
             variant="standard"
             helperText={secondaryerrorData.phone_number != '' ? secondaryerrorData.phone_number : ''}
+            value={secondaryFormData.phone_number}
             onChange={handleChangeSecondary}
           />
         </div>
@@ -453,6 +493,7 @@ export default function NewUser() {
           label="About" 
           variant="standard" 
           helperText={secondaryerrorData.about != '' ? secondaryerrorData.about : ''}
+          value={secondaryFormData.about}
           onChange={handleChangeSecondary}/>
         </div>
         <div className="newUserItem">
@@ -462,6 +503,7 @@ export default function NewUser() {
           label="Address" 
           variant="standard" 
           helperText={secondaryerrorData.address != '' ? secondaryerrorData.address : ''}
+          value={secondaryFormData.address}
           onChange={handleChangeSecondary}/>
         </div>
       </form>
