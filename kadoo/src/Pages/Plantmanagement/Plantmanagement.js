@@ -334,7 +334,8 @@ function Plantmanagment(props) {
         .then((response) => response.json())
         .then((data) => {
           setCoinsNumber(data.coin_value)
-          console.log('sdfdfsdf')
+          console.log('Coin')
+          console.log(data.coin_value)
           if (data.coin_value >= 50) {
             setPlantInfo(initialData)
             setNewPlant(true)
@@ -616,6 +617,8 @@ function Plantmanagment(props) {
             imageChange={imageChange}
             errorData={errorData}
             handleSubmit={handleSubmit}
+            newPlant={newPlant}
+            enable={enable}
           />
         </Dialog>
       </ThemeProvider>

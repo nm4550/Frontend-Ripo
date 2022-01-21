@@ -13,6 +13,7 @@ import Alert from '@mui/material/Alert'
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos'
 import Divider from '@mui/material/Divider'
+import Typography from '@mui/material/Typography'
 import InputLabel from '@mui/material/InputLabel'
 import MenuItem from '@mui/material/MenuItem'
 import FormControl from '@mui/material/FormControl'
@@ -22,6 +23,9 @@ import Tooltip from '@mui/material/Tooltip'
 import { makeStyles } from '@mui/styles'
 import Skeleton from '@mui/material/Skeleton'
 import Theme from '../../Theme/ThemeGenerator'
+import Image from 'mui-image'
+import UploadIcon from '@mui/icons-material/Upload'
+import './GreenHouseEdit.css'
 
 const Input = styled('input')({
   display: 'none',
@@ -53,21 +57,381 @@ function GreenHouseEdit(props) {
   }
 
   return (
-    <div>
+    <Grid
+      container
+      justifyContent='center'
+      alignItems='center'
+      style={{ height: '100%' }}
+    >
       <Grid
+        container
+        justifyContent='center'
+        alignItems='center'
+        sx={{
+          pl: { xs: 2, md: 5 },
+          pr: { xs: 2, nd: 5 },
+          pt: { xs: 10, sm: 3, md: 0 },
+        }}
+        style={{ height: '100%' }}
+      >
+        <Grid item container>
+          <Grid
+            container
+            item
+            justifyContent='center'
+            alignItems='center'
+            sx={{ mt: 0 }}
+            className='ProductPageProductContainer'
+          >
+            <Grid
+              item
+              xs={12}
+              md={5}
+              lg={5}
+              container
+              justifyContent='center'
+              alignItems='center'
+              sx={{
+                height: { xs: 'auto', md: '70vh' },
+              }}
+            >
+              <Card
+                sx={{
+                  boxShadow: 2,
+                  height: { xs: 'auto', md: '70vh' },
+                  width: '100%',
+                }}
+                className='ProductPageImageContainer'
+              >
+                <Grid
+                  item
+                  container
+                  justifyContent='center'
+                  alignItems='center'
+                  sx={{
+                    height: { xs: 'auto', md: '70vh' },
+                    pb: { xs: 0, md: 0 },
+                  }}
+                >
+                  <Grid item container className='blurred'>
+                    <Image
+                      src={
+                        !props.imageChange
+                          ? 'http://127.0.0.1:8000' + props.data.image
+                          : props.preview
+                      }
+                      width='100%'
+                      height='100%'
+                      fit='cover'
+                    />
+                  </Grid>
+                  <Grid
+                    className='front'
+                    item
+                    container
+                    justifyContent='center'
+                    alignItems='center'
+                  >
+                    <Grid
+                      container
+                      item
+                      justifyContent='center'
+                      alignItems='center'
+                      direction='row'
+                      className='widthResize'
+                      sx={{ mr: { md: 1.5, xs: 0 } }}
+                    >
+                      <Grid
+                        item
+                        xs={12}
+                        md={10}
+                        alignItems='center'
+                        justifyContent='center'
+                        sx={{
+                          display: 'flex',
+                          height: { xs: '70%', md: '100%' },
+                        }}
+                      >
+                        <Image
+                          src={
+                            !props.imageChange
+                              ? 'http://127.0.0.1:8000' + props.data.image
+                              : props.preview
+                          }
+                          className='mainImage'
+                          shift='bottom'
+                          shiftDuration={320}
+                          fit='cover'
+                        />
+                      </Grid>
+                      <Grid
+                        item
+                        container
+                        justifyContent='center'
+                        sx={{ mt: 1 }}
+                      >
+                        <input
+                          accept='image/jpeg'
+                          className={classes.input}
+                          id='faceImage'
+                          type='file'
+                          onChange={props.handleCapture}
+                        />
+                        <Tooltip title='Select Image'>
+                          <label htmlFor='faceImage'>
+                            <Button
+                              variant='contained'
+                              component='span'
+                              startIcon={<UploadIcon />}
+                            >
+                              Upload
+                            </Button>
+                          </label>
+                        </Tooltip>
+                      </Grid>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Card>
+            </Grid>
+            <Grid
+              item
+              xs={12}
+              md={7}
+              lg={7}
+              sx={{ p: 2, ml: { xs: 0, md: -5 }, mt: { xs: -4.5, md: 0 } }}
+              className='BringFront'
+            >
+              <Card sx={{ boxShadow: 3 }}>
+                <Grid container spacing={1} sx={{ p: 3 }}>
+                  <Grid
+                    item
+                    xs={12}
+                    md={12}
+                    lg={12}
+                    className='ProductPageTitle'
+                  >
+                    <Typography
+                      variant='h5'
+                      sx={{ pb: 2 }}
+                      className='PlantPageTitle'
+                    >
+                      Plants Information
+                    </Typography>
+                    <Divider />
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    md={12}
+                    lg={12}
+                    className='ProductPageTitle'
+                    sx={{ m: 1 }}
+                  >
+                    <TextField
+                      fullWidth
+                      label='Name'
+                      id='name'
+                      name='name'
+                      defaultValue={props.data.name}
+                      helperText={
+                        props.errorData.name != '' ? props.errorData.name : ''
+                      }
+                      onChange={handleChange}
+                    />
+                    <Divider sx={{ mt: 1 }} />
+                  </Grid>
+
+                  <Grid
+                    item
+                    xs={12}
+                    md={12}
+                    lg={12}
+                    spacing={1}
+                    className='ProductPageText'
+                    sx={{ m: 1 }}
+                  >
+                    <div className='ProductPageText'>
+                      <TextField
+                        fullWidth
+                        id='description'
+                        name='description'
+                        label='Description'
+                        multiline
+                        maxRows={3}
+                        defaultValue={props.data.description}
+                        onChange={handleChange}
+                      />
+                    </div>
+                  </Grid>
+                  <Grid
+                    container
+                    item
+                    className='ProductPageText'
+                    sx={{ m: 1 }}
+                  >
+                    <FormControl fullWidth sx={{ minWidth: '135px' }}>
+                      <InputLabel id='demo-simple-select-label'>
+                        Location
+                      </InputLabel>
+                      <Select
+                        labelId='demo-simple-select-label'
+                        id='location'
+                        name='location'
+                        label='Location'
+                        defaultValue={props.data.location}
+                        onChange={handleChange}
+                      >
+                        <MenuItem value={'Living room'}>Living room</MenuItem>
+                        <MenuItem value={'Kitchen'}>Kitchen</MenuItem>
+                        <MenuItem value={'bedroom'}>Bedroom</MenuItem>
+                      </Select>
+                    </FormControl>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={12}
+                    md={12}
+                    lg={12}
+                    className='ProductPageBuyContainer'
+                  >
+                    <Grid
+                      container
+                      item
+                      justifyContent='flex-end'
+                      sx={{ p: 0.5, Color: '#12824C' }}
+                      className='ProductPageTitle'
+                    >
+                      <Button
+                        variant='contained'
+                        className='productsPageAdd'
+                        onClick={props.handleSubmit}
+                        disabled={!props.newPlant && !props.enable}
+                      >
+                        Submit
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Card>
+            </Grid>
+          </Grid>
+        </Grid>
+      </Grid>
+      {/*<Grid
         container
         justifyContent='center'
         alignItems='center'
         sx={{ pl: { xs: 2, sm: 10 }, pr: { xs: 2, sm: 10 } }}
       >
         <Grid
-          container
           item
+          xs={12}
+          md={6}
+          lg={6}
+          container
           justifyContent='center'
-          sx={{ mt: { xs: 9, sm: 2, md: 3, lg: 5 } }}
-          className='ProductPageProductContainer'
+          alignItems='center'
+          sx={{
+            height: { xs: 'auto', md: '70vh' },
+          }}
         >
           <Grid
+            sx={{
+              height: { xs: 'auto', md: '70vh' },
+            }}
+            className='ProductPageImageContainer'
+          >
+            <Grid
+              container
+              item
+              justifyContent='center'
+              sx={{ mt: { xs: 9, sm: 2, md: 3, lg: 5 } }}
+              className='ProductPageProductContainer'
+            >
+              <Grid
+                item
+                container
+                justifyContent='center'
+                alignItems='center'
+                sx={{
+                  height: { xs: 'auto', md: '70vh' },
+                  pb: { xs: 0, md: 0 },
+                }}
+              >
+                <Grid item container className='blurred'>
+                  <Image
+                    src={
+                      !props.imageChange
+                        ? 'http://127.0.0.1:8000' + props.data.image
+                        : props.preview
+                    }
+                    width='100%'
+                    height='100%'
+                    fit='cover'
+                  />
+                </Grid>
+                <Grid
+                  className='front'
+                  item
+                  container
+                  justifyContent='center'
+                  alignItems='center'
+                >
+                  <Grid
+                    container
+                    item
+                    justifyContent='center'
+                    alignItems='center'
+                    direction='row'
+                    className='widthResize'
+                    sx={{ mr: { md: 1.5, xs: 0 } }}
+                  >
+                    <Grid
+                      item
+                      xs={12}
+                      md={10}
+                      alignItems='center'
+                      justifyContent='center'
+                      sx={{
+                        display: 'flex',
+                        height: { xs: '70%', md: '100%' },
+                      }}
+                    >
+                      <Image
+                        src={
+                          !props.imageChange
+                            ? 'http://127.0.0.1:8000' + props.data.image
+                            : props.preview
+                        }
+                        className='mainImage'
+                        shift='bottom'
+                        shiftDuration={320}
+                        fit='cover'
+                      />
+                    </Grid>
+                    <Grid item container justifyContent='center'>
+                      <input
+                        accept='image/jpeg'
+                        className={classes.input}
+                        id='faceImage'
+                        type='file'
+                        onChange={props.handleCapture}
+                      />
+                      <Tooltip title='Select Image'>
+                        <label htmlFor='faceImage'>
+                          <Button variant='contained' component='span'>
+                            Upload
+                          </Button>
+                        </label>
+                      </Tooltip>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Grid>
+          </Grid>
+          {/*<Grid
             item
             xs={12}
             md={6}
@@ -125,7 +489,7 @@ function GreenHouseEdit(props) {
                   sx={{ p: 0.5, Color: '#12824C' }}
                   className='ProductPageTitle'
                 >
-                  {/*<label htmlFor='contained-button-file'>
+                  {<label htmlFor='contained-button-file'>
                     <Input
                       accept='image/*'
                       id='contained-button-file'
@@ -136,25 +500,12 @@ function GreenHouseEdit(props) {
                       Upload
                 </Button>
 
-                </label>*/}
-                  <input
-                    accept='image/jpeg'
-                    className={classes.input}
-                    id='faceImage'
-                    type='file'
-                    onChange={props.handleCapture}
-                  />
-                  <Tooltip title='Select Image'>
-                    <label htmlFor='faceImage'>
-                      <Button variant='contained' component='span'>
-                        Upload
-                      </Button>
-                    </label>
-                  </Tooltip>
+                </label>} 
+                  
                 </Grid>
               </Grid>
             </Grid>
-          </Grid>
+                  </Grid> 
           <Grid item xs={12} md={6} lg={6} sx={{ p: 2 }}>
             <Grid container spacing={1}>
               <Grid
@@ -201,69 +552,6 @@ function GreenHouseEdit(props) {
                   />
                 </div>
               </Grid>
-
-              {/*<Grid
-                container
-                item
-                xs={12}
-                className='ProductPageText'
-                justifyContent='space-between'
-                sx={{ m: 1, mt: 0 }}
-              >
-                <Grid item className='ProductPageText'>
-                  <FormControl
-                    fullWidth
-                    sx={{ mt: 1, mb: 1, minWidth: '135px' }}
-                  >
-                    <InputLabel id='demo-simple-select-label'>Light</InputLabel>
-                    <Select
-                      labelId='demo-simple-select-label'
-                      id='demo-simple-select'
-                      label='Light'
-                    >
-                      <MenuItem value={'low'}>Low</MenuItem>
-                      <MenuItem value={'medium'}>Medium</MenuItem>
-                      <MenuItem value={'much'}>Much</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item className='ProductPageText'>
-                  <FormControl
-                    fullWidth
-                    sx={{ mt: 1, mb: 1, minWidth: '135px' }}
-                  >
-                    <InputLabel id='demo-simple-select-label'>Water</InputLabel>
-                    <Select
-                      labelId='demo-simple-select-label'
-                      id='demo-simple-select'
-                      label='Light'
-                    >
-                      <MenuItem value={'low'}>Low</MenuItem>
-                      <MenuItem value={'medium'}>Medium</MenuItem>
-                      <MenuItem value={'much'}>Much</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-                <Grid item className='ProductPageText'>
-                  <FormControl
-                    fullWidth
-                    sx={{ mt: 1, mb: 1, minWidth: '135px' }}
-                  >
-                    <InputLabel id='demo-simple-select-label'>
-                      Growth
-                    </InputLabel>
-                    <Select
-                      labelId='demo-simple-select-label'
-                      id='demo-simple-select'
-                      label='Light'
-                    >
-                      <MenuItem value={'low'}>Low</MenuItem>
-                      <MenuItem value={'medium'}>Medium</MenuItem>
-                      <MenuItem value={'much'}>Much</MenuItem>
-                    </Select>
-                  </FormControl>
-                </Grid>
-              </Grid>*/}
               <Grid container item className='ProductPageText' sx={{ m: 1 }}>
                 <FormControl fullWidth sx={{ minWidth: '135px' }}>
                   <InputLabel
@@ -312,8 +600,8 @@ function GreenHouseEdit(props) {
             </Grid>
           </Grid>
         </Grid>
-      </Grid>
-    </div>
+      </Grid>*/}
+    </Grid>
   )
 }
 
