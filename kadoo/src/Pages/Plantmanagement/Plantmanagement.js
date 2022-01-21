@@ -84,8 +84,19 @@ function Plantmanagment(props) {
   const [selectedFile, setSelectedFile] = React.useState(null)
   const [preview, setPreview] = React.useState(null)
   const [imageChange, setImageChange] = React.useState(false)
+  const [coins, setCoinsNumber] = useState(0)
 
   const childRef = useRef()
+
+  function srcToFile(src, fileName, mimeType) {
+    return fetch(src)
+      .then(function (res) {
+        return res.arrayBuffer()
+      })
+      .then(function (buf) {
+        return new File([buf], fileName, { type: mimeType })
+      })
+  }
 
   useEffect(() => {
     // create the preview
@@ -235,13 +246,14 @@ function Plantmanagment(props) {
       alert('Enter the name of plant!')
       return
     }
-    formData.append('description', newPlantInfo.description)
-    formData.append('location', newPlantInfo.location)
     if (selectedFile !== null) {
       formData.append('image', selectedFile, selectedFile.name)
     } else {
-      formData.append('image', '')
+      alert('Select Image for the plant!')
+      return
     }
+    formData.append('description', newPlantInfo.description)
+    formData.append('location', newPlantInfo.location)
 
     //console.log(formData)
     const requestOptions = {
@@ -309,9 +321,32 @@ function Plantmanagment(props) {
   }
 
   const handleClickOpen = () => {
-    setPlantInfo(initialData)
-    setNewPlant(true)
-    setOpen(true)
+    console.log('s111111111')
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        Authorization: 'JWT ' + localStorage.getItem('access_token'),
+        'Content-Type': 'application/json',
+      },
+    }
+    async function ReloadCoin() {
+      await fetch('http://127.0.0.1:8000/api/coin/get/', requestOptions)
+        .then((response) => response.json())
+        .then((data) => {
+          setCoinsNumber(data.coin_value)
+          console.log('sdfdfsdf')
+          if (data.coin_value >= 50) {
+            setPlantInfo(initialData)
+            setNewPlant(true)
+            setOpen(true)
+          } else {
+            alert('You dont have enough coin!')
+            return
+          }
+          console.log(data)
+        })
+    }
+    ReloadCoin()
   }
 
   const handleClose = () => {
@@ -321,11 +356,26 @@ function Plantmanagment(props) {
   }
 
   const handleClickOpenEdit = (data) => {
+    console.log('1')
     setPlantInfo(data)
     setNewPlantInfo(data)
     setNewPlant(false)
     setOpen(true)
   }
+
+  useEffect(() => {
+    if (plantInfo !== initialData) {
+      srcToFile(
+        'http://127.0.0.1:8000' + plantInfo.image,
+        'file.jpg',
+        'image/jpg'
+      ).then((file) => {
+        console.log('herwr')
+        console.log(file)
+        setSelectedFile(file)
+      })
+    }
+  }, [plantInfo])
 
   const handleDrawerOpen = () => {
     setOpenDrawer(true)
@@ -356,7 +406,7 @@ function Plantmanagment(props) {
   }
 
   const handleReload = () => {
-    setReload(reload ? false : true)
+    window.location.reload(true)
   }
 
   useEffect(() => {
