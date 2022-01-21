@@ -29,18 +29,25 @@ const currencies = [
   },
 ];
 
-export default function NewUser() {
+export default function NewUser(props) {
   const [currency, setCurrency] = React.useState('EUR');
 
   const [value, setValue] = React.useState(null);
   const initialPrimaryFormData = Object.freeze({
+    id: "",
+    type: "",
     name: "",
-    lastName: "",
-    userName: "",
+    last_name: "",
+    user_name: "",
     email: "",
     password: "",
   });
   const initialSecondaryFormData = Object.freeze({
+    id: "",
+    id_code: "",
+    is_online: "",
+    rate: "",
+    user: "",
     birth_date: "",
     degree: "",
     major: "",
@@ -56,6 +63,42 @@ export default function NewUser() {
   const [primaryConfirmation, setPrimaryConfirmation] = useState(false);
   const [primaryAccepted, setPrimaryAccepted] = useState(false);
   const [id, setId] = useState('');
+  const [userId , setUserId] = useState('');
+
+  
+  useEffect(() => {
+    setUserId(props.match.params.userId)
+  }, [])
+
+  useEffect(() => {
+    if(userId != '')
+    {
+      fetch('http://127.0.0.1:8000/api/specialist/primary/' + userId + '/' , {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+           Authorization: 'JWT ' + localStorage.getItem('access_token')
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          updateFormData(data)
+        })
+        fetch('http://127.0.0.1:8000/api/specialist/secondary/' + userId + '/' , {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+           Authorization: 'JWT ' + localStorage.getItem('access_token')
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          updateSecondaryFormData(data)
+        })
+    }
+  }, [userId])
 
   useEffect(() => {
     if(id != '')
@@ -204,9 +247,9 @@ export default function NewUser() {
       console.log(
       JSON.stringify({
         email: formData.email,
-        user_name: formData.userName,
+        user_name: formData.user_name,
         first_name: formData.name,
-        last_name: formData.lastName,
+        last_name: formData.last_name,
         password: formData.password,
       })
       );
@@ -217,11 +260,11 @@ export default function NewUser() {
       });
       updateErrorData({
         ...errorData,
-        lastName: "",
+        last_name: "",
       });
       updateErrorData({
         ...errorData,
-        userName: "",
+        user_name: "",
       });
       updateErrorData({
         ...errorData,
@@ -238,9 +281,9 @@ export default function NewUser() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email: formData.email,
-          user_name: formData.userName,
+          user_name: formData.user_name,
           first_name: formData.name,
-          last_name: formData.lastName,
+          last_name: formData.last_name,
           password: formData.password,
         }),
       };
@@ -278,7 +321,7 @@ export default function NewUser() {
             if (errors.user_name !== undefined) {
               updateErrorData({
                 ...errorData,
-                userName: errors.user_name,
+                user_name: errors.user_name,
               });
               return;
             }
@@ -294,7 +337,7 @@ export default function NewUser() {
             if (errors.last_name !== undefined) {
               updateErrorData({
                 ...errorData,
-                lastName: errors.last_name,
+                last_name: errors.last_name,
               });
               return;
             }
@@ -329,18 +372,20 @@ export default function NewUser() {
             type="email"
             helperText={errorData.email != '' ? errorData.email : ''}
             onChange={handleChange}
+            value={formData.email}
             required
           />
         </div>
         <div className="newUserItem">
           <TextField
-            name='userName'
+            name='user_name'
             id="standard-basic"
-            label="Username"
+            label="user_name"
             variant="standard"
             type="text"
-            helperText={errorData.userName != '' ? errorData.userName : ''}
+            helperText={errorData.user_name != '' ? errorData.user_name : ''}
             onChange={handleChange}
+            value={formData.user_name}
             required
           />
         </div>
@@ -353,17 +398,19 @@ export default function NewUser() {
             type="text"
             helperText={errorData.name != '' ? errorData.name : ''}
             onChange={handleChange}
+            value={formData.name}
             required
           />
         </div>
         <div className="newUserItem">
           <TextField
-            name='lastName'
+            name='last_name'
             id="standard-basic"
             label="Last Name"
             variant="standard"
             type="text"
-            helperText={errorData.lastName != '' ? errorData.lastName : ''}
+            helperText={errorData.last_name != '' ? errorData.last_name : ''}
+            value={formData.last_name}
             onChange={handleChange}
             required
           />
@@ -377,6 +424,7 @@ export default function NewUser() {
             type="password"
             autoComplete="current-password"
             helperText={errorData.password != '' ? errorData.password : ''}
+            value={formData.password}
             onChange={handleChange}
             required
           />
@@ -401,6 +449,7 @@ export default function NewUser() {
                 {...params} 
                 name="birth_date"
                 helperText={secondaryerrorData.birth_date != '' ? secondaryerrorData.birth_date : ''}
+                value={secondaryFormData.birth_date}
                 onChange={handleChangeSecondary}/>
               )}
             />
@@ -418,6 +467,7 @@ export default function NewUser() {
             native: true,
           }}
           variant="standard"
+          value={secondaryFormData.degree}
           >
           {currencies.map((option) => (
             <option key={option.value} value={option.value}>
@@ -434,6 +484,7 @@ export default function NewUser() {
           label="Major" 
           variant="standard" 
           helperText={secondaryerrorData.major != '' ? secondaryerrorData.major : ''}
+          value={secondaryFormData.major}
           onChange={handleChangeSecondary}/>
         </div>
         <div className="newUserItem">
@@ -443,6 +494,7 @@ export default function NewUser() {
             label="Phone number"
             variant="standard"
             helperText={secondaryerrorData.phone_number != '' ? secondaryerrorData.phone_number : ''}
+            value={secondaryFormData.phone_number}
             onChange={handleChangeSecondary}
           />
         </div>
@@ -453,6 +505,7 @@ export default function NewUser() {
           label="About" 
           variant="standard" 
           helperText={secondaryerrorData.about != '' ? secondaryerrorData.about : ''}
+          value={secondaryFormData.about}
           onChange={handleChangeSecondary}/>
         </div>
         <div className="newUserItem">
@@ -462,6 +515,7 @@ export default function NewUser() {
           label="Address" 
           variant="standard" 
           helperText={secondaryerrorData.address != '' ? secondaryerrorData.address : ''}
+          value={secondaryFormData.address}
           onChange={handleChangeSecondary}/>
         </div>
       </form>

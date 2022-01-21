@@ -95,10 +95,10 @@ export default function UserList() {
     }, 
     },  
     { field: "Actions", headerName: "Actions", width: 100 , headerAlign: 'center' ,
-    renderCell: () => {
+    renderCell: (params) => {
       return (
         <div>
-          <Link to="/AdminPage/user/:userId">
+          <Link to={"/AdminPage/user/" + params.row.id + "/"}>
             <IconButton>
               <EditIcon/>
             </IconButton>
