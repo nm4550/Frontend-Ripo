@@ -1,129 +1,130 @@
-import "./AdminProductList.css";
-import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import { productRows } from "../../dummyData";
-import { Link } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { IconButton } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
-import EditIcon from '@mui/icons-material/Edit';
-import { Fab } from "@mui/material";
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
-import * as React from 'react';
-import Button from '@mui/material/Button';
+import './AdminProductList.css'
+import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+import { productRows } from '../../dummyData'
+import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { IconButton } from '@mui/material'
+import AddIcon from '@mui/icons-material/Add'
+import EditIcon from '@mui/icons-material/Edit'
+import { Fab } from '@mui/material'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogContentText from '@mui/material/DialogContentText'
+import DialogTitle from '@mui/material/DialogTitle'
+import useMediaQuery from '@mui/material/useMediaQuery'
+import { useTheme } from '@mui/material/styles'
+import * as React from 'react'
+import Button from '@mui/material/Button'
 
 export default function ProductList() {
   const [page, setPage] = useState(1)
   const [allPage, setAllPage] = useState(1)
   const [products, setProducts] = useState([])
-  const [data, setData] = useState(productRows);
-  const [open, setOpen] = React.useState(false);
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [data, setData] = useState(productRows)
+  const [open, setOpen] = React.useState(false)
+  const theme = useTheme()
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'))
 
   const handleClickOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
-  
   const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
-  };
+    setData(data.filter((item) => item.id !== id))
+  }
 
   const columns = [
-    { field: "name", headerName: "Name", width: 180 , headerAlign: 'center' ,
-    renderCell: (params) => {
-      return (
-        <div className="productListItem">
-          {params.row.name}
-        </div>
-      );
-    }, 
-    },
     {
-      field: "image",
-      headerName: "Image", 
-      headerAlign: 'center' ,
-      width: 80,
+      field: 'name',
+      headerName: 'Name',
+      width: 180,
+      headerAlign: 'center',
       renderCell: (params) => {
-        console.log(params.row.name);
-        return (
-          <div className="productListItem">
-            <img className="productListImg" src={params.row.image} alt="" />
-          </div>
-        );
+        return <div className='productListItem'>{params.row.name}</div>
       },
     },
-    { field: "price", headerName: "Price", width: 70 , headerAlign: 'center',
-    renderCell: (params) => {
-      return (
-        <div className="productListItem">
-          ${params.row.price}
-        </div>
-      );
-    }, 
+    {
+      field: 'image',
+      headerName: 'Image',
+      headerAlign: 'center',
+      width: 80,
+      renderCell: (params) => {
+        console.log(params.row.name)
+        return (
+          <div className='productListItem'>
+            <img className='productListImg' src={params.row.image} alt='' />
+          </div>
+        )
+      },
     },
-    { field: "count", headerName: "Count", width: 80 , headerAlign: 'center' ,
-    renderCell: (params) => {
-      return (
-        <div className="productListItem">
-          {params.row.count}
-        </div>
-      );
-    }, 
+    {
+      field: 'price',
+      headerName: 'Price',
+      width: 70,
+      headerAlign: 'center',
+      renderCell: (params) => {
+        return <div className='productListItem'>${params.row.price}</div>
+      },
     },
-    { field: "Actions", headerName: "Actions", width: 100 , headerAlign: 'center' ,
-    renderCell: () => {
-      return (
-        <div>
-          <Link to="/AdminPage/product/:productId">
-            <IconButton>
-              <EditIcon/>
+    {
+      field: 'count',
+      headerName: 'Count',
+      width: 80,
+      headerAlign: 'center',
+      renderCell: (params) => {
+        return <div className='productListItem'>{params.row.count}</div>
+      },
+    },
+    {
+      field: 'Actions',
+      headerName: 'Actions',
+      width: 100,
+      headerAlign: 'center',
+      renderCell: (params) => {
+        return (
+          <div>
+            <Link to={'/AdminPage/product/' + params.row.id + '/'}>
+              <IconButton>
+                <EditIcon />
+              </IconButton>
+            </Link>
+            <IconButton onClick={handleClickOpen}>
+              <DeleteOutlineIcon />
             </IconButton>
-          </Link>
-          <IconButton  onClick={handleClickOpen}
-          >
-            <DeleteOutlineIcon/>
-          </IconButton>
-          <Dialog
+            <Dialog
               fullScreen={fullScreen}
               open={open}
               onClose={handleClose}
-              aria-labelledby="responsive-dialog-title"
-              >
-                <DialogTitle id="responsive-dialog-title">
-                {"Delete confirmation"}
-                </DialogTitle>
-                <DialogContent>
-                  <DialogContentText>
-                    Are you sure you want to delete this item?
-                  </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                  <Button autoFocus onClick={handleClose}>
-                    No
-                  </Button>
-                  <Button onClick={handleClose} autoFocus>
-                    Yes
-                  </Button>
-                </DialogActions>
-            </Dialog> 
-        </div>
-              
-      );
-    }, 
+              aria-labelledby='responsive-dialog-title'
+            >
+              <DialogTitle id='responsive-dialog-title'>
+                {'Delete confirmation'}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>
+                  Are you sure you want to delete this item?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button autoFocus onClick={handleClose}>
+                  No
+                </Button>
+                <Button onClick={handleClose} autoFocus>
+                  Yes
+                </Button>
+              </DialogActions>
+            </Dialog>
+          </div>
+        )
+      },
     },
-  ];
+  ]
   // const rows = [
   //   {
   //     id:1 , id:"Elnaz"
@@ -144,27 +145,27 @@ export default function ProductList() {
       })
   }
 
-  useEffect(()=>{
-    fetchPagination();
-    console.log('1');
-  },[])
+  useEffect(() => {
+    fetchPagination()
+    console.log('1')
+  }, [])
 
-  useEffect(()=>{
-    console.log(products);
-  },[products])
+  useEffect(() => {
+    console.log(products)
+  }, [products])
 
   return (
-    <div className="productList">
-      <Link to="/AdminPage/newProduct" className="LinkFab">
-        <Fab variant="extended" className="userAddButton">
+    <div className='productList'>
+      <Link to='/AdminPage/newProduct' className='LinkFab'>
+        <Fab variant='extended' className='userAddButton'>
           <AddIcon sx={{ mr: 1 }} />
           Add Specialist
         </Fab>
       </Link>
       <DataGrid
-        align= 'center'
+        align='center'
         textCenter
-        className="DataTable"
+        className='DataTable'
         rows={products}
         disableSelectionOnClick
         columns={columns}
@@ -172,5 +173,5 @@ export default function ProductList() {
         checkboxSelection
       />
     </div>
-  );
+  )
 }
