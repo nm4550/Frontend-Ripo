@@ -26,6 +26,7 @@ import TimePicker from '@mui/lab/TimePicker'
 export default function Reminder(props) {
   const [value, setValue] = React.useState(null)
   const [num, setNum] = React.useState(1)
+  const [enable, setEnable] = React.useState(false)
   const [satEnable, setSatEnable] = React.useState(false)
   const [sunEnable, setSunEnable] = React.useState(false)
   const [monEnable, setMonEnable] = React.useState(false)
@@ -54,6 +55,44 @@ export default function Reminder(props) {
   const [timeFormat2, setTimeFormat2] = React.useState('')
   const [timeFormat3, setTimeFormat3] = React.useState('')
   const [timeFormat4, setTimeFormat4] = React.useState('')
+
+  useEffect(() => {
+    switch (num) {
+      case 1:
+        if (time1 !== null) {
+          setEnable(true)
+        } else {
+          setEnable(false)
+        }
+        break
+      case 2:
+        if (time1 !== null && time2 !== null) {
+          setEnable(true)
+        } else {
+          setEnable(false)
+        }
+        break
+      case 3:
+        if (time1 !== null && time2 !== null && time3 !== null) {
+          setEnable(true)
+        } else {
+          setEnable(false)
+        }
+        break
+      case 4:
+        if (
+          time1 !== null &&
+          time2 !== null &&
+          time3 !== null &&
+          time4 !== null
+        ) {
+          setEnable(true)
+        } else {
+          setEnable(false)
+        }
+        break
+    }
+  }, [num, time1, time2, time3, time4])
 
   function handleClick(index) {
     switch (index) {
@@ -555,6 +594,7 @@ export default function Reminder(props) {
             className='productsPageAdd'
             sx={{ mr: 3 }}
             onClick={SetDates}
+            disabled={!enable}
           >
             ADD REMINDER
           </Button>

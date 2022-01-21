@@ -58,7 +58,7 @@ function NotFound() {
           >
             <Link to={'/Homepage/'}>
               <Button variant='contained' sx={{ mt: 1.5 }}>
-                Got to home Page
+                Go to home Page
               </Button>
             </Link>
           </Grid>
