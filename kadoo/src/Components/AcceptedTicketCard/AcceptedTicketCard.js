@@ -47,6 +47,7 @@ export default function AcceptedTicketCard(props) {
   };
   
   const handleDone = () => {
+    window.location.reload(true)
     setHandle(true);
   };
 
@@ -65,20 +66,20 @@ export default function AcceptedTicketCard(props) {
     })
     }, []);
     
-    // useEffect(() => {
-    //   if(!done){
-    // const requestOptions = {
-    //   method: 'POST',
-    //   headers: { 'Authorization': 'JWT ' + localStorage.getItem('access_token'),
-    //   'Content-Type': 'application/json' },
-    //   body: JSON.stringify(),
-    // }
-    // fetch('http://127.0.0.1:8000/api/ticket/done-ticket-specialist/'+`${props.ticket.id}/`, requestOptions)
-    // .then((response) => response.json())
-    // .then((data) => {
-    //     console.log("hellooo")
-    // })
-    // }}, [done]);
+    useEffect(() => {
+      if(done){
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+      'Content-Type': 'application/json' },
+      body: JSON.stringify(),
+    }
+    fetch('http://127.0.0.1:8000/api/ticket/done-ticket-specialist/'+`${props.ticket.id}/`, requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+        console.log("hellooo")
+    })
+    }}, [done]);
 
 
   return (
@@ -122,7 +123,7 @@ export default function AcceptedTicketCard(props) {
         <Typography variant="body2" color="text.secondary">
           {props.ticket.body.substring(
                 0,
-                40
+                20
               )}...
         </Typography>
       </CardContent>

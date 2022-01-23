@@ -47,6 +47,7 @@ export default function TicketCard(props) {
   };
 
   const handleReply = () => {
+    window.location.reload(true)
     setHandle(true);
   };
   
@@ -63,26 +64,29 @@ export default function TicketCard(props) {
         setUsername(data.user_name)
         setEmail(data.email)
     })
+    
+    console.log(props.ticket)
     }, []);
 
-    // useEffect(() => {
-    //   if(!handle){
-    // const requestOptions = {
-    //   method: 'POST',
-    //   headers: { 'Authorization': 'JWT ' + localStorage.getItem('access_token'),
-    //   'Content-Type': 'application/json' },
-    //   body: JSON.stringify(),
-    // }
-    // fetch('http://127.0.0.1:8000/api/ticket/accept-ticket/'+`${props.ticket.id}/`, requestOptions)
-    // .then((response) => response.json())
-    // .then((data) => {
-    //     console.log("hiiii")
-    // })
-    // }}, [handle]);
+
+    useEffect(() => {
+      if(handle){
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Authorization': 'JWT ' + localStorage.getItem('access_token'),
+      'Content-Type': 'application/json' },
+      body: JSON.stringify(),
+    }
+    fetch('http://127.0.0.1:8000/api/ticket/accept-ticket/'+`${props.ticket.id}/`, requestOptions)
+    .then((response) => response.json())
+    .then((data) => {
+        console.log("hiiii")
+    })
+    }}, [handle]);
 
 
   return (
-    <div>
+    <Card sx={{ width: '100' }}>
       <Dialog
         fullScreen={fullScreen}
         open={open}
@@ -98,7 +102,6 @@ export default function TicketCard(props) {
           </DialogContentText>
         </DialogContent>
       </Dialog>
-    <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="avatar">
@@ -122,12 +125,11 @@ export default function TicketCard(props) {
         <Typography variant="body2" color="text.secondary">
           {props.ticket.body.substring(
                 0,
-                40
+                20
               )}...
         </Typography>
       </CardContent>
       </Link>
     </Card>
-    </div>
   );
 }
