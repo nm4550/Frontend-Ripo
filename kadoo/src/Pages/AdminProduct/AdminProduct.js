@@ -180,6 +180,30 @@ export default function NewUser(props) {
     setProductId(props.match.params.productId)
   }, [])
 
+  function srcToFile(src, fileName, mimeType) {
+    return fetch(src)
+      .then(function (res) {
+        return res.arrayBuffer()
+      })
+      .then(function (buf) {
+        return new File([buf], fileName, { type: mimeType })
+      })
+  }
+
+  useEffect(() => {
+    if (formData !== initialFormData) {
+      srcToFile(
+        'http://127.0.0.1:8000' + formData.image,
+        'file.jpg',
+        'image/jpg'
+      ).then((file) => {
+        console.log(file)
+        console.log(formData)
+        setSelectedFile(file)
+      })
+    }
+  }, [formData])
+
   useEffect(() => {
     console.log('dsaaaaaaaaaaa')
     if (productId !== '') {
@@ -231,12 +255,70 @@ export default function NewUser(props) {
     }
   }, [productId])
 
-  const handleChange = (e) => {
-    updateFormData({
-      ...formData,
-      [e.target.name]: e.target.value.trim(),
-    })
-    console.log(formData)
+  const handleSubmit = () => {
+    console.log(formData.album)
+    console.log('[' + formData.tags.map((x) => '"' + x + '"').toString() + ']')
+    const Data = new FormData()
+    Data.append('id', formData.id)
+    Data.append('name', formData.name)
+    Data.append('description', formData.description)
+    Data.append('count', numberOfBuy)
+    Data.append('price', formData.price)
+    Data.append('kind', formData.kind)
+    Data.append('environment', formData.environment)
+    Data.append('water', formData.water)
+    Data.append('light', formData.light)
+    Data.append('growthRate', formData.growthRate)
+    Data.append('image', selectedFile, selectedFile.name)
+    Data.append(
+      'tags',
+      '[' + formData.tags.map((x) => '"' + x + '"').toString() + ']'
+    )
+    Data.append('album', formData.album)
+
+    //console.log(formData)
+    const requestOptions = {
+      method: 'PUT',
+      headers: {
+        Authorization: 'JWT ' + localStorage.getItem('access_token'),
+      },
+      body: Data,
+    }
+
+    fetch(
+      'http://127.0.0.1:8000/api/plantsRUD/' +
+        props.match.params.productId +
+        '/',
+      requestOptions
+    )
+      .then(async (response) => {
+        if (response.status === 200) {
+          let isJson = response.headers
+            .get('content-type')
+            ?.includes('application/json')
+          let data = isJson ? await response.json() : null
+          alert('Updated Successfully')
+        } else {
+          throw response
+        }
+      })
+      .catch((err) => {
+        if (err.status === 404) {
+          fetch(
+            'http://127.0.0.1:8000/api/toolsRUD/' +
+              props.match.params.productId +
+              '/',
+            requestOptions
+          ).then((res) => {
+            if (res.status === 200) {
+              res.json().then((data) => {
+                console.log(data)
+                alert('Updated Successfully')
+              })
+            }
+          })
+        }
+      })
   }
   var increaseBought = () => {
     var nob = numberOfBuy
@@ -247,6 +329,13 @@ export default function NewUser(props) {
     if (nob > 0) {
       setNumberOfBuy(nob - 1)
     }
+  }
+
+  const handleChange = (e) => {
+    updateFormData({
+      ...formData,
+      [e.target.name]: e.target.value.trim(),
+    })
   }
   // const [currency, setCurrency] = React.useState("EUR");
 
@@ -885,8 +974,7 @@ export default function NewUser(props) {
                       <Button
                         variant='contained'
                         className='productsPageAdd'
-                        onClick={props.handleSubmit}
-                        disabled={!props.newPlant && !props.enable}
+                        onClick={handleSubmit}
                       >
                         Submit
                       </Button>

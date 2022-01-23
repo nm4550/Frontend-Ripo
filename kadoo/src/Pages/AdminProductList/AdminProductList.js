@@ -58,7 +58,11 @@ export default function ProductList() {
         console.log(params.row.name)
         return (
           <div className='productListItem'>
-            <img className='productListImg' src={params.row.image} alt='' />
+            <img
+              className='productListImg'
+              src={'http://127.0.0.1:8000' + params.row.image}
+              alt=''
+            />
           </div>
         )
       },
@@ -159,7 +163,7 @@ export default function ProductList() {
       <Link to='/AdminPage/newProduct' className='LinkFab'>
         <Fab variant='extended' className='userAddButton'>
           <AddIcon sx={{ mr: 1 }} />
-          Add Specialist
+          Add Product
         </Fab>
       </Link>
       <DataGrid

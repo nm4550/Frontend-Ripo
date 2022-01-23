@@ -17,7 +17,7 @@ export default function ToolsCart(props) {
             <CardMedia
               component='img'
               height='200'
-              image={props.product.image}
+              image={'http://127.0.0.1:8000' + props.product.image}
               alt='picture'
               className='toolIconImage'
             />
