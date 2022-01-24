@@ -28,6 +28,7 @@ import UserDropDown from '../UserDropDown/UserDropDown'
 import ShowCoins from '../ShowCoins/ShowCoins'
 import SpecialistDropDown from '../SpecialistDropDown/SpecialistDropDown'
 import { Link } from 'react-router-dom'
+import WriteTicket from '../WriteTicket/WriteTicket'
 import './AppBar.css'
 
 const Search = styled('div')(({ theme }) => ({
@@ -272,7 +273,7 @@ const KadooAppBar = forwardRef((props, ref) => {
               isAuthorized === true &&
               kind === 'MEMBER' && <ShowCoins coins={coins} />}
 
-            {props.AuthorizationOption &&
+            {/*props.AuthorizationOption &&
               isAuthorized === true &&
               props.TicketOption &&
               props.numberOfTicket !== 0 && (
@@ -281,7 +282,11 @@ const KadooAppBar = forwardRef((props, ref) => {
                     <ForumIcon />
                   </Badge>
                 </IconButton>
-              )}
+              )*/}
+
+            {props.AuthorizationOption &&
+              isAuthorized === true &&
+              props.AddTicketOption && <WriteTicket />}
 
             {props.AuthorizationOption &&
               isAuthorized === true &&
@@ -295,7 +300,7 @@ const KadooAppBar = forwardRef((props, ref) => {
               )}
 
             {props.AuthorizationOption && isAuthorized === true && (
-              <UserDropDown />
+              <UserDropDown kind={kind} />
             )}
             {props.AuthorizationOption && isAuthorized === false && (
               <Button
