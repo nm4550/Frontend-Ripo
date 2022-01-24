@@ -20,6 +20,7 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny'
 import { Link } from 'react-router-dom'
 import './GreenHouseCard.css'
 import Fab from '@mui/material/Fab'
+import history from '../../history'
 // Import Theme Files
 import { ThemeProvider } from '@mui/material/styles'
 import Theme from '../../Theme/ThemeGenerator'
@@ -106,6 +107,16 @@ function GreenHouseCard(props) {
   React.useEffect(() => {
     console.log('reminder : ' + reminderOpen)
   }, [reminderOpen])
+
+  const handleClickCalendar = () => {
+    if (props.data.haveCalendar) {
+      history.push('https://calendar.google.com/')
+      window.location.reload(true)
+    } else {
+      setReminderOpen(true)
+      handleClose()
+    }
+  }
 
   const handleClickReminderOpen = () => {
     setReminderOpen(true)
@@ -233,8 +244,14 @@ function GreenHouseCard(props) {
           />
         </Grid>
         <Avatar className={cardStyles.avatar}>
-          <Fab color='primary' aria-label='add'>
-            <OpacityIcon />
+          <Fab
+            color={props.data.haveCalendar ? 'primary' : 'secondary'}
+            aria-label='add'
+            onClick={() => {
+              handleClickCalendar()
+            }}
+          >
+            <OpacityIcon className='FabColor' />
           </Fab>
         </Avatar>
         <CardContent className={cardStyles.content} className='FontRight'>
@@ -273,6 +290,7 @@ function GreenHouseCard(props) {
               summary={props.data.name}
               location={props.data.location}
               description={props.data.description}
+              id={props.data.id}
               onClose={handleClickReminderClose}
             />
           </Grid>

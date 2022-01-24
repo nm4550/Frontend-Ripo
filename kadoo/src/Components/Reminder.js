@@ -232,7 +232,29 @@ export default function Reminder(props) {
             })
         }, index * 2000)
       })
-    )
+    ).then(() => {
+      const requestOptions = {
+        method: 'GET',
+        headers: {
+          Authorization: 'JWT ' + localStorage.getItem('access_token'),
+          'Content-Type': 'application/json',
+        },
+      }
+      fetch(
+        'http://127.0.0.1:8000/api/makeHaveCalendarTrue/' + props.id + '/',
+        requestOptions
+      )
+        .then((response) => {
+          response.json()
+        })
+        .then((data) => {
+          console.log('data')
+          console.log(data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    })
   }
 
   useEffect(() => {

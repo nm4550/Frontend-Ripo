@@ -171,8 +171,10 @@ export default function NewUser(props) {
   useEffect(() => {
     // create the preview
     if (formData != initialFormData) {
-      setPreview(formData.image)
-      setNumberOfBuy(formData.count)
+      if (selectedFile === null) {
+        setPreview(formData.image)
+        setNumberOfBuy(formData.count)
+      }
     }
   }, [formData])
 
@@ -270,11 +272,11 @@ export default function NewUser(props) {
     Data.append('light', formData.light)
     Data.append('growthRate', formData.growthRate)
     Data.append('image', selectedFile, selectedFile.name)
-    Data.append(
+    /*Data.append(
       'tags',
       '[' + formData.tags.map((x) => '"' + x + '"').toString() + ']'
     )
-    Data.append('album', formData.album)
+    Data.append('album', formData.album)*/
 
     //console.log(formData)
     const requestOptions = {
