@@ -103,8 +103,13 @@ function GreenHouseCard(props) {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
 
+  React.useEffect(() => {
+    console.log('reminder : ' + reminderOpen)
+  }, [reminderOpen])
+
   const handleClickReminderOpen = () => {
     setReminderOpen(true)
+    handleClose()
   }
   const handleClickReminderClose = () => {
     setReminderOpen(false)
@@ -141,8 +146,11 @@ function GreenHouseCard(props) {
   }
 
   return (
-    <ThemeProvider theme={Theme}>
-      <Card className={cx(cardStyles.root, shadowStyles.root)}>
+    <ThemeProvider sx={{ height: '100%' }} theme={Theme}>
+      <Card
+        className={cx(cardStyles.root, shadowStyles.root)}
+        sx={{ height: '100%' }}
+      >
         <div className='layer'>
           <Grid className='layer' container justifyContent=' flex-end'>
             <Grid className='layer' item>
@@ -205,7 +213,6 @@ function GreenHouseCard(props) {
 
             <MenuItem
               onClick={() => {
-                handleClose()
                 handleClickReminderOpen()
               }}
             >
@@ -237,7 +244,7 @@ function GreenHouseCard(props) {
             heading={props.data.name}
             body={
               <div>
-                <div className='lighWeightFont'>
+                <div className='descriptionText'>
                   {props.data.description != null
                     ? props.data.description.length > 99
                       ? props.data.description.substring(0, 99) + ' ...'

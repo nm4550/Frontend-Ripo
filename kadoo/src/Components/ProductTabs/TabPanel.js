@@ -134,7 +134,7 @@ export default function BasicTabs() {
       }}
     >
       <Typography variant='h4' sx={{ mt: 0 }}>
-        Explore our Newest products
+        Explore our New products
       </Typography>
       <Box sx={{ width: '100%', mt: 3 }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
