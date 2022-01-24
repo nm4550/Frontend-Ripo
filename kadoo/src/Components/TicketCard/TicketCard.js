@@ -47,7 +47,8 @@ export default function TicketCard(props) {
   };
 
   const handleReply = () => {
-    setHandle(handle? false:true);
+    window.location.reload(true)
+    setHandle(true);
   };
   
   useEffect(() => {
@@ -63,9 +64,13 @@ export default function TicketCard(props) {
         setUsername(data.user_name)
         setEmail(data.email)
     })
+    
+    console.log(props.ticket)
     }, []);
 
+
     useEffect(() => {
+      if(handle){
     const requestOptions = {
       method: 'POST',
       headers: { 'Authorization': 'JWT ' + localStorage.getItem('access_token'),
@@ -77,11 +82,11 @@ export default function TicketCard(props) {
     .then((data) => {
         console.log("hiiii")
     })
-    }, [handle]);
+    }}, [handle]);
 
 
   return (
-    <div>
+    <Card sx={{ width: '100' }}>
       <Dialog
         fullScreen={fullScreen}
         open={open}
@@ -97,7 +102,6 @@ export default function TicketCard(props) {
           </DialogContentText>
         </DialogContent>
       </Dialog>
-    <Card sx={{ maxWidth: 345 }}>
       <CardHeader
         avatar={
           <Avatar sx={{ bgcolor: red[500] }} aria-label="avatar">
@@ -105,7 +109,7 @@ export default function TicketCard(props) {
           </Avatar>
         }
         action={
-          <IconButton aria-label="reply" onClick={handleReply}>
+          <IconButton aria-label="reply" onClick={()=>{handleReply()}}>
             <ReplyIcon />
           </IconButton>
         }
@@ -121,12 +125,11 @@ export default function TicketCard(props) {
         <Typography variant="body2" color="text.secondary">
           {props.ticket.body.substring(
                 0,
-                40
+                20
               )}...
         </Typography>
       </CardContent>
       </Link>
     </Card>
-    </div>
   );
 }

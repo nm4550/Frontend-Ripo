@@ -58,7 +58,6 @@ export default function TicketPage() {
             AuthorizationOption={true}
             DrawerOption={true}
             />
-
             <Card
                 style={{ backgroundColor: '#f5f4f4' }}
                 sx={{
@@ -109,8 +108,12 @@ export default function TicketPage() {
                   justifyContent='center'
                   alignItems='flex-start'
                 >
-                    <Grid item>
+                    <Grid container item>
                         <ShowAllTickets data={ticketsData} />
+                        {ticketsData.length == "0" &&
+                          <Alert sx={{mt:3}}
+                           severity="info" color="warning">No Tickets Yet</Alert>
+                        }
                     </Grid>
                 </Grid>
             </Card>

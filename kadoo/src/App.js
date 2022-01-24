@@ -32,6 +32,7 @@ import AdminProduct from './Pages/AdminProduct/AdminProduct'
 import AdminProductList from './Pages/AdminProductList/AdminProductList'
 import TicketPage from './Pages/TicketPage/TicketPage'
 import WriteTicket from './Components/WriteTicket/WriteTicket'
+import TicketUser from './Pages/TicketUser/TicketUser'
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
           <Router>
             <Switch>
               <Route exact path='/TicketPage' component={TicketPage} />
+              <Route exact path='/TicketUser' component={TicketUser} />
               <Route exact path='/WriteTicket' component={WriteTicket} />
               <Route
                 exact
