@@ -60,7 +60,8 @@ class ProductPlantsPage extends React.Component {
       .then((response) => response.json())
       .then((data) => {
         this.setState({ tags: data })
-        console.log(this.state.tags)
+        console.log('tag')
+        console.log(data)
       })
     fetch('http://127.0.0.1:8000/api/plantAlbumImages/' + this.state.id + '/')
       .then((response) => response.json())
@@ -68,7 +69,6 @@ class ProductPlantsPage extends React.Component {
         this.setState({ album: data })
         this.setState({ imageName: data[0] })
         console.log(this.state.album)
-        console.log(this.state.imageName.image)
       })
   }
 
@@ -198,7 +198,12 @@ class ProductPlantsPage extends React.Component {
                   >
                     <Grid item container className='blurred'>
                       <Image
-                        src={this.state.imageName.image}
+                        src={
+                          this.state.imageName === undefined
+                            ? 'http://127.0.0.1:8000' + this.state.product.image
+                            : 'http://127.0.0.1:8000' +
+                              this.state.imageName.image
+                        }
                         width='100%'
                         height='100%'
                         fit='cover'
@@ -248,7 +253,13 @@ class ProductPlantsPage extends React.Component {
                           }}
                         >
                           <Image
-                            src={this.state.imageName.image}
+                            src={
+                              this.state.imageName === undefined
+                                ? 'http://127.0.0.1:8000' +
+                                  this.state.product.image
+                                : 'http://127.0.0.1:8000' +
+                                  this.state.imageName.image
+                            }
                             className='mainImage'
                             shift='bottom'
                             shiftDuration={320}
@@ -427,36 +438,40 @@ class ProductPlantsPage extends React.Component {
                           sx={{ display: { xs: 'none', md: 'flex' } }}
                         >
                           <Box sx={{ ml: 0, mt: 1, mb: 1.5 }}>
-                            {this.state.tags.length !== 0 && (
-                              <Box
-                                sx={{ display: 'flex', flexDirection: 'row' }}
-                              >
-                                <Box
-                                  alignItems='center'
-                                  sx={{ display: 'flex' }}
-                                >
-                                  <TagIcon color='action' />
-                                  <Typography>Tags:</Typography>
-                                </Box>
-                                <Box
-                                  sx={{
-                                    display: 'flex',
-                                    flexWrap: 'wrap',
-                                    ml: 0.5,
-                                  }}
-                                >
-                                  {this.state.tags.map((item) => (
-                                    <Chip
-                                      sx={{ mr: 0.5, mt: 0.5 }}
-                                      label={
-                                        <Typography>{item.name}</Typography>
-                                      }
-                                      variant='outlined'
-                                    />
-                                  ))}
-                                </Box>
+                            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                              <Box alignItems='center' sx={{ display: 'flex' }}>
+                                <TagIcon color='action' />
+                                <Typography>Tags:</Typography>
                               </Box>
-                            )}
+                              <Box
+                                sx={{
+                                  display: 'flex',
+                                  flexWrap: 'wrap',
+                                  ml: 0.5,
+                                }}
+                              >
+                                {this.state.tags.length !== 0 && (
+                                  <Grid>
+                                    {this.state.tags.map((item) => (
+                                      <Chip
+                                        sx={{ mr: 0.5, mt: 0.5 }}
+                                        label={
+                                          <Typography>{item.name}</Typography>
+                                        }
+                                        variant='outlined'
+                                      />
+                                    ))}
+                                  </Grid>
+                                )}
+                                {this.state.tags.length === 0 && (
+                                  <Grid>
+                                    <Typography sx={{ mr: 0.5, mt: 0.5 }}>
+                                      {'NO TAGS'}
+                                    </Typography>
+                                  </Grid>
+                                )}
+                              </Box>
+                            </Box>
                           </Box>
                         </Grid>
                         <Grid
@@ -625,15 +640,19 @@ class ProductPlantsPage extends React.Component {
                                     ml: 0.5,
                                   }}
                                 >
-                                  {this.state.tags.map((item) => (
-                                    <Chip
-                                      sx={{ mr: 0.5, mt: 0.5 }}
-                                      label={
-                                        <Typography>{item.name}</Typography>
-                                      }
-                                      variant='outlined'
-                                    />
-                                  ))}
+                                  {this.state.tags.length !== 0 && (
+                                    <Grid>
+                                      {this.state.tags.map((item) => (
+                                        <Chip
+                                          sx={{ mr: 0.5, mt: 0.5 }}
+                                          label={
+                                            <Typography>{item.name}</Typography>
+                                          }
+                                          variant='outlined'
+                                        />
+                                      ))}
+                                    </Grid>
+                                  )}
                                 </Box>
                               </Box>
                             )}

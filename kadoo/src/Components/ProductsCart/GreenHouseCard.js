@@ -20,6 +20,7 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny'
 import { Link } from 'react-router-dom'
 import './GreenHouseCard.css'
 import Fab from '@mui/material/Fab'
+import history from '../../history'
 // Import Theme Files
 import { ThemeProvider } from '@mui/material/styles'
 import Theme from '../../Theme/ThemeGenerator'
@@ -103,8 +104,23 @@ function GreenHouseCard(props) {
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
 
+  React.useEffect(() => {
+    console.log('reminder : ' + reminderOpen)
+  }, [reminderOpen])
+
+  const handleClickCalendar = () => {
+    if (props.data.haveCalendar) {
+      history.push('https://calendar.google.com/')
+      window.location.reload(true)
+    } else {
+      setReminderOpen(true)
+      handleClose()
+    }
+  }
+
   const handleClickReminderOpen = () => {
     setReminderOpen(true)
+    handleClose()
   }
   const handleClickReminderClose = () => {
     setReminderOpen(false)
@@ -141,8 +157,11 @@ function GreenHouseCard(props) {
   }
 
   return (
-    <ThemeProvider theme={Theme}>
-      <Card className={cx(cardStyles.root, shadowStyles.root)}>
+    <ThemeProvider sx={{ height: '100%' }} theme={Theme}>
+      <Card
+        className={cx(cardStyles.root, shadowStyles.root)}
+        sx={{ height: '100%' }}
+      >
         <div className='layer'>
           <Grid className='layer' container justifyContent=' flex-end'>
             <Grid className='layer' item>
@@ -205,7 +224,6 @@ function GreenHouseCard(props) {
 
             <MenuItem
               onClick={() => {
-                handleClose()
                 handleClickReminderOpen()
               }}
             >
@@ -226,8 +244,14 @@ function GreenHouseCard(props) {
           />
         </Grid>
         <Avatar className={cardStyles.avatar}>
-          <Fab color='primary' aria-label='add'>
-            <OpacityIcon />
+          <Fab
+            color={props.data.haveCalendar ? 'primary' : 'secondary'}
+            aria-label='add'
+            onClick={() => {
+              handleClickCalendar()
+            }}
+          >
+            <OpacityIcon className='FabColor' />
           </Fab>
         </Avatar>
         <CardContent className={cardStyles.content} className='FontRight'>
@@ -237,7 +261,7 @@ function GreenHouseCard(props) {
             heading={props.data.name}
             body={
               <div>
-                <div className='lighWeightFont'>
+                <div className='descriptionText'>
                   {props.data.description != null
                     ? props.data.description.length > 99
                       ? props.data.description.substring(0, 99) + ' ...'
@@ -266,6 +290,7 @@ function GreenHouseCard(props) {
               summary={props.data.name}
               location={props.data.location}
               description={props.data.description}
+              id={props.data.id}
               onClose={handleClickReminderClose}
             />
           </Grid>

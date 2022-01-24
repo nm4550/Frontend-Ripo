@@ -35,11 +35,50 @@ export default function ProductList() {
     setOpen(false)
   }
 
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id))
+  const handleDelete = (id1, kind, name) => {
+    console.log('Kind : ' + kind)
+    console.log('id : ' + id1)
+    const requestOptions = {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'JWT ' + localStorage.getItem('access_token'),
+      },
+    }
+    if (kind === 'Plant') {
+      console.log('+++++++++++++++++++++++')
+      fetch(
+        'http://127.0.0.1:8000/api/plantsRUD/' + id1 + '/',
+        requestOptions
+      ).then((res) => {
+        if (res.status === 200) {
+          alert('Delete successful')
+          handleClose()
+        }
+      })
+    } else {
+      fetch(
+        'http://127.0.0.1:8000/api/toolsRUD/' + id1 + '/',
+        requestOptions
+      ).then((res) => {
+        if (res.status === 200) {
+          alert('Delete successful')
+          handleClose()
+        }
+      })
+    }
   }
 
   const columns = [
+    {
+      field: 'id',
+      headerName: 'ID',
+      width: 80,
+      headerAlign: 'center',
+      renderCell: (params) => {
+        return <div className='productListItem'>{params.row.id}</div>
+      },
+    },
     {
       field: 'name',
       headerName: 'Name',
@@ -58,7 +97,11 @@ export default function ProductList() {
         console.log(params.row.name)
         return (
           <div className='productListItem'>
-            <img className='productListImg' src={params.row.image} alt='' />
+            <img
+              className='productListImg'
+              src={'http://127.0.0.1:8000' + params.row.image}
+              alt=''
+            />
           </div>
         )
       },
@@ -115,7 +158,16 @@ export default function ProductList() {
                 <Button autoFocus onClick={handleClose}>
                   No
                 </Button>
-                <Button onClick={handleClose} autoFocus>
+                <Button
+                  onClick={() =>
+                    handleDelete(
+                      params.row.id,
+                      params.row.kind,
+                      params.row.name
+                    )
+                  }
+                  autoFocus
+                >
                   Yes
                 </Button>
               </DialogActions>
@@ -159,7 +211,7 @@ export default function ProductList() {
       <Link to='/AdminPage/newProduct' className='LinkFab'>
         <Fab variant='extended' className='userAddButton'>
           <AddIcon sx={{ mr: 1 }} />
-          Add Specialist
+          Add Product
         </Fab>
       </Link>
       <DataGrid

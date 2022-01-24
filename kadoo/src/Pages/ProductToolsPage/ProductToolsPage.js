@@ -69,7 +69,6 @@ class ProductToolsPage extends React.Component {
         this.setState({ album: data })
         this.setState({ imageName: data[0] })
         console.log(this.state.album)
-        console.log(this.state.imageName.image)
       })
   }
 
@@ -199,7 +198,12 @@ class ProductToolsPage extends React.Component {
                   >
                     <Grid item container className='blurred-tool'>
                       <Image
-                        src={this.state.imageName.image}
+                        src={
+                          this.state.imageName === undefined
+                            ? 'http://127.0.0.1:8000' + this.state.product.image
+                            : 'http://127.0.0.1:8000' +
+                              this.state.imageName.image
+                        }
                         width='100%'
                         height='100%'
                         fit='cover'
@@ -249,7 +253,13 @@ class ProductToolsPage extends React.Component {
                           }}
                         >
                           <Image
-                            src={this.state.imageName.image}
+                            src={
+                              this.state.imageName === undefined
+                                ? 'http://127.0.0.1:8000' +
+                                  this.state.product.image
+                                : 'http://127.0.0.1:8000' +
+                                  this.state.imageName.image
+                            }
                             className='mainImage'
                             shift='bottom'
                             shiftDuration={320}
@@ -359,17 +369,12 @@ class ProductToolsPage extends React.Component {
                           sx={{ display: { xs: 'none', md: 'flex' } }}
                         >
                           <Box sx={{ ml: 0, mt: 1, mb: 1.5 }}>
-                            {this.state.tooltags.length !== 0 && (
-                              <Box
-                                sx={{ display: 'flex', flexDirection: 'row' }}
-                              >
-                                <Box
-                                  alignItems='center'
-                                  sx={{ display: 'flex' }}
-                                >
-                                  <TagIcon color='action' />
-                                  <Typography>Tags:</Typography>
-                                </Box>
+                            <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                              <Box alignItems='center' sx={{ display: 'flex' }}>
+                                <TagIcon color='action' />
+                                <Typography>Tags:</Typography>
+                              </Box>
+                              {this.state.tooltags.length !== 0 && (
                                 <Box
                                   sx={{
                                     display: 'flex',
@@ -387,8 +392,21 @@ class ProductToolsPage extends React.Component {
                                     />
                                   ))}
                                 </Box>
-                              </Box>
-                            )}
+                              )}
+                              {this.state.tooltags.length === 0 && (
+                                <Box
+                                  sx={{
+                                    display: 'flex',
+                                    flexWrap: 'wrap',
+                                    ml: 0.5,
+                                  }}
+                                >
+                                  <Typography sx={{ mr: 0.5, mt: 0.5 }}>
+                                    {'NO TAGS!'}
+                                  </Typography>
+                                </Box>
+                              )}
+                            </Box>
                           </Box>
                         </Grid>
                         <Grid

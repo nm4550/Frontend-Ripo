@@ -238,7 +238,7 @@ function Plantmanagment(props) {
       image: '',
     })
     console.log('----------------')
-    console.log(newPlantInfo)
+    console.log(selectedFile)
     const formData = new FormData()
     if (newPlantInfo.name != '') {
       formData.append('name', newPlantInfo.name)
@@ -366,15 +366,19 @@ function Plantmanagment(props) {
 
   useEffect(() => {
     if (plantInfo !== initialData) {
-      srcToFile(
-        'http://127.0.0.1:8000' + plantInfo.image,
-        'file.jpg',
-        'image/jpg'
-      ).then((file) => {
-        console.log('herwr')
-        console.log(file)
-        setSelectedFile(file)
-      })
+      if (selectedFile === null) {
+        if (!newPlant) {
+          srcToFile(
+            'http://127.0.0.1:8000' + plantInfo.image,
+            'file.jpg',
+            'image/jpg'
+          ).then((file) => {
+            console.log('herwr')
+            console.log(file)
+            setSelectedFile(file)
+          })
+        }
+      }
     }
   }, [plantInfo])
 

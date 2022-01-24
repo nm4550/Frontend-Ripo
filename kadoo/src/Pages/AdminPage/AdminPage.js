@@ -1,5 +1,5 @@
 import Sidebar from '../../Components/sidebar/Sidebar'
-import Topbar from '../../Components/topbar/Topbar'
+import AppBar from '../../Components/AppBar/AppBar'
 import './AdminPage.css'
 import AdminHome from '../../Pages/AdminHome/AdminHome'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
@@ -15,7 +15,7 @@ import { useState, useEffect } from 'react'
 function App() {
   return (
     <Router>
-      <Topbar />
+      <AppBar />
       <div className='containerAdmin'>
         <Sidebar />
         <Switch>

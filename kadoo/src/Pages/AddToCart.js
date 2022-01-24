@@ -38,41 +38,52 @@ function AddtoCart() {
       'http://127.0.0.1:8000/api/cart/user-count-cart/',
       requestOptions
     )
-      .then((response) => response.json())
-      .then((data) => {
-        setNumberOfItems(data)
-        console.log(data)
+      .then((response) => {
+        if (response.status != 401) {
+          response.json().then((data) => {
+            setNumberOfItems(data)
+            console.log(data)
+          })
+        } else {
+          throw response
+        }
+      })
+      .catch((res) => {
+        if (res.status === 401) setNumberOfItems(0)
       })
   }
 
   useEffect(() => {
-    //Login a Sample User
-
-    async function fetchAllProductData() {
-      await axiosInstance
-        .get(`cart/user-unapproved-plants-cart-count/`)
-        .then((res) => {
-          axiosInstance.defaults.headers['Authorization'] =
-            'JWT ' + localStorage.getItem('access_token')
-          setCartItems(res.data)
-          console.log(cartItems)
-        })
-    }
-
-    async function fetchAllToolsData() {
-      await axiosInstance
-        .get(`cart/user-unapproved-tools-cart-count/`)
-        .then((res) => {
-          axiosInstance.defaults.headers['Authorization'] =
-            'JWT ' + localStorage.getItem('access_token')
-          setToolCartItems(res.data)
-        })
-    }
-
-    fetchAllProductData()
-    fetchAllToolsData()
     FetchCountCart()
   }, [])
+
+  useEffect(() => {
+    console.log('Item : ' + numberOfItems)
+    if (numberOfItems !== null && numberOfItems !== 0) {
+      async function fetchAllProductData() {
+        await axiosInstance
+          .get(`cart/user-unapproved-plants-cart-count/`)
+          .then((res) => {
+            axiosInstance.defaults.headers['Authorization'] =
+              'JWT ' + localStorage.getItem('access_token')
+            setCartItems(res.data)
+            console.log(cartItems)
+          })
+      }
+      async function fetchAllToolsData() {
+        await axiosInstance
+          .get(`cart/user-unapproved-tools-cart-count/`)
+          .then((res) => {
+            axiosInstance.defaults.headers['Authorization'] =
+              'JWT ' + localStorage.getItem('access_token')
+            setToolCartItems(res.data)
+          })
+      }
+
+      fetchAllProductData()
+      fetchAllToolsData()
+    }
+  }, [numberOfItems])
 
   const onAdd = (product) => {
     const exist = cartItems.find((x) => x.id === product.id)
@@ -208,7 +219,7 @@ function AddtoCart() {
 
   return (
     <div className='App'>
-      {numberOfItems !== 0 && (
+      {numberOfItems !== 0 && numberOfItems !== null && (
         <Grid>
           <AppBar
             SearchOption={true}
@@ -274,7 +285,7 @@ function AddtoCart() {
             sx={{ pt: 5, pr: 10, pl: 10 }}
           >
             <img
-              src='undraw_empty_cart_co35.svg'
+              src='empty.png'
               style={{ width: '100%', height: '100%', objectFit: 'contain' }}
               alt='Background'
             />

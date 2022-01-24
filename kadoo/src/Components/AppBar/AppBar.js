@@ -28,6 +28,7 @@ import UserDropDown from '../UserDropDown/UserDropDown'
 import ShowCoins from '../ShowCoins/ShowCoins'
 import SpecialistDropDown from '../SpecialistDropDown/SpecialistDropDown'
 import { Link } from 'react-router-dom'
+import WriteTicket from '../WriteTicket/WriteTicket'
 import './AppBar.css'
 
 const Search = styled('div')(({ theme }) => ({
@@ -78,6 +79,7 @@ const KadooAppBar = forwardRef((props, ref) => {
   const [userType, setUserType] = React.useState('')
   const [coins, setCoinsNumber] = useState(0)
   const [searchText, setSearchText] = useState('')
+  const [kind, setKind] = useState('')
 
   useImperativeHandle(ref, () => ({
     reloadAll() {
@@ -145,10 +147,12 @@ const KadooAppBar = forwardRef((props, ref) => {
     }
     fetch('http://127.0.0.1:8000/api/user/userinfo/', requestOptions)
       .then((response) => {
-        response.json()
         console.log(localStorage.getItem('access_token'))
         if (response.status != 401) {
           setAuthorized(true)
+          response.json().then((data) => {
+            setKind(data.type)
+          })
           console.log('User has been Authorized')
         } else {
           throw response
@@ -265,11 +269,11 @@ const KadooAppBar = forwardRef((props, ref) => {
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-            {props.AuthorizationOption && isAuthorized === true && (
-              <ShowCoins coins={coins} />
-            )}
-
             {props.AuthorizationOption &&
+              isAuthorized === true &&
+              kind === 'MEMBER' && <ShowCoins coins={coins} />}
+
+            {/*props.AuthorizationOption &&
               isAuthorized === true &&
               props.TicketOption &&
               props.numberOfTicket !== 0 && (
@@ -278,7 +282,11 @@ const KadooAppBar = forwardRef((props, ref) => {
                     <ForumIcon />
                   </Badge>
                 </IconButton>
-              )}
+              )*/}
+
+            {props.AuthorizationOption &&
+              isAuthorized === true &&
+              props.AddTicketOption && <WriteTicket />}
 
             {props.AuthorizationOption &&
               isAuthorized === true &&
@@ -291,9 +299,9 @@ const KadooAppBar = forwardRef((props, ref) => {
                 </IconButton>
               )}
 
-            {props.AuthorizationOption &&
-              isAuthorized === true &&
-              userType != 'ADMIN' && <UserDropDown />}
+            {props.AuthorizationOption && isAuthorized === true && (
+              <UserDropDown kind={kind} />
+            )}
             {props.AuthorizationOption && isAuthorized === false && (
               <Button
                 edge='end'

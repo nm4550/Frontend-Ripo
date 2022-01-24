@@ -31,7 +31,7 @@ function NotFound() {
           sx={{ pt: 5, pr: 10, pl: 10 }}
         >
           <img
-            src='undraw_page_not_found_re_e9o6.svg'
+            src='404.png'
             style={{ width: '100%', height: '100%', objectFit: 'contain' }}
             alt='Background'
           />

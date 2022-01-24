@@ -1,25 +1,25 @@
-import "./sidebar.css";
-import LineStyleIcon from '@mui/icons-material/LineStyle';
-import TimelineIcon from '@mui/icons-material/Timeline';
-import TrendingUpIcon from '@mui/icons-material/TrendingUp';
-import PermIdentityIcon from '@mui/icons-material/PermIdentity';
-import StorefrontIcon from '@mui/icons-material/Storefront';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import MailOutlineIcon from '@mui/icons-material/MailOutline';
-import DynamicFeedIcon from '@mui/icons-material/DynamicFeed';
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
-import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
-import ReportIcon from '@mui/icons-material/Report';
-import { Link } from "react-router-dom";
+import './sidebar.css'
+import LineStyleIcon from '@mui/icons-material/LineStyle'
+import TimelineIcon from '@mui/icons-material/Timeline'
+import TrendingUpIcon from '@mui/icons-material/TrendingUp'
+import PermIdentityIcon from '@mui/icons-material/PermIdentity'
+import StorefrontIcon from '@mui/icons-material/Storefront'
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney'
+import BarChartIcon from '@mui/icons-material/BarChart'
+import MailOutlineIcon from '@mui/icons-material/MailOutline'
+import DynamicFeedIcon from '@mui/icons-material/DynamicFeed'
+import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline'
+import WorkOutlineIcon from '@mui/icons-material/WorkOutline'
+import ReportIcon from '@mui/icons-material/Report'
+import { Link } from 'react-router-dom'
 
 export default function Sidebar() {
   return (
-    <div className="sidebar">
-      <div className="sidebarWrapper">
-        <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Dashboard</h3>
-          <ul className="sidebarList">
+    <div className='sidebar'>
+      <div className='sidebarWrapper'>
+        <div className='sidebarMenu'>
+          {/*<h3 className='sidebarTitle'>Dashboard</h3>*/}
+          {/*<ul className="sidebarList">
             <Link to="/AdminPage/AdminHome" className="link">
             <li className="sidebarListItem">
               <LineStyleIcon className="sidebarIcon" />
@@ -34,34 +34,34 @@ export default function Sidebar() {
               <TrendingUpIcon className="sidebarIcon" />
               Sales
             </li>
-          </ul>
+          </ul>*/}
         </div>
-        <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Quick Menu</h3>
-          <ul className="sidebarList">
-            <Link to="/AdminPage/specialist" className="link">
-              <li className="sidebarListItem">
-                <PermIdentityIcon className="sidebarIcon" />
+        <div className='sidebarMenu'>
+          <h3 className='sidebarTitle'>Quick Menu</h3>
+          <ul className='sidebarList'>
+            <Link to='/AdminPage/specialist' className='link'>
+              <li className='sidebarListItem'>
+                <PermIdentityIcon className='sidebarIcon' />
                 Specialists
               </li>
             </Link>
-            <Link to="/AdminPage/productsList" className="link">
-              <li className="sidebarListItem">
-                <StorefrontIcon className="sidebarIcon" />
+            <Link to='/AdminPage/productsList' className='link'>
+              <li className='sidebarListItem'>
+                <StorefrontIcon className='sidebarIcon' />
                 Products
               </li>
             </Link>
-            <li className="sidebarListItem">
+            {/*<li className="sidebarListItem">
               <AttachMoneyIcon className="sidebarIcon" />
               Transactions
             </li>
             <li className="sidebarListItem">
               <BarChartIcon className="sidebarIcon" />
               Reports
-            </li>
+        </li>*/}
           </ul>
         </div>
-        <div className="sidebarMenu">
+        {/*<div className="sidebarMenu">
           <h3 className="sidebarTitle">Notifications</h3>
           <ul className="sidebarList">
             <li className="sidebarListItem">
@@ -94,8 +94,8 @@ export default function Sidebar() {
               Reports
             </li>
           </ul>
-        </div>
+        </div>*/}
       </div>
     </div>
-  );
+  )
 }
