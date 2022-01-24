@@ -27,7 +27,6 @@ const ExpandMore = styled((props) => {
   }),
 }));
 
-
 export default function TicketCard(props) {
   const[username,setUsername]=React.useState("Username")
   const[email,setEmail]=React.useState("Email")
