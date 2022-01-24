@@ -69,7 +69,6 @@ class ProductPlantsPage extends React.Component {
         this.setState({ album: data })
         this.setState({ imageName: data[0] })
         console.log(this.state.album)
-        console.log(this.state.imageName.image)
       })
   }
 
@@ -200,7 +199,10 @@ class ProductPlantsPage extends React.Component {
                     <Grid item container className='blurred'>
                       <Image
                         src={
-                          'http://127.0.0.1:8000' + this.state.imageName.image
+                          this.state.imageName === undefined
+                            ? 'http://127.0.0.1:8000' + this.state.product.image
+                            : 'http://127.0.0.1:8000' +
+                              this.state.imageName.image
                         }
                         width='100%'
                         height='100%'
@@ -252,8 +254,11 @@ class ProductPlantsPage extends React.Component {
                         >
                           <Image
                             src={
-                              'http://127.0.0.1:8000' +
-                              this.state.imageName.image
+                              this.state.imageName === undefined
+                                ? 'http://127.0.0.1:8000' +
+                                  this.state.product.image
+                                : 'http://127.0.0.1:8000' +
+                                  this.state.imageName.image
                             }
                             className='mainImage'
                             shift='bottom'

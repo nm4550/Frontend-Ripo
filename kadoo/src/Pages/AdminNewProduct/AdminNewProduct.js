@@ -177,8 +177,6 @@ export default function NewUser(props) {
   }, [formData])
 
   const handleSubmit = () => {
-    console.log(formData.album)
-    console.log('[' + formData.tags.map((x) => '"' + x + '"').toString() + ']')
     const Data = new FormData()
     Data.append('id', formData.id)
     Data.append('name', formData.name)
@@ -191,13 +189,7 @@ export default function NewUser(props) {
     Data.append('light', formData.light)
     Data.append('growthRate', formData.growthRate)
     Data.append('image', selectedFile, selectedFile.name)
-    Data.append(
-      'tags',
-      '[' + formData.tags.map((x) => '"' + x + '"').toString() + ']'
-    )
-    Data.append('album', formData.album)
 
-    //console.log(formData)
     const requestOptions = {
       method: 'POST',
       headers: {
@@ -206,32 +198,30 @@ export default function NewUser(props) {
       body: Data,
     }
 
-    fetch('http://127.0.0.1:8000/api/plants/', requestOptions)
-      .then(async (response) => {
-        if (response.status === 200) {
-          let isJson = response.headers
-            .get('content-type')
-            ?.includes('application/json')
-          let data = isJson ? await response.json() : null
-          alert('Updated Successfully')
-        } else {
-          throw response
+    if (formData.kind === 'Plant') {
+      fetch('http://127.0.0.1:8000/api/plants/', requestOptions).then(
+        async (response) => {
+          if (response.status === 200) {
+            let isJson = response.headers
+              .get('content-type')
+              ?.includes('application/json')
+            let data = isJson ? await response.json() : null
+            alert('Updated Successfully')
+          } else {
+            throw response
+          }
+        }
+      )
+    } else if (formData.kind === 'Tool') {
+      fetch('http://127.0.0.1:8000/api/tools/', requestOptions).then((res) => {
+        if (res.status === 200) {
+          res.json().then((data) => {
+            console.log(data)
+            alert('Updated Successfully')
+          })
         }
       })
-      .catch((err) => {
-        if (err.status === 404) {
-          fetch('http://127.0.0.1:8000/api/tools/', requestOptions).then(
-            (res) => {
-              if (res.status === 200) {
-                res.json().then((data) => {
-                  console.log(data)
-                  alert('Updated Successfully')
-                })
-              }
-            }
-          )
-        }
-      })
+    }
   }
   var increaseBought = () => {
     var nob = numberOfBuy

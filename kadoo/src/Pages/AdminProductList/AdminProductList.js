@@ -35,8 +35,8 @@ export default function ProductList() {
     setOpen(false)
   }
 
-  const handleDelete = (id) => {
-    console.log('id : ' + id)
+  const handleDelete = (id1, kind) => {
+    console.log('id : ' + id1)
     const requestOptions = {
       method: 'DELETE',
       headers: {
@@ -44,36 +44,39 @@ export default function ProductList() {
         Authorization: 'JWT ' + localStorage.getItem('access_token'),
       },
     }
-    fetch('http://127.0.0.1:8000/api/plantsRUD/' + id + '/', requestOptions)
-      .then((res) => {
+    if (kind === 'Plant') {
+      fetch(
+        'http://127.0.0.1:8000/api/plantsRUD/' + id1 + '/',
+        requestOptions
+      ).then((res) => {
         if (res.status === 200) {
           alert('Delete successful')
           handleClose()
         }
       })
-      .catch((err) => {
-        if (err.status === 404) {
-          fetch(
-            'http://127.0.0.1:8000/api/toolsRUD/' + id + '/',
-            requestOptions
-          )
-            .then((res) => {
-              alert('Delete successful')
-              handleClose()
-            })
-            .then((res) => {
-              if (res.status === 200) {
-                res.json().then((data) => {
-                  console.log(data)
-                  alert('Updated Successfully')
-                })
-              }
-            })
+    } else {
+      fetch(
+        'http://127.0.0.1:8000/api/toolsRUD/' + id1 + '/',
+        requestOptions
+      ).then((res) => {
+        if (res.status === 200) {
+          alert('Delete successful')
+          handleClose()
         }
       })
+    }
   }
 
   const columns = [
+    {
+      field: 'id',
+      headerName: 'ID',
+      width: 80,
+      headerAlign: 'center',
+      renderCell: (params) => {
+        return <div className='productListItem'>{params.row.id}</div>
+      },
+    },
     {
       field: 'name',
       headerName: 'Name',
@@ -153,7 +156,10 @@ export default function ProductList() {
                 <Button autoFocus onClick={handleClose}>
                   No
                 </Button>
-                <Button onClick={() => handleDelete(params.row.id)} autoFocus>
+                <Button
+                  onClick={() => handleDelete(params.row.id, params.row.kind)}
+                  autoFocus
+                >
                   Yes
                 </Button>
               </DialogActions>
