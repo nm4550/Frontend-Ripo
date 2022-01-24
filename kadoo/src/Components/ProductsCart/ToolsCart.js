@@ -10,21 +10,26 @@ import SettingsIcon from '@mui/icons-material/Settings'
 
 export default function ToolsCart(props) {
   return (
-    <Card>
-      <CardActionArea>
+    <Card sx={{ height: '100%' }}>
+      <CardActionArea sx={{ height: '100%' }}>
         <Link to={'/ProductToolsPage/' + props.product.id}>
           <Grid className='productIconImageContainer' sx={{ p: 1 }}>
             <CardMedia
               component='img'
               height='200'
-              image={props.product.image}
+              image={'http://127.0.0.1:8000' + props.product.image}
               alt='picture'
               className='toolIconImage'
             />
           </Grid>
         </Link>
         <CardContent>
-          <Typography gutterBottom variant='h5' component='div'>
+          <Typography
+            gutterBottom
+            variant='h5'
+            component='div'
+            className='textClass'
+          >
             {props.product.name}
           </Typography>
           <Typography gutterBottom variant='h6' component='div'>

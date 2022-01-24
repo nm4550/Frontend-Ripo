@@ -6,7 +6,7 @@ import AcceptedTicketCard from '../AcceptedTicketCard/AcceptedTicketCard'
 
 function ShowMyTickets(props) {
   return (
-    <div>
+    <Grid container>
       <Box sx={{ width: '100%' }}>
         <Typography variant='h4' gutterBottom component='div'>
           My Tickets
@@ -19,7 +19,7 @@ function ShowMyTickets(props) {
           ))}
         </Grid>
       </Box>
-    </div>
+    </Grid>
   )
 }
 

@@ -1,4 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, {
+  useEffect,
+  useState,
+  forwardRef,
+  useRef,
+  useImperativeHandle,
+} from 'react'
 import { styled, alpha } from '@mui/material/styles'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
@@ -22,6 +28,7 @@ import UserDropDown from '../UserDropDown/UserDropDown'
 import ShowCoins from '../ShowCoins/ShowCoins'
 import SpecialistDropDown from '../SpecialistDropDown/SpecialistDropDown'
 import { Link } from 'react-router-dom'
+import WriteTicket from '../WriteTicket/WriteTicket'
 import './AppBar.css'
 
 const Search = styled('div')(({ theme }) => ({
@@ -64,14 +71,48 @@ const StyledColorSerchIconButton = styled(IconButton)(({ theme }) => ({
   },
 }))
 
-export default function KadooAppBar(props) {
+const KadooAppBar = forwardRef((props, ref) => {
   const [isAuthorized, setAuthorized] = useState(false)
   const [numberOfTicket, setNumberOfTicket] = useState([3])
   const [numberOfItems, setNumberOfItems] = useState(0)
   const [userData, setUserData] = React.useState([])
-  const [userType, setUserType] = React.useState("")
+  const [userType, setUserType] = React.useState('')
   const [coins, setCoinsNumber] = useState(0)
   const [searchText, setSearchText] = useState('')
+  const [kind, setKind] = useState('')
+
+  useImperativeHandle(ref, () => ({
+    reloadAll() {
+      const requestOptions = {
+        method: 'GET',
+        headers: {
+          Authorization: 'JWT ' + localStorage.getItem('access_token'),
+          'Content-Type': 'application/json',
+        },
+      }
+      async function ReloadCoin() {
+        await fetch('http://127.0.0.1:8000/api/coin/get/', requestOptions)
+          .then((response) => response.json())
+          .then((data) => {
+            setCoinsNumber(data.coin_value)
+            console.log(data)
+          })
+      }
+      async function RealodCountCart() {
+        await fetch(
+          'http://127.0.0.1:8000/api/cart/user-count-cart/',
+          requestOptions
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            setNumberOfItems(data)
+            console.log(data)
+          })
+      }
+      RealodCountCart()
+      ReloadCoin()
+    },
+  }))
 
   function handleChange(e) {
     setSearchText(e.target.value.trim())
@@ -106,10 +147,12 @@ export default function KadooAppBar(props) {
     }
     fetch('http://127.0.0.1:8000/api/user/userinfo/', requestOptions)
       .then((response) => {
-        response.json()
         console.log(localStorage.getItem('access_token'))
         if (response.status != 401) {
           setAuthorized(true)
+          response.json().then((data) => {
+            setKind(data.type)
+          })
           console.log('User has been Authorized')
         } else {
           throw response
@@ -152,8 +195,6 @@ export default function KadooAppBar(props) {
     }
   }, [isAuthorized])
 
-  
-
   const handelDrawer = () => {
     if (props.isopen === false) {
       props.OpenMenu()
@@ -166,7 +207,7 @@ export default function KadooAppBar(props) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar sx={{ position: { xs: 'fixed', sm: 'static' } }}>
         <Toolbar>
-          <Grid display={{ xs: 'flex', sm: 'none' }}>
+          <Grid display={{ xs: 'flex', md: 'none' }}>
             {props.DrawerOption && (
               <IconButton
                 size='large'
@@ -194,9 +235,11 @@ export default function KadooAppBar(props) {
             </Link>
           )}
           {!props.DrawerOption && (
-            <Typography variant='h4' noWrap component='div'>
-              Kadoo
-            </Typography>
+            <Link to='/Homepage'>
+              <Typography variant='h4' noWrap component='div' className='Title'>
+                Kadoo
+              </Typography>
+            </Link>
           )}
           {props.SearchOption && (
             <Search>
@@ -226,17 +269,11 @@ export default function KadooAppBar(props) {
 
           <Box sx={{ flexGrow: 1 }} />
           <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-
             {props.AuthorizationOption &&
-              props.CartOption &&
-              isAuthorized === true &&(
-                <ShowCoins coins={coins}/>
-              )}
-            {props.AuthorizationOption && isAuthorized === true && (
-              <ShowCoins coins={coins} />
-            )}
+              isAuthorized === true &&
+              kind === 'MEMBER' && <ShowCoins coins={coins} />}
 
-            {props.AuthorizationOption &&
+            {/*props.AuthorizationOption &&
               isAuthorized === true &&
               props.TicketOption &&
               props.numberOfTicket !== 0 && (
@@ -245,7 +282,11 @@ export default function KadooAppBar(props) {
                     <ForumIcon />
                   </Badge>
                 </IconButton>
-              )}
+              )*/}
+
+            {props.AuthorizationOption &&
+              isAuthorized === true &&
+              props.AddTicketOption && <WriteTicket />}
 
             {props.AuthorizationOption &&
               isAuthorized === true &&
@@ -258,8 +299,8 @@ export default function KadooAppBar(props) {
                 </IconButton>
               )}
 
-            {props.AuthorizationOption && isAuthorized === true && userType != "ADMIN" && (
-              <UserDropDown />
+            {props.AuthorizationOption && isAuthorized === true && (
+              <UserDropDown kind={kind} />
             )}
             {props.AuthorizationOption && isAuthorized === false && (
               <Button
@@ -297,4 +338,6 @@ export default function KadooAppBar(props) {
       </AppBar>
     </Box>
   )
-}
+})
+
+export default KadooAppBar

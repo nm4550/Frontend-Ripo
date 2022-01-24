@@ -9,6 +9,11 @@
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
 }
+
+.textClass {
+  word-wrap: break-word;
+}
+
 .featButton {
   display: flex;
   justify-content: center;

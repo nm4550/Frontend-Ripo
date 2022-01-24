@@ -20,12 +20,61 @@ import WbSunnyIcon from '@mui/icons-material/WbSunny'
 import { Link } from 'react-router-dom'
 import './GreenHouseCard.css'
 import Fab from '@mui/material/Fab'
+import history from '../../history'
 // Import Theme Files
 import { ThemeProvider } from '@mui/material/styles'
 import Theme from '../../Theme/ThemeGenerator'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import MoreVertIcon from '@mui/icons-material/MoreVert'
+import AddAlarmIcon from '@mui/icons-material/AddAlarm'
+import DialogTitle from '@mui/material/DialogTitle'
+import DialogContent from '@mui/material/DialogContent'
+import DialogActions from '@mui/material/DialogActions'
+import Dialog from '@mui/material/Dialog'
+import Reminder from '../../Components/Reminder'
+import Button from '@mui/material/Button'
+import { styled } from '@mui/material/styles'
+import PropTypes from 'prop-types'
+import CloseIcon from '@mui/icons-material/Close'
+
+const BootstrapDialog = styled(Dialog)(({ theme }) => ({
+  '& .MuiDialogContent-root': {
+    padding: theme.spacing(2),
+  },
+  '& .MuiDialogActions-root': {
+    padding: theme.spacing(1),
+  },
+}))
+
+const BootstrapDialogTitle = (props) => {
+  const { children, onClose, ...other } = props
+
+  return (
+    <DialogTitle sx={{ m: 0, p: 2 }} {...other}>
+      {children}
+      {onClose ? (
+        <IconButton
+          aria-label='close'
+          onClick={onClose}
+          sx={{
+            position: 'absolute',
+            right: 8,
+            top: 8,
+            color: (theme) => theme.palette.grey[500],
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </DialogTitle>
+  )
+}
+
+BootstrapDialogTitle.propTypes = {
+  children: PropTypes.node,
+  onClose: PropTypes.func.isRequired,
+}
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -51,9 +100,32 @@ function GreenHouseCard(props) {
   const mediaStyles = useSlopeCardMediaStyles()
   const shadowStyles = useSoftRiseShadowStyles()
   const textCardContentStyles = useN01TextInfoContentStyles()
-
+  const [reminderOpen, setReminderOpen] = React.useState(false)
   const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
+
+  React.useEffect(() => {
+    console.log('reminder : ' + reminderOpen)
+  }, [reminderOpen])
+
+  const handleClickCalendar = () => {
+    if (props.data.haveCalendar) {
+      history.push('https://calendar.google.com/')
+      window.location.reload(true)
+    } else {
+      setReminderOpen(true)
+      handleClose()
+    }
+  }
+
+  const handleClickReminderOpen = () => {
+    setReminderOpen(true)
+    handleClose()
+  }
+  const handleClickReminderClose = () => {
+    setReminderOpen(false)
+  }
+
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget)
   }
@@ -85,8 +157,11 @@ function GreenHouseCard(props) {
   }
 
   return (
-    <ThemeProvider theme={Theme}>
-      <Card className={cx(cardStyles.root, shadowStyles.root)}>
+    <ThemeProvider sx={{ height: '100%' }} theme={Theme}>
+      <Card
+        className={cx(cardStyles.root, shadowStyles.root)}
+        sx={{ height: '100%' }}
+      >
         <div className='layer'>
           <Grid className='layer' container justifyContent=' flex-end'>
             <Grid className='layer' item>
@@ -146,6 +221,19 @@ function GreenHouseCard(props) {
                 Edit
               </Box>
             </MenuItem>
+
+            <MenuItem
+              onClick={() => {
+                handleClickReminderOpen()
+              }}
+            >
+              <Box>
+                <IconButton sx={{ mr: 2 }} size='small'>
+                  <AddAlarmIcon />
+                </IconButton>
+                Add Reminder
+              </Box>
+            </MenuItem>
           </Menu>
         </div>
         <Grid sx={{ p: 1, mt: -6 }}>
@@ -156,8 +244,14 @@ function GreenHouseCard(props) {
           />
         </Grid>
         <Avatar className={cardStyles.avatar}>
-          <Fab color='primary' aria-label='add'>
-            <OpacityIcon />
+          <Fab
+            color={props.data.haveCalendar ? 'primary' : 'secondary'}
+            aria-label='add'
+            onClick={() => {
+              handleClickCalendar()
+            }}
+          >
+            <OpacityIcon className='FabColor' />
           </Fab>
         </Avatar>
         <CardContent className={cardStyles.content} className='FontRight'>
@@ -167,7 +261,7 @@ function GreenHouseCard(props) {
             heading={props.data.name}
             body={
               <div>
-                <div className='lighWeightFont'>
+                <div className='descriptionText'>
                   {props.data.description != null
                     ? props.data.description.length > 99
                       ? props.data.description.substring(0, 99) + ' ...'
@@ -179,6 +273,29 @@ function GreenHouseCard(props) {
           />
         </CardContent>
       </Card>
+      <BootstrapDialog
+        onClose={handleClickReminderClose}
+        aria-labelledby='customized-dialog-title'
+        open={reminderOpen}
+      >
+        <BootstrapDialogTitle
+          id='customized-dialog-title'
+          onClose={handleClickReminderClose}
+        >
+          Add Reminder
+        </BootstrapDialogTitle>
+        <DialogContent dividers>
+          <Grid item container>
+            <Reminder
+              summary={props.data.name}
+              location={props.data.location}
+              description={props.data.description}
+              id={props.data.id}
+              onClose={handleClickReminderClose}
+            />
+          </Grid>
+        </DialogContent>
+      </BootstrapDialog>
     </ThemeProvider>
   )
 }

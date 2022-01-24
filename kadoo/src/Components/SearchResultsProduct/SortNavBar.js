@@ -12,12 +12,13 @@ import FormControl from '@mui/material/FormControl'
 import Select from '@mui/material/Select'
 import CloseIcon from '@mui/icons-material/Close'
 import IconButton from '@mui/material/IconButton'
-
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward'
+import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward'
 import Stack from '@mui/material/Stack'
 import ProductIcon2 from '../productIcon/productIcon2'
 
 function SortNavBar(props) {
-  const [sortSelectMenu, setSortSelectMenu] = useState(0)
+  const [sortSelectMenu, setSortSelectMenu] = useState(1)
   const {
     handleSortKindPlants,
     handleSortOrderPlants,
@@ -212,6 +213,7 @@ function SortNavBar(props) {
               handleChangeButtonMenu(1)
             }}
             size='small'
+            startIcon={<ArrowUpwardIcon />}
           >
             {' '}
             A to Z{' '}
@@ -223,6 +225,7 @@ function SortNavBar(props) {
               handleChangeButtonMenu(2)
             }}
             size='small'
+            startIcon={<ArrowDownwardIcon />}
           >
             {' '}
             Z to A{' '}
@@ -234,6 +237,7 @@ function SortNavBar(props) {
               handleChangeButtonMenu(3)
             }}
             size='small'
+            startIcon={<ArrowUpwardIcon />}
           >
             {' '}
             ACS Price{' '}
@@ -245,6 +249,7 @@ function SortNavBar(props) {
               handleChangeButtonMenu(4)
             }}
             size='small'
+            startIcon={<ArrowDownwardIcon />}
           >
             {' '}
             DES Price{' '}
@@ -256,6 +261,7 @@ function SortNavBar(props) {
               handleChangeButtonMenu(5)
             }}
             size='small'
+            startIcon={<ArrowUpwardIcon />}
           >
             {' '}
             ACS time{' '}
@@ -267,6 +273,7 @@ function SortNavBar(props) {
               handleChangeButtonMenu(6)
             }}
             size='small'
+            startIcon={<ArrowDownwardIcon />}
           >
             {' '}
             DES time{' '}

@@ -7,7 +7,7 @@
   z-index: -3;
 }
 
-.productIconImageContainer{
+.productIconImageContainer {
   z-index: -1;
 }
 
@@ -23,12 +23,17 @@
   font-family: Quicksand !important;
 }
 
-.lighWeightFont {
+.descriptionText {
   font-family: Quicksand !important;
   font-weight: 400 !important;
   padding-bottom: 16px;
+  word-break: break-all;
 }
 
-.layer{
+.FabColor {
+  color: white !important;
+}
+
+.layer {
   z-index: 2;
 }

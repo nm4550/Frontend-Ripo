@@ -6,12 +6,12 @@ import TicketCard from '../TicketCard/TicketCard'
 
 function ShowAllTickets(props) {
   return (
-    <div>
+    <Grid container sx={{ width: '100%' }}>
       <Box sx={{ width: '100%' }}>
         <Typography variant='h4' gutterBottom component='div'>
           All Tickets
         </Typography>
-        <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid container item rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           {props.data.map((T) => (
             <Grid item xs={12} sm={6} md={4}>
               <TicketCard ticket={T} />
@@ -19,7 +19,7 @@ function ShowAllTickets(props) {
           ))}
         </Grid>
       </Box>
-    </div>
+    </Grid>
   )
 }
 

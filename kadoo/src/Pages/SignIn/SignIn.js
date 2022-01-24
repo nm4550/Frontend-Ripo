@@ -4,6 +4,7 @@ import { Grid, TextField, Button, InputAdornment } from '@mui/material'
 import { EmailRounded, VpnKey } from '@mui/icons-material'
 import { useState, useEffect } from 'react'
 import history from '../../history'
+import AppBar from '../../Components/AppBar/AppBar'
 import './SignIn.css'
 
 function SignIn() {
@@ -123,6 +124,13 @@ function SignIn() {
   }
   return (
     <div>
+      <AppBar
+        SearchOption={true}
+        TicketOption={false}
+        CartOption={false}
+        DrawerOption={false}
+        AuthorizationOption={false}
+      />
       <Grid
         container
         style={{ minHeight: '100vh' }}
@@ -131,7 +139,7 @@ function SignIn() {
         <Grid item xs={12} sm={6}>
           <img
             src={Background}
-            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
             alt='Background'
           />
         </Grid>

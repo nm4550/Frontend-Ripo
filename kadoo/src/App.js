@@ -13,6 +13,7 @@ import SignUp from './Pages/SignUp/SignUp'
 import HomePage from './Pages/HomePage/HomePage'
 import SearchResultProduct from './Components/SearchResultsProduct/SearchResultProduct'
 import Cart from './Pages/AddToCart'
+import NotFound from './Pages/NotFound'
 import CategoriesPage from './Pages/CategoriesPage'
 import ProductPlantsPage from './Pages/ProductPlantsPage/ProductPlantsPage'
 import ProductToolsPage from './Pages/ProductToolsPage/ProductToolsPage'
@@ -26,11 +27,12 @@ import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import ShowCoins from './Components/ShowCoins/ShowCoins'
 import WateringUpdate from './Components/UpdateCoins/WateringUpdate'
 import AdminHome from './Pages/AdminHome/AdminHome'
-import UserList from "./Pages/AdminUserList/AdminUserList";
-import AdminProduct from "./Pages/AdminProduct/AdminProduct";
-import AdminProductList from "./Pages/AdminProductList/AdminProductList";
+import UserList from './Pages/AdminUserList/AdminUserList'
+import AdminProduct from './Pages/AdminProduct/AdminProduct'
+import AdminProductList from './Pages/AdminProductList/AdminProductList'
 import TicketPage from './Pages/TicketPage/TicketPage'
 import WriteTicket from './Components/WriteTicket/WriteTicket'
+import TicketUser from './Pages/TicketUser/TicketUser'
 
 function App() {
   return (
@@ -41,8 +43,13 @@ function App() {
           <Router>
             <Switch>
               <Route exact path='/TicketPage' component={TicketPage} />
+              <Route exact path='/TicketUser' component={TicketUser} />
               <Route exact path='/WriteTicket' component={WriteTicket} />
-              <Route exact path='/WateringUpdateTest' component={WateringUpdate} />
+              <Route
+                exact
+                path='/WateringUpdateTest'
+                component={WateringUpdate}
+              />
               <Route exact path='/Coins' component={ShowCoins} />
               <Route exact path='/' component={LandingPage} />
               <Route exact path='/signin' component={SignIn} />
@@ -79,6 +86,7 @@ function App() {
                 path='/greenHouseCreate/'
                 component={GreenHouseEdit}
               />
+              <Route component={NotFound} />
             </Switch>
           </Router>
         </LocalizationProvider>

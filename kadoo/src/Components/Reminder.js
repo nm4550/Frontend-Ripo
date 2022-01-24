@@ -22,10 +22,13 @@ import Chip from '@mui/material/Chip'
 import Stack from '@mui/material/Stack'
 import Divider from '@mui/material/Divider'
 import TimePicker from '@mui/lab/TimePicker'
+import CircularProgress from '@mui/material/CircularProgress'
+import { green } from '@mui/material/colors'
 
 export default function Reminder(props) {
   const [value, setValue] = React.useState(null)
   const [num, setNum] = React.useState(1)
+  const [enable, setEnable] = React.useState(false)
   const [satEnable, setSatEnable] = React.useState(false)
   const [sunEnable, setSunEnable] = React.useState(false)
   const [monEnable, setMonEnable] = React.useState(false)
@@ -54,6 +57,61 @@ export default function Reminder(props) {
   const [timeFormat2, setTimeFormat2] = React.useState('')
   const [timeFormat3, setTimeFormat3] = React.useState('')
   const [timeFormat4, setTimeFormat4] = React.useState('')
+
+  const [loading, setLoading] = React.useState(false)
+  const [success, setSuccess] = React.useState(false)
+  const timer = React.useRef()
+
+  const buttonSx = {
+    ...(success && {
+      bgcolor: green[500],
+      '&:hover': {
+        bgcolor: green[700],
+      },
+    }),
+  }
+
+  useEffect(() => {
+    if (infoCount > 0) {
+      switch (num) {
+        case 1:
+          if (time1 !== null) {
+            setEnable(true)
+          } else {
+            setEnable(false)
+          }
+          break
+        case 2:
+          if (time1 !== null && time2 !== null) {
+            setEnable(true)
+          } else {
+            setEnable(false)
+          }
+          break
+        case 3:
+          if (time1 !== null && time2 !== null && time3 !== null) {
+            setEnable(true)
+          } else {
+            setEnable(false)
+          }
+          break
+        case 4:
+          if (
+            time1 !== null &&
+            time2 !== null &&
+            time3 !== null &&
+            time4 !== null
+          ) {
+            setEnable(true)
+          } else {
+            setEnable(false)
+          }
+          break
+      }
+    } else {
+      setEnable(false)
+    }
+  }, [num, time1, time2, time3, time4, infoCount])
 
   function handleClick(index) {
     switch (index) {
@@ -118,67 +176,110 @@ export default function Reminder(props) {
   }
 
   function SetReminder() {
-    dateTimes.map((p) => {
+    Promise.all(
+      dateTimes.map((p, index) => {
+        setTimeout(async () => {
+          const requestOptions = {
+            method: 'POST',
+            headers: {
+              Authorization: 'JWT ' + localStorage.getItem('access_token'),
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              summary: props.summary,
+              location: props.location,
+              description: props.description,
+              start: {
+                dateTime: p,
+              },
+              end: {
+                dateTime: p,
+              },
+              recurrence: ['RRULE:FREQ=WEEKLY;COUNT=52'],
+              reminders: {
+                useDefault: false,
+                overrides: [
+                  { method: 'email', minutes: 60 },
+                  { method: 'popup', minutes: 10 },
+                ],
+              },
+            }),
+          }
+          console.log(requestOptions.body)
+          fetch('http://127.0.0.1:8000/api/reminder/', requestOptions)
+            .then(async (response) => {
+              const isJson = response.headers
+                .get('content-type')
+                ?.includes('application/json')
+              const data = isJson ? await response.json() : null
+              console.log(data)
+              // check for error response
+              console.log(response.status)
+              if (!response.ok) {
+                // get error message from body or default to response status
+                const error = response.status
+
+                return Promise.reject(error)
+              }
+              console.log(data)
+            })
+            .catch((error) => {
+              if (error === 401) {
+                alert('You should login first!')
+                return
+              }
+              console.error('There was an error!', error)
+            })
+        }, index * 2000)
+      })
+    ).then(() => {
       const requestOptions = {
-        method: 'POST',
+        method: 'GET',
         headers: {
           Authorization: 'JWT ' + localStorage.getItem('access_token'),
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          summary: props.summary,
-          location: props.location,
-          description: props.description,
-          start: {
-            dateTime: p,
-          },
-          end: {
-            dateTime: p,
-          },
-          recurrence: ['RRULE:FREQ=WEEKLY;COUNT=52'],
-          reminders: {
-            useDefault: false,
-            overrides: [
-              { method: 'email', minutes: 60 },
-              { method: 'popup', minutes: 10 },
-            ],
-          },
-        }),
       }
-      console.log(requestOptions.body)
-      setTimeout(async () => {
-        fetch('http://127.0.0.1:8000/api/reminder/', requestOptions)
-          .then(async (response) => {
-            const isJson = response.headers
-              .get('content-type')
-              ?.includes('application/json')
-            const data = isJson ? await response.json() : null
-            console.log(data)
-            // check for error response
-            console.log(response.status)
-            if (!response.ok) {
-              // get error message from body or default to response status
-              const error = response.status
-              return Promise.reject(error)
-            }
-            console.log(data)
-          })
-          .catch((error) => {
-            if (error === 401) {
-              alert('You should login first!')
-              return
-            }
-            console.error('There was an error!', error)
-          })
-      }, 0)
+      fetch(
+        'http://127.0.0.1:8000/api/makeHaveCalendarTrue/' + props.id + '/',
+        requestOptions
+      )
+        .then((response) => {
+          response.json()
+        })
+        .then((data) => {
+          console.log('data')
+          console.log(data)
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     })
   }
 
   useEffect(() => {
-    if (num * infoCount === dateTimes.length) {
-      SetReminder()
+    if (infoCount !== 0) {
+      if (num * infoCount === dateTimes.length) {
+        SetReminder()
+        if (!loading) {
+          setSuccess(false)
+          setLoading(true)
+          timer.current = window.setTimeout(() => {
+            setSuccess(true)
+          }, dateTimes.length * 2000 + 500)
+        }
+      }
     }
   }, [dateTimes])
+
+  useEffect(() => {
+    if (success) {
+      setTimeout(() => {
+        setLoading(false)
+        props.onClose()
+      }, 3000)
+    }
+  }, [success])
 
   useEffect(() => {
     console.log(infoCount)
@@ -550,15 +651,37 @@ export default function Reminder(props) {
           sx={{ p: 3, Color: '#12824C' }}
           className='ProductPageTitle'
         >
+          <Box sx={{ m: 1, position: 'relative' }}>
+            <Button
+              variant='contained'
+              className='productsPageAdd'
+              sx={{ mr: 3 }}
+              onClick={SetDates}
+              disabled={!enable || loading}
+              sx={buttonSx}
+            >
+              ADD REMINDER
+            </Button>
+            {loading && (
+              <CircularProgress
+                size={24}
+                sx={{
+                  color: green[500],
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  marginTop: '-12px',
+                  marginLeft: '-12px',
+                }}
+              />
+            )}
+          </Box>
+
           <Button
             variant='contained'
             className='productsPageAdd'
-            sx={{ mr: 3 }}
-            onClick={SetDates}
+            onClick={props.onClose}
           >
-            ADD REMINDER
-          </Button>
-          <Button variant='contained' className='productsPageAdd'>
             CANCEL
           </Button>
         </Grid>

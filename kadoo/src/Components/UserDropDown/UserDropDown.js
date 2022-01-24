@@ -17,6 +17,9 @@ import PaymentIcon from '@mui/icons-material/Payment'
 import ForumIcon from '@mui/icons-material/Forum'
 import Badge from '@mui/material/Badge'
 import CoinsIcon from '../../Images/Coins/coins.png'
+import ParkIcon from '@mui/icons-material/Park'
+import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings'
+import { Link } from 'react-router-dom'
 
 function UserDropDown(props) {
   const [anchorEl, setAnchorEl] = React.useState(null)
@@ -92,7 +95,7 @@ function UserDropDown(props) {
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
         <Tooltip title='Account settings'>
           <IconButton onClick={handleClick} size='small' sx={{ ml: 2 }}>
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+            <Avatar sx={{ width: 32, height: 32 }}>S</Avatar>
           </IconButton>
         </Tooltip>
       </Box>
@@ -130,7 +133,7 @@ function UserDropDown(props) {
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
       >
-        <MenuItem>
+        <MenuItem style={{ pointerEvents: 'none' }}>
           <Avatar /> {userData.user_name}
         </MenuItem>
         <MenuItem sx={{ display: { xs: 'flex', md: 'none' } }}>
@@ -151,7 +154,7 @@ function UserDropDown(props) {
             Cart
           </Box>
         </MenuItem>
-        <MenuItem sx={{ display: { xs: 'flex', md: 'none' } }}>
+        {/*<MenuItem sx={{ display: { xs: 'flex', md: 'none' } }}>
           <Box>
             <ListItemIcon>
               {numberOfTicket !== 0 && (
@@ -163,13 +166,48 @@ function UserDropDown(props) {
             </ListItemIcon>
             Tickets
           </Box>
-        </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <TodayIcon fontSize='small' />
-          </ListItemIcon>
-          Reminder
-        </MenuItem>
+              </MenuItem>*/}
+        {props.kind === 'MEMBER' && (
+          <Link to='/greenHouse' className='textDecoration'>
+            <MenuItem>
+              <ListItemIcon>
+                <ParkIcon fontSize='small' />
+              </ListItemIcon>
+              Green House
+            </MenuItem>
+          </Link>
+        )}
+        {props.kind === 'MEMBER' && (
+          <Link to='/TicketUser' className='textDecoration'>
+            <MenuItem>
+              <ListItemIcon>
+                <ForumIcon fontSize='small' />
+              </ListItemIcon>
+              My Tickets
+            </MenuItem>
+          </Link>
+        )}
+        {props.kind === 'SPECIALIST' && (
+          <Link to='/TicketPage' className='textDecoration'>
+            <MenuItem>
+              <ListItemIcon>
+                <ForumIcon fontSize='small' />
+              </ListItemIcon>
+              My Tickets
+            </MenuItem>
+          </Link>
+        )}
+        {props.kind === 'ADMIN' && (
+          <Link to='/AdminPage' className='textDecoration'>
+            <MenuItem>
+              <ListItemIcon>
+                <AdminPanelSettingsIcon fontSize='small' />
+              </ListItemIcon>
+              ADMIN
+            </MenuItem>
+          </Link>
+        )}
+
         <MenuItem onClick={handleLogOut}>
           <ListItemIcon>
             <ExitToAppIcon fontSize='small' />

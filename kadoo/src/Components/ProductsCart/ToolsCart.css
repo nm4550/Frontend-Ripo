@@ -9,6 +9,11 @@
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
 }
+
+.textClass {
+  word-wrap: break-word;
+}
+
 .toolIcon {
   color: rgb(196, 196, 196);
 }
