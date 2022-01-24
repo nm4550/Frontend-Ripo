@@ -285,7 +285,7 @@ function AddtoCart() {
             sx={{ pt: 5, pr: 10, pl: 10 }}
           >
             <img
-              src='undraw_empty_cart_co35.svg'
+              src='empty.png'
               style={{ width: '100%', height: '100%', objectFit: 'contain' }}
               alt='Background'
             />

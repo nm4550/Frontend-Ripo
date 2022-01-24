@@ -248,116 +248,7 @@ export default function NewUser(props) {
   const handleSubmit = (e) => {
     e.preventDefault()
     if (!primaryAccepted) {
-      console.log(formData)
-      console.log(
-        JSON.stringify({
-          email: formData.email,
-          user_name: formData.user_name,
-          first_name: formData.first_name,
-          last_name: formData.last_name,
-          password: formData.password,
-        })
-      )
-
-      updateErrorData({
-        ...errorData,
-        first_name: '',
-      })
-      updateErrorData({
-        ...errorData,
-        last_name: '',
-      })
-      updateErrorData({
-        ...errorData,
-        user_name: '',
-      })
-      updateErrorData({
-        ...errorData,
-        email: '',
-      })
-      updateErrorData({
-        ...errorData,
-        password: '',
-      })
-      console.log(errorData)
-
-      const requestOptions = {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          email: formData.email,
-          user_name: formData.user_name,
-          first_name: formData.first_name,
-          last_name: formData.last_name,
-          password: formData.password,
-        }),
-      }
-      fetch(
-        'http://127.0.0.1:8000/api/specialist/update-primary/' + userId + '/',
-        requestOptions
-      )
-        .then(async (response) => {
-          if (response.status === 200) {
-            let isJson = response.headers
-              .get('content-type')
-              ?.includes('application/json')
-            let data = isJson ? await response.json() : null
-            console.log('1')
-            console.log(data)
-            setId(data.id)
-
-            setPrimaryConfirmation(primaryConfirmation ? false : true)
-            setPrimaryAccepted(true)
-          } else {
-            throw response
-          }
-        })
-        .catch((err) => {
-          err.text().then((errorMessage) => {
-            const errors = JSON.parse(errorMessage)
-            console.log('e ' + errors.email)
-
-            if (errors.email !== undefined) {
-              updateErrorData({
-                ...errorData,
-                email: errors.email,
-              })
-              return
-            }
-
-            if (errors.user_name !== undefined) {
-              updateErrorData({
-                ...errorData,
-                user_name: errors.user_name,
-              })
-              return
-            }
-
-            if (errors.first_name !== undefined) {
-              updateErrorData({
-                ...errorData,
-                first_name: errors.first_name,
-              })
-              return
-            }
-
-            if (errors.last_name !== undefined) {
-              updateErrorData({
-                ...errorData,
-                last_name: errors.last_name,
-              })
-              return
-            }
-
-            if (errors.password !== undefined) {
-              updateErrorData({
-                ...errorData,
-                password: errors.password,
-              })
-              return
-            }
-          })
-        })
+      setPrimaryAccepted(true)
     } else {
       setPrimaryConfirmation(primaryConfirmation ? false : true)
     }
@@ -377,7 +268,7 @@ export default function NewUser(props) {
             helperText={errorData.email != '' ? errorData.email : ''}
             onChange={handleChange}
             value={formData.email}
-            required
+            disabled={true}
           />
         </div>
         <div className='newUserItem'>
@@ -390,7 +281,7 @@ export default function NewUser(props) {
             helperText={errorData.user_name != '' ? errorData.user_name : ''}
             onChange={handleChange}
             value={formData.user_name}
-            required
+            disabled={true}
           />
         </div>
         <div className='newUserItem'>
@@ -403,7 +294,7 @@ export default function NewUser(props) {
             helperText={errorData.first_name != '' ? errorData.first_name : ''}
             onChange={handleChange}
             value={formData.first_name}
-            required
+            disabled={true}
           />
         </div>
         <div className='newUserItem'>
@@ -416,7 +307,7 @@ export default function NewUser(props) {
             helperText={errorData.last_name != '' ? errorData.last_name : ''}
             value={formData.last_name}
             onChange={handleChange}
-            required
+            disabled={true}
           />
         </div>
         <div className='newUserItem'>

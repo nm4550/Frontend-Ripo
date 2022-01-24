@@ -35,7 +35,8 @@ export default function ProductList() {
     setOpen(false)
   }
 
-  const handleDelete = (id1, kind) => {
+  const handleDelete = (id1, kind, name) => {
+    console.log('Kind : ' + kind)
     console.log('id : ' + id1)
     const requestOptions = {
       method: 'DELETE',
@@ -45,6 +46,7 @@ export default function ProductList() {
       },
     }
     if (kind === 'Plant') {
+      console.log('+++++++++++++++++++++++')
       fetch(
         'http://127.0.0.1:8000/api/plantsRUD/' + id1 + '/',
         requestOptions
@@ -157,7 +159,13 @@ export default function ProductList() {
                   No
                 </Button>
                 <Button
-                  onClick={() => handleDelete(params.row.id, params.row.kind)}
+                  onClick={() =>
+                    handleDelete(
+                      params.row.id,
+                      params.row.kind,
+                      params.row.name
+                    )
+                  }
                   autoFocus
                 >
                   Yes
